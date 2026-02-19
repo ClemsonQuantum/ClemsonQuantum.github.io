@@ -27,8 +27,14 @@ export default async function StudentWorkDetailPage({ params }: Props) {
     slug
   );
 
-  const authors = data.authors as Array<{ name: string; affiliation?: string }> | null;
-  const date = data.date ? String(data.date) : null;
+  if (!data || !content) {
+    return (
+      <div className="page-content">
+        <h1>Not Found</h1>
+        <p>This student work/project could not be found.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page-content">
