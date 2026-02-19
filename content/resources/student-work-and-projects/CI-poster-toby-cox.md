@@ -4,12 +4,12 @@ title: "Hardware-Aware Quantum Circuit Synthesis"
 date: 2025-06-15
 type: poster
 authors:
-	- name: "Toby Cox"
-	- name: "Ian Lewis"
+  - name: "Toby Cox"
+  - name: "Ian Lewis"
 mentors:
-	- "Nathan Jones"
-	- "Rong Ge"
-	- "Akhilesh Bondapalli"
+  - "Nathan Jones"
+  - "Rong Ge"
+  - "Akhilesh Bondapalli"
 summary: "Poster on methods for synthesizing quantum circuits that are optimized for specific hardware constraints (gate set, connectivity, noise characteristics)."
 # image: "/images/CI-poster-toby-cox.png"  # TODO: add image file
 link: "https://ci.clemson.edu/showcase/posters/"
