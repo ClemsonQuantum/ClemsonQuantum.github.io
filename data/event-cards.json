@@ -1,0 +1,77 @@
+[
+  {
+    "title": "Clemson Quantathon 2026",
+    "date": "2026-03-15",
+    "location": "Clemson, SC",
+    "backgroundImage": "/images/Watt.jpg",
+    "backLines": [
+      "Clemson, SC",
+      "Clemson University",
+      "Watt Innovation Center",
+      "March 15th - 17th"
+    ],
+    "link": "/events/hackathons/2026-SC-Quantathon-v3/"
+  },
+  {
+    "title": "SC Quantathon v2 2025",
+    "date": "2025-10-09",
+    "location": "Columbia, SC",
+    "backgroundImage": "/images/SCQ2jpg.webp",
+    "backLines": [
+      "Columbia, SC",
+      "University of South Carolina",
+      "Darla Moore School of Business",
+      "October 9th - 12th"
+    ],
+    "link": "https://www.scquantum.org/events/iqc25-championship-quantathonv2"
+  },
+  {
+    "title": "NYUAD 2025",
+    "date": "2025-04-25",
+    "location": "Abu Dhabi",
+    "backgroundImage": "/images/NYUAD2025.jpg",
+    "backLines": [
+      "Abu Dhabi",
+      "New York University Abu Dhabi",
+      "---",
+      "April 25th - 27th"
+    ],
+    "link": "https://hackathon.nyuad.nyu.edu/"
+  },
+  {
+    "title": "iQuHack 2025",
+    "date": "2025-01-31",
+    "location": "Boston, MA",
+    "backgroundImage": "/images/iQuHack2025.png",
+    "backLines": [
+      "Cambridge, MA",
+      "Massachusetts Institute of Technology",
+      "Strata Center",
+      "January 31st - February 2nd"
+    ],
+    "link": "https://www.iquise.mit.edu/iQuHACK/2025-01-31"
+  },
+  {
+    "title": "SC Quantathon v1 2024",
+    "date": "2024-10-10",
+    "location": "Columbia, SC",
+    "backgroundImage": "/images/SCQ1jpg.webp",
+    "backLines": [
+      "Columbia, SC",
+      "University of South Carolina",
+      "Darla Moore School of Business",
+      "October 10th - 13th"
+    ],
+    "link": "https://www.scquantum.org/events/quantathon-v1"
+  },
+  {
+    "title": "All Events!",
+    "date": "",
+    "location": "",
+    "backgroundImage": "/images/Question.jpg",
+    "backLines": [
+      "TBD",
+      "..."
+    ]
+  }
+]

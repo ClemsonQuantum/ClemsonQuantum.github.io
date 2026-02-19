@@ -1,0 +1,39 @@
+[
+  {
+    "name": "Nathan Jones",
+    "role": "President",
+    "description": "CS Ph.D. Candidate and Clemson Alumnus. Research in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing.",
+    "image": "/images/Nathan.jpeg",
+    "linkedin": "https://www.linkedin.com/in/njonescomputing/",
+    "github": "https://github.com/njones93531/"
+  },
+  {
+    "name": "Valentine Mohaugen",
+    "role": "Vice President",
+    "description": "Senior in Physics. Research in Topological Materials and Quantum Error Correction.",
+    "image": "/images/Valentine.jpg",
+    "linkedin": "https://www.linkedin.com/in/valentine-mohaugen/",
+    "github": "https://github.com/Valmohaugen/"
+  },
+  {
+    "name": "Evan Hall",
+    "role": "Treasurer",
+    "description": "Math Ph.D. candidate and Clemson Alumnus. Research in Quantum Error Correction.",
+    "image": "/images/Evan.jpg",
+    "linkedin": "https://www.linkedin.com/in/evanlandonhall/"
+  },
+  {
+    "name": "Ashton McEntarffer",
+    "role": "Secretary",
+    "description": "Junior in Computer Science. Research in xxxxx.",
+    "image": "/images/blank-profile.svg",
+    "linkedin": "https://www.linkedin.com/in/ashtonmc/"
+  },
+  {
+    "name": "Rong Ge",
+    "role": "Advisor",
+    "description": "Professor in the School of Computing. Research in High Performance Computing, Parallel and Distributed Systems, and Performance and Power Analysis and Modeling.",
+    "image": "/images/Rong.jpg",
+    "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/"
+  }
+]

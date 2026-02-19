@@ -1,0 +1,98 @@
+[
+  {
+    "title": "README",
+    "url": "//README/",
+    "excerpt": "How to Add Events, News, and Student Work This folder holds all the Markdown .md content files. The website automatically discovers files here and adds them to the navigation and listing pages. After editing, push to the main branch — the site rebuilds automatically. --- Adding a new hackathon 1. Cr",
+    "date": null
+  },
+  {
+    "title": "SC Quantathon v1 2024",
+    "url": "/events/hackathons/2024-SC-Quantathon-v1/",
+    "excerpt": "SC Quantathon v1 2024 Text about SC Quantathon v1. News story type description and layout. Add list of other news stories and posts about it.",
+    "date": "2024-10-01 # inferred from filename prefix; adjust if needed"
+  },
+  {
+    "title": "NYUAD 2025",
+    "url": "/events/hackathons/2025-NYUAD/",
+    "excerpt": "NYUAD 2025 Text about NYUAD Hackathon 2025. News story type description and layout. Add list of other news stories and posts about it.",
+    "date": "2025-04-15 # inferred from filename prefix; adjust if needed"
+  },
+  {
+    "title": "SC Quantathon v2 2025",
+    "url": "/events/hackathons/2025-SC-Quantathon-v2/",
+    "excerpt": "SC Quantathon v2 2025 Text about SC Quantathon v2. News story type description and layout. Add list of other news stories and posts about it.",
+    "date": "2025-10-01 # inferred from filename prefix; adjust if needed"
+  },
+  {
+    "title": "Y Quantum 2025",
+    "url": "/events/hackathons/2025-Y-Quantum/",
+    "excerpt": "Y Quantum 2025 Text about Y Quantum 2025. News story type description and layout. Add list of other news stories and posts about it.",
+    "date": "2025-04-01 # inferred from filename prefix; adjust if needed"
+  },
+  {
+    "title": "iQuHack 2025",
+    "url": "/events/hackathons/2025-iQuHack/",
+    "excerpt": "iQuHack 2025 Text about MIT iQuHack 2025. News story type description and layout. Add list of other news stories and posts about it.",
+    "date": "2025-02-01 # inferred from filename prefix; adjust if needed"
+  },
+  {
+    "title": "Clemson Quantathon 2026",
+    "url": "/events/hackathons/2026-SC-Quantathon-v3/",
+    "excerpt": "March 15 – 17, 2026 • Clemson, SC Clemson Quantathon 2026 48 hours. Quantum hardware. Real-world challenges. Are you ready? Apply Now About The Clemson Quantathon is Clemson University's inaugural quantum computing hackathon, hosted by the Clemson Quantum Club. Over the course of 48 hours, teams of up to four will tackle real-world challenges using quantum computing platforms, compete for prizes, and learn from industry mentors. Whether you're a seasoned quantum programmer or writing your first quantum circuit, the Quantathon is designed to be accessible and exciting. Workshops, mentorship, and starter code will be provided so every participant can hit the ground running. Join students from across the Southeast — and beyond — for a weekend of innovation at the intersection of computer science, physics, and engineering.",
+    "date": "2026-03-15"
+  },
+  {
+    "title": "2024 IBM Fall Fest",
+    "url": "/events/workshops-and-seminars/2024-IBM-Fall-Fest/",
+    "excerpt": "2024 IBM Fall Fest Clemson Quantum Club partnered with IBM to host Fall Fest 2024, a full-day event featuring workshops on quantum programming, hardware demonstrations, and student project showcases. Attendees learned about Qiskit, hybrid quantum-classical workflows, and had the opportunity to ask q",
+    "date": "2024-10-12"
+  },
+  {
+    "title": "2025 CUHackIt",
+    "url": "/events/workshops-and-seminars/2025-CUHackIt/",
+    "excerpt": "2025 CUHackIt Details coming soon — adjust the date/front matter as needed.",
+    "date": "2025-05-01 # inferred; adjust if needed"
+  },
+  {
+    "title": "2025 IBM Fall Fest",
+    "url": "/events/workshops-and-seminars/2025-IBM-Fall-Fest/",
+    "excerpt": "2025 IBM Fall Fest Clemson was selected to be a satellite host for the annual IBM Qiskit Fall Festivals. These festivals are held at universities and academic institutions around the world in October and November. The goal is to educate students and the community about quantum computing and its pote",
+    "date": "2025-10-12 # inferred; adjust if needed"
+  },
+  {
+    "title": "Clemson teams sweep SC Quantathon, win trip to international competition",
+    "url": "/news/2024-12-04/",
+    "excerpt": "Two Clemson teams placed at the SC Quantathon and secured an invitation to compete internationally. Their projects focused on practical quantum algorithms and hardware-aware optimizations. Read the full Clemson News story for details and photos. For the original article, see the Clemson News link ab",
+    "date": "2024-12-04"
+  },
+  {
+    "title": "Students hack the future — one qubit at a time",
+    "url": "/news/2025-03-19/",
+    "excerpt": "Students from across campus participated in a quantum-focused hackathon that included tutorials, hands-on demos, and teams building small quantum prototypes and simulators. The event highlighted student innovation in quantum computing and outreach. See the full Clemson News article via the link abov",
+    "date": "2025-03-19"
+  },
+  {
+    "title": "Clemson team goes global after SC Quantathon win",
+    "url": "/news/2025-09-02/",
+    "excerpt": "A Clemson team captured first place at the SC Quantathon and received an invitation to present their work at an international forum. Their project demonstrated novel approaches to quantum error mitigation and benchmarking. Read more on the SC Quantum website.",
+    "date": "2025-09-02"
+  },
+  {
+    "title": "Detecting Majorana Zero Mode with ResNet and Winding Number Invariant",
+    "url": "/resources/student-work-and-projects/CI-poster-ian-lewis/",
+    "excerpt": "Abstract We train a ResNet on simulated conductance/wavefunction data to classify the presence of Majorana zero modes and compare classifier outputs to winding-number-based invariants. Results indicate complementary strengths for data-driven and analytic approaches. Authors & affiliations - Ian Lewi",
+    "date": "2025-06-15"
+  },
+  {
+    "title": "Hardware-Aware Quantum Circuit Synthesis",
+    "url": "/resources/student-work-and-projects/CI-poster-toby-cox/",
+    "excerpt": "Abstract This project explores compilation and synthesis techniques that produce circuits tailored to a target device's native gates and topology, improving practical execution fidelity. Authors & affiliations - Toby Cox — Clemson University Creative Inquiry - Ian Lewis — Clemson University Creative",
+    "date": "2025-06-15"
+  },
+  {
+    "title": "Advancing Materials Development with Quantum AI and VQE Simulations of Majorana Edge States and Topological Phases",
+    "url": "/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen/",
+    "excerpt": "Abstract This poster presents work combining VQE simulations and machine learning techniques to probe Majorana edge states and topological phases relevant to materials design. The project demonstrates how quantum simulations can support identification of topological signatures and potential material",
+    "date": "2025-07-01"
+  }
+]
