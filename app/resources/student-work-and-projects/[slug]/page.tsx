@@ -48,8 +48,8 @@ export default async function StudentWorkDetailPage({ params }: Props) {
           {date && authors && authors.length > 0 && (
             <span>&nbsp;&bull;&nbsp;</span>
           )}
-          {authors &&
-            (authors as Author[]).map((a, i) => (
+          {Array.isArray(authors) &&
+            authors.map((a: Author, i: number) => (
               <span key={i}>
                 {a.name}
                 {i < authors.length - 1 ? ', ' : ''}
