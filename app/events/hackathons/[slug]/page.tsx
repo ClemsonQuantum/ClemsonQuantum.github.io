@@ -14,8 +14,11 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const { data } = getPageBySlug('events/hackathons', slug);
-  return { title: String(data.title ?? slug) };
+  const page = getPageBySlug('events/hackathons', slug);
+  if (!page || !page.data) {
+    return { title: String(slug) };
+  }
+  return { title: String(page.data.title ?? slug) };
 }
 
 export default async function HackathonPage({ params }: Props) {
