@@ -63,6 +63,9 @@ export function getPageBySlug(
   slug: string
 ): { data: Record<string, unknown>; content: string } {
   const filepath = path.join(CONTENT_ROOT, contentSubdir, `${slug}.md`);
+  if (!fs.existsSync(filepath)) {
+    return { data: null, content: null };
+  }
   const raw = fs.readFileSync(filepath, 'utf-8');
   return matter(raw) as { data: Record<string, unknown>; content: string };
 }
