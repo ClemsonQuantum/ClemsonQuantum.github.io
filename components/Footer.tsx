@@ -1,9 +1,15 @@
+import siteConfig from '@/data/site-config.json';
+
 export default function Footer() {
   return (
     <footer>
-      <p>
-        &copy; {new Date().getFullYear()} Clemson Quantum.{' '}
-        Built with <a href="https://nextjs.org" target="_blank" rel="noopener">Next.js</a>.
+      <div className="footer-links">
+        <a href={siteConfig.discordInvite} target="_blank" rel="noopener">Discord</a>
+        <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener">TigerQuest</a>
+        <a href={`mailto:${siteConfig.contactEmail}`}>Contact</a>
+      </div>
+      <p className="footer-copy">
+        &copy; {new Date().getFullYear()} Clemson Quantum
       </p>
     </footer>
   );
