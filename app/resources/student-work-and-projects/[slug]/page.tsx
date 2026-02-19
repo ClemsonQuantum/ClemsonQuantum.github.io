@@ -14,11 +14,11 @@ export async function generateStaticParams() {
 }
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
   const page = getPageBySlug('resources/student-work-and-projects', slug);
   if (!page || !page.data) {
     return { title: String(slug) };
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function StudentWorkPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const page = getPageBySlug('resources/student-work-and-projects', slug);
   if (!page || !page.data || !page.content) {
     return (
