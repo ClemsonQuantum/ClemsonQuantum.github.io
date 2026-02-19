@@ -1,3 +1,4 @@
+type Author = { name: string };
 import type { Metadata } from 'next';
 import { getAllPages, getPageBySlug, formatDate } from '@/lib/content';
 import ReactMarkdown from 'react-markdown';
@@ -48,7 +49,7 @@ export default async function StudentWorkDetailPage({ params }: Props) {
             <span>&nbsp;&bull;&nbsp;</span>
           )}
           {authors &&
-            authors.map((a: any, i: number) => (
+            (authors as Author[]).map((a, i) => (
               <span key={i}>
                 {a.name}
                 {i < authors.length - 1 ? ', ' : ''}
