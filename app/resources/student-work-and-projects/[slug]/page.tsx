@@ -36,17 +36,19 @@ export default async function StudentWorkDetailPage({ params }: Props) {
     );
   }
 
+  const { date, authors } = data || {};
+
   return (
     <div className="page-content">
       <h1>{String(data.title ?? slug)}</h1>
       {(date || (authors && authors.length > 0)) && (
         <p className="meta">
-          {date && <span>{formatDate(date)}</span>}
+          {date && <span>{formatDate(String(date))}</span>}
           {date && authors && authors.length > 0 && (
             <span>&nbsp;&bull;&nbsp;</span>
           )}
           {authors &&
-            authors.map((a, i) => (
+            authors.map((a: any, i: number) => (
               <span key={i}>
                 {a.name}
                 {i < authors.length - 1 ? ', ' : ''}
