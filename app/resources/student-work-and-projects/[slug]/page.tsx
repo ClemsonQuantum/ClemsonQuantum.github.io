@@ -37,18 +37,19 @@ export default async function StudentWorkDetailPage({ params }: Props) {
     );
   }
 
-  const { date, authors } = data || {};
+  const date: string | undefined = typeof data.date === 'string' ? data.date : undefined;
+  const authors: Author[] = Array.isArray(data.authors) ? data.authors : [];
 
   return (
     <div className="page-content">
       <h1>{String(data.title ?? slug)}</h1>
-      {(date || (authors && authors.length > 0)) && (
+      {(date || authors.length > 0) ? (
         <p className="meta">
           {date && <span>{formatDate(String(date))}</span>}
-          {date && authors && authors.length > 0 && (
+          {date && authors.length > 0 && (
             <span>&nbsp;&bull;&nbsp;</span>
           )}
-          {Array.isArray(authors) &&
+          {authors.length > 0 &&
             authors.map((a: Author, i: number) => (
               <span key={i}>
                 {a.name}
@@ -56,7 +57,7 @@ export default async function StudentWorkDetailPage({ params }: Props) {
               </span>
             ))}
         </p>
-      )}
+      ) : null}
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
         {content}
       </ReactMarkdown>
