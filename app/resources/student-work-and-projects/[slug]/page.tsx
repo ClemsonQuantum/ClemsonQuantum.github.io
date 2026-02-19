@@ -1,13 +1,11 @@
-type Author = { name: string };
+
 import type { Metadata } from 'next';
 import { getAllPages, getPageBySlug, formatDate } from '@/lib/content';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
-interface Props {
-  params: Promise<{ slug: string }>;
-}
+type Author = { name: string };
 
 export async function generateStaticParams() {
   return getAllPages('resources/student-work-and-projects').map((p) => ({
@@ -15,7 +13,12 @@ export async function generateStaticParams() {
   }));
 }
 
-  const { slug } = await params;
+interface PageProps {
+  params: { slug: string };
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = params;
   const page = getPageBySlug('resources/student-work-and-projects', slug);
   if (!page || !page.data) {
     return { title: String(slug) };
@@ -24,7 +27,8 @@ export async function generateStaticParams() {
   return { title: String(data.title ?? slug) };
 }
 
-  const { slug } = await params;
+export default async function StudentWorkPage({ params }: PageProps) {
+  const { slug } = params;
   const page = getPageBySlug('resources/student-work-and-projects', slug);
   if (!page || !page.data || !page.content) {
     return (
