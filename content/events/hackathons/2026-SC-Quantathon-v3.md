@@ -132,7 +132,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
   <div class="hackathon-track">
     <h3>Quantum Hardware &amp; Devices</h3>
     <p class="hackathon-track-sponsor">Sponsored by [PLACEHOLDER]</p>
-    <p>Work hands-on with quantum hardware, develop device control software, or create new tools for benchmarking and error mitigation. Push the limits of what today’s quantum devices can do.</p>
+    <p>Work hands-on with quantum hardware, develop device control software, or create new tools for benchmarking and error mitigation. Push the limits of what today's quantum devices can do.</p>
   </div>
 </div>
 
@@ -177,6 +177,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
     <div class="hackathon-resource-icon">🎓</div>
     <div class="hackathon-resource-title">Clemson Quantum Club Bootcamp</div>
     <div class="hackathon-resource-desc">Our own beginner-friendly workshops and materials</div>
+  </a>
   <a class="hackathon-resource-card" href="https://learning.quantum.ibm.com/" target="_blank">
     <div class="hackathon-resource-icon">📘</div>
     <div class="hackathon-resource-title">IBM Qiskit Textbook</div>
@@ -196,13 +197,6 @@ Join students from across the Southeast — and beyond — for a weekend of inno
     <div class="hackathon-resource-icon">🌎</div>
     <div class="hackathon-resource-title">Quantum Country</div>
     <div class="hackathon-resource-desc">Accessible introduction to quantum computing concepts</div>
-  </a>
-</a>
-  <a class="hackathon-resource-card" href="https://arxiv.org/archive/quant-ph" target="_blank">
-    <div class="hackathon-resource-icon">📄</div>
-    <div class="hackathon-resource-title">arXiv Quantum Physics</div>
-    <div class="hackathon-resource-desc">Latest research papers and preprints in quantum computing and quantum information</div>
-  </a>
   </a>
 </div>
 
@@ -247,13 +241,35 @@ The Clemson Quantathon is made possible by the generous support of our sponsors.
 
 <div class="hackathon-section">
 
-## Ready to Hack the Quantum Future?
+## Organizing Team
 
-Applications are open! Apply by **[PLACEHOLDER — Deadline Date]** to secure your spot.
-
-<a href="#" class="hackathon-cta hackathon-cta-large">Apply Now</a>
-
-<p class="hackathon-apply-note">Have questions? Reach out to us at <a href="mailto:cqc@clemson.edu">cqcclemson.edu</a> or find us on <a href="https://discord.gg/your-link">[PLACEHOLDER — Discord/Slack link]</a>.</p>
+<div class="hackathon-team-grid">
+  <div class="hackathon-team-member">
+    <img src="/images/Nathan.jpeg" alt="Nathan Jones" class="hackathon-team-photo" />
+    <div class="hackathon-team-name">Nathan Jones</div>
+    <div class="hackathon-team-role">Challenge &amp; Activities Lead</div>
+  </div>
+  <div class="hackathon-team-member">
+    <img src="/images/blank-profile.svg" alt="Caroline Cadena" class="hackathon-team-photo" />
+    <div class="hackathon-team-name">Caroline Cadena</div>
+    <div class="hackathon-team-role">Logistics Lead</div>
+  </div>
+  <div class="hackathon-team-member">
+    <img src="/images/Valentine.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" />
+    <div class="hackathon-team-name">Valentine Mohaugen</div>
+    <div class="hackathon-team-role">Tech Lead</div>
+  </div>
+  <div class="hackathon-team-member">
+    <img src="/images/blank-profile.svg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
+    <div class="hackathon-team-name">Ashton McEntarffer</div>
+    <div class="hackathon-team-role">Finance Lead</div>
+  </div>
+  <div class="hackathon-team-member">
+    <img src="/images/blank-profile.svg" alt="Varun Sethi" class="hackathon-team-photo" />
+    <div class="hackathon-team-name">Varun Sethi</div>
+    <div class="hackathon-team-role">Communications Lead</div>
+  </div>
+</div>
 
 </div>
 

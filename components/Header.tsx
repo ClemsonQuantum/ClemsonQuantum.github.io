@@ -77,7 +77,7 @@ export default function Header({ navData }: HeaderProps) {
           <img
             src="/images/logo.png"
             alt="Clemson Quantum"
-            style={{ height: '36px', width: 'auto', verticalAlign: 'middle', display: 'block' }}
+            style={{ height: '48px', width: 'auto', verticalAlign: 'middle', display: 'block' }}
           />
         </Link>
 

@@ -12,7 +12,9 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
   const dir = path.join(CONTENT_ROOT, contentSubdir);
   if (!fs.existsSync(dir)) return [];
 
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.md'));
+  const files = fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.md') && !f.startsWith('_'));
 
   return files.map((filename) => {
     const slug = filename.replace(/\.md$/, '');
@@ -28,7 +30,11 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
     return {
       slug,
       title: data.title ?? slug,
-      date: data.date ? String(data.date) : null,
+      date: data.date
+        ? data.date instanceof Date
+          ? data.date.toISOString().slice(0, 10)
+          : String(data.date)
+        : null,
       summary: data.summary ?? null,
       image: data.image ?? null,
       external_url: data.external_url ?? null,
@@ -51,7 +57,7 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
 export function sortPages(pages: PageMeta[]): PageMeta[] {
   const dated = pages
     .filter((p) => p.date !== null)
-    .sort((a, b) => (b.date! > a.date! ? 1 : -1));
+    .sort((a, b) => (b.date! > a.date! ? 1 : b.date! < a.date! ? -1 : 0));
   const undated = pages
     .filter((p) => p.date === null)
     .sort((a, b) => a.title.localeCompare(b.title));

@@ -8,38 +8,50 @@
   {
     "title": "SC Quantathon v1 2024",
     "url": "/events/hackathons/2024-SC-Quantathon-v1/",
-    "excerpt": "SC Quantathon v1 2024 Text about SC Quantathon v1. News story type description and layout. Add list of other news stories and posts about it.",
-    "date": "2024-10-01 # inferred from filename prefix; adjust if needed"
+    "excerpt": "Attended &bull; October 2024 SC Quantathon v1 2024 Columbia, SC &bull; University of South Carolina Official Event Site &rarr; About the Event The SC Quantathon v1 was the inaugural quantum computing hackathon organized by SC Quantum, held at the Darla Moore School of Business at the University of S",
+    "date": "2024-10-10"
   },
   {
-    "title": "NYUAD 2025",
+    "title": "NYUAD Hackathon 2025",
     "url": "/events/hackathons/2025-NYUAD/",
-    "excerpt": "NYUAD 2025 Text about NYUAD Hackathon 2025. News story type description and layout. Add list of other news stories and posts about it.",
-    "date": "2025-04-15 # inferred from filename prefix; adjust if needed"
+    "excerpt": "Attended &bull; April 2025 NYUAD Hackathon 2025 Abu Dhabi, UAE &bull; New York University Abu Dhabi Official Event Site &rarr; About the Event The NYUAD International Hackathon for Social Good is an annual event focused on innovation in computer science and engineering, emphasizing quantum computing",
+    "date": "2025-04-25"
   },
   {
     "title": "SC Quantathon v2 2025",
     "url": "/events/hackathons/2025-SC-Quantathon-v2/",
-    "excerpt": "SC Quantathon v2 2025 Text about SC Quantathon v2. News story type description and layout. Add list of other news stories and posts about it.",
-    "date": "2025-10-01 # inferred from filename prefix; adjust if needed"
+    "excerpt": "Attended &bull; October 2025 SC Quantathon v2 2025 Columbia, SC &bull; University of South Carolina Official Event Site &rarr; About the Event The SC Quantathon v2 was the second annual quantum computing hackathon organized by SC Quantum, held at the Darla Moore School of Business at the University ",
+    "date": "2025-10-09"
   },
   {
     "title": "Y Quantum 2025",
     "url": "/events/hackathons/2025-Y-Quantum/",
-    "excerpt": "Y Quantum 2025 Text about Y Quantum 2025. News story type description and layout. Add list of other news stories and posts about it.",
-    "date": "2025-04-01 # inferred from filename prefix; adjust if needed"
+    "excerpt": "Attended &bull; 2025 Y Quantum 2025 PLACEHOLDER — City &bull; PLACEHOLDER — Host About the Event PLACEHOLDER — Description of the Y Quantum event. Our Team PLACEHOLDER PLACEHOLDER Results & Highlights 💡 PLACEHOLDER — Description Takeaways PLACEHOLDER",
+    "date": "2025-04-01"
   },
   {
     "title": "iQuHack 2025",
     "url": "/events/hackathons/2025-iQuHack/",
-    "excerpt": "iQuHack 2025 Text about MIT iQuHack 2025. News story type description and layout. Add list of other news stories and posts about it.",
-    "date": "2025-02-01 # inferred from filename prefix; adjust if needed"
+    "excerpt": "Attended &bull; January 2025 iQuHack 2025 Cambridge, MA &bull; Massachusetts Institute of Technology Official Event Site &rarr; About the Event iQuHACK interdisciplinary Quantum HACKathon is MIT's annual quantum computing hackathon and one of the largest events of its kind. Organized by MIT's iQuISE",
+    "date": "2025-01-31"
   },
   {
     "title": "SC Quantathon v3 2026",
     "url": "/events/hackathons/2026-SC-Quantathon-v3/",
     "excerpt": "September 25 – 27, 2026 &bull; Clemson, SC SC Quantathon v3 2026 48 hours. Quantum hardware. Real-world challenges. Are you ready? Apply Now About SC Quantathon v3 is being brought to Clemson University as it's inaugural quantum computing hackathon, hosted by the Clemson Quantum Club. Over the cours",
     "date": "2026-09-25"
+  },
+  {
+    "title": "[EVENT NAME] [YEAR]",
+    "url": "/events/hackathons/_TEMPLATE-competitor/",
+    "excerpt": "Attended &bull; MONTH YEAR EVENT NAME YEAR CITY, STATE/COUNTRY &bull; HOST UNIVERSITY/ORG Official Event Site &rarr; About the Event EVENT NAME is description of what the event is, who hosts it, what it focuses on — 2-3 sentences. The event took place on DATES at VENUE, CITY. Any additional context ",
+    "date": "YYYY-MM-DD"
+  },
+  {
+    "title": "[EVENT NAME] [YEAR]",
+    "url": "/events/hackathons/_TEMPLATE-hosted/",
+    "excerpt": "MONTH DAY – DAY, YEAR &bull; CITY, STATE EVENT NAME YEAR Catchy tagline describing the event Apply Now About EVENT NAME is description of what the hackathon is, who hosts it, what makes it unique. Over the course of DURATION, teams of up to N will tackle real-world challenges using quantum computing",
+    "date": "YYYY-MM-DD"
   },
   {
     "title": "2024 IBM Fall Fest",
@@ -57,7 +69,13 @@
     "title": "2025 IBM Fall Fest",
     "url": "/events/workshops-and-seminars/2025-IBM-Fall-Fest/",
     "excerpt": "2025 IBM Fall Fest Clemson was selected to be a satellite host for the annual IBM Qiskit Fall Festivals. These festivals are held at universities and academic institutions around the world in October and November. The goal is to educate students and the community about quantum computing and its pote",
-    "date": "2025-10-12 # inferred; adjust if needed"
+    "date": "2025-10-12"
+  },
+  {
+    "title": "[WORKSHOP/SEMINAR NAME]",
+    "url": "/events/workshops-and-seminars/_TEMPLATE-workshop/",
+    "excerpt": "WORKSHOP/SEMINAR NAME Brief description of the workshop — what it covers, who it's for, why it matters. 1-2 paragraphs. Schedule Day 1 — Date, Time, Location Overview: Description of what happens in this session. Day 2 — Date, Time, Location Overview: Description of what happens in this session. Day",
+    "date": "YYYY-MM-DD"
   },
   {
     "title": "Clemson teams sweep SC Quantathon, win trip to international competition",
@@ -76,6 +94,12 @@
     "url": "/news/2025-09-02/",
     "excerpt": "A Clemson team captured first place at the SC Quantathon and received an invitation to present their work at an international forum. Their project demonstrated novel approaches to quantum error mitigation and benchmarking. Read more on the SC Quantum website.",
     "date": "2025-09-02"
+  },
+  {
+    "title": "[HEADLINE]",
+    "url": "/news/_TEMPLATE-news/",
+    "excerpt": "Full article content goes here. Use markdown formatting. For external articles, write a brief summary/excerpt here since the full article lives elsewhere.",
+    "date": "YYYY-MM-DD"
   },
   {
     "title": "Detecting Majorana Zero Mode with ResNet and Winding Number Invariant",

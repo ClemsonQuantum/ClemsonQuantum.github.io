@@ -50,6 +50,19 @@ document.addEventListener('DOMContentLoaded', function () {
         openParent();
       });
       entry.floating.addEventListener('mouseleave', scheduleRemove);
+
+      // Ensure cloned links navigate on first click
+      var links = entry.floating.querySelectorAll('a[href]');
+      links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = link.getAttribute('href');
+          if (!href) return;
+          if (link.getAttribute('target') === '_blank') return;
+          e.preventDefault();
+          window.location.href = href;
+        });
+      });
+
       return entry.floating;
     }
 

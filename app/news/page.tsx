@@ -11,9 +11,7 @@ export default function NewsPage() {
     <>
       <h1>News</h1>
       <section>
-        <p>
-          News articles featuring the club and its members.
-        </p>
+        <p>News articles featuring the club and its members.</p>
       </section>
       <div className="news-cards">
         {items.map((item) => (
