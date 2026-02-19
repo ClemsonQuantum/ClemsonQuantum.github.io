@@ -61,7 +61,7 @@ export function sortPages(pages: PageMeta[]): PageMeta[] {
 export function getPageBySlug(
   contentSubdir: string,
   slug: string
-): { data: Record<string, unknown>; content: string } {
+): { data: Record<string, unknown> | null; content: string | null } {
   const filepath = path.join(CONTENT_ROOT, contentSubdir, `${slug}.md`);
   if (!fs.existsSync(filepath)) {
     return { data: null, content: null };
