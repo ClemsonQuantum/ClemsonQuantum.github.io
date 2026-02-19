@@ -36,10 +36,10 @@
     "date": "2025-02-01 # inferred from filename prefix; adjust if needed"
   },
   {
-    "title": "Clemson Quantathon 2026",
+    "title": "SC Quantathon v3 2026",
     "url": "/events/hackathons/2026-SC-Quantathon-v3/",
-    "excerpt": "March 15 – 17, 2026 • Clemson, SC Clemson Quantathon 2026 48 hours. Quantum hardware. Real-world challenges. Are you ready? Apply Now About The Clemson Quantathon is Clemson University's inaugural quantum computing hackathon, hosted by the Clemson Quantum Club. Over the course of 48 hours, teams of up to four will tackle real-world challenges using quantum computing platforms, compete for prizes, and learn from industry mentors. Whether you're a seasoned quantum programmer or writing your first quantum circuit, the Quantathon is designed to be accessible and exciting. Workshops, mentorship, and starter code will be provided so every participant can hit the ground running. Join students from across the Southeast — and beyond — for a weekend of innovation at the intersection of computer science, physics, and engineering.",
-    "date": "2026-03-15"
+    "excerpt": "September 25 – 27, 2026 &bull; Clemson, SC SC Quantathon v3 2026 48 hours. Quantum hardware. Real-world challenges. Are you ready? Apply Now About SC Quantathon v3 is being brought to Clemson University as it's inaugural quantum computing hackathon, hosted by the Clemson Quantum Club. Over the cours",
+    "date": "2026-09-25"
   },
   {
     "title": "2024 IBM Fall Fest",

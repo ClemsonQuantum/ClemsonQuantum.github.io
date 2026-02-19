@@ -4,13 +4,13 @@ title: "Detecting Majorana Zero Mode with ResNet and Winding Number Invariant"
 date: 2025-06-15
 type: poster
 authors:
-	- name: "Ian Lewis"
-	- name: "Toby Cox"
+  - name: "Ian Lewis"
+  - name: "Toby Cox"
 mentors:
-	- "Nathan Jones"
-	- "Rong Ge"
-	- "Sumanta Tewari"
-	- "Binayyak Roy"
+  - "Nathan Jones"
+  - "Rong Ge"
+  - "Sumanta Tewari"
+  - "Binayyak Roy"
 summary: "Poster demonstrating how a ResNet classifier and winding number invariant can be used to detect Majorana zero modes in simulated data."
 # image: "/images/CI-poster-ian-lewis.png"  # TODO: add image file
 link: "https://ci.clemson.edu/showcase/posters/"

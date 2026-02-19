@@ -4,12 +4,12 @@ title: "Advancing Materials Development with Quantum AI and VQE Simulations of M
 date: 2025-07-01
 type: poster
 authors:
-	- name: "Valentine Mohaugen"
-		affiliation: "Savannah River National Lab"
+  - name: "Valentine Mohaugen"
+    affiliation: "Savannah River National Lab"
 mentors:
-	- "Larry Deschaine"
-	- "Adrian Mistreanu"
-	- "Simona Murph"
+  - "Larry Deschaine"
+  - "Adrian Mistreanu"
+  - "Simona Murph"
 summary: "Poster exploring the use of Variational Quantum Eigensolver (VQE) simulations and Quantum AI tools to study Majorana edge states and related topological phases for materials development."
 # image: "/images/SRNL-poster-valentine-mohaugen.png"  # TODO: add image file
 link: "/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen.pdf"

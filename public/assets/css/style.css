@@ -1309,43 +1309,29 @@ footer {
   padding: 0;
 }
 
+/* Remove main padding when hackathon page is shown */
+main:has(.hackathon-page) {
+  padding-top: 0;
+}
+
 .hackathon-page {
   max-width: 100%;
   margin: 0;
 }
 
-/* Hero — full-bleed gradient banner */
-
+/* Hero — full-bleed solid banner */
 .hackathon-hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
   padding: 5rem var(--space-xl) 4rem;
-  background: transparent;
-  color: #222;
-  position: relative;
-  overflow: hidden;
-  box-shadow: none;
-  border-bottom: none;
-}
-
-
-.hackathon-hero::before {
-  display: none;
-}
-
-.hackathon-hero > * {
-  position: relative;
-  z-index: 1;
+  background: #4c1d95;
+  color: #fff;
 }
 
 .hackathon-hero h1 {
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
   margin: 0 0 var(--space-md);
-  color: #222;
+  color: #fff;
   letter-spacing: -0.03em;
   line-height: 1.1;
 }
@@ -1361,20 +1347,16 @@ footer {
   background: rgba(255, 255, 255, 0.12);
   padding: 0.4rem 1.25rem;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-  .hackathon-hero-tagline {
-    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-    opacity: 0.88;
-    max-width: 620px;
-    margin: 0 0 var(--space-2xl) 0;
-    line-height: 1.6;
-    text-align: center;
-    font-weight: 400;
-    padding-left: 0;
-    margin-left: 0;
-  }
+.hackathon-hero-tagline {
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  opacity: 0.9;
+  max-width: 620px;
+  margin: 0 auto var(--space-2xl);
+  line-height: 1.6;
+  font-weight: 400;
 }
 
 /* CTA Buttons */
@@ -1525,7 +1507,7 @@ footer {
 }
 
 .hackathon-schedule-day h3 {
-  background: linear-gradient(135deg, #1e1b4b, #4c1d95);
+  background: #4c1d95;
   color: #fff;
   padding: 1rem 1.5rem;
   font-size: 1.1rem;
@@ -1674,7 +1656,7 @@ footer {
 
 .hackathon-prize-grand {
   border: 2px solid var(--color-orange);
-  background: linear-gradient(160deg, #fff7ed 0%, #ffffff 100%);
+  background: #fff7ed;
   box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);
 }
 
@@ -1832,27 +1814,12 @@ footer {
   margin: 0;
 }
 
-/* Apply Section — full-bleed gradient */
+/* Apply Section — full-bleed solid */
 .hackathon-apply {
   text-align: center;
   padding: 5rem clamp(1.5rem, 5vw, 4rem);
-  background: linear-gradient(135deg, #0f0a2e 0%, #1e1b4b 30%, #4c1d95 65%, #7c3aed 100%);
+  background: #4c1d95;
   color: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-.hackathon-apply::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 60% 40%, rgba(249, 115, 22, 0.15) 0%, transparent 55%);
-  pointer-events: none;
-}
-
-.hackathon-apply > * {
-  position: relative;
-  z-index: 1;
 }
 
 .hackathon-apply h2 {
