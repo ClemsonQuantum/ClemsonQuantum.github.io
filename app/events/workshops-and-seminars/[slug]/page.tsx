@@ -16,13 +16,17 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const { data } = getPageBySlug('events/workshops-and-seminars', slug);
+  const page = getPageBySlug('events/workshops-and-seminars', slug);
+  if (!page || !page.data) return { title: String(slug) };
+  const { data } = page;
   return { title: String(data.title ?? slug) };
 }
 
 export default async function WorkshopPage({ params }: Props) {
   const { slug } = await params;
-  const { content } = getPageBySlug('events/workshops-and-seminars', slug);
+  const page = getPageBySlug('events/workshops-and-seminars', slug);
+  if (!page || !page.content) return <div>Page not found.</div>;
+  const { content } = page;
 
   return (
     <div className="page-content">
