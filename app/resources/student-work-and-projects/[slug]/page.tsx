@@ -15,20 +15,18 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const { data } = getPageBySlug('resources/student-work-and-projects', slug);
+  const page = getPageBySlug('resources/student-work-and-projects', slug);
+  if (!page || !page.data) {
+    return { title: String(slug) };
+  }
+  const { data } = page;
   return { title: String(data.title ?? slug) };
 }
 
-export default async function StudentWorkDetailPage({ params }: Props) {
   const { slug } = await params;
-  const { data, content } = getPageBySlug(
-    'resources/student-work-and-projects',
-    slug
-  );
-
-  if (!data || !content) {
+  const page = getPageBySlug('resources/student-work-and-projects', slug);
+  if (!page || !page.data || !page.content) {
     return (
       <div className="page-content">
         <h1>Not Found</h1>
@@ -36,7 +34,7 @@ export default async function StudentWorkDetailPage({ params }: Props) {
       </div>
     );
   }
-
+  const { data, content } = page;
   const date: string | undefined = typeof data.date === 'string' ? data.date : undefined;
   const authors: Author[] = Array.isArray(data.authors) ? data.authors : [];
 
