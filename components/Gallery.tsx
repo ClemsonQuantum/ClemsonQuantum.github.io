@@ -1,6 +1,8 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
+import SiteImage from './SiteImage';
 
 export interface GalleryItem {
   href: string;
@@ -30,37 +32,32 @@ export default function Gallery({ items }: GalleryProps) {
 
   return (
     <div className="gallery-wrap">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/back.png"
-        id="backBtn"
-        alt="Previous"
-        style={{ cursor: 'pointer' }}
+      <button
+        className="gallery-nav-btn"
+        aria-label="Previous"
         onClick={() => scroll('left')}
-      />
+      >
+        <SiteImage src="/images/back.png" alt="" />
+      </button>
       <div className="gallery" ref={scrollRef} onWheel={handleWheel}>
-        {items.map((item, i) => (
-          <span
-            key={i}
-            onClick={() => {
-              window.location.href = item.href;
-            }}
-            style={{ cursor: 'pointer' }}
+        {items.map((item) => (
+          <Link
+            key={item.src}
+            href={item.href}
+            className="gallery-item"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.src} alt={item.caption} />
+            <SiteImage src={item.src} alt={item.caption} />
             <p className="gallery-caption">{item.caption}</p>
-          </span>
+          </Link>
         ))}
       </div>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/next.png"
-        id="nextBtn"
-        alt="Next"
-        style={{ cursor: 'pointer' }}
+      <button
+        className="gallery-nav-btn"
+        aria-label="Next"
         onClick={() => scroll('right')}
-      />
+      >
+        <SiteImage src="/images/next.png" alt="" />
+      </button>
     </div>
   );
 }

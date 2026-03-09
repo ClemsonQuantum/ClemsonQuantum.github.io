@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: #fff;
-  border: 1px solid var(--color-border, #e5e7eb);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 1rem;
   padding: 1.5rem 1.25rem 1.25rem 1.25rem;
   box-shadow: 0 2px 12px rgba(60,30,90,0.06);
@@ -34,7 +34,7 @@
 }
 .hackathon-resource-desc {
   font-size: 0.98rem;
-  color: #444;
+  color: var(--color-text-secondary);
 }
 /* ===================================================================
    Clemson Quantum — Modern Design System
@@ -51,12 +51,15 @@
   --color-accent-hover: #6d28d9;
   --color-accent-light: #ede9fe;
   --color-orange: #f97316;
+  --color-orange-light: #fff7ed;
+  --color-highlight: #fef08a;
   --color-border: #e5e7eb;
   --color-nav-bg: #2d1054;
   --color-nav-text: #f9fafb;
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -533,7 +536,7 @@ img {
 }
 
 .search-highlight {
-  background: #fef08a;
+  background: var(--color-highlight, #fef08a);
   padding: 1px 3px;
   border-radius: 2px;
 }
@@ -544,8 +547,12 @@ main {
   margin-bottom: 0;
 }
 
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+}
+
 h1 {
-  font-family: var(--font-sans);
   font-size: clamp(2rem, 5vw, 3rem);
   text-align: center;
   color: var(--color-accent);
@@ -555,7 +562,6 @@ h1 {
 }
 
 h2 {
-  font-family: var(--font-sans);
   font-weight: 600;
 }
 
@@ -1589,7 +1595,7 @@ main:has(.hackathon-page) {
 
 .hackathon-prize-grand {
   border: 2px solid var(--color-orange);
-  background: #fff7ed;
+  background: var(--color-orange-light, #fff7ed);
   box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);
 }
 
@@ -2195,11 +2201,13 @@ main:has(.competitor-page) {
    =================================================================== */
 
 .section-heading {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 700;
   color: var(--color-accent);
   text-align: center;
+  letter-spacing: -0.02em;
+  margin-top: var(--space-3xl);
   margin-bottom: var(--space-xs);
 }
 
@@ -2220,27 +2228,31 @@ main:has(.competitor-page) {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  border-top: none;
-  padding-top: var(--space-md);
-  transition: opacity 0.2s;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .home-news-item:hover {
-  opacity: 0.8;
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
 }
 
 .home-news-item__img {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
-  border-radius: var(--radius-sm);
-  margin-bottom: var(--space-sm);
+  display: block;
 }
 
 .home-news-item__body {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  padding: var(--space-md) var(--space-lg);
 }
 
 .home-news-item__date {
@@ -2267,6 +2279,9 @@ main:has(.competitor-page) {
 }
 
 .view-all-link {
+  display: block;
+  text-align: center;
+  margin-top: var(--space-lg);
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-accent);
@@ -2282,5 +2297,199 @@ main:has(.competitor-page) {
   .home-news-grid {
     grid-template-columns: 1fr;
     gap: var(--space-lg);
+  }
+}
+
+/* ===================================================================
+   Home About — paragraph spacing
+   =================================================================== */
+
+.home-about p + p {
+  margin-top: var(--space-md);
+}
+
+/* ===================================================================
+   Organizer Row — extracted inline styles
+   =================================================================== */
+
+.organizer-row__avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin-right: 32px;
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
+.organizer-row__links {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.organizer-row__link-icon {
+  height: 32px;
+}
+
+/* ===================================================================
+   Nav Logo
+   =================================================================== */
+
+.nav-logo {
+  height: 48px;
+  width: auto;
+  vertical-align: middle;
+  display: block;
+}
+
+/* ===================================================================
+   Gallery — semantic buttons
+   =================================================================== */
+
+.gallery-nav-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.gallery-nav-btn img {
+  display: block;
+}
+
+.gallery-item {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ===================================================================
+   Scroll Reveal Animations
+   =================================================================== */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ===================================================================
+   SearchBar — active item highlight
+   =================================================================== */
+
+.search-item--active {
+  background: var(--color-accent-light);
+}
+
+/* ===================================================================
+   Article Hero Image
+   =================================================================== */
+
+.article-hero-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+}
+
+/* ===================================================================
+   Search Results — extracted inline styles
+   =================================================================== */
+
+.search-results-dropdown {
+  display: block;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.search-container {
+  position: relative;
+}
+
+/* ===================================================================
+   CTA Button
+   =================================================================== */
+
+.cta-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-accent);
+  color: #fff !important;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.cta-button:hover {
+  background: var(--color-accent-hover);
+  color: #fff !important;
+  transform: translateY(-1px);
+}
+
+/* ===================================================================
+   Dark Mode
+   =================================================================== */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0f0d13;
+    --color-surface: #1a1625;
+    --color-text: #e5e2eb;
+    --color-text-secondary: #9b95a8;
+    --color-accent: #a78bfa;
+    --color-accent-hover: #c4b5fd;
+    --color-accent-light: #2d2044;
+    --color-border: #2d2640;
+    --color-orange: #fb923c;
+    --color-orange-light: #2d2015;
+    --color-highlight: #4a3d1a;
+
+    /* Shadows need adjustment for dark backgrounds */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
+  }
+
+  /* Organizer avatar background */
+  .organizer-row__avatar {
+    background: var(--color-surface);
+  }
+
+  /* Search input text in nav stays light */
+  .search-input::placeholder,
+  .search-icon {
+    color: rgba(255, 255, 255, 0.5);
   }
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { NavData } from '@/lib/navData';
+import SiteImage from './SiteImage';
 import SearchBar from './SearchBar';
 
 interface HeaderProps {
@@ -73,11 +74,10 @@ export default function Header({ navData }: HeaderProps) {
         id="navLinks"
       >
         <Link href="/">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <SiteImage
             src="/images/logo.png"
             alt="Clemson Quantum"
-            style={{ height: '48px', width: 'auto', verticalAlign: 'middle', display: 'block' }}
+            className="nav-logo"
           />
         </Link>
 

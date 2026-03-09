@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import SiteImage from './SiteImage';
 
 export interface PeopleCardData {
   name: string;
@@ -27,8 +28,7 @@ export default function PeopleCard({
         className="people-card-header"
         onClick={() => setOpen((o) => !o)}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="people-card-avatar" src={imageSrc} alt={name} />
+        <SiteImage className="people-card-avatar" src={imageSrc} alt={name} />
         <div className="people-card-info">
           <h3>{name}</h3>
           <p>{role}</p>
@@ -48,19 +48,21 @@ export default function PeopleCard({
       <div className="people-card-details" data-open={open}>
         <div className="people-card-details-inner">
           <div className="people-card-details-content">
-            <p>{description}</p>
+            <p>
+              {description.split('\n').map((line, i, arr) => (
+                <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+              ))}
+            </p>
             {(linkedin || github) && (
               <div className="people-card-links">
                 {linkedin && (
                   <a href={linkedin} target="_blank" rel="noopener">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/linkedin.png" alt="LinkedIn" />
+                    <SiteImage src="/images/linkedin.png" alt="LinkedIn" />
                   </a>
                 )}
                 {github && (
                   <a href={github} target="_blank" rel="noopener">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/images/github cat.png" alt="GitHub" />
+                    <SiteImage src="/images/github cat.png" alt="GitHub" />
                   </a>
                 )}
               </div>

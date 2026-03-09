@@ -3,7 +3,7 @@ layout: default
 title: "2024 IBM Fall Fest"
 date: 2024-10-12
 summary: "Clemson Quantum Club hosted IBM Fall Fest 2024 — a day of hands-on workshops, demos, and networking with IBM quantum engineers."
-image: "/images/image-3.png"
+image: "/images/image-3.jpg"
 location: "Clemson University — Watt Center"
 external_url: "https://www.ibm.com/events/fallfest"
 cta_label: "View details"

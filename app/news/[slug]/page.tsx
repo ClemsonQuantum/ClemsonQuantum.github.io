@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getAllPages, getPageBySlug, formatDate } from '@/lib/content';
+import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -47,16 +48,10 @@ export default async function NewsArticlePage({ params }: Props) {
         <p className="meta">{formatDate(date)}</p>
       )}
       {image && (
-        <img
+        <SiteImage
           src={image}
           alt={String(data.title ?? '')}
-          style={{
-            width: '100%',
-            maxHeight: '400px',
-            objectFit: 'cover',
-            borderRadius: '0.75rem',
-            marginBottom: '1.5rem',
-          }}
+          className="article-hero-img"
         />
       )}
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>

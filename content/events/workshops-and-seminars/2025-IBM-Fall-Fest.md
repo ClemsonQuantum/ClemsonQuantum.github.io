@@ -3,7 +3,7 @@ layout: default
 title: "2025 IBM Fall Fest"
 date: 2025-10-12
 summary: "IBM Fall Fest 2025 — partnered with Clemson Quantum Club."
-image: "/images/image-3.png"
+image: "/images/image-3.jpg"
 ---
 
 # 2025 IBM Fall Fest
