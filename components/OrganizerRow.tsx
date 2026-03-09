@@ -1,3 +1,5 @@
+import SiteImage from './SiteImage';
+
 export interface OrganizerData {
   name: string;
   role: string;
@@ -17,44 +19,36 @@ export default function OrganizerRow({
 }: OrganizerData) {
   return (
     <div className="organizer-row">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <SiteImage
         src={imageSrc}
         alt={name}
-        style={{
-          width: '160px',
-          height: '160px',
-          borderRadius: '50%',
-          objectFit: 'cover',
-          objectPosition: 'center',
-          marginRight: '32px',
-          background: '#fff',
-          flexShrink: 0,
-        }}
+        className="organizer-row__avatar"
       />
       <div>
         <h2>
           {name} | <span>{role}</span>
         </h2>
-        <p className="organizer-description">{description}</p>
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <p className="organizer-description">
+          {description.split('\n').map((line, i, arr) => (
+            <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+          ))}
+        </p>
+        <div className="organizer-row__links">
           {linkedin && (
             <a href={linkedin} target="_blank" rel="noopener">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <SiteImage
                 src="/images/linkedin.png"
                 alt="LinkedIn Profile"
-                style={{ height: '32px' }}
+                className="organizer-row__link-icon"
               />
             </a>
           )}
           {github && (
             <a href={github} target="_blank" rel="noopener">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <SiteImage
                 src="/images/github cat.png"
                 alt="GitHub Profile"
-                style={{ height: '32px' }}
+                className="organizer-row__link-icon"
               />
             </a>
           )}

@@ -1,3 +1,4 @@
+import SiteImage from './SiteImage';
 import { PageMeta, formatDate } from '@/lib/types';
 
 interface NewsCardProps {
@@ -40,8 +41,7 @@ export default function NewsCard({ item }: NewsCardProps) {
         </div>
         {item.image && (
           <div className="article-item__image" aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.image} alt={item.title} loading="lazy" />
+            <SiteImage src={item.image} alt={item.title} loading="lazy" />
           </div>
         )}
       </div>

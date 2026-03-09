@@ -1,3 +1,5 @@
+import SiteImage from './SiteImage';
+
 export interface EventCardData {
   title: string;
   date?: string;
@@ -30,8 +32,7 @@ export default function EventCard({
       href={href}
       {...(isExternal ? { target: '_blank', rel: 'noopener' } : {})}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="event-item__img" src={backgroundImage} alt={title} loading="lazy" />
+      <SiteImage className="event-item__img" src={backgroundImage} alt={title} loading="lazy" />
       <div className="event-item__body">
         {formattedDate && <span className="event-item__date">{formattedDate}</span>}
         <h3 className="event-item__title">{title}</h3>

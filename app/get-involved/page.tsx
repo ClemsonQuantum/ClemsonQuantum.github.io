@@ -53,51 +53,19 @@ export default function GetInvolvedPage() {
         </p>
       </section>
 
-      <section id="contact-form">
+      <section id="contact">
         <h2>Contact Club Leadership</h2>
         <p>
           If you&apos;re interested in joining, volunteering, or collaborating,
-          use the form below and we&apos;ll get back to you within a few days.
+          reach out and we&apos;ll get back to you within a few days.
         </p>
-
-        <form
-          action={`https://formspree.io/f/${siteConfig.formspreeId}`}
-          method="POST"
-        >
-          <label htmlFor="name">Name</label>
-          <br />
-          <input type="text" id="name" name="name" required />
-          <br />
-
-          <label htmlFor="email">Email</label>
-          <br />
-          <input type="email" id="email" name="email" required />
-          <br />
-
-          <label htmlFor="message">Message</label>
-          <br />
-          <textarea id="message" name="message" rows={5} required></textarea>
-          <br />
-
-          <label htmlFor="role">I&apos;m a</label>
-          <br />
-          <select id="role" name="role">
-            <option value="student">Student</option>
-            <option value="researcher">Researcher</option>
-            <option value="industry">Industry</option>
-            <option value="other">Other</option>
-          </select>
-          <br />
-
-          <button type="submit">Send</button>
-        </form>
-
-        <p>
-          If you prefer email, contact us at{' '}
-          <a href={`mailto:${siteConfig.contactEmail}`}>
-            {siteConfig.contactEmail}
+        <p style={{ marginTop: '1rem' }}>
+          <a
+            href={`mailto:${siteConfig.contactEmail}`}
+            className="cta-button"
+          >
+            Email us at {siteConfig.contactEmail}
           </a>
-          .
         </p>
       </section>
     </>
