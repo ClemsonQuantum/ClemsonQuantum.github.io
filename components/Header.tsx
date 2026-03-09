@@ -12,15 +12,16 @@ interface HeaderProps {
 
 export default function Header({ navData }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      const bubble = document.getElementById('navBubble');
+      const toggle = document.getElementById('navToggle');
       const links = document.getElementById('navLinks');
       if (
-        bubble &&
+        toggle &&
         links &&
-        !bubble.contains(e.target as Node) &&
+        !toggle.contains(e.target as Node) &&
         !links.contains(e.target as Node)
       ) {
         setMenuOpen(false);
@@ -31,133 +32,105 @@ export default function Header({ navData }: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    const nav = document.querySelector('.nav') as HTMLElement | null;
-    if (!nav) return;
-    let lastScrollY = window.scrollY;
-
-    function handleNavVisibility() {
-      if (!nav) return;
-      if (window.innerWidth > 360) {
-        nav.style.top = '';
-        return;
-      }
-      if (window.scrollY <= 0) {
-        nav.style.top = '0';
-      } else if (window.scrollY > lastScrollY) {
-        nav.style.top = '-80px';
-      } else {
-        nav.style.top = '0';
-      }
-      lastScrollY = window.scrollY;
+    function onScroll() {
+      setScrolled(window.scrollY > 8);
     }
-
-    window.addEventListener('scroll', handleNavVisibility);
-    window.addEventListener('resize', handleNavVisibility);
-    return () => {
-      window.removeEventListener('scroll', handleNavVisibility);
-      window.removeEventListener('resize', handleNavVisibility);
-    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <div className="nav">
-      <button
-        className="nav-bubble"
-        id="navBubble"
-        aria-label="Open navigation"
-        onClick={() => setMenuOpen((o) => !o)}
-      >
-        <span>&#9776;</span>
-      </button>
-      <div
-        className={`nav-links${menuOpen ? ' show' : ''}`}
-        id="navLinks"
-      >
-        <Link href="/">
+    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+      <div className="nav-inner">
+        <Link href="/" className="nav-brand">
           <SiteImage
             src="/images/logo.png"
             alt="Clemson Quantum"
             className="nav-logo"
           />
+          <span className="nav-brand-text">Clemson Quantum</span>
         </Link>
 
-        <Link href="/news/">News</Link>
+        <button
+          className={`nav-toggle${menuOpen ? ' nav-toggle--open' : ''}`}
+          id="navToggle"
+          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((o) => !o)}
+        >
+          <span /><span /><span />
+        </button>
 
-        <div className="dropdown">
-          <Link href="/events/" className="dropdown-btn">
-            Events
-          </Link>
-          <div className="dropdown-content">
-            <div className="dropdown-submenu">
-              <Link href="/events/hackathons/" className="dropdown-btn">
-                Hackathons
-              </Link>
-              <div className="dropdown-content">
+        <div
+          className={`nav-links${menuOpen ? ' nav-links--open' : ''}`}
+          id="navLinks"
+        >
+          <Link href="/news/" className="nav-link">News</Link>
+
+          <div className="nav-dropdown">
+            <Link href="/events/" className="nav-link nav-dropdown-trigger">
+              Events
+              <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+            <div className="nav-dropdown-panel">
+              <div className="nav-dropdown-section">
+                <span className="nav-dropdown-heading">Hackathons</span>
                 {navData.hackathons.map((p) => (
                   <Link
                     key={p.slug}
-                    href={
-                      p.isExternal ? p.href : `/events/hackathons/${p.slug}/`
-                    }
-                    {...(p.isExternal
-                      ? { target: '_blank', rel: 'noopener' }
-                      : {})}
+                    href={p.isExternal ? p.href : `/events/hackathons/${p.slug}/`}
+                    className="nav-dropdown-link"
+                    {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
                   >
                     {p.title}
                   </Link>
                 ))}
               </div>
-            </div>
-
-            <div className="dropdown-submenu">
-              <Link
-                href="/events/workshops-and-seminars/"
-                className="dropdown-btn"
-              >
-                Workshops &amp; Seminars
-              </Link>
-              <div className="dropdown-content">
+              <div className="nav-dropdown-section">
+                <span className="nav-dropdown-heading">Workshops &amp; Seminars</span>
                 {navData.workshops.map((p) => (
                   <Link
                     key={p.slug}
-                    href={
-                      p.isExternal
-                        ? p.href
-                        : `/events/workshops-and-seminars/${p.slug}/`
-                    }
-                    {...(p.isExternal
-                      ? { target: '_blank', rel: 'noopener' }
-                      : {})}
+                    href={p.isExternal ? p.href : `/events/workshops-and-seminars/${p.slug}/`}
+                    className="nav-dropdown-link"
+                    {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
                   >
                     {p.title}
                   </Link>
                 ))}
               </div>
             </div>
+          </div>
 
-            <Link href="/events/">All Events</Link>
+          <div className="nav-dropdown">
+            <Link href="/resources/" className="nav-link nav-dropdown-trigger">
+              Resources
+              <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </Link>
+            <div className="nav-dropdown-panel">
+              <div className="nav-dropdown-section">
+                <Link href="/resources/learning-resources/" className="nav-dropdown-link">
+                  Learning Resources
+                </Link>
+                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link">
+                  Student Work &amp; Projects
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <Link href="/get-involved/" className="nav-link">Get Involved</Link>
+
+          <div className="nav-search-slot">
+            <SearchBar />
           </div>
         </div>
-
-        <div className="dropdown">
-          <Link href="/resources/" className="dropdown-btn">
-            Resources
-          </Link>
-          <div className="dropdown-content">
-            <Link href="/resources/learning-resources/">
-              Learning Resources
-            </Link>
-            <Link href="/resources/student-work-and-projects/">
-              Student Work &amp; Projects
-            </Link>
-            <Link href="/resources/">All Resources</Link>
-          </div>
-        </div>
-
-        <Link href="/get-involved/">Get Involved</Link>
-
-        <SearchBar />
       </div>
-    </div>
+    </nav>
   );
 }
