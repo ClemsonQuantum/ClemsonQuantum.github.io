@@ -46,7 +46,7 @@ export default function OrganizerRow({
           {github && (
             <a href={github} target="_blank" rel="noopener">
               <SiteImage
-                src="/images/github cat.png"
+                src="/images/github.svg"
                 alt="GitHub Profile"
                 className="organizer-row__link-icon"
               />

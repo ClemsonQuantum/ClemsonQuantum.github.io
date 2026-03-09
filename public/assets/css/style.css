@@ -219,7 +219,6 @@ img {
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--color-accent);
-  background: var(--color-accent-light);
 }
 
 /* Active underline indicator — on hover */
