@@ -219,6 +219,7 @@ img {
 .nav-link:hover,
 .nav-link:focus-visible {
   color: var(--color-accent);
+  background: var(--color-accent-light);
 }
 
 /* Active underline indicator — on hover */
@@ -502,6 +503,7 @@ img {
 
 .search:focus-within {
   border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
 }
 
 .search .material-symbols-outlined {
