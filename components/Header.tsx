@@ -76,32 +76,41 @@ export default function Header({ navData }: HeaderProps) {
               </svg>
             </Link>
             <div className="nav-dropdown-panel">
-              <div className="nav-dropdown-section">
-                <span className="nav-dropdown-heading">Hackathons</span>
-                {navData.hackathons.map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={p.isExternal ? p.href : `/events/hackathons/${p.slug}/`}
-                    className="nav-dropdown-link"
-                    {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
-                  >
-                    {p.title}
-                  </Link>
-                ))}
+              <div className="dropdown-submenu">
+                <Link href="/events/hackathons/" className="nav-dropdown-link nav-dropdown-link--parent">
+                  Hackathons
+                </Link>
+                <div className="dropdown-submenu-content">
+                  {navData.hackathons.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={p.isExternal ? p.href : `/events/hackathons/${p.slug}/`}
+                      className="nav-dropdown-link"
+                      {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+                    >
+                      {p.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
-              <div className="nav-dropdown-section">
-                <span className="nav-dropdown-heading">Workshops &amp; Seminars</span>
-                {navData.workshops.map((p) => (
-                  <Link
-                    key={p.slug}
-                    href={p.isExternal ? p.href : `/events/workshops-and-seminars/${p.slug}/`}
-                    className="nav-dropdown-link"
-                    {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
-                  >
-                    {p.title}
-                  </Link>
-                ))}
+              <div className="dropdown-submenu">
+                <Link href="/events/workshops-and-seminars/" className="nav-dropdown-link nav-dropdown-link--parent">
+                  Workshops &amp; Seminars
+                </Link>
+                <div className="dropdown-submenu-content">
+                  {navData.workshops.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={p.isExternal ? p.href : `/events/workshops-and-seminars/${p.slug}/`}
+                      className="nav-dropdown-link"
+                      {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+                    >
+                      {p.title}
+                    </Link>
+                  ))}
+                </div>
               </div>
+              <Link href="/events/" className="nav-dropdown-link">All Events</Link>
             </div>
           </div>
 

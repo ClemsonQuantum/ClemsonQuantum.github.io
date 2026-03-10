@@ -330,6 +330,80 @@ img {
   color: var(--color-accent);
 }
 
+/* Parent link with arrow indicator */
+.nav-dropdown-link--parent {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-dropdown-link--parent::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-right: 1.5px solid var(--color-text-secondary);
+  border-top: 1.5px solid var(--color-text-secondary);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+  transition: border-color 0.15s;
+}
+
+.nav-dropdown-link--parent:hover::after {
+  border-color: var(--color-accent);
+}
+
+/* --- Nested flyout submenus --- */
+
+.dropdown-submenu {
+  position: relative;
+}
+
+/* Invisible bridge so cursor can travel from parent to flyout */
+.dropdown-submenu::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -14px;
+  width: 14px;
+  height: 100%;
+}
+
+/* Hide the CSS submenu on desktop — main.js creates a floating clone */
+.dropdown-submenu-content {
+  display: none;
+}
+
+/* Floating submenu (cloned to body via main.js) */
+.floating-submenu {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 40px rgba(45, 16, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 0.5rem;
+  max-height: 70vh;
+  overflow: auto;
+  min-width: 220px;
+}
+
+.floating-submenu a {
+  display: block;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  line-height: 1.4;
+  margin: 2px 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.floating-submenu a:hover {
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
 /* --- Search slot --- */
 
 .nav-search-slot {
@@ -471,6 +545,20 @@ img {
   .nav-dropdown-link {
     padding: 0.4rem 0.5rem;
     color: var(--color-text-secondary);
+  }
+
+  /* On mobile, show submenu content inline (no floating clone) */
+  .dropdown-submenu::after {
+    display: none;
+  }
+
+  .dropdown-submenu-content {
+    display: block;
+    padding-left: var(--space-md);
+  }
+
+  .nav-dropdown-link--parent::after {
+    transform: rotate(135deg);
   }
 
   .nav-search-slot {
