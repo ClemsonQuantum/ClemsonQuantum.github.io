@@ -62,7 +62,7 @@ export default async function NewsArticlePage({ params }: Props) {
           <a
             href={externalUrl}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             className="hackathon-cta"
           >
             {ctaLabel} &rarr;

@@ -12,7 +12,7 @@ mentors:
   - "Simona Murph"
 summary: "Poster exploring the use of Variational Quantum Eigensolver (VQE) simulations and Quantum AI tools to study Majorana edge states and related topological phases for materials development."
 # image: "/images/SRNL-poster-valentine-mohaugen.png"  # TODO: add image file
-link: "/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen.pdf"
+# link: "/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen.pdf"  # TODO: add PDF file
 ---
 
 ## Abstract
@@ -31,4 +31,5 @@ This poster presents work combining VQE simulations and machine learning techniq
 
 ## Files
 
-- [Poster PDF](/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen.pdf)
+<!-- TODO: uncomment when PDF is available -->
+<!-- - [Poster PDF](/resources/student-work-and-projects/SRNL-poster-valentine-mohaugen.pdf) -->

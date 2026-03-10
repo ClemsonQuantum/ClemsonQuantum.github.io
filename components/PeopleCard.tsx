@@ -56,12 +56,12 @@ export default function PeopleCard({
             {(linkedin || github) && (
               <div className="people-card-links">
                 {linkedin && (
-                  <a href={linkedin} target="_blank" rel="noopener">
+                  <a href={linkedin} target="_blank" rel="noopener noreferrer">
                     <SiteImage src="/images/linkedin.png" alt="LinkedIn" />
                   </a>
                 )}
                 {github && (
-                  <a href={github} target="_blank" rel="noopener">
+                  <a href={github} target="_blank" rel="noopener noreferrer">
                     <SiteImage src="/images/github.svg" alt="GitHub" />
                   </a>
                 )}
