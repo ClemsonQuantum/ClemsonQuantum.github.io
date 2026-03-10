@@ -1,41 +1,3 @@
-/* Hackathon Resources Grid */
-.hackathon-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-lg);
-  margin: 2.5rem 0 1.5rem 0;
-}
-.hackathon-resource-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 1rem;
-  padding: 1.5rem 1.25rem 1.25rem 1.25rem;
-  box-shadow: 0 2px 12px rgba(60,30,90,0.06);
-  text-decoration: none;
-  color: inherit;
-  transition: box-shadow 0.2s, transform 0.2s;
-  min-height: 180px;
-}
-.hackathon-resource-card:hover {
-  box-shadow: 0 6px 24px rgba(60,30,90,0.13);
-  transform: translateY(-4px) scale(1.03);
-}
-.hackathon-resource-icon {
-  font-size: 2.1rem;
-  margin-bottom: 0.7rem;
-}
-.hackathon-resource-title {
-  font-weight: 700;
-  font-size: 1.13rem;
-  margin-bottom: 0.3rem;
-}
-.hackathon-resource-desc {
-  font-size: 0.98rem;
-  color: var(--color-text-secondary);
-}
 /* ===================================================================
    Clemson Quantum — Modern Design System
    =================================================================== */
@@ -173,8 +135,9 @@ img {
 }
 
 .nav-logo {
-  height: 36px;
+  height: 48px;
   width: auto;
+  vertical-align: middle;
   display: block;
 }
 
@@ -2474,17 +2437,6 @@ main:has(.competitor-page) {
 }
 
 /* ===================================================================
-   Nav Logo
-   =================================================================== */
-
-.nav-logo {
-  height: 48px;
-  width: auto;
-  vertical-align: middle;
-  display: block;
-}
-
-/* ===================================================================
    Gallery — semantic buttons
    =================================================================== */
 
@@ -2537,14 +2489,6 @@ main:has(.competitor-page) {
 }
 
 /* ===================================================================
-   SearchBar — active item highlight
-   =================================================================== */
-
-.search-item--active {
-  background: var(--color-accent-light);
-}
-
-/* ===================================================================
    Article Hero Image
    =================================================================== */
 
@@ -2554,24 +2498,6 @@ main:has(.competitor-page) {
   object-fit: cover;
   border-radius: var(--radius-md);
   margin-bottom: var(--space-lg);
-}
-
-/* ===================================================================
-   Search Results — extracted inline styles
-   =================================================================== */
-
-.search-results-dropdown {
-  display: block;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: var(--color-surface);
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  max-height: 300px;
-  overflow-y: auto;
-  z-index: 1000;
 }
 
 .search-container {

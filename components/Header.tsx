@@ -86,7 +86,7 @@ export default function Header({ navData }: HeaderProps) {
                       key={p.slug}
                       href={p.isExternal ? p.href : `/events/hackathons/${p.slug}/`}
                       className="nav-dropdown-link"
-                      {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     >
                       {p.title}
                     </Link>
@@ -103,7 +103,24 @@ export default function Header({ navData }: HeaderProps) {
                       key={p.slug}
                       href={p.isExternal ? p.href : `/events/workshops-and-seminars/${p.slug}/`}
                       className="nav-dropdown-link"
-                      {...(p.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {p.title}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div className="dropdown-submenu">
+                <Link href="/events/meetings/" className="nav-dropdown-link nav-dropdown-link--parent">
+                  Meetings
+                </Link>
+                <div className="dropdown-submenu-content">
+                  {navData.meetings.map((p) => (
+                    <Link
+                      key={p.slug}
+                      href={p.isExternal ? p.href : `/events/meetings/${p.slug}/`}
+                      className="nav-dropdown-link"
+                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                     >
                       {p.title}
                     </Link>

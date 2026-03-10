@@ -7,6 +7,7 @@ export const metadata: Metadata = { title: 'Events' };
 export default function EventsPage() {
   const hackathons = sortPages(getAllPages('events/hackathons'));
   const workshops = sortPages(getAllPages('events/workshops-and-seminars'));
+  const meetings = sortPages(getAllPages('events/meetings'));
 
   return (
     <>
@@ -31,6 +32,14 @@ export default function EventsPage() {
         <ShowMoreSection
           initial={workshops.slice(0, 3)}
           rest={workshops.slice(3)}
+        />
+      </section>
+
+      <section className="events-section">
+        <h2>Meetings</h2>
+        <ShowMoreSection
+          initial={meetings.slice(0, 3)}
+          rest={meetings.slice(3)}
         />
       </section>
     </>

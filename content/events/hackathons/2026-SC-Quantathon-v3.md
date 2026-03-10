@@ -72,7 +72,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 — Friday, March 15</h3>
+    <h3>Day 1 — Friday, September 25</h3>
     <table>
       <tr><td class="hackathon-time">3:00 PM</td><td>Check-in &amp; registration</td></tr>
       <tr><td class="hackathon-time">4:00 PM</td><td>Opening ceremony &amp; keynote speaker</td></tr>
@@ -83,7 +83,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
     </table>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 — Saturday, March 16</h3>
+    <h3>Day 2 — Saturday, September 26</h3>
     <table>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
       <tr><td class="hackathon-time">9:00 AM</td><td>Workshop: Intro to Quantum Circuits</td></tr>
@@ -96,7 +96,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
     </table>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 — Sunday, March 17</h3>
+    <h3>Day 3 — Sunday, September 27</h3>
     <table>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
       <tr><td class="hackathon-time">10:00 AM</td><td>Hacking ends — submissions due</td></tr>

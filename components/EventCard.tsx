@@ -5,7 +5,7 @@ export interface EventCardData {
   date?: string;
   location: string;
   backgroundImage: string;
-  backLines: string[];
+
   link?: string;
 }
 
@@ -30,7 +30,7 @@ export default function EventCard({
     <a
       className="event-item"
       href={href}
-      {...(isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+      {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       <SiteImage className="event-item__img" src={backgroundImage} alt={title} loading="lazy" />
       <div className="event-item__body">

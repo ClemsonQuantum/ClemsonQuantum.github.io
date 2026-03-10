@@ -32,7 +32,7 @@ export default function GetInvolvedPage() {
           <a
             href={siteConfig.discordInvite}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Join the Discord
           </a>
@@ -45,7 +45,7 @@ export default function GetInvolvedPage() {
           <a
             href={siteConfig.tigerquestUrl}
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             TigerQuest listing
           </a>
