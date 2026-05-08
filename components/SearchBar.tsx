@@ -91,7 +91,9 @@ export default function SearchBar() {
     [results, activeIndex]
   );
 
-  const isOpen = results.length > 0;
+  const hasMinQuery = query.trim().length >= 2;
+  const hasResults = results.length > 0;
+  const isOpen = hasMinQuery;
 
   return (
     <div className="search search-container" ref={containerRef}>
@@ -111,7 +113,7 @@ export default function SearchBar() {
         aria-activedescendant={activeIndex >= 0 ? `search-option-${activeIndex}` : undefined}
         aria-label="Search site content"
       />
-      {isOpen && (
+      {isOpen && hasResults && (
         <div className="search-results-dropdown" role="listbox" id={listboxId}>
           {results.map((r, i) => (
             <a
@@ -132,6 +134,11 @@ export default function SearchBar() {
               </div>
             </a>
           ))}
+        </div>
+      )}
+      {isOpen && !hasResults && (
+        <div className="search-results-dropdown search-results-dropdown--empty" role="status">
+          <div className="search-empty">No results for &ldquo;{query.trim()}&rdquo;</div>
         </div>
       )}
     </div>

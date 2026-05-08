@@ -206,31 +206,7 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 
 ## Sponsors
 
-The Clemson Quantathon is made possible by the generous support of our sponsors.
-
-<div class="hackathon-sponsors">
-  <div class="hackathon-sponsor-tier">
-    <h3>Title Sponsors</h3>
-    <div class="hackathon-sponsor-logos">
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER — Title Sponsor Logo]</div>
-    </div>
-  </div>
-  <div class="hackathon-sponsor-tier">
-    <h3>Gold Sponsors</h3>
-    <div class="hackathon-sponsor-logos">
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER]</div>
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER]</div>
-    </div>
-  </div>
-  <div class="hackathon-sponsor-tier">
-    <h3>Silver Sponsors</h3>
-    <div class="hackathon-sponsor-logos">
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER]</div>
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER]</div>
-      <div class="hackathon-sponsor-logo">[PLACEHOLDER]</div>
-    </div>
-  </div>
-</div>
+We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Silver tiers are open. Confirmed partners will be featured here as they're announced.
 
 <div class="hackathon-sponsor-cta">
   <p>Interested in sponsoring the Clemson Quantathon?</p>
