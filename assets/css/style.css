@@ -570,8 +570,7 @@ img {
 }
 
 .search:focus-within {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  border-color: var(--color-text-secondary);
 }
 
 .search .material-symbols-outlined {
@@ -596,6 +595,13 @@ img {
 .search-input::placeholder {
   color: var(--color-text-secondary);
   opacity: 0.7;
+}
+
+/* Override the global :focus-visible 2px accent outline for the search
+   input — the .search container's :focus-within border already provides
+   a focus indicator without the purple rectangle around the input. */
+.search-input:focus-visible {
+  outline: none;
 }
 
 .search-results-dropdown {
