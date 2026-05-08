@@ -2,31 +2,45 @@
   {
     "name": "Nathan Jones",
     "role": "President",
-    "description": "CS Ph.D. Candidate and Clemson Alumnus\nResearch in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing",
+    "description": "Computer Science Ph.D. Candidate and Clemson Alumnus\nResearch in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing",
     "image": "/images/Nathan.jpeg",
+    "email": "najones@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/njonescomputing/",
     "github": "https://github.com/njones93531/"
   },
   {
     "name": "Valentine Mohaugen",
     "role": "Vice President",
-    "description": "Senior in Physics\nResearch in Topological Materials and Quantum Error Correction",
+    "description": "Physics M.S. Student and Clemson Alumnus\nResearch in Topological Materials, Quantum Error Correction, and Quantum Machine Learning",
     "image": "/images/Valentine.jpg",
+    "email": "valentm@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/valentine-mohaugen/",
     "github": "https://github.com/Valmohaugen/"
   },
   {
     "name": "Ashton McEntarffer",
-    "role": "Secretary & Interim Treasurer",
-    "description": "Junior in Computer Science\nResearch in Computer Science",
+    "role": "Secretary",
+    "description": "Senior in Computer Science\nResearch in Computer Science",
+    "image": "/images/Ashton.jpg",
+    "email": "amcenta@clemson.edu",
+    "linkedin": "https://www.linkedin.com/in/ashtonmc/",
+    "github": "https://github.com/AshtonMcEntarffer"
+  },
+  {
+    "name": "Jack Layton",
+    "role": "Treasurer",
+    "description": "Industrial Engineering Ph.D. Student and Clemson Alumnus\nResearch in....",
     "image": "/images/blank-profile.svg",
-    "linkedin": "https://www.linkedin.com/in/ashtonmc/"
+    "email": "jslayto@clemson.edu",
+    "linkedin": "https://www.linkedin.com/in/jack-layton-668231b0/",
+    "github": "https://github.com/cosmicdrifter423"
   },
   {
     "name": "Rong Ge",
     "role": "Advisor",
     "description": "Professor in the School of Computing\nResearch in High Performance Computing, Parallel and Distributed Systems, and Performance and Power Analysis and Modeling",
     "image": "/images/Rong.jpg",
+    "email": "rge@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/"
   }
 ]

@@ -79,6 +79,7 @@ content/                # Markdown content files
     student-work-and-projects/  # Student project showcases
 data/                   # JSON data files
   board-members.json    # Executive board info
+  past-board-members.json  # Past executive board roster (compact)
   site-config.json      # Site configuration (meeting time, links)
   event-cards.json      # Event card data
   gallery.json          # Image gallery data
@@ -142,7 +143,9 @@ Create a `.md` file in `content/events/hackathons/` or `content/events/workshops
 
 Update `data/site-config.json` to change meeting times, location, Discord invite, or contact info.
 
-Update `data/board-members.json` to change the executive board listing.
+Update `data/board-members.json` to change the executive board listing. Each entry supports `name`, `role`, `description`, `image`, `email` (optional, renders an email button when set), `linkedin` (optional), and `github` (optional).
+
+Update `data/past-board-members.json` to add past board members. The "Past Board Members" expandable section appears on the home page when this file is non-empty. Each entry supports `name`, `role`, `years` (e.g., `"2023–2024"`), and an optional `image` path; entries without an image fall back to a silhouette.
 
 ## Deployment
 
