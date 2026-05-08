@@ -3166,14 +3166,10 @@ main:has(.competitor-page) {
   background: var(--color-surface);
 }
 
-/* Cramped intermediate width: horizontal nav is shown but brand wordmark
-   competes with 5 links + search. Hide the wordmark and tighten link
-   spacing. <768px falls back to the hamburger menu; ≥1024px keeps the
-   full layout untouched. */
+/* Wordmark removed from markup — only the logo identifies the brand.
+   Mild link/gap tightening at intermediate widths keeps 5 links + search
+   from cramping at 768–1023px. */
 @media (min-width: 768px) and (max-width: 1023px) {
-  .nav-brand-text {
-    display: none;
-  }
   .nav-links {
     gap: 0;
   }
