@@ -61,13 +61,12 @@ export default function Header({ navData }: HeaderProps) {
   return (
     <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
       <div className="nav-inner">
-        <Link href="/" className="nav-brand">
+        <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
           <SiteImage
             src="/images/logo.png"
             alt="Clemson Quantum"
             className="nav-logo"
           />
-          <span className="nav-brand-text">Clemson Quantum Club</span>
         </Link>
 
         <button
