@@ -69,8 +69,9 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <a href="#main" className="skip-link">Skip to main content</a>
         <Header navData={navData} />
-        <main>{children}</main>
+        <main id="main">{children}</main>
         <Footer />
         <script src="/assets/js/main.js" defer></script>
       </body>

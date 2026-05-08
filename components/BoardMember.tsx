@@ -1,0 +1,90 @@
+'use client';
+
+import { useState } from 'react';
+import SiteImage from './SiteImage';
+
+export interface BoardMemberData {
+  name: string;
+  role: string;
+  description: string;
+  imageSrc: string;
+  linkedin?: string;
+  github?: string;
+}
+
+export default function BoardMember({
+  name,
+  role,
+  description,
+  imageSrc,
+  linkedin,
+  github,
+}: BoardMemberData) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <article className="board-member">
+      <SiteImage className="board-member__avatar" src={imageSrc} alt={name} />
+      <div className="board-member__body">
+        <div className="board-member__head">
+          <h3 className="board-member__name">
+            {name}
+            <span className="board-member__role"> | {role}</span>
+          </h3>
+          <button
+            className="board-member__toggle"
+            aria-expanded={open}
+            aria-label={open ? `Hide details about ${name}` : `Show details about ${name}`}
+            onClick={() => setOpen((o) => !o)}
+          >
+            {open ? 'Less' : 'More'}
+          </button>
+        </div>
+        <div className="board-member__details" data-open={open}>
+          <div className="board-member__details-inner">
+            <p className="board-member__description">
+              {description.split('\n').map((line, i, arr) => (
+                <span key={i}>
+                  {line}
+                  {i < arr.length - 1 && <br />}
+                </span>
+              ))}
+            </p>
+            {(linkedin || github) && (
+              <div className="board-member__links">
+                {linkedin && (
+                  <a
+                    href={linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${name} on LinkedIn`}
+                  >
+                    <SiteImage
+                      src="/images/linkedin.png"
+                      alt=""
+                      className="board-member__link-icon"
+                    />
+                  </a>
+                )}
+                {github && (
+                  <a
+                    href={github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${name} on GitHub`}
+                  >
+                    <SiteImage
+                      src="/images/github.svg"
+                      alt=""
+                      className="board-member__link-icon"
+                    />
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
