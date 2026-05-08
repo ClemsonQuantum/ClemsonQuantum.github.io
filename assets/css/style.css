@@ -3165,3 +3165,27 @@ main:has(.competitor-page) {
   flex-shrink: 0;
   background: var(--color-surface);
 }
+
+/* Cramped intermediate width: horizontal nav is shown but brand wordmark
+   competes with 5 links + search. Hide the wordmark and tighten link
+   spacing. <768px falls back to the hamburger menu; ≥1024px keeps the
+   full layout untouched. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .nav-brand-text {
+    display: none;
+  }
+  .nav-links {
+    gap: 0;
+  }
+  .nav-link {
+    padding: 0.4rem 0.55rem;
+    font-size: 0.85rem;
+  }
+  .nav-link::after {
+    left: 0.55rem;
+    right: 0.55rem;
+  }
+  .nav-search-slot {
+    margin-left: 0.25rem;
+  }
+}
