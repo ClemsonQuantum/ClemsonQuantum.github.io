@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import siteConfig from '@/data/site-config.json';
+import PastBoardMembers from '@/components/PastBoardMembers';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -57,6 +58,8 @@ export default function AboutPage() {
           learn.
         </p>
       </section>
+
+      <PastBoardMembers />
 
       <section className="about-page__section about-page__section--cta">
         <h2>Get Involved</h2>

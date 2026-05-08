@@ -2,12 +2,14 @@
 
 import { useState } from 'react';
 import SiteImage from './SiteImage';
+import EmailIcon from './icons/EmailIcon';
 
 export interface BoardMemberData {
   name: string;
   role: string;
   description: string;
   imageSrc: string;
+  email?: string;
   linkedin?: string;
   github?: string;
 }
@@ -17,6 +19,7 @@ export default function BoardMember({
   role,
   description,
   imageSrc,
+  email,
   linkedin,
   github,
 }: BoardMemberData) {
@@ -50,8 +53,16 @@ export default function BoardMember({
                 </span>
               ))}
             </p>
-            {(linkedin || github) && (
+            {(email || linkedin || github) && (
               <div className="board-member__links">
+                {email && (
+                  <a
+                    href={`mailto:${email}`}
+                    aria-label={`Email ${name}`}
+                  >
+                    <EmailIcon className="board-member__link-icon" />
+                  </a>
+                )}
                 {linkedin && (
                   <a
                     href={linkedin}

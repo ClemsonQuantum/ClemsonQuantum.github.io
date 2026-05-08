@@ -150,6 +150,7 @@ export default function HomePage() {
             role={m.role}
             description={m.description}
             imageSrc={m.image}
+            email={m.email}
             linkedin={m.linkedin}
             github={m.github}
           />
