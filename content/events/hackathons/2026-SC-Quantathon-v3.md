@@ -236,7 +236,7 @@ We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Si
     <div class="hackathon-team-role">Tech Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/blank-profile.svg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
+    <img src="/images/Ashton.jpg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Ashton McEntarffer</div>
     <div class="hackathon-team-role">Finance Lead</div>
   </div>
