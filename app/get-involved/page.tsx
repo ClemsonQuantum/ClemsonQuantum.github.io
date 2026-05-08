@@ -59,7 +59,7 @@ export default function GetInvolvedPage() {
           If you&apos;re interested in joining, volunteering, or collaborating,
           reach out and we&apos;ll get back to you within a few days.
         </p>
-        <p style={{ marginTop: '1rem' }}>
+        <p className="get-involved-cta">
           <a
             href={`mailto:${siteConfig.contactEmail}`}
             className="cta-button"
