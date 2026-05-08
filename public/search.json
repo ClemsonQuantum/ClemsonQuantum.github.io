@@ -54,6 +54,12 @@
     "date": "YYYY-MM-DD"
   },
   {
+    "title": "Quantum Chess — March 2025",
+    "url": "/events/meetings/quantum-chess-march-2025/",
+    "excerpt": "Quantum Chess — March 2025 Members of the Clemson Quantum club gathered for a game of Quantum Chess, exploring the intersection of classical strategy and quantum mechanics. Players made moves governed by quantum rules such as superposition and entanglement, leading to surprising and educational game",
+    "date": "2025-03-01"
+  },
+  {
     "title": "2024 IBM Fall Fest",
     "url": "/events/workshops-and-seminars/2024-IBM-Fall-Fest/",
     "excerpt": "2024 IBM Fall Fest Clemson Quantum Club partnered with IBM to host Fall Fest 2024, a full-day event featuring workshops on quantum programming, hardware demonstrations, and student project showcases. Attendees learned about Qiskit, hybrid quantum-classical workflows, and had the opportunity to ask q",
@@ -62,8 +68,8 @@
   {
     "title": "2025 CUHackIt",
     "url": "/events/workshops-and-seminars/2025-CUHackIt/",
-    "excerpt": "2025 CUHackIt Details coming soon — adjust the date/front matter as needed.",
-    "date": "2025-05-01 # inferred; adjust if needed"
+    "excerpt": "2025 CUHackIt CUHackIt is Clemson University's annual student hackathon. In 2025, the Clemson Quantum Club participated with quantum computing workshops and mentoring. Highlights - Quantum Workshop: Introduction to quantum gates and circuits using Qiskit - Team Challenges: Hands-on quantum algorithm",
+    "date": "2025-05-01"
   },
   {
     "title": "2025 IBM Fall Fest",
