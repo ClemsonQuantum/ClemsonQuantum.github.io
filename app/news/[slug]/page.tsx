@@ -58,14 +58,14 @@ export default async function NewsArticlePage({ params }: Props) {
         {content}
       </ReactMarkdown>
       {externalUrl && (
-        <p style={{ marginTop: '2rem' }}>
+        <p className="news-external-cta">
           <a
             href={externalUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hackathon-cta"
           >
-            {ctaLabel} &rarr;
+            {ctaLabel} <span aria-hidden="true">&rarr;</span>
           </a>
         </p>
       )}
