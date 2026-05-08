@@ -3113,3 +3113,55 @@ main:has(.competitor-page) {
     background: var(--color-surface);
   }
 }
+
+/* Inline SVG icons inside board-member link rows (envelope) */
+.board-member__links svg.board-member__link-icon {
+  color: var(--color-text);
+  display: block;
+}
+
+/* Past board members archive on /about page */
+.about-past-board__toggle {
+  display: inline-flex;
+  align-items: center;
+  margin-top: var(--space-sm);
+  padding: 0.4rem 1rem;
+  background: transparent;
+  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.about-past-board__toggle:hover,
+.about-past-board__toggle:focus-visible {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+}
+.about-past-board__list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.about-past-board__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xs) 0;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+.about-past-board__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--color-surface);
+}
