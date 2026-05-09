@@ -217,7 +217,7 @@ We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Si
 
 <div class="hackathon-section">
 
-## Organizing Team
+## Organizing Committee
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
