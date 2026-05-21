@@ -659,7 +659,9 @@ h1 {
 }
 
 h2 {
-  font-weight: 600;
+  font-size: clamp(1.75rem, 2.8vw, 2.3rem);
+  font-weight: 700;
+  line-height: 1.15;
 }
 
 /* --- Section (About, Get Involved, etc.) --- */
@@ -673,7 +675,7 @@ section h2 {
   color: var(--color-text);
   text-align: center;
   margin-top: 0;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
 section p {
@@ -1290,10 +1292,13 @@ form button[type='submit']:hover {
   transform: translateY(-1px);
 }
 
-/* --- Footer --- */
+/* --- Footer — mirrors the frosted-glass nav --- */
 footer {
-  background: var(--color-nav-bg);
-  color: var(--color-nav-text);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(14px) saturate(1.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
   margin-top: var(--space-3xl);
   padding: var(--space-xl) 0;
   font-size: 0.9rem;
@@ -1302,25 +1307,53 @@ footer {
 
 .footer-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.25rem;
   justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 0.75rem;
 }
 
 .footer-links a {
-  color: rgba(249, 250, 251, 0.7);
-  font-size: 0.875rem;
+  position: relative;
+  padding: 0.4rem 0.7rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
   text-decoration: none;
-  transition: color 0.2s;
+  border-radius: var(--radius-sm);
+  transition: color 0.2s, background 0.2s;
 }
 
-.footer-links a:hover {
-  color: var(--color-nav-text);
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0.7rem;
+  right: 0.7rem;
+  height: 2px;
+  background: var(--color-accent);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer-links a:hover::after,
+.footer-links a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .footer-copy {
   margin: 0;
-  color: rgba(249, 250, 251, 0.5);
+  color: var(--color-text-secondary);
+  opacity: 0.75;
   font-size: 0.8rem;
 }
 
@@ -2261,7 +2294,7 @@ main:has(.competitor-page) {
 }
 
 .events-section h2 {
-  font-size: 1.5rem;
+  font-size: clamp(1.75rem, 2.6vw, 2.1rem);
   font-weight: 700;
   color: var(--color-text);
   margin-bottom: var(--space-lg);
@@ -3064,9 +3097,9 @@ main:has(.competitor-page) {
 .about-page__section h2 {
   max-width: 16ch;
   font-family: var(--font-serif);
-  font-size: clamp(1.65rem, 3vw, 2.4rem);
+  font-size: clamp(2rem, 3.4vw, 2.75rem);
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.1;
   color: var(--color-text);
   margin: 0;
   text-align: left;
@@ -3277,6 +3310,10 @@ main:has(.competitor-page) {
   .nav--scrolled {
     box-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
     border-bottom-color: rgba(167, 139, 250, 0.15);
+  }
+
+  footer {
+    background: rgba(15, 13, 19, 0.82);
   }
 
   .nav-brand-text {
@@ -4086,7 +4123,6 @@ main {
 footer {
   margin-top: 0;
   padding: 2.2rem var(--space-xl);
-  background: #27114a;
 }
 
 .footer-links,
@@ -4094,15 +4130,6 @@ footer {
   max-width: var(--max-width);
   margin-left: auto;
   margin-right: auto;
-}
-
-.footer-links {
-  gap: 1.8rem;
-}
-
-.footer-links a,
-.footer-copy {
-  color: rgba(248, 250, 252, 0.84);
 }
 
 @media (max-width: 1023px) {

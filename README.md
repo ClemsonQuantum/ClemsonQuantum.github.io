@@ -139,9 +139,11 @@ Create a `.md` file in `content/events/hackathons/` or `content/events/workshops
 - `content/events/hackathons/_TEMPLATE-competitor.md` — for hackathons CQC competes in
 - `content/events/workshops-and-seminars/_TEMPLATE-workshop.md` — for workshops
 
+> Files whose name starts with `_` (e.g. the `_TEMPLATE-*` files) and any `README.md` are treated as drafts/scaffolding: they are excluded from page listings and from the site search index.
+
 ### Editing Site Configuration
 
-Update `data/site-config.json` to change meeting times, location, Discord invite, or contact info.
+Update `data/site-config.json` to change meeting times, location, Discord invite, LinkedIn URL, or contact info.
 
 Update `data/board-members.json` to change the executive board listing. Each entry supports `name`, `role`, `description`, `image`, `email` (optional, renders an email button when set), `linkedin` (optional), and `github` (optional).
 

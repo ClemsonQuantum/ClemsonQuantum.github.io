@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logo.png',
+        url: '/images/logo-v2.png',
         width: 512,
         height: 512,
         alt: 'Clemson Quantum Logo',
@@ -47,11 +47,11 @@ export const metadata: Metadata = {
     title: 'Clemson Quantum',
     description:
       'Student-led quantum computing club at Clemson University.',
-    images: ['/images/logo.png'],
+    images: ['/images/logo-v2.png'],
   },
   icons: {
-    icon: '/images/logo.png',
-    apple: '/images/logo.png',
+    icon: '/images/logo-v2.png',
+    apple: '/images/logo-v2.png',
   },
 };
 
