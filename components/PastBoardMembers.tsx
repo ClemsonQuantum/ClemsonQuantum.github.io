@@ -18,15 +18,20 @@ export default function PastBoardMembers() {
   if (members.length === 0) return null;
 
   return (
-    <section className="about-page__section">
-      <h2>Past Board Members</h2>
-      <button
-        className="about-past-board__toggle"
-        onClick={() => setExpanded((e) => !e)}
-        aria-expanded={expanded}
-      >
-        {expanded ? 'Hide past board' : 'Show past board'}
-      </button>
+    <section className="about-page__section about-past-board">
+      <div className="about-past-board__header">
+        <div>
+          <h2>Past board members</h2>
+          <p>Previous student officers who helped build Clemson Quantum.</p>
+        </div>
+        <button
+          className="about-past-board__toggle"
+          onClick={() => setExpanded((e) => !e)}
+          aria-expanded={expanded}
+        >
+          {expanded ? 'Hide archive' : 'View archive'}
+        </button>
+      </div>
       {expanded && (
         <ul className="about-past-board__list">
           {members.map((m) => (
@@ -36,9 +41,11 @@ export default function PastBoardMembers() {
                 src={m.image || '/images/blank-profile.svg'}
                 alt={m.name}
               />
-              <span>
-                {m.name} &mdash; {m.role} ({m.years})
-              </span>
+              <div>
+                <h3>{m.name}</h3>
+                <p>{m.role}</p>
+                <span>{m.years}</span>
+              </div>
             </li>
           ))}
         </ul>
