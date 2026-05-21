@@ -136,9 +136,6 @@ export default function Header({ navData }: HeaderProps) {
   const dropdownHandlers = (id: Exclude<DropdownId, null>) => ({
     onMouseEnter: () => {
       setOpenDropdown(id);
-      if (id === 'events' && openSubmenu === null) {
-        setOpenSubmenu('hackathons');
-      }
     },
     onMouseLeave: () => {
       setOpenDropdown((cur) => (cur === id ? null : cur));
@@ -148,9 +145,6 @@ export default function Header({ navData }: HeaderProps) {
     },
     onFocus: () => {
       setOpenDropdown(id);
-      if (id === 'events' && openSubmenu === null) {
-        setOpenSubmenu('hackathons');
-      }
     },
     onBlur: (e: ReactFocusEvent<HTMLDivElement>) => {
       if (!e.currentTarget.contains(e.relatedTarget as Node)) {

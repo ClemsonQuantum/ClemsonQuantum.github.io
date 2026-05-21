@@ -38,41 +38,17 @@ export default function HomePage() {
         'Event',
     }));
 
-  const proofItems = [
-    {
-      value: `${hackathons.length + workshops.length + meetings.length}+`,
-      label: 'Club events, competitions, and workshops in the current archive',
-    },
-    {
-      value: `${newsItems.length}`,
-      label: 'Recent news features highlighting Clemson Quantum work',
-    },
-    {
-      value: `${boardMembers.length}`,
-      label: 'Student leaders and faculty support shaping the club this year',
-    },
-  ];
-
   return (
     <>
       <section className="home-hero">
         <div className="home-hero__content">
-          <p className="home-hero__eyebrow">Clemson Quantum Club</p>
-          <h1 className="home-hero__title">
-            Quantum education, competition, and community at Clemson.
-          </h1>
+          <h1 className="home-hero__title">Clemson Quantum Club</h1>
           <p className="home-hero__subtitle">
-            Clemson Quantum is a student-led club connecting students to
-            workshops, hackathons, research-minded peers, and the broader
-            quantum ecosystem without requiring prior experience.
+            Clemson has a student-led quantum club. We participate in
+            hackathons, host workshops and seminars, and meet biweekly to learn
+            and build together.
           </p>
           <div className="home-hero__ctas">
-            <Link
-              href="/get-involved/"
-              className="home-hero__cta home-hero__cta--primary"
-            >
-              Join the club
-            </Link>
             <Link
               href="/events/"
               className="home-hero__cta home-hero__cta--secondary"
@@ -90,34 +66,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="home-proof">
-        <div className="home-proof__intro">
-          <p className="home-proof__eyebrow">What the club does</p>
-          <h2 className="home-section__title">Built around learning by doing.</h2>
-          <p className="home-section__lead">
-            The club brings together quantum-curious students across disciplines
-            through hands-on learning, team-based competition, and a growing
-            network of collaborators at Clemson and beyond.
-          </p>
-        </div>
-        <div className="home-proof__grid">
-          {proofItems.map((item) => (
-            <div key={item.label} className="home-proof__item">
-              <span className="home-proof__value">{item.value}</span>
-              <p className="home-proof__label">{item.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="home-section">
         <div className="home-section__header">
           <div>
-            <p className="home-section__eyebrow">Latest coverage</p>
-            <h2 className="home-section__title">Recent news</h2>
+            <h2 className="home-section__title">News</h2>
           </div>
           <Link href="/news/" className="view-all-link">
-            View all news <span aria-hidden="true">&rarr;</span>
+            View all news
           </Link>
         </div>
         <div className="preview-grid">
@@ -130,11 +85,10 @@ export default function HomePage() {
       <section className="home-section">
         <div className="home-section__header">
           <div>
-            <p className="home-section__eyebrow">Competitions and programming</p>
-            <h2 className="home-section__title">Recent events</h2>
+            <h2 className="home-section__title">Events</h2>
           </div>
           <Link href="/events/" className="view-all-link">
-            View all events <span aria-hidden="true">&rarr;</span>
+            View all events
           </Link>
         </div>
         <div className="preview-grid">
@@ -156,23 +110,22 @@ export default function HomePage() {
       <section className="home-section home-section--board">
         <div className="home-section__header">
           <div>
-            <p className="home-section__eyebrow">Leadership</p>
             <h2 className="home-section__title">Executive board</h2>
           </div>
         </div>
         <div className="board-members-list">
-        {boardMembers.map((m) => (
-          <BoardMember
-            key={m.name}
-            name={m.name}
-            role={m.role}
-            description={m.description}
-            imageSrc={m.image}
-            email={m.email}
-            linkedin={m.linkedin}
-            github={m.github}
-          />
-        ))}
+          {boardMembers.map((m) => (
+            <BoardMember
+              key={m.name}
+              name={m.name}
+              role={m.role}
+              description={m.description}
+              imageSrc={m.image}
+              email={m.email}
+              linkedin={m.linkedin}
+              github={m.github}
+            />
+          ))}
         </div>
       </section>
     </>
