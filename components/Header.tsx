@@ -265,6 +265,14 @@ export default function Header({ navData }: HeaderProps) {
                 <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" role="menuitem" onClick={closeMenus}>
                   Student Work &amp; Projects
                 </Link>
+                <Link
+                  href="/resources/"
+                  className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
+                  role="menuitem"
+                  onClick={closeMenus}
+                >
+                  All Resources <span aria-hidden="true">&rarr;</span>
+                </Link>
               </div>
             </div>
           </div>
