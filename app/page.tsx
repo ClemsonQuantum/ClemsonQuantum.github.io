@@ -48,14 +48,6 @@ export default function HomePage() {
             hackathons, host workshops and seminars, and meet biweekly to learn
             and build together.
           </p>
-          <div className="home-hero__ctas">
-            <Link
-              href="/events/"
-              className="home-hero__cta home-hero__cta--secondary"
-            >
-              Explore events
-            </Link>
-          </div>
         </div>
         <div className="home-hero__visual">
           <SiteImage

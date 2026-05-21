@@ -6,57 +6,147 @@ import PastBoardMembers from '@/components/PastBoardMembers';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Learn about the Clemson Quantum Club — our mission, what we do, and how to get involved.',
+    'Learn about the Clemson Quantum Club, a student-led community for accessible quantum computing education, events, and peer support at Clemson.',
 };
+
+const focusAreas = [
+  {
+    title: 'Biweekly access',
+    text:
+      'Students can drop into biweekly meetings without an application, dues, or prior quantum computing background.',
+  },
+  {
+    title: 'Hands-on learning',
+    text:
+      'Workshops and study groups help members move from core concepts to writing and running quantum circuits.',
+  },
+  {
+    title: 'Community pathways',
+    text:
+      'Members find peers for projects, hackathon teams, research conversations, and course planning.',
+  },
+];
+
+const memberActivities = [
+  'Attend beginner-friendly meetings and discussion sessions.',
+  'Practice with tools such as Qiskit, PennyLane, and Cirq.',
+  'Build teams for quantum hackathons and campus events.',
+  'Connect with faculty, student research pathways, and the Creative Inquiry program.',
+];
+
+const meetingDayDisplay =
+  siteConfig.meetingDay.charAt(0).toUpperCase() + siteConfig.meetingDay.slice(1);
 
 export default function AboutPage() {
   return (
     <article className="about-page">
-      <header className="about-page__header">
-        <h1>About the Clemson Quantum Club</h1>
-        <p className="about-page__tagline">
-          Making quantum computing accessible to every student at Clemson.
-        </p>
+      <header className="about-page__hero">
+        <div className="about-page__hero-copy">
+          <h1>Student-led quantum computing at Clemson</h1>
+          <p className="about-page__tagline">
+            Clemson Quantum Club brings students together to learn quantum
+            computing through biweekly meetings, practical workshops, peer
+            support, and team-based events.
+          </p>
+          <div className="about-page__hero-actions">
+            <Link href="/get-involved/" className="cta-button cta-button--outline">
+              Get involved
+            </Link>
+            <a
+              href={siteConfig.discordInvite}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cta-button cta-button--outline"
+            >
+              Join Discord
+            </a>
+          </div>
+        </div>
+        <aside className="about-page__meeting-card" aria-label="Meeting details">
+          <p className="about-page__card-label">Biweekly meetings</p>
+          <dl>
+            <div>
+              <dt>When</dt>
+              <dd>
+                {meetingDayDisplay}, {siteConfig.meetingTime}
+              </dd>
+            </div>
+            <div>
+              <dt>Where</dt>
+              <dd>{siteConfig.location}</dd>
+            </div>
+            <div>
+              <dt>Who</dt>
+              <dd>Open to students from any major and experience level</dd>
+            </div>
+          </dl>
+        </aside>
       </header>
 
-      <section className="about-page__section">
-        <h2>Our Mission</h2>
+      <section className="about-page__section about-page__section--intro">
+        <div>
+          <h2>Who we are</h2>
+        </div>
         <p>
-          The Clemson Quantum Club (CQC) is a student-led organization on a
-          mission to make quantum computing accessible to every student at
-          Clemson University. Whether you study computer science, physics,
-          engineering, mathematics, or any other field, quantum technologies are
-          shaping the future — and we believe everyone deserves a seat at the
-          table.
+          Clemson Quantum Club is an interdisciplinary student organization for
+          students who want to understand, use, and discuss quantum computing.
+          The club is designed for beginners and experienced students alike:
+          computer science, physics, engineering, mathematics, and other fields
+          all have a place in the conversation.
         </p>
       </section>
 
       <section className="about-page__section">
-        <h2>What We Do</h2>
-        <p>
-          We host weekly meetings, hands-on coding workshops, and study groups
-          that take students from zero quantum knowledge to writing and running
-          real quantum circuits. Our members learn industry tools like IBM
-          Qiskit, PennyLane, and Cirq through guided bootcamps and collaborative
-          projects.
-        </p>
-        <p>
-          CQC regularly sends teams to quantum hackathons across the country and
-          around the world — including MIT&apos;s iQuHACK, the NYUAD International
-          Hackathon in Abu Dhabi, and the SC Quantathon series where Clemson
-          teams have taken home top honors. In 2026, we are bringing our own
-          hackathon to Clemson with{' '}
-          <Link href="/events/hackathons/2026-SC-Quantathon-v3/">
-            SC Quantathon v3
+        <div className="about-page__section-heading">
+          <h2>Why join</h2>
+        </div>
+        <div className="about-page__focus-grid">
+          {focusAreas.map((area) => (
+            <div key={area.title} className="about-page__focus-card">
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="about-page__section about-page__section--split">
+        <div>
+          <h2>What members do</h2>
+          <p>
+            Club meetings combine approachable discussion with hands-on work.
+            Members use the club to learn fundamentals, prepare for events, find
+            teammates, and stay connected to the quantum computing community at
+            Clemson.
+          </p>
+        </div>
+        <ul className="about-page__activity-list">
+          {memberActivities.map((activity) => (
+            <li key={activity}>{activity}</li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="about-page__section about-page__section--split">
+        <div>
+          <h2>Events and pathways</h2>
+          <p>
+            Members participate in workshops, hackathons, and student projects,
+            including events connected to MIT iQuHACK and the SC Quantathon
+            series. Clemson Quantum is also preparing to host{' '}
+            <Link href="/events/hackathons/2026-SC-Quantathon-v3/">
+              SC Quantathon v3
+            </Link>
+            , a student-focused quantum hackathon at Clemson.
+          </p>
+        </div>
+        <div className="about-page__link-panel">
+          <Link href="/events/">Browse events</Link>
+          <Link href="/resources/learning-resources/">Learning resources</Link>
+          <Link href="/resources/student-work-and-projects/">
+            Student work &amp; projects
           </Link>
-          , a 48-hour event open to students from any university.
-        </p>
-        <p>
-          Beyond competitions, we connect students with research opportunities,
-          industry mentors, and a growing network of quantum enthusiasts. No
-          prior experience is required — just curiosity and a willingness to
-          learn.
-        </p>
+        </div>
       </section>
 
       <PastBoardMembers />
@@ -64,9 +154,9 @@ export default function AboutPage() {
       <section className="about-page__section about-page__section--cta">
         <h2>Get Involved</h2>
         <p>
-          We meet weekly on {siteConfig.meetingDay} at {siteConfig.meetingTime}{' '}
-          in {siteConfig.location}. Drop in any time — there&apos;s no
-          application or commitment required to attend.
+          We meet on {siteConfig.meetingDay} at {siteConfig.meetingTime} in{' '}
+          {siteConfig.location}. Drop in any time; there is no application or
+          commitment required to attend.
         </p>
         <div className="about-page__ctas">
           <Link href="/get-involved/" className="cta-button">
