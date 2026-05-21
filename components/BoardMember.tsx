@@ -24,6 +24,7 @@ export default function BoardMember({
   github,
 }: BoardMemberData) {
   const [open, setOpen] = useState(false);
+  const lines = description.split('\n');
 
   return (
     <article className="board-member">
@@ -46,10 +47,10 @@ export default function BoardMember({
         <div className="board-member__details" data-open={open}>
           <div className="board-member__details-inner">
             <p className="board-member__description">
-              {description.split('\n').map((line, i, arr) => (
+              {lines.map((line, i) => (
                 <span key={i}>
                   {line}
-                  {i < arr.length - 1 && <br />}
+                  {i < lines.length - 1 && <br />}
                 </span>
               ))}
             </p>

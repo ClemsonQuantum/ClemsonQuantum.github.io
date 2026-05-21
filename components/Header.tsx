@@ -1,9 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { FocusEvent as ReactFocusEvent } from 'react';
+import type {
+  Dispatch,
+  FocusEvent as ReactFocusEvent,
+  SetStateAction,
+} from 'react';
 import Link from 'next/link';
 import type { NavData } from '@/lib/navData';
+import type { PageMeta } from '@/lib/content';
 import SiteImage from './SiteImage';
 import SearchBar from './SearchBar';
 
@@ -13,10 +18,94 @@ interface HeaderProps {
 
 const HACKATHONS_IN_DROPDOWN = 3;
 
+type DropdownId = 'events' | 'resources' | null;
+type EventsSubmenuId = 'hackathons' | 'workshops' | 'meetings' | null;
+
+interface EventsSubmenuProps {
+  id: Exclude<EventsSubmenuId, null>;
+  label: string;
+  href: string;
+  items: PageMeta[];
+  openSubmenu: EventsSubmenuId;
+  setOpenSubmenu: Dispatch<SetStateAction<EventsSubmenuId>>;
+  closeMenus: () => void;
+  viewAllLabel?: string;
+}
+
+function EventsSubmenu({
+  id,
+  label,
+  href,
+  items,
+  openSubmenu,
+  setOpenSubmenu,
+  closeMenus,
+  viewAllLabel,
+}: EventsSubmenuProps) {
+  const isOpen = openSubmenu === id;
+
+  return (
+    <div
+      className={`dropdown-submenu${isOpen ? ' dropdown-submenu--open' : ''}`}
+      onMouseEnter={() => setOpenSubmenu(id)}
+      onFocus={() => setOpenSubmenu(id)}
+      onBlur={(e: ReactFocusEvent<HTMLDivElement>) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+          setOpenSubmenu((cur) => (cur === id ? null : cur));
+        }
+      }}
+    >
+      <Link
+        href={href}
+        className="nav-dropdown-link nav-dropdown-link--parent"
+        role="menuitem"
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        onClick={closeMenus}
+      >
+        {label}
+      </Link>
+      <div className="dropdown-submenu-content" role="menu">
+        {items.map((item) => (
+          <Link
+            key={item.slug}
+            href={item.isExternal ? item.href : `${href}${item.slug}/`}
+            className="nav-dropdown-link"
+            role="menuitem"
+            onClick={closeMenus}
+            {...(item.isExternal
+              ? { target: '_blank', rel: 'noopener noreferrer' }
+              : {})}
+          >
+            {item.title}
+          </Link>
+        ))}
+        {viewAllLabel && (
+          <Link
+            href={href}
+            className="nav-dropdown-link nav-dropdown-link--view-all"
+            role="menuitem"
+            onClick={closeMenus}
+          >
+            {viewAllLabel} <span aria-hidden="true">&rarr;</span>
+          </Link>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function Header({ navData }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<DropdownId>(null);
+  const [openSubmenu, setOpenSubmenu] = useState<EventsSubmenuId>(null);
+
+  function closeMenus() {
+    setMenuOpen(false);
+    setOpenDropdown(null);
+    setOpenSubmenu(null);
+  }
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -28,7 +117,7 @@ export default function Header({ navData }: HeaderProps) {
         !toggle.contains(e.target as Node) &&
         !links.contains(e.target as Node)
       ) {
-        setMenuOpen(false);
+        closeMenus();
       }
     }
     document.addEventListener('click', handleClick);
@@ -44,13 +133,31 @@ export default function Header({ navData }: HeaderProps) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const dropdownHandlers = (id: string) => ({
-    onMouseEnter: () => setOpenDropdown(id),
-    onMouseLeave: () => setOpenDropdown((cur) => (cur === id ? null : cur)),
-    onFocus: () => setOpenDropdown(id),
+  const dropdownHandlers = (id: Exclude<DropdownId, null>) => ({
+    onMouseEnter: () => {
+      setOpenDropdown(id);
+      if (id === 'events' && openSubmenu === null) {
+        setOpenSubmenu('hackathons');
+      }
+    },
+    onMouseLeave: () => {
+      setOpenDropdown((cur) => (cur === id ? null : cur));
+      if (id === 'events') {
+        setOpenSubmenu(null);
+      }
+    },
+    onFocus: () => {
+      setOpenDropdown(id);
+      if (id === 'events' && openSubmenu === null) {
+        setOpenSubmenu('hackathons');
+      }
+    },
     onBlur: (e: ReactFocusEvent<HTMLDivElement>) => {
       if (!e.currentTarget.contains(e.relatedTarget as Node)) {
         setOpenDropdown((cur) => (cur === id ? null : cur));
+        if (id === 'events') {
+          setOpenSubmenu(null);
+        }
       }
     },
   });
@@ -83,8 +190,8 @@ export default function Header({ navData }: HeaderProps) {
           className={`nav-links${menuOpen ? ' nav-links--open' : ''}`}
           id="navLinks"
         >
-          <Link href="/about/" className="nav-link">About</Link>
-          <Link href="/news/" className="nav-link">News</Link>
+          <Link href="/about/" className="nav-link" onClick={closeMenus}>About</Link>
+          <Link href="/news/" className="nav-link" onClick={closeMenus}>News</Link>
 
           <div
             className={`nav-dropdown${openDropdown === 'events' ? ' nav-dropdown--open' : ''}`}
@@ -102,70 +209,42 @@ export default function Header({ navData }: HeaderProps) {
               </svg>
             </Link>
             <div className="nav-dropdown-panel" role="menu">
-              <div className="dropdown-submenu">
-                <Link href="/events/hackathons/" className="nav-dropdown-link nav-dropdown-link--parent" role="menuitem">
-                  Hackathons
-                </Link>
-                <div className="dropdown-submenu-content">
-                  {visibleHackathons.map((p) => (
-                    <Link
-                      key={p.slug}
-                      href={p.isExternal ? p.href : `/events/hackathons/${p.slug}/`}
-                      className="nav-dropdown-link"
-                      role="menuitem"
-                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {p.title}
-                    </Link>
-                  ))}
-                  {hackathonsTruncated && (
-                    <Link
-                      href="/events/hackathons/"
-                      className="nav-dropdown-link nav-dropdown-link--view-all"
-                      role="menuitem"
-                    >
-                      View all hackathons <span aria-hidden="true">&rarr;</span>
-                    </Link>
-                  )}
-                </div>
-              </div>
-              <div className="dropdown-submenu">
-                <Link href="/events/workshops-and-seminars/" className="nav-dropdown-link nav-dropdown-link--parent" role="menuitem">
-                  Workshops &amp; Seminars
-                </Link>
-                <div className="dropdown-submenu-content">
-                  {navData.workshops.map((p) => (
-                    <Link
-                      key={p.slug}
-                      href={p.isExternal ? p.href : `/events/workshops-and-seminars/${p.slug}/`}
-                      className="nav-dropdown-link"
-                      role="menuitem"
-                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {p.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <div className="dropdown-submenu">
-                <Link href="/events/meetings/" className="nav-dropdown-link nav-dropdown-link--parent" role="menuitem">
-                  Meetings
-                </Link>
-                <div className="dropdown-submenu-content">
-                  {navData.meetings.map((p) => (
-                    <Link
-                      key={p.slug}
-                      href={p.isExternal ? p.href : `/events/meetings/${p.slug}/`}
-                      className="nav-dropdown-link"
-                      role="menuitem"
-                      {...(p.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    >
-                      {p.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <Link href="/events/" className="nav-dropdown-link" role="menuitem">All Events</Link>
+              <EventsSubmenu
+                id="hackathons"
+                label="Hackathons"
+                href="/events/hackathons/"
+                items={visibleHackathons}
+                openSubmenu={openSubmenu}
+                setOpenSubmenu={setOpenSubmenu}
+                closeMenus={closeMenus}
+                viewAllLabel={hackathonsTruncated ? 'View all hackathons' : undefined}
+              />
+              <EventsSubmenu
+                id="workshops"
+                label="Workshops & Seminars"
+                href="/events/workshops-and-seminars/"
+                items={navData.workshops}
+                openSubmenu={openSubmenu}
+                setOpenSubmenu={setOpenSubmenu}
+                closeMenus={closeMenus}
+              />
+              <EventsSubmenu
+                id="meetings"
+                label="Meetings"
+                href="/events/meetings/"
+                items={navData.meetings}
+                openSubmenu={openSubmenu}
+                setOpenSubmenu={setOpenSubmenu}
+                closeMenus={closeMenus}
+              />
+              <Link
+                href="/events/"
+                className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
+                role="menuitem"
+                onClick={closeMenus}
+              >
+                All Events <span aria-hidden="true">&rarr;</span>
+              </Link>
             </div>
           </div>
 
@@ -186,17 +265,17 @@ export default function Header({ navData }: HeaderProps) {
             </Link>
             <div className="nav-dropdown-panel" role="menu">
               <div className="nav-dropdown-section">
-                <Link href="/resources/learning-resources/" className="nav-dropdown-link" role="menuitem">
+                <Link href="/resources/learning-resources/" className="nav-dropdown-link" role="menuitem" onClick={closeMenus}>
                   Learning Resources
                 </Link>
-                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" role="menuitem">
+                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" role="menuitem" onClick={closeMenus}>
                   Student Work &amp; Projects
                 </Link>
               </div>
             </div>
           </div>
 
-          <Link href="/get-involved/" className="nav-link">Get Involved</Link>
+          <Link href="/get-involved/" className="nav-link" onClick={closeMenus}>Get Involved</Link>
 
           <div className="nav-search-slot">
             <SearchBar />

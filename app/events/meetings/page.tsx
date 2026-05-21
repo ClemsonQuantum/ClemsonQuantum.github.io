@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
-import NewsCard from '@/components/NewsCard';
+import PreviewCard from '@/components/PreviewCard';
 
 export const metadata: Metadata = { title: 'Meetings' };
 
@@ -8,16 +8,24 @@ export default function MeetingsPage() {
   const meetings = sortPages(getAllPages('events/meetings'));
 
   return (
-    <>
-      <h1>Meetings</h1>
-      <section>
-        <p>Club meetings and social events hosted by Clemson Quantum.</p>
-      </section>
-      <div className="news-cards">
+    <div className="archive-page">
+      <header className="archive-hero archive-hero--events">
+        <p className="archive-hero__eyebrow">Community archive</p>
+        <h1 className="archive-hero__title">Meetings</h1>
+        <p className="archive-hero__lead">
+          Club meetings, social programming, and recurring community events.
+        </p>
+      </header>
+      <div className="preview-grid">
         {meetings.map((item) => (
-          <NewsCard key={item.slug} item={item} />
+          <PreviewCard
+            key={item.slug}
+            item={item}
+            kind="event"
+            metaLabel="Meeting"
+          />
         ))}
       </div>
-    </>
+    </div>
   );
 }
