@@ -44,7 +44,6 @@ export default function PreviewCard({
 }: PreviewCardProps) {
   const footerLabel = kind === 'news' ? getSourceLabel(item) : metaLabel;
   const summary = item.summary ?? item.excerpt;
-  const actionLabel = kind === 'news' ? 'Read story' : 'View details';
 
   return (
     <a
@@ -68,19 +67,13 @@ export default function PreviewCard({
           )}
           {badge && <span className="preview-card__badge">{badge}</span>}
         </div>
-        <h3 className="preview-card__title">
-          {item.title}
-          {item.isExternal && (
-            <span className="preview-card__external" aria-hidden="true">↗</span>
-          )}
-        </h3>
+        <h3 className="preview-card__title">{item.title}</h3>
         {summary && <p className="preview-card__summary">{summary}</p>}
-        <div className="preview-card__footer">
-          <span className="preview-card__label">{footerLabel}</span>
-          <span className="preview-card__action">
-            {actionLabel} <span aria-hidden="true">&rarr;</span>
-          </span>
-        </div>
+        {footerLabel && (
+          <div className="preview-card__footer">
+            <span className="preview-card__label">{footerLabel}</span>
+          </div>
+        )}
       </div>
     </a>
   );
