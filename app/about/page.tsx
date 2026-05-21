@@ -150,28 +150,6 @@ export default function AboutPage() {
       </section>
 
       <PastBoardMembers />
-
-      <section className="about-page__section about-page__section--cta">
-        <h2>Get Involved</h2>
-        <p>
-          We meet on {siteConfig.meetingDay} at {siteConfig.meetingTime} in{' '}
-          {siteConfig.location}. Drop in any time; there is no application or
-          commitment required to attend.
-        </p>
-        <div className="about-page__ctas">
-          <Link href="/get-involved/" className="cta-button">
-            Meeting details &amp; contact
-          </Link>
-          <a
-            href={siteConfig.discordInvite}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="cta-button cta-button--outline"
-          >
-            Join our Discord
-          </a>
-        </div>
-      </section>
     </article>
   );
 }

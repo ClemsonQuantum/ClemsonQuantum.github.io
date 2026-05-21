@@ -164,7 +164,7 @@ export default function Header({ navData }: HeaderProps) {
       <div className="nav-inner">
         <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
           <SiteImage
-            src="/images/logo.png"
+            src="/images/logo-v2.png"
             alt="Clemson Quantum"
             className="nav-logo"
           />
