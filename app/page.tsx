@@ -1,148 +1,166 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { getAllPages, sortPages, formatDate } from '@/lib/content';
+import { getAllPages, sortPages } from '@/lib/content';
 import SiteImage from '@/components/SiteImage';
-import ScrollReveal from '@/components/ScrollReveal';
 import BoardMember from '@/components/BoardMember';
+import PreviewCard from '@/components/PreviewCard';
 import boardMembers from '@/data/board-members.json';
 
 export const metadata: Metadata = { title: 'Home' };
 
 export default function HomePage() {
-  const recentNews = sortPages(getAllPages('news')).slice(0, 6);
+  const newsItems = sortPages(getAllPages('news'));
+  const recentNews = newsItems.slice(0, 3);
+  const hackathons = getAllPages('events/hackathons').map((item) => ({
+    item,
+    metaLabel: 'Hackathon',
+  }));
+  const workshops = getAllPages('events/workshops-and-seminars').map((item) => ({
+    item,
+    metaLabel: 'Workshop',
+  }));
+  const meetings = getAllPages('events/meetings').map((item) => ({
+    item,
+    metaLabel: 'Meeting',
+  }));
 
   const today = new Date().toISOString().slice(0, 10);
-  const allEvents = sortPages([
-    ...getAllPages('events/hackathons'),
-    ...getAllPages('events/workshops-and-seminars'),
-  ]).slice(0, 6);
+  const allEvents = sortPages(
+    [...hackathons, ...workshops, ...meetings].map((entry) => entry.item)
+  )
+    .slice(0, 3)
+    .map((item) => ({
+      item,
+      metaLabel:
+        hackathons.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
+        workshops.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
+        meetings.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
+        'Event',
+    }));
+
+  const proofItems = [
+    {
+      value: `${hackathons.length + workshops.length + meetings.length}+`,
+      label: 'Club events, competitions, and workshops in the current archive',
+    },
+    {
+      value: `${newsItems.length}`,
+      label: 'Recent news features highlighting Clemson Quantum work',
+    },
+    {
+      value: `${boardMembers.length}`,
+      label: 'Student leaders and faculty support shaping the club this year',
+    },
+  ];
 
   return (
     <>
-      <ScrollReveal>
-        <section className="home-hero">
-          <div className="home-hero__content">
-            <h1 className="home-hero__title">
-              Quantum computing, accessible at Clemson.
-            </h1>
-            <p className="home-hero__subtitle">
-              A student-led club building real quantum circuits, winning
-              hackathons, and connecting Clemson students to the quantum
-              industry — no prior experience required.
-            </p>
-            <div className="home-hero__ctas">
-              <Link
-                href="/get-involved/"
-                className="home-hero__cta home-hero__cta--primary"
-              >
-                Join the Club
-              </Link>
-              <Link
-                href="/events/hackathons/"
-                className="home-hero__cta home-hero__cta--secondary"
-              >
-                See Our Work
-              </Link>
-            </div>
-          </div>
-          <div className="home-hero__visual">
-            <SiteImage
-              src="/images/image-4.jpg"
-              alt="The Clemson Quantum team at MIT iQuHack 2025, holding a Clemson Tiger paw flag in front of an iQuHACK display"
-              className="home-hero__image"
-            />
-          </div>
-        </section>
-      </ScrollReveal>
-
-      <hr className="section-divider" />
-
-      <ScrollReveal>
-        <h2 className="section-heading">News</h2>
-      </ScrollReveal>
-      <div className="home-news-grid">
-        {recentNews.map((item, i) => (
-          <ScrollReveal key={item.slug} delay={Math.min(i + 1, 3)}>
-            <a
-              className="home-news-item"
-              href={item.href}
-              {...(item.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
+      <section className="home-hero">
+        <div className="home-hero__content">
+          <p className="home-hero__eyebrow">Clemson Quantum Club</p>
+          <h1 className="home-hero__title">
+            Quantum education, competition, and community at Clemson.
+          </h1>
+          <p className="home-hero__subtitle">
+            Clemson Quantum is a student-led club connecting students to
+            workshops, hackathons, research-minded peers, and the broader
+            quantum ecosystem without requiring prior experience.
+          </p>
+          <div className="home-hero__ctas">
+            <Link
+              href="/get-involved/"
+              className="home-hero__cta home-hero__cta--primary"
             >
-              {item.image && (
-                <SiteImage className="home-news-item__img" src={item.image} alt={item.title} loading="lazy" />
-              )}
-              <div className="home-news-item__body">
-                {item.date && (
-                  <span className="home-news-item__date">{formatDate(item.date)}</span>
-                )}
-                <h3 className="home-news-item__title">
-                  {item.title}
-                  {item.isExternal && (
-                    <span className="home-news-item__external-icon" aria-hidden="true">↗</span>
-                  )}
-                </h3>
-                {item.summary && (
-                  <p className="home-news-item__summary">{item.summary}</p>
-                )}
-              </div>
-            </a>
-          </ScrollReveal>
-        ))}
-      </div>
-      <Link href="/news/" className="view-all-link">
-        View all news <span aria-hidden="true">&rarr;</span>
-      </Link>
+              Join the club
+            </Link>
+            <Link
+              href="/events/"
+              className="home-hero__cta home-hero__cta--secondary"
+            >
+              Explore events
+            </Link>
+          </div>
+        </div>
+        <div className="home-hero__visual">
+          <SiteImage
+            src="/images/image-4.jpg"
+            alt="Clemson Quantum members at MIT iQuHack 2025"
+            className="home-hero__image"
+          />
+        </div>
+      </section>
 
-      <ScrollReveal>
-        <h2 className="section-heading">Events</h2>
-      </ScrollReveal>
-      <div className="home-news-grid">
-        {allEvents.map((item, i) => {
-          const upcoming = item.date !== null && item.date >= today;
-          return (
-            <ScrollReveal key={item.slug} delay={Math.min(i + 1, 3)}>
-              <a
-                className={`home-news-item home-event-item${upcoming ? ' home-event-item--upcoming' : ''}`}
-                href={item.href}
-                {...(item.isExternal ? { target: '_blank', rel: 'noopener' } : {})}
-              >
-                {item.image && (
-                  <SiteImage className="home-news-item__img" src={item.image} alt={item.title} loading="lazy" />
-                )}
-                <div className="home-news-item__body">
-                  {(item.date || upcoming) && (
-                    <div className="home-event-item__top-row">
-                      {item.date && (
-                        <span className="home-event-item__date-prominent">{formatDate(item.date)}</span>
-                      )}
-                      {upcoming && (
-                        <span className="home-event-item__badge">Upcoming</span>
-                      )}
-                    </div>
-                  )}
-                  <h3 className="home-news-item__title">
-                    {item.title}
-                    {item.isExternal && (
-                      <span className="home-news-item__external-icon" aria-hidden="true">↗</span>
-                    )}
-                  </h3>
-                  {item.summary && (
-                    <p className="home-news-item__summary">{item.summary}</p>
-                  )}
-                </div>
-              </a>
-            </ScrollReveal>
-          );
-        })}
-      </div>
-      <Link href="/events/" className="view-all-link">
-        View all events <span aria-hidden="true">&rarr;</span>
-      </Link>
+      <section className="home-proof">
+        <div className="home-proof__intro">
+          <p className="home-proof__eyebrow">What the club does</p>
+          <h2 className="home-section__title">Built around learning by doing.</h2>
+          <p className="home-section__lead">
+            The club brings together quantum-curious students across disciplines
+            through hands-on learning, team-based competition, and a growing
+            network of collaborators at Clemson and beyond.
+          </p>
+        </div>
+        <div className="home-proof__grid">
+          {proofItems.map((item) => (
+            <div key={item.label} className="home-proof__item">
+              <span className="home-proof__value">{item.value}</span>
+              <p className="home-proof__label">{item.label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <ScrollReveal>
-        <h2 className="section-heading">Executive Board</h2>
-      </ScrollReveal>
-      <div className="board-members-list">
+      <section className="home-section">
+        <div className="home-section__header">
+          <div>
+            <p className="home-section__eyebrow">Latest coverage</p>
+            <h2 className="home-section__title">Recent news</h2>
+          </div>
+          <Link href="/news/" className="view-all-link">
+            View all news <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+        <div className="preview-grid">
+          {recentNews.map((item) => (
+            <PreviewCard key={item.slug} item={item} kind="news" />
+          ))}
+        </div>
+      </section>
+
+      <section className="home-section">
+        <div className="home-section__header">
+          <div>
+            <p className="home-section__eyebrow">Competitions and programming</p>
+            <h2 className="home-section__title">Recent events</h2>
+          </div>
+          <Link href="/events/" className="view-all-link">
+            View all events <span aria-hidden="true">&rarr;</span>
+          </Link>
+        </div>
+        <div className="preview-grid">
+          {allEvents.map(({ item, metaLabel }) => {
+            const upcoming = item.date !== null && item.date >= today;
+            return (
+              <PreviewCard
+                key={item.slug}
+                item={item}
+                kind="event"
+                metaLabel={metaLabel}
+                badge={upcoming ? 'Upcoming' : null}
+              />
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="home-section home-section--board">
+        <div className="home-section__header">
+          <div>
+            <p className="home-section__eyebrow">Leadership</p>
+            <h2 className="home-section__title">Executive board</h2>
+          </div>
+        </div>
+        <div className="board-members-list">
         {boardMembers.map((m) => (
           <BoardMember
             key={m.name}
@@ -155,7 +173,8 @@ export default function HomePage() {
             github={m.github}
           />
         ))}
-      </div>
+        </div>
+      </section>
     </>
   );
 }

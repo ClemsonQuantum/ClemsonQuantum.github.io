@@ -2,28 +2,31 @@
 layout: default
 title: SC Quantathon v3 2026
 date: 2026-09-25
-summary: Clemson's first quantum computing hackathon — 48 hours of building, learning, and competing.
+summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
 image: /images/Watt.jpg
 ---
 
 <div class="hackathon-page">
 
 <div class="hackathon-hero">
-  <p class="hackathon-hero-eyebrow">September 25 – 27, 2026 &bull; Clemson, SC</p>
+  <p class="hackathon-hero-eyebrow">September 25-27, 2026 • Clemson, South Carolina</p>
   <h1>SC Quantathon v3 2026</h1>
-  <p class="hackathon-hero-tagline">48 hours. Quantum hardware. Real-world challenges. Are you ready?</p>
-  <a href="#apply" class="hackathon-cta">Apply Now</a>
+  <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University built around hands-on learning, team problem solving, and industry connection.</p>
+  <div class="hackathon-hero-actions">
+    <a href="mailto:cqc@clemson.edu?subject=SC%20Quantathon%20v3%20Participant%20Updates" class="hackathon-cta">Request participant updates</a>
+    <a href="#sponsors" class="hackathon-cta hackathon-cta-outline">Sponsor the event</a>
+  </div>
 </div>
 
 <div class="hackathon-section">
 
 ## About
 
-**SC Quantathon v3** is being brought to Clemson University as it's inaugural quantum computing hackathon, hosted by the Clemson Quantum Club. Over the course of 48 hours, teams of up to five will tackle real-world challenges using quantum computing platforms, compete for prizes, and learn from industry mentors.
+**SC Quantathon v3** continues Clemson Quantum's effort to create a student-centered quantum computing event in the Southeast. The weekend is designed to bring together students who want to learn, build, and collaborate around real quantum computing challenges.
 
-Whether you're a seasoned quantum programmer or writing your first quantum circuit, the Quantathon is designed to be accessible and exciting. Workshops, mentorship, and food will be provided so every participant can hit the ground running.
+Participants will work in teams, attend technical programming, and receive support from mentors and organizers throughout the event. The format is intended to be accessible to first-time participants while still giving experienced students room to build ambitious projects.
 
-Join students from across the Southeast — and beyond — for a weekend of innovation at the intersection of computer science, physics, and engineering.
+Students from computing, physics, engineering, mathematics, and related fields are encouraged to participate.
 
 </div>
 
@@ -33,34 +36,28 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 
 <div class="hackathon-details-grid">
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128197;</div>
     <div class="hackathon-detail-label">Dates</div>
-    <div class="hackathon-detail-value">September 25 – 27, 2026</div>
+    <div class="hackathon-detail-value">September 25-27, 2026</div>
   </div>
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128205;</div>
     <div class="hackathon-detail-label">Location</div>
-    <div class="hackathon-detail-value">WAP<br/>Clemson University</div>
+    <div class="hackathon-detail-value">Watt Family Innovation Center<br/>Clemson University</div>
   </div>
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128101;</div>
     <div class="hackathon-detail-label">Team Size</div>
-    <div class="hackathon-detail-value">1 – 5 members</div>
+    <div class="hackathon-detail-value">1-5 students</div>
   </div>
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#127891;</div>
     <div class="hackathon-detail-label">Eligibility</div>
-    <div class="hackathon-detail-value">Undergraduate &amp; graduate students</div>
+    <div class="hackathon-detail-value">Undergraduate and graduate students</div>
   </div>
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128187;</div>
     <div class="hackathon-detail-label">Format</div>
-    <div class="hackathon-detail-value">In-person</div>
+    <div class="hackathon-detail-value">In person</div>
   </div>
   <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128176;</div>
     <div class="hackathon-detail-label">Cost</div>
-    <div class="hackathon-detail-value">Free — meals &amp; swag included</div>
+    <div class="hackathon-detail-value">Free to attend. Meals and event materials will be provided.</div>
   </div>
 </div>
 
@@ -72,37 +69,37 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 — Friday, September 25</h3>
+    <h3>Day 1 - Friday, September 25</h3>
     <table>
-      <tr><td class="hackathon-time">3:00 PM</td><td>Check-in &amp; registration</td></tr>
-      <tr><td class="hackathon-time">4:00 PM</td><td>Opening ceremony &amp; keynote speaker</td></tr>
-      <tr><td class="hackathon-time">5:00 PM</td><td>Challenge tracks revealed</td></tr>
-      <tr><td class="hackathon-time">5:30 PM</td><td>Team formation &amp; brainstorming</td></tr>
+      <tr><td class="hackathon-time">3:00 PM</td><td>Check-in and registration</td></tr>
+      <tr><td class="hackathon-time">4:00 PM</td><td>Opening program and welcome</td></tr>
+      <tr><td class="hackathon-time">5:00 PM</td><td>Challenge tracks released</td></tr>
+      <tr><td class="hackathon-time">5:30 PM</td><td>Team formation and project planning</td></tr>
       <tr><td class="hackathon-time">6:30 PM</td><td>Dinner</td></tr>
-      <tr><td class="hackathon-time">7:30 PM</td><td>Hacking begins!</td></tr>
+      <tr><td class="hackathon-time">7:30 PM</td><td>Hacking begins</td></tr>
     </table>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 — Saturday, September 26</h3>
+    <h3>Day 2 - Saturday, September 26</h3>
     <table>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">9:00 AM</td><td>Workshop: Intro to Quantum Circuits</td></tr>
-      <tr><td class="hackathon-time">10:30 AM</td><td>Workshop: [PLACEHOLDER — Sponsor Workshop]</td></tr>
-      <tr><td class="hackathon-time">12:00 PM</td><td>Lunch &amp; networking</td></tr>
+      <tr><td class="hackathon-time">9:00 AM</td><td>Workshop: Intro to quantum circuits</td></tr>
+      <tr><td class="hackathon-time">10:30 AM</td><td>Partner workshop details coming soon</td></tr>
+      <tr><td class="hackathon-time">12:00 PM</td><td>Lunch and networking</td></tr>
       <tr><td class="hackathon-time">1:00 PM</td><td>Mentor office hours</td></tr>
-      <tr><td class="hackathon-time">3:00 PM</td><td>Mid-hackathon check-in</td></tr>
+      <tr><td class="hackathon-time">3:00 PM</td><td>Mid-event team check-in</td></tr>
       <tr><td class="hackathon-time">6:00 PM</td><td>Dinner</td></tr>
-      <tr><td class="hackathon-time">9:00 PM</td><td>Late-night snacks &amp; coding</td></tr>
+      <tr><td class="hackathon-time">9:00 PM</td><td>Late-night snacks and work session</td></tr>
     </table>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 — Sunday, September 27</h3>
+    <h3>Day 3 - Sunday, September 27</h3>
     <table>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">10:00 AM</td><td>Hacking ends — submissions due</td></tr>
-      <tr><td class="hackathon-time">10:30 AM</td><td>Team presentations &amp; demos</td></tr>
-      <tr><td class="hackathon-time">12:30 PM</td><td>Judging deliberation &amp; lunch</td></tr>
-      <tr><td class="hackathon-time">1:30 PM</td><td>Awards ceremony &amp; closing</td></tr>
+      <tr><td class="hackathon-time">10:00 AM</td><td>Project submissions due</td></tr>
+      <tr><td class="hackathon-time">10:30 AM</td><td>Team presentations and demos</td></tr>
+      <tr><td class="hackathon-time">12:30 PM</td><td>Judging deliberation and lunch</td></tr>
+      <tr><td class="hackathon-time">1:30 PM</td><td>Awards and closing program</td></tr>
     </table>
   </div>
 </div>
@@ -115,24 +112,24 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 
 <div class="hackathon-tracks-grid">
   <div class="hackathon-track">
-    <h3>Quantum Machine Learning</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [PLACEHOLDER]</p>
-    <p>Apply quantum computing to real-world machine learning problems. Explore variational classifiers, quantum kernels, and hybrid quantum-classical models to push the boundaries of AI.</p>
+    <h3>Quantum machine learning</h3>
+    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+    <p>Projects in this track will explore hybrid quantum-classical approaches to classification, kernels, and related machine learning workflows.</p>
   </div>
   <div class="hackathon-track">
-    <h3>Quantum Chemistry &amp; Simulation</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [PLACEHOLDER]</p>
-    <p>Simulate molecular systems and chemical reactions on quantum hardware. Tackle drug discovery, materials science, or energy optimization using quantum algorithms.</p>
+    <h3>Quantum chemistry and simulation</h3>
+    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+    <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
   </div>
   <div class="hackathon-track">
-    <h3>Open Innovation</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [PLACEHOLDER]</p>
-    <p>Build whatever inspires you. Quantum games, cryptography tools, optimization solvers, educational apps — surprise us with your creativity and technical skill.</p>
+    <h3>Open innovation</h3>
+    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+    <p>This track supports original student ideas spanning education, software tooling, optimization, visualization, and experimental project concepts.</p>
   </div>
   <div class="hackathon-track">
-    <h3>Quantum Hardware &amp; Devices</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [PLACEHOLDER]</p>
-    <p>Work hands-on with quantum hardware, develop device control software, or create new tools for benchmarking and error mitigation. Push the limits of what today's quantum devices can do.</p>
+    <h3>Quantum hardware and devices</h3>
+    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+    <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
   </div>
 </div>
 
@@ -145,72 +142,66 @@ Join students from across the Southeast — and beyond — for a weekend of inno
 <div class="hackathon-prizes">
   <div class="hackathon-prize-tier hackathon-prize-grand">
     <h3>Grand Prize</h3>
-    <p class="hackathon-prize-value">[PLACEHOLDER — e.g., $2,000 + travel to a quantum conference]</p>
-    <p>Awarded to the overall best project across all tracks.</p>
+    <p class="hackathon-prize-value">Prize package details coming soon</p>
+    <p>The overall award will recognize the strongest project presented across the event.</p>
   </div>
   <div class="hackathon-prize-tier">
     <h3>Track Winners</h3>
-    <p class="hackathon-prize-value">[PLACEHOLDER — e.g., $500 per track]</p>
-    <p>One winner per challenge track, selected by track sponsors and judges.</p>
+    <p class="hackathon-prize-value">Prize package details coming soon</p>
+    <p>Each challenge track is expected to include a dedicated recognition award.</p>
   </div>
   <div class="hackathon-prize-tier">
     <h3>Best Newcomer</h3>
-    <p class="hackathon-prize-value">[PLACEHOLDER — e.g., $250 + mentorship opportunity]</p>
-    <p>For the best project from a team where all members are new to quantum computing.</p>
+    <p class="hackathon-prize-value">Prize package details coming soon</p>
+    <p>This award will highlight strong work from teams that are new to quantum computing.</p>
   </div>
   <div class="hackathon-prize-tier">
-    <h3>People's Choice</h3>
-    <p class="hackathon-prize-value">[PLACEHOLDER]</p>
-    <p>Voted on by all participants after final demos.</p>
+    <h3>People&apos;s Choice</h3>
+    <p class="hackathon-prize-value">Prize package details coming soon</p>
+    <p>Participants will help recognize one of the final projects through peer voting.</p>
   </div>
 </div>
 
 </div>
 
 <div class="hackathon-section">
-
 
 ## Resources
 
 <div class="hackathon-resources-grid">
   <a class="hackathon-resource-card" href="/resources/learning-resources/">
-    <div class="hackathon-resource-icon">🎓</div>
-    <div class="hackathon-resource-title">Clemson Quantum Club Bootcamp</div>
-    <div class="hackathon-resource-desc">Our own beginner-friendly workshops and materials</div>
+    <div class="hackathon-resource-title">Clemson Quantum learning resources</div>
+    <div class="hackathon-resource-desc">Introductory materials, workshop notes, and student-facing references curated by the club.</div>
   </a>
-  <a class="hackathon-resource-card" href="https://learning.quantum.ibm.com/" target="_blank">
-    <div class="hackathon-resource-icon">📘</div>
-    <div class="hackathon-resource-title">IBM Qiskit Textbook</div>
-    <div class="hackathon-resource-desc">Comprehensive quantum computing course with interactive exercises</div>
+  <a class="hackathon-resource-card" href="https://learning.quantum.ibm.com/" target="_blank" rel="noopener noreferrer">
+    <div class="hackathon-resource-title">IBM Quantum Learning</div>
+    <div class="hackathon-resource-desc">Courses, labs, and technical references for students getting started with Qiskit and IBM platforms.</div>
   </a>
-  <a class="hackathon-resource-card" href="https://pennylane.ai/" target="_blank">
-    <div class="hackathon-resource-icon">🧠</div>
-    <div class="hackathon-resource-title">PennyLane Documentation</div>
-    <div class="hackathon-resource-desc">Quantum machine learning framework and tutorials</div>
+  <a class="hackathon-resource-card" href="https://pennylane.ai/" target="_blank" rel="noopener noreferrer">
+    <div class="hackathon-resource-title">PennyLane documentation</div>
+    <div class="hackathon-resource-desc">Resources for hybrid quantum-classical development, variational workflows, and quantum machine learning.</div>
   </a>
-  <a class="hackathon-resource-card" href="https://quantumai.google/cirq" target="_blank">
-    <div class="hackathon-resource-icon">🔬</div>
-    <div class="hackathon-resource-title">Cirq Tutorials</div>
-    <div class="hackathon-resource-desc">Google's quantum computing framework</div>
+  <a class="hackathon-resource-card" href="https://quantumai.google/cirq" target="_blank" rel="noopener noreferrer">
+    <div class="hackathon-resource-title">Cirq tutorials</div>
+    <div class="hackathon-resource-desc">Google&apos;s documentation and examples for circuit design, simulation, and quantum software experimentation.</div>
   </a>
-  <a class="hackathon-resource-card" href="https://quantum.country/" target="_blank">
-    <div class="hackathon-resource-icon">🌎</div>
+  <a class="hackathon-resource-card" href="https://quantum.country/" target="_blank" rel="noopener noreferrer">
     <div class="hackathon-resource-title">Quantum Country</div>
-    <div class="hackathon-resource-desc">Accessible introduction to quantum computing concepts</div>
+    <div class="hackathon-resource-desc">An approachable conceptual introduction for participants who want a stronger foundation before the event.</div>
   </a>
 </div>
 
 </div>
 
-<div class="hackathon-section">
+<div class="hackathon-section" id="sponsors">
 
 ## Sponsors
 
-We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Silver tiers are open. Confirmed partners will be featured here as they're announced.
+We are currently building the partner roster for **SC Quantathon v3**. Title, Gold, and Silver sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
 
 <div class="hackathon-sponsor-cta">
-  <p>Interested in sponsoring the Clemson Quantathon?</p>
-  <a href="mailto:cqc@clemson.edu" class="hackathon-cta hackathon-cta-outline">Become a Sponsor</a>
+  <p>Interested in supporting the event?</p>
+  <a href="mailto:cqc@clemson.edu?subject=SC%20Quantathon%20v3%20Sponsorship" class="hackathon-cta hackathon-cta-outline">Contact the organizers</a>
 </div>
 
 </div>
@@ -223,7 +214,7 @@ We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Si
   <div class="hackathon-team-member">
     <img src="/images/Nathan.jpeg" alt="Nathan Jones" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Nathan Jones</div>
-    <div class="hackathon-team-role">Challenge &amp; Activities Lead</div>
+    <div class="hackathon-team-role">Challenge and Activities Lead</div>
   </div>
   <div class="hackathon-team-member">
     <img src="/images/blank-profile.svg" alt="Caroline Cadena" class="hackathon-team-photo" />
@@ -233,7 +224,7 @@ We're currently recruiting sponsors for SC Quantathon v3 — Title, Gold, and Si
   <div class="hackathon-team-member">
     <img src="/images/Valentine.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
-    <div class="hackathon-team-role">Tech Lead</div>
+    <div class="hackathon-team-role">Technology Lead</div>
   </div>
   <div class="hackathon-team-member">
     <img src="/images/Ashton.jpg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
