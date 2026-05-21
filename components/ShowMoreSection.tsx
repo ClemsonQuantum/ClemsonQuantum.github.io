@@ -2,24 +2,33 @@
 
 import { useState } from 'react';
 import type { PageMeta } from '@/lib/types';
-import NewsCard from './NewsCard';
+import PreviewCard from './PreviewCard';
 
 interface ShowMoreSectionProps {
   initial: PageMeta[];
   rest: PageMeta[];
+  kind: 'news' | 'event';
+  metaLabel?: string;
 }
 
 export default function ShowMoreSection({
   initial,
   rest,
+  kind,
+  metaLabel,
 }: ShowMoreSectionProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <>
-      <div className="news-cards">
+      <div className="preview-grid">
         {initial.map((item) => (
-          <NewsCard key={item.slug} item={item} />
+          <PreviewCard
+            key={item.slug}
+            item={item}
+            kind={kind}
+            metaLabel={metaLabel}
+          />
         ))}
       </div>
 
@@ -33,9 +42,14 @@ export default function ShowMoreSection({
           </button>
           {expanded && (
             <div className="more-list">
-              <div className="news-cards">
+              <div className="preview-grid">
                 {rest.map((item) => (
-                  <NewsCard key={item.slug} item={item} />
+                  <PreviewCard
+                    key={item.slug}
+                    item={item}
+                    kind={kind}
+                    metaLabel={metaLabel}
+                  />
                 ))}
               </div>
             </div>

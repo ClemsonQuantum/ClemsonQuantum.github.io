@@ -1,8 +1,21 @@
 import type { Metadata } from 'next';
+import { Fraunces, Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getNavData } from '@/lib/navData';
+
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-serif',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   title: {
@@ -53,27 +66,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="theme-color" content="#2d1054" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search&display=swap"
-        />
       </head>
-      <body>
+      <body className={`${inter.variable} ${fraunces.variable}`}>
         <a href="#main" className="skip-link">Skip to main content</a>
         <Header navData={navData} />
         <main id="main">{children}</main>
         <Footer />
-        <script src="/assets/js/main.js" defer></script>
       </body>
     </html>
   );

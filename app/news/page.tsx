@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
-import NewsCard from '@/components/NewsCard';
+import PreviewCard from '@/components/PreviewCard';
 
 export const metadata: Metadata = { title: 'News' };
 
@@ -8,16 +8,20 @@ export default function NewsPage() {
   const items = sortPages(getAllPages('news'));
 
   return (
-    <>
-      <h1>News</h1>
-      <section>
-        <p>News articles featuring the club and its members.</p>
-      </section>
-      <div className="news-cards">
+    <div className="archive-page">
+      <header className="archive-hero">
+        <p className="archive-hero__eyebrow">Clemson Quantum</p>
+        <h1 className="archive-hero__title">News</h1>
+        <p className="archive-hero__lead">
+          Recent coverage featuring the club, its members, and Clemson
+          Quantum-related work.
+        </p>
+      </header>
+      <div className="preview-grid">
         {items.map((item) => (
-          <NewsCard key={item.slug} item={item} />
+          <PreviewCard key={item.slug} item={item} kind="news" />
         ))}
       </div>
-    </>
+    </div>
   );
 }

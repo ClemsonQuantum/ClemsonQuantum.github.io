@@ -97,7 +97,22 @@ export default function SearchBar() {
 
   return (
     <div className="search search-container" ref={containerRef}>
-      <span className="material-symbols-outlined" aria-hidden="true">search</span>
+      <svg
+        className="search-icon"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path
+          d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
       <input
         ref={inputRef}
         className="search-input"
