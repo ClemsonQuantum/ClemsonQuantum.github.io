@@ -1,11 +1,5 @@
 [
   {
-    "title": "README",
-    "url": "//README/",
-    "excerpt": "How to Add Events, News, and Student Work This folder holds all the Markdown .md content files. The website automatically discovers files here and adds them to the navigation and listing pages. After editing, push to the main branch — the site rebuilds automatically. --- Adding a new hackathon 1. Cr",
-    "date": null
-  },
-  {
     "title": "SC Quantathon v1 2024",
     "url": "/events/hackathons/2024-SC-Quantathon-v1/",
     "excerpt": "Attended &bull; October 2024 SC Quantathon v1 2024 Columbia, SC &bull; University of South Carolina Official Event Site &rarr; About the Event The SC Quantathon v1 was the inaugural quantum computing hackathon organized by SC Quantum, held at the Darla Moore School of Business at the University of S",
@@ -42,18 +36,6 @@
     "date": "2026-09-25"
   },
   {
-    "title": "[EVENT NAME] [YEAR]",
-    "url": "/events/hackathons/_TEMPLATE-competitor/",
-    "excerpt": "Attended &bull; MONTH YEAR EVENT NAME YEAR CITY, STATE/COUNTRY &bull; HOST UNIVERSITY/ORG Official Event Site &rarr; About the Event EVENT NAME is description of what the event is, who hosts it, what it focuses on — 2-3 sentences. The event took place on DATES at VENUE, CITY. Any additional context ",
-    "date": "YYYY-MM-DD"
-  },
-  {
-    "title": "[EVENT NAME] [YEAR]",
-    "url": "/events/hackathons/_TEMPLATE-hosted/",
-    "excerpt": "MONTH DAY – DAY, YEAR &bull; CITY, STATE EVENT NAME YEAR Catchy tagline describing the event Apply Now About EVENT NAME is description of what the hackathon is, who hosts it, what makes it unique. Over the course of DURATION, teams of up to N will tackle real-world challenges using quantum computing",
-    "date": "YYYY-MM-DD"
-  },
-  {
     "title": "Quantum Chess — March 2025",
     "url": "/events/meetings/quantum-chess-march-2025/",
     "excerpt": "Quantum Chess — March 2025 Members of the Clemson Quantum club gathered for a game of Quantum Chess, exploring the intersection of classical strategy and quantum mechanics. Players made moves governed by quantum rules such as superposition and entanglement, leading to surprising and educational game",
@@ -78,12 +60,6 @@
     "date": "2025-10-12"
   },
   {
-    "title": "[WORKSHOP/SEMINAR NAME]",
-    "url": "/events/workshops-and-seminars/_TEMPLATE-workshop/",
-    "excerpt": "WORKSHOP/SEMINAR NAME Brief description of the workshop — what it covers, who it's for, why it matters. 1-2 paragraphs. Schedule Day 1 — Date, Time, Location Overview: Description of what happens in this session. Day 2 — Date, Time, Location Overview: Description of what happens in this session. Day",
-    "date": "YYYY-MM-DD"
-  },
-  {
     "title": "Clemson teams sweep SC Quantathon, win trip to international competition",
     "url": "/news/2024-12-04/",
     "excerpt": "Two Clemson teams placed at the SC Quantathon and secured an invitation to compete internationally. Their projects focused on practical quantum algorithms and hardware-aware optimizations. Read the full Clemson News story for details and photos. For the original article, see the Clemson News link ab",
@@ -100,12 +76,6 @@
     "url": "/news/2025-09-02/",
     "excerpt": "A Clemson team captured first place at the SC Quantathon and received an invitation to present their work at an international forum. Their project demonstrated novel approaches to quantum error mitigation and benchmarking. Read more on the SC Quantum website.",
     "date": "2025-09-02"
-  },
-  {
-    "title": "[HEADLINE]",
-    "url": "/news/_TEMPLATE-news/",
-    "excerpt": "Full article content goes here. Use markdown formatting. For external articles, write a brief summary/excerpt here since the full article lives elsewhere.",
-    "date": "YYYY-MM-DD"
   },
   {
     "title": "Detecting Majorana Zero Mode with ResNet and Winding Number Invariant",

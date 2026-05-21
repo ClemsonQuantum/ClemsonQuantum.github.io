@@ -28,7 +28,11 @@ function walkDir(dir, results = []) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
       walkDir(fullPath, results);
-    } else if (entry.name.endsWith('.md')) {
+    } else if (
+      entry.name.endsWith('.md') &&
+      !entry.name.startsWith('_') &&
+      entry.name.toLowerCase() !== 'readme.md'
+    ) {
       const raw = fs.readFileSync(fullPath, 'utf-8');
       const { data, content } = parseFrontMatter(raw);
       const relDir = path.relative(CONTENT_ROOT, path.dirname(fullPath));
