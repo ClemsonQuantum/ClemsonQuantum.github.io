@@ -4327,15 +4327,16 @@ main:has(.hackathon-page) {
   margin-right: auto;
 }
 
-.hackathon-hero h1 {
+.hackathon-hero .hackathon-hero-text h1 {
   margin: 0;
+  padding: 0;
   color: var(--color-text);
   font-size: clamp(2.8rem, 7vw, 4.8rem);
   line-height: 0.94;
   text-align: left;
 }
 
-.hackathon-hero-eyebrow {
+.hackathon-hero .hackathon-hero-eyebrow {
   margin-bottom: 1rem;
   padding: 0;
   background: transparent;
@@ -4346,13 +4347,69 @@ main:has(.hackathon-page) {
   letter-spacing: 0.14em;
 }
 
-.hackathon-hero-tagline {
+.hackathon-hero .hackathon-hero-tagline {
   max-width: 60ch;
   margin: 1.2rem 0 0;
-  color: var(--color-text-secondary);
+  color: var(--color-text);
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.75;
+}
+
+/* Hero: text flush-left, logo flush-right, capped to the section max-width */
+.hackathon-hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.hackathon-hero-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.hackathon-hero-logo {
+  flex: 0 0 auto;
+  width: clamp(160px, 22vw, 280px);
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .hackathon-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  .hackathon-hero-logo {
+    width: clamp(150px, 48vw, 230px);
+  }
+}
+
+/* Responsive 16:9 video embed */
+.hackathon-video {
+  width: 100%;
+  max-width: 820px;
+  margin: 1.5rem 0 0;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.hackathon-video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Contextual call-to-action under a section */
+.hackathon-section-cta {
+  margin-top: 1.75rem;
 }
 
 .hackathon-hero-actions {
@@ -4419,6 +4476,24 @@ main:has(.hackathon-page) {
   font-size: clamp(2rem, 4vw, 2.75rem);
   border: 0;
   text-align: left;
+}
+
+/* Section title row with a right-aligned action link (mirrors .home-section__header) */
+.hackathon-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  margin-bottom: 1.4rem;
+}
+
+.hackathon-section-header h2 {
+  margin: 0;
+}
+
+.hackathon-section-header .view-all-link {
+  flex-shrink: 0;
 }
 
 .hackathon-section p {
@@ -4516,6 +4591,10 @@ main:has(.hackathon-page) {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
+}
+
+.hackathon-prizes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .hackathon-track,
@@ -4643,7 +4722,6 @@ main:has(.hackathon-page) {
 
 @media (max-width: 1023px) {
   .hackathon-tracks-grid,
-  .hackathon-prizes,
   .hackathon-resources-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
