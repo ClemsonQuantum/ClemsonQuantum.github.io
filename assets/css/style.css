@@ -1328,26 +1328,6 @@ footer {
 .footer-links a:hover,
 .footer-links a:focus-visible {
   color: var(--color-accent);
-  background: var(--color-accent-light);
-}
-
-.footer-links a::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0.7rem;
-  right: 0.7rem;
-  height: 2px;
-  background: var(--color-accent);
-  border-radius: 1px;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.footer-links a:hover::after,
-.footer-links a:focus-visible::after {
-  transform: scaleX(1);
 }
 
 .footer-copy {
