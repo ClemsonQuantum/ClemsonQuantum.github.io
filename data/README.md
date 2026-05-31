@@ -27,34 +27,6 @@ Each person is an object with these fields:
 
 ---
 
-## gallery.json
-
-Controls the **photo gallery** on the homepage (the horizontal scrolling images).
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `href` | Yes | Where clicking the image links to (use `/` for no link) |
-| `src` | Yes | Path to the image, e.g. `/images/image-1.jpg` |
-| `caption` | Yes | Text shown below the image |
-
-**To add a photo:** Add a new entry to the array and put the image file in `public/images/`.
-
----
-
-## event-cards.json
-
-Controls the **flip cards** in the Events section on the homepage.
-
-| Field | Required | Description |
-|-------|----------|-------------|
-| `title` | Yes | Event name shown on the front |
-| `location` | Yes | City/state shown on the front |
-| `backgroundImage` | Yes | Path to the card background image |
-| `backLines` | Yes | List of text lines shown on the back of the card |
-| `link` | No | URL for the "Apply Here!" button on the back |
-
----
-
 ## site-config.json
 
 Controls the **Get Involved** page — meeting info, links, and contact details.

@@ -10,7 +10,6 @@ export default function NewsPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero">
-        <p className="archive-hero__eyebrow">Clemson Quantum</p>
         <h1 className="archive-hero__title">News</h1>
         <p className="archive-hero__lead">
           Recent coverage featuring the club, its members, and Clemson

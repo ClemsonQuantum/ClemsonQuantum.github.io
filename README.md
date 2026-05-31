@@ -63,13 +63,14 @@ app/                    # Next.js App Router pages
 components/             # React components
   Header.tsx            # Navigation header with search
   Footer.tsx            # Site footer
-  Gallery.tsx           # Horizontal image gallery
-  PeopleCard.tsx        # Board member cards (mobile)
-  OrganizerRow.tsx      # Board member rows (desktop)
+  BoardMember.tsx       # Executive board member (expandable)
+  PastBoardMembers.tsx  # Past board roster (expandable)
+  PreviewCard.tsx       # News / event preview card
   SearchBar.tsx         # Site-wide search
-  NewsCard.tsx          # News article card
-  EventCard.tsx         # Event listing card
   ShowMoreSection.tsx   # Expandable content section
+  ScrollReveal.tsx      # Scroll-in reveal wrapper
+  SiteImage.tsx         # Plain <img> wrapper
+  icons/EmailIcon.tsx   # Email icon
 content/                # Markdown content files
   events/               # Event markdown
     hackathons/         # Hackathon event pages
@@ -81,8 +82,6 @@ data/                   # JSON data files
   board-members.json    # Executive board info
   past-board-members.json  # Past executive board roster (compact)
   site-config.json      # Site configuration (meeting time, links)
-  event-cards.json      # Event card data
-  gallery.json          # Image gallery data
 lib/                    # Utility modules
   content.ts            # Markdown content loader
   navData.ts            # Navigation data builder
@@ -90,13 +89,10 @@ lib/                    # Utility modules
 scripts/
   generate-search-index.mjs  # Builds search.json at prebuild
 public/
-  assets/css/style.css  # Main stylesheet
-  assets/js/main.js     # Floating submenu logic
-  images/               # Site images
+  images/               # Site images (served at /images/...)
   search.json           # Generated search index
-assets/                 # Source CSS and JS
-  css/style.css
-  js/main.js
+assets/
+  css/style.css         # Main stylesheet (imported via app/globals.css)
 ```
 
 ## Content Editing
