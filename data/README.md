@@ -40,7 +40,7 @@ Controls the **Get Involved** page — meeting info, links, and contact details.
 | `discordInvite` | Full Discord invite URL |
 | `tigerquestUrl` | TigerQuest listing URL |
 | `contactEmail` | Club email address |
-| `formspreeId` | Formspree form ID for the contact form |
+| `formspreeId` | Optional. A real [Formspree](https://formspree.io) form ID makes the Get Involved contact form email you submissions. Until it is set, the form falls back to opening the visitor's email app (pre-addressed to `contactEmail`). |
 
 ---
 
