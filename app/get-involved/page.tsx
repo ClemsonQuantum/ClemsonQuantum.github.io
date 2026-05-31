@@ -11,13 +11,21 @@ export const metadata: Metadata = {
 const meetingDayDisplay =
   siteConfig.meetingDay.charAt(0).toUpperCase() + siteConfig.meetingDay.slice(1);
 
-// The contact form posts directly to Formspree. Until a real form ID is set in
-// data/site-config.json (replacing the "your-form-id" placeholder), the form is
-// shown but clearly marked as not-yet-live, and the direct links remain the
-// primary way to reach the team.
-const formReady =
+// The contact form posts to Formspree when a real form ID is configured in
+// data/site-config.json. Until then it falls back to a mailto: submission that
+// opens the visitor's email app pre-addressed to the club — so the form is
+// always functional, with no third-party setup required.
+const formspreeReady =
   Boolean(siteConfig.formspreeId) && siteConfig.formspreeId !== 'your-form-id';
-const formAction = `https://formspree.io/f/${siteConfig.formspreeId}`;
+const formProps = formspreeReady
+  ? { action: `https://formspree.io/f/${siteConfig.formspreeId}`, method: 'POST' }
+  : {
+      action: `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
+        'Message from the Clemson Quantum website'
+      )}`,
+      method: 'post',
+      encType: 'text/plain',
+    };
 
 export default function GetInvolvedPage() {
   return (
@@ -119,21 +127,7 @@ export default function GetInvolvedPage() {
           </p>
         </div>
         <div>
-          {!formReady && (
-            <p className="form-note">
-              Our contact form is being set up. In the meantime, the fastest way
-              to reach us is the{' '}
-              <a
-                href={siteConfig.discordInvite}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Discord
-              </a>{' '}
-              or email above.
-            </p>
-          )}
-          <form action={formAction} method="POST">
+          <form {...formProps}>
             <label htmlFor="gi-name">Name</label>
             <input id="gi-name" type="text" name="name" autoComplete="name" required />
 
@@ -149,13 +143,25 @@ export default function GetInvolvedPage() {
             <label htmlFor="gi-message">Message</label>
             <textarea id="gi-message" name="message" rows={5} required />
 
-            <input
-              type="hidden"
-              name="_subject"
-              value="New message from the Clemson Quantum website"
-            />
+            {formspreeReady && (
+              <input
+                type="hidden"
+                name="_subject"
+                value="New message from the Clemson Quantum website"
+              />
+            )}
             <button type="submit">Send message</button>
           </form>
+          {!formspreeReady && (
+            <p className="form-note">
+              Pressing send opens your email app with your message ready to send
+              to{' '}
+              <a href={`mailto:${siteConfig.contactEmail}`}>
+                {siteConfig.contactEmail}
+              </a>
+              .
+            </p>
+          )}
         </div>
       </section>
     </article>
