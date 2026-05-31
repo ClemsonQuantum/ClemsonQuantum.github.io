@@ -32,7 +32,6 @@ export default function ResourcesPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero">
-        <p className="archive-hero__eyebrow">Clemson Quantum</p>
         <h1 className="archive-hero__title">Resources</h1>
         <p className="archive-hero__lead">
           Clemson University is home to a growing quantum computing community

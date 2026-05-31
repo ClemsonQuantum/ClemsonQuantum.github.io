@@ -12,7 +12,6 @@ export default function EventsPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
-        <p className="archive-hero__eyebrow">Programming</p>
         <h1 className="archive-hero__title">Events</h1>
         <p className="archive-hero__lead">
           Browse Clemson Quantum hackathons, workshops, seminars, and club
