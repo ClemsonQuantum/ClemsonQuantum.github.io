@@ -10,7 +10,6 @@ export default function WorkshopsPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
-        <p className="archive-hero__eyebrow">Learning archive</p>
         <h1 className="archive-hero__title">Workshops &amp; Seminars</h1>
         <p className="archive-hero__lead">
           Learning-focused events hosted by Clemson Quantum and partner

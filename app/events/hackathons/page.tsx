@@ -10,7 +10,6 @@ export default function HackathonsPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
-        <p className="archive-hero__eyebrow">Competition archive</p>
         <h1 className="archive-hero__title">Hackathons</h1>
         <p className="archive-hero__lead">
           Quantum hackathons hosted by or attended by Clemson Quantum teams.

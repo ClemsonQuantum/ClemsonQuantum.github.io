@@ -10,7 +10,6 @@ export default function MeetingsPage() {
   return (
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
-        <p className="archive-hero__eyebrow">Community archive</p>
         <h1 className="archive-hero__title">Meetings</h1>
         <p className="archive-hero__lead">
           Club meetings, social programming, and recurring community events.
