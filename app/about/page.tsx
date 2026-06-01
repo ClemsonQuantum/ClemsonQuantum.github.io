@@ -43,11 +43,6 @@ export default function AboutPage() {
       <header className="about-page__hero">
         <div className="about-page__hero-copy">
           <h1>Student-led quantum computing at Clemson</h1>
-          <p className="about-page__tagline">
-            Clemson Quantum Club brings students together to learn quantum
-            computing through biweekly meetings, practical workshops, peer
-            support, and team-based events.
-          </p>
           <div className="about-page__hero-actions">
             <Link href="/get-involved/" className="cta-button cta-button--outline">
               Get involved

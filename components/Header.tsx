@@ -163,11 +163,19 @@ export default function Header({ navData }: HeaderProps) {
     <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
       <div className="nav-inner">
         <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
-          <SiteImage
-            src="/images/logo-v2.png"
-            alt="Clemson Quantum"
-            className="nav-logo"
-          />
+          <picture>
+            {/* Dark-theme logo (white on black) swapped in via prefers-color-scheme;
+                light-theme logo (black on white) is the default <img>. */}
+            <source
+              srcSet="/images/logo-dark.png"
+              media="(prefers-color-scheme: dark)"
+            />
+            <SiteImage
+              src="/images/logo-light.png"
+              alt="Clemson Quantum"
+              className="nav-logo"
+            />
+          </picture>
         </Link>
 
         <button
@@ -221,6 +229,7 @@ export default function Header({ navData }: HeaderProps) {
                 openSubmenu={openSubmenu}
                 setOpenSubmenu={setOpenSubmenu}
                 closeMenus={closeMenus}
+                viewAllLabel="View all workshops & seminars"
               />
               <EventsSubmenu
                 id="meetings"
@@ -230,6 +239,7 @@ export default function Header({ navData }: HeaderProps) {
                 openSubmenu={openSubmenu}
                 setOpenSubmenu={setOpenSubmenu}
                 closeMenus={closeMenus}
+                viewAllLabel="View all meetings"
               />
               <Link
                 href="/events/"

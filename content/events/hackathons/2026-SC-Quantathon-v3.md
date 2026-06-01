@@ -19,6 +19,10 @@ image: /images/Watt.jpg
   </div>
 </div>
 
+<div class="hackathon-hero-cta">
+  <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-large">Apply Now</a>
+</div>
+
 <div class="hackathon-section">
 
 <div class="hackathon-section-header">
@@ -148,15 +152,15 @@ Students from computing, physics, engineering, mathematics, and related fields a
 ## Prizes
 
 <div class="hackathon-prizes">
-  <div class="hackathon-prize-tier hackathon-prize-grand">
-    <h3>Grand Prize</h3>
-    <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>The overall award will recognize the strongest project presented across the event.</p>
-  </div>
   <div class="hackathon-prize-tier">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
     <p>Each challenge track is expected to include a dedicated recognition award.</p>
+  </div>
+  <div class="hackathon-prize-tier hackathon-prize-grand">
+    <h3>Grand Prize</h3>
+    <p class="hackathon-prize-value">Prize package details coming soon</p>
+    <p>The overall award will recognize the strongest project presented across the event.</p>
   </div>
   <div class="hackathon-prize-tier">
     <h3>Best Newcomer</h3>
@@ -180,7 +184,7 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
 
 <div class="hackathon-section">
 
-## Organizing Committee
+## Hackathon Committee
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
