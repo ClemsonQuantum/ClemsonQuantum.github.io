@@ -28,3 +28,13 @@ export function formatDate(dateStr: string): string {
     timeZone: 'UTC',
   });
 }
+
+/**
+ * Single source of truth for whether an event shows the "Upcoming" badge:
+ * true when the entry is dated today or later (compared in UTC at build time).
+ */
+export function isUpcoming(item: Pick<PageMeta, 'date'>): boolean {
+  if (!item.date) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  return item.date >= today;
+}
