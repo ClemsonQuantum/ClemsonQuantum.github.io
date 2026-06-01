@@ -24,7 +24,6 @@ export default function HomePage() {
     metaLabel: 'Meeting',
   }));
 
-  const today = new Date().toISOString().slice(0, 10);
   const allEvents = sortPages(
     [...hackathons, ...workshops, ...meetings].map((entry) => entry.item)
   )
@@ -41,12 +40,17 @@ export default function HomePage() {
   return (
     <>
       <section className="home-hero">
-        <div className="home-hero__content">
-          <h1 className="home-hero__title">Clemson Quantum Club</h1>
+        <h1 className="home-hero__title">Clemson Quantum Club</h1>
+        <div className="home-hero__text">
           <p className="home-hero__subtitle">
             Clemson has a student-led quantum club. We participate in
             hackathons, host workshops and seminars, and meet biweekly to learn
             and build together.
+          </p>
+          <p className="home-hero__subtitle">
+            No prior experience is required, and students from every major are
+            welcome to learn the fundamentals, join a hackathon team, and
+            explore quantum computing together.
           </p>
         </div>
         <div className="home-hero__visual">
@@ -84,18 +88,14 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="preview-grid">
-          {allEvents.map(({ item, metaLabel }) => {
-            const upcoming = item.date !== null && item.date >= today;
-            return (
-              <PreviewCard
-                key={item.slug}
-                item={item}
-                kind="event"
-                metaLabel={metaLabel}
-                badge={upcoming ? 'Upcoming' : null}
-              />
-            );
-          })}
+          {allEvents.map(({ item, metaLabel }) => (
+            <PreviewCard
+              key={item.slug}
+              item={item}
+              kind="event"
+              metaLabel={metaLabel}
+            />
+          ))}
         </div>
       </section>
 

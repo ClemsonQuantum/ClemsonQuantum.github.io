@@ -297,12 +297,24 @@ img {
 
 /* "View all" link inside dropdown — visually distinct from items */
 .nav-dropdown-link--view-all {
+  position: relative;
   font-size: 0.8rem;
   color: var(--color-accent);
   font-weight: 600;
-  margin-top: 0.25rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-border);
+  /* Gap above the link; the divider is a separate ::before line sitting in the
+     gap (outside the link's box) so it stays centered AND the hover highlight
+     never covers it. */
+  margin-top: 0.85rem;
+}
+
+.nav-dropdown-link--view-all::before {
+  content: '';
+  position: absolute;
+  left: 0.5rem;
+  right: 0.5rem;
+  top: -0.42rem;
+  height: 1px;
+  background: var(--color-border);
 }
 
 .nav-dropdown-link--view-all:hover {
@@ -3038,6 +3050,10 @@ main:has(.competitor-page) {
 }
 
 .about-page__hero h1 {
+  /* Cancel the global h1's `padding: 0 var(--space-md)` so the title sits flush
+     at the page's left margin, aligned with the section headings below it and
+     the moved archive/home hero titles. */
+  padding: 0;
   max-width: 15ch;
   margin-bottom: var(--space-md);
   font-size: clamp(2.4rem, 5.5vw, 4.4rem);
@@ -3106,6 +3122,13 @@ main:has(.competitor-page) {
 }
 
 .about-page__section {
+  /* Override the generic centered+padded `section` rule so section headings
+     line up with the hero title at the page's left margin. */
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
   margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
 }
 
@@ -3353,15 +3376,16 @@ main:has(.competitor-page) {
 .board-member__links svg.board-member__link-icon {
   color: var(--color-text);
   display: block;
+  /* The envelope only fills ~75% of its viewBox, so it reads smaller than the
+     solid LinkedIn/GitHub icons — size it up a touch to match visually. */
+  width: 1.7rem;
+  height: 1.7rem;
 }
 
 /* Past board members archive on /about page */
 .about-past-board {
-  padding: var(--space-xl);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
+  /* No card box — sits flat on the page like the homepage section headers. */
+  padding: 0;
 }
 
 .about-past-board__header {
@@ -3407,17 +3431,16 @@ main:has(.competitor-page) {
   padding: 0;
   margin: var(--space-lg) 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  /* Up to 3 per row across the section; auto-fill (not auto-fit) keeps a lone
+     member from stretching to full width, and it wraps to 2/1 on narrow screens. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
   gap: var(--space-md);
 }
 .about-past-board__item {
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  padding: var(--space-md);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  /* No box — flat entry (applies to Evan and any future past member). */
   color: var(--color-text);
 }
 .about-past-board__avatar {
@@ -3455,7 +3478,7 @@ main:has(.competitor-page) {
 
 @media (max-width: 639px) {
   .about-past-board {
-    padding: var(--space-lg) var(--space-md);
+    padding: 0;
   }
 
   .about-past-board__header {
@@ -3619,7 +3642,7 @@ a:hover {
 }
 
 .nav-dropdown-link--all {
-  margin-top: 0.45rem;
+  margin-top: 0.85rem;
 }
 
 @media (min-width: 768px) {
@@ -3701,7 +3724,9 @@ main {
 
 .archive-hero {
   max-width: 860px;
-  margin: 0 auto;
+  /* Left-align the hero so the page title starts at the same content margin as
+     the sections/cards below it (was centered, which pushed it inboard). */
+  margin: 0;
   padding: clamp(1.5rem, 3vw, 2.5rem) 0 var(--space-xl);
 }
 
@@ -3727,7 +3752,9 @@ main {
 }
 
 .archive-hero__lead {
-  max-width: 62ch;
+  /* No ch cap — let the caption fill the hero width so it sits on one line on
+     desktop and wraps to a new line only when the viewport is too narrow. */
+  max-width: none;
   margin: 1rem 0 0;
   color: var(--color-text-secondary);
   font-size: 1.05rem;
@@ -3735,6 +3762,10 @@ main {
 }
 
 .archive-section {
+  /* Override the generic centered `section` rule so archive sections span the
+     full page width and left-align with the hero title and the page margin. */
+  max-width: none;
+  margin: 0;
   padding: var(--space-lg) 0 var(--space-2xl);
 }
 
@@ -3749,6 +3780,14 @@ main {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-lg);
   align-items: stretch;
+}
+
+/* Pages that drop a card grid straight into .archive-page (News, Hackathons,
+   Meetings, Workshops) have no .archive-section wrapper, so the grid would sit
+   flush against the footer. Give it the same bottom cushion the section-based
+   pages (Events, Resources) already get via their padding-bottom. */
+.archive-page > .preview-grid:last-child {
+  margin-bottom: var(--space-2xl);
 }
 
 .preview-card {
@@ -3863,28 +3902,35 @@ main {
 .home-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: center;
+  column-gap: clamp(2rem, 4vw, 4rem);
+  row-gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: start;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: clamp(2rem, 5vw, 4.5rem) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
 }
 
 .home-hero__title {
+  grid-column: 1 / -1;
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  font-size: clamp(2.35rem, 4.5vw, 3.7rem);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
   line-height: 1;
   text-align: left;
 }
 
 .home-hero__subtitle {
-  margin: 1.15rem 0 0;
+  margin: 0;
   color: var(--color-text-secondary);
   font-size: 1.1rem;
   line-height: 1.75;
   max-width: 58ch;
+}
+
+/* Space between the two stacked hero paragraphs */
+.home-hero__text > p + p {
+  margin-top: 1.3rem;
 }
 
 .home-hero__ctas {
@@ -4011,6 +4057,12 @@ main {
   margin-bottom: var(--space-lg);
 }
 
+/* When this header is reused inside an archive section (Events page), keep the
+   title margin at 0 so it baseline-aligns with the "View all" link. */
+.home-section__header .home-section__title {
+  margin: 0;
+}
+
 .view-all-link {
   display: inline-flex;
   align-items: center;
@@ -4027,7 +4079,7 @@ main {
 }
 
 .home-section--board {
-  padding-bottom: clamp(3rem, 5vw, 4rem);
+  padding-bottom: clamp(2.4rem, 3.9vw, 3rem);
 }
 
 .home-section--board .home-section__header {
@@ -4066,9 +4118,8 @@ main {
   border-color: rgba(22, 32, 51, 0.12);
 }
 
-.board-member:last-child {
-  border-bottom: 1px solid rgba(22, 32, 51, 0.12);
-}
+/* Last board member intentionally has no bottom border — only the footer
+   follows it on the homepage, so a trailing rule would dangle. */
 
 .board-member__avatar {
   width: 120px;
@@ -4120,10 +4171,12 @@ main {
 
 .board-member__links {
   display: flex;
+  align-items: center;
   gap: 0.85rem;
 }
 
 .board-member__link-icon {
+  display: block;
   width: 1.45rem;
   height: 1.45rem;
   opacity: 0.78;
@@ -4323,17 +4376,25 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-page {
-  background: transparent;
+  /* One continuous gradient across the whole page so the banner flows seamlessly
+     into the page below — the banner's soft lavender at the top melts into the
+     warm cream page. (Dark mode overrides this with a dark-purple version.) */
+  background: linear-gradient(
+    180deg,
+    rgb(238, 231, 247) 0,
+    rgb(245, 241, 249) 200px,
+    var(--color-bg) 600px
+  );
 }
 
 .hackathon-hero {
   padding: clamp(3.2rem, 8vw, 5rem) var(--space-xl);
   color: var(--color-text);
   text-align: left;
-  background:
-    linear-gradient(135deg, rgba(255, 245, 235, 0.96) 0%, rgba(255, 255, 255, 0.96) 60%, rgba(239, 231, 255, 0.82) 100%);
-  border-top: 1px solid rgba(22, 32, 51, 0.06);
-  border-bottom: 1px solid rgba(22, 32, 51, 0.08);
+  /* Background lives on .hackathon-page so the banner flows seamlessly into the
+     page (both themes); the hero itself is transparent with no hard edge. */
+  background: transparent;
+  border: none;
 }
 
 .hackathon-hero > * {
@@ -4461,6 +4522,31 @@ main:has(.hackathon-page) {
   color: var(--color-accent-hover);
   border-color: rgba(245, 102, 0, 0.36);
   box-shadow: none;
+}
+
+/* "Apply" CTA centered in the open band between the hero and the first section.
+   Sized up here because the redesigned .hackathon-cta rule above overrides the
+   global .hackathon-cta-large modifier (same specificity, later in the file). */
+/* Zero the hero's bottom padding and the About section's top padding around the
+   Apply CTA so the button's own equal vertical padding defines the gap — keeping
+   it centered in a small band at every viewport width. */
+.hackathon-hero:has(+ .hackathon-hero-cta) {
+  padding-bottom: 0;
+}
+
+.hackathon-hero-cta + .hackathon-section {
+  padding-top: 0;
+}
+
+.hackathon-hero-cta {
+  display: flex;
+  justify-content: center;
+  padding: clamp(1.75rem, 3.5vw, 2.5rem) var(--space-xl);
+}
+
+.hackathon-hero-cta .hackathon-cta {
+  padding: 1.1rem 3.25rem;
+  font-size: 1.15rem;
 }
 
 .hackathon-section,
@@ -4934,5 +5020,44 @@ main:has(.hackathon-page) {
 
   .board-member:last-child {
     border-bottom-color: rgba(229, 226, 235, 0.12);
+  }
+}
+
+/* ===================================================================
+   SC Quantathon hero — dark-mode banner (night version)
+   =================================================================== */
+@media (prefers-color-scheme: dark) {
+  /* One continuous gradient across the whole hackathon page: the banner's purple
+     at the top flows seamlessly down into the page's dark purple. The banner
+     itself is transparent, so there is no separate region and no hard edge. */
+  .hackathon-page {
+    background: linear-gradient(
+      180deg,
+      rgb(56, 42, 62) 0,
+      rgb(42, 32, 66) 220px,
+      var(--color-bg) 620px
+    );
+  }
+
+  .hackathon-hero {
+    background: transparent;
+    border: none;
+  }
+
+  /* The banner logo is a solid-black SVG; invert it to white for the dark banner. */
+  .hackathon-hero-logo {
+    filter: invert(1);
+  }
+}
+
+/* ===================================================================
+   Board member GitHub icon — light version for dark mode
+   =================================================================== */
+@media (prefers-color-scheme: dark) {
+  /* The GitHub mark is a dark (#24292f) SVG; invert it to a light version so it
+     reads on the dark surface. (LinkedIn is blue and the email uses currentColor,
+     so they're fine as-is.) */
+  .board-member__link-icon[src*='github'] {
+    filter: invert(1);
   }
 }

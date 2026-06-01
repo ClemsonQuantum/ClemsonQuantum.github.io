@@ -1,6 +1,6 @@
 import SiteImage from './SiteImage';
 import type { PageMeta } from '@/lib/types';
-import { formatDate } from '@/lib/types';
+import { formatDate, isUpcoming } from '@/lib/types';
 
 interface PreviewCardProps {
   item: PageMeta;
@@ -44,6 +44,11 @@ export default function PreviewCard({
 }: PreviewCardProps) {
   const footerLabel = kind === 'news' ? getSourceLabel(item) : metaLabel;
   const summary = item.summary ?? item.excerpt;
+  // Centralized badge: an explicit `badge` overrides, otherwise event cards show
+  // "Upcoming" automatically based on the entry's date — so every card, on every
+  // page, stays consistent and is maintained in one place.
+  const effectiveBadge =
+    badge ?? (kind === 'event' && isUpcoming(item) ? 'Upcoming' : null);
 
   return (
     <a
@@ -65,7 +70,9 @@ export default function PreviewCard({
           {item.date && (
             <span className="preview-card__date">{formatDate(item.date)}</span>
           )}
-          {badge && <span className="preview-card__badge">{badge}</span>}
+          {effectiveBadge && (
+            <span className="preview-card__badge">{effectiveBadge}</span>
+          )}
         </div>
         <h3 className="preview-card__title">{item.title}</h3>
         {summary && <p className="preview-card__summary">{summary}</p>}
