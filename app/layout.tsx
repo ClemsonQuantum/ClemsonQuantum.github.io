@@ -35,23 +35,21 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logo-v2.png',
-        width: 512,
-        height: 512,
-        alt: 'Clemson Quantum Logo',
+        url: '/images/logo-light.png',
+        width: 1144,
+        height: 779,
+        alt: 'Clemson Quantum Club Logo',
       },
     ],
   },
-  twitter: {
-    card: 'summary',
-    title: 'Clemson Quantum',
-    description:
-      'Student-led quantum computing club at Clemson University.',
-    images: ['/images/logo-v2.png'],
-  },
   icons: {
-    icon: '/images/logo-v2.png',
-    apple: '/images/logo-v2.png',
+    // Match the header brand logo: light wordmark by default, dark variant
+    // swapped in by browsers that honor the favicon color-scheme media query.
+    icon: [
+      { url: '/images/logo-light.png', media: '(prefers-color-scheme: light)' },
+      { url: '/images/logo-dark.png', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: '/images/logo-light.png',
   },
 };
 
