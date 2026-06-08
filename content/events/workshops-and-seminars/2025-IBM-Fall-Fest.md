@@ -1,12 +1,12 @@
 ---
 layout: default
-title: "2025 IBM Fall Fest"
+title: "IBM Quantum Qiskit Fall Fest 2025"
 date: 2025-10-12
-summary: "IBM Fall Fest 2025 — partnered with Clemson Quantum Club."
+summary: "IBM Quantum Qiskit Fall Fest 2025 — partnered with Clemson Quantum Club."
 image: "/images/ibm-fall-fest-2025.png"
 ---
 
-# 2025 IBM Fall Fest
+# IBM Quantum Qiskit Fall Fest 2025
 
 Clemson was selected to be a satellite host for the annual IBM Qiskit Fall Festivals. These festivals are held at universities and academic institutions around the world in October and November. The goal is to educate students and the community about quantum computing and its potential. Our Fall Fest will emphasize interdisciplinary applications — we will include an introductory workshop followed by speaker sessions that touch on biology/medicine, finance/business, physics/chemistry, and computing.
 

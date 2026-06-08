@@ -11,9 +11,6 @@ export default function MeetingsPage() {
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Meetings</h1>
-        <p className="archive-hero__lead">
-          Club meetings, social programming, and recurring community events.
-        </p>
       </header>
       <div className="preview-grid">
         {meetings.map((item) => (

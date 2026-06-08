@@ -11,10 +11,6 @@ export default function NewsPage() {
     <div className="archive-page">
       <header className="archive-hero">
         <h1 className="archive-hero__title">News</h1>
-        <p className="archive-hero__lead">
-          Recent coverage featuring the club, its members, and Clemson
-          Quantum-related work.
-        </p>
       </header>
       <div className="preview-grid">
         {items.map((item) => (

@@ -1,15 +1,15 @@
 ---
 layout: default
-title: Y Quantum 2025
+title: YQuantum 2025
 date: 2025-04-01
-summary: "Clemson Quantum competed at Y Quantum 2025."
+summary: "Clemson Quantum competed at YQuantum 2025."
 ---
 
 <div class="competitor-page">
 
 <div class="competitor-hero">
   <p class="competitor-hero-eyebrow">Attended &bull; 2025</p>
-  <h1>Y Quantum 2025</h1>
+  <h1>YQuantum 2025</h1>
   <p class="competitor-hero-sub">[PLACEHOLDER — City] &bull; [PLACEHOLDER — Host]</p>
 </div>
 
@@ -17,7 +17,7 @@ summary: "Clemson Quantum competed at Y Quantum 2025."
 
 ## About the Event
 
-[PLACEHOLDER — Description of the Y Quantum event.]
+[PLACEHOLDER — Description of the YQuantum event.]
 
 </div>
 

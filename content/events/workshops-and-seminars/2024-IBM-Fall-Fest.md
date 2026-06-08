@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "2024 IBM Fall Fest"
+title: "IBM Quantum Qiskit Fall Fest 2024"
 date: 2024-10-12
-summary: "Clemson Quantum Club hosted IBM Fall Fest 2024 — a day of hands-on workshops, demos, and networking with IBM quantum engineers."
+summary: "Clemson Quantum Club hosted IBM Quantum Qiskit Fall Fest 2024 — a day of hands-on workshops, demos, and networking with IBM quantum engineers."
 image: "/images/ibm-fall-fest-2024.jpg"
 location: "Clemson University — Watt Center"
 external_url: "https://www.ibm.com/events/fallfest"
@@ -10,7 +10,7 @@ cta_label: "View details"
 ---
 
 <main>
-	<h1>2024 IBM Fall Fest</h1>
+	<h1>IBM Quantum Qiskit Fall Fest 2024</h1>
 </main>
 
 <section>
