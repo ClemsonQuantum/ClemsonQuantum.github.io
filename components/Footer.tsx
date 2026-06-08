@@ -7,7 +7,6 @@ export default function Footer() {
         <a href={siteConfig.discordInvite} target="_blank" rel="noopener noreferrer">Discord</a>
         <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener noreferrer">TigerQuest</a>
         <a href={`mailto:${siteConfig.contactEmail}`}>Contact</a>
       </div>
       <p className="footer-copy">

@@ -3432,26 +3432,15 @@ main:has(.competitor-page) {
   font-size: 0.98rem;
 }
 
-.about-past-board__toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+/* Let the standardized .view-all-link work on <button> (e.g. the archive
+   toggle) by stripping default button chrome. */
+button.view-all-link {
   flex-shrink: 0;
-  padding: 0.55rem 1rem;
-  background: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
-  font-family: var(--font-sans);
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: inherit;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
-}
-.about-past-board__toggle:hover,
-.about-past-board__toggle:focus-visible {
-  background: var(--color-accent-light);
-  border-color: var(--color-accent);
 }
 .about-past-board__list {
   list-style: none;
@@ -3511,10 +3500,6 @@ main:has(.competitor-page) {
   .about-past-board__header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .about-past-board__toggle {
-    width: 100%;
   }
 }
 
