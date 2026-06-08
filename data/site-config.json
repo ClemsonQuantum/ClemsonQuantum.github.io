@@ -6,6 +6,9 @@
   "discordInvite": "https://discord.gg/X42jcgvrRX",
   "tigerquestUrl": "https://clemson.campuslabs.com/engage/organization/clemsonquantum",
   "linkedinUrl": "https://www.linkedin.com/company/clemson-quantum-club",
+  "instagramUrl": "https://www.instagram.com/clemsonquantum",
+  "githubUrl": "https://github.com/ClemsonQuantum",
+  "groupmeUrl": "#",
   "contactEmail": "cqc@clemson.edu",
-  "formspreeId": "your-form-id"
+  "web3formsKey": "your-access-key"
 }

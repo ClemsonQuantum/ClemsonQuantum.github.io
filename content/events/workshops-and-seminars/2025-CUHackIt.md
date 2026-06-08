@@ -1,13 +1,13 @@
 ---
-title: "2025 CUHackIt"
+title: "CUhackit 2025"
 date: 2025-05-01
-summary: "CUHackIt 2025 — Clemson's student hackathon featuring quantum computing workshops and team challenges."
+summary: "CUhackit 2025 — Clemson's student hackathon featuring quantum computing workshops and team challenges."
 image: "/images/home_background.jpg"
 ---
 
-# 2025 CUHackIt
+# CUhackit 2025
 
-CUHackIt is Clemson University's annual student hackathon. In 2025, the Clemson Quantum Club participated with quantum computing workshops and mentoring.
+CUhackit is Clemson University's annual student hackathon. In 2025, the Clemson Quantum Club participated with quantum computing workshops and mentoring.
 
 ## Highlights
 

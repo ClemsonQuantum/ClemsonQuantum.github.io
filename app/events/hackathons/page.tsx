@@ -11,9 +11,6 @@ export default function HackathonsPage() {
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Hackathons</h1>
-        <p className="archive-hero__lead">
-          Quantum hackathons hosted by or attended by Clemson Quantum teams.
-        </p>
       </header>
       <div className="preview-grid">
         {hackathons.map((item) => (

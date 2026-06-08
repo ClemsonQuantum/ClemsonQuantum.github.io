@@ -33,12 +33,6 @@ export default function ResourcesPage() {
     <div className="archive-page">
       <header className="archive-hero">
         <h1 className="archive-hero__title">Resources</h1>
-        <p className="archive-hero__lead">
-          Clemson University is home to a growing quantum computing community
-          spanning multiple departments. Below you&apos;ll find curated learning
-          materials, student work, and the faculty and programs driving quantum
-          research and education at Clemson.
-        </p>
       </header>
 
       <section className="archive-section">

@@ -1134,7 +1134,11 @@ section p {
 .page-content {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 var(--space-xl);
+  /* Bottom cushion so detail pages (news articles, meeting/workshop pages) sit
+     spaced above the footer, matching the archive pages. Full-bleed pages
+     (.hackathon-page / .competitor-page) reset this via their `:has` overrides
+     and supply their own bottom spacing through their last section. */
+  padding: 0 var(--space-xl) var(--space-2xl);
 }
 
 .page-content h1 {
@@ -2949,6 +2953,29 @@ main:has(.competitor-page) {
   line-height: 1.55;
 }
 
+/* Inline status messages for the AJAX contact form (Web3Forms). */
+.form-success,
+.form-error {
+  margin: 0;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.form-success {
+  background: rgba(34, 139, 87, 0.1);
+  border: 1px solid rgba(34, 139, 87, 0.35);
+  color: #1d6b45;
+}
+
+.form-error {
+  margin-top: 0.85rem;
+  background: rgba(196, 52, 32, 0.08);
+  border: 1px solid rgba(196, 52, 32, 0.3);
+  color: #a3331f;
+}
+
 /* Resources hub — 2-up cards for the sub-pages + faculty role line */
 .resource-cards {
   display: grid;
@@ -3714,6 +3741,13 @@ main {
   padding-top: var(--space-xl);
 }
 
+/* Archive pages (News, Events, Resources) lead with a centered title and no
+   lead text, so drop the generic main top padding and let the hero supply a
+   small gap — keeps the title close to the sticky header. */
+main:has(.archive-page) {
+  padding-top: 0;
+}
+
 .archive-page,
 .home-section,
 .home-proof {
@@ -3723,11 +3757,11 @@ main {
 }
 
 .archive-hero {
-  max-width: 860px;
-  /* Left-align the hero so the page title starts at the same content margin as
-     the sections/cards below it (was centered, which pushed it inboard). */
+  /* Span the full archive-page width so the centered title lands at page center,
+     matching the home hero. Small top gap so the title sits just under the header. */
+  max-width: none;
   margin: 0;
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0 var(--space-xl);
+  padding: var(--space-md) 0 var(--space-xl);
 }
 
 .archive-hero__eyebrow,
@@ -3746,7 +3780,7 @@ main {
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  text-align: left;
+  text-align: center;
   font-size: clamp(2.5rem, 5vw, 4rem);
   line-height: 0.95;
 }
@@ -3823,6 +3857,29 @@ main {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* The SC Quantathon v3 poster is more square (1199x829) than the 16:9 card
+   slot, so the default `cover` crops its top and bottom. Show the whole poster
+   with `contain`, and fill the resulting letterbox with a blurred, zoomed copy
+   of the same poster so the card still reads as a full-bleed image rather than
+   bars. Targeted to this one image via its src so all other cards keep `cover`. */
+.preview-card__media:has(.preview-card__image[src$="SCQv3 graphic.png"]) {
+  position: relative;
+}
+
+.preview-card__media:has(.preview-card__image[src$="SCQv3 graphic.png"])::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/images/SCQv3 graphic.png') center / cover no-repeat;
+  filter: blur(20px) brightness(0.8);
+  transform: scale(1.18);
+}
+
+.preview-card__image[src$="SCQv3 graphic.png"] {
+  position: relative;
+  object-fit: contain;
 }
 
 .preview-card__body {
@@ -3917,7 +3974,9 @@ main {
   color: var(--color-text);
   font-size: clamp(2.6rem, 5vw, 4.2rem);
   line-height: 1;
-  text-align: left;
+  /* Spans the full hero width, so centering the text keeps the club name
+     centered on the page at any viewport. */
+  text-align: center;
 }
 
 .home-hero__subtitle {
@@ -4270,7 +4329,6 @@ footer {
     aspect-ratio: 16 / 10;
   }
 
-  .home-hero__title,
   .home-section__title {
     text-align: left;
   }
