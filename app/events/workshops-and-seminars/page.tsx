@@ -11,10 +11,6 @@ export default function WorkshopsPage() {
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Workshops &amp; Seminars</h1>
-        <p className="archive-hero__lead">
-          Learning-focused events hosted by Clemson Quantum and partner
-          organizations.
-        </p>
       </header>
       <div className="preview-grid">
         {workshops.map((item) => (

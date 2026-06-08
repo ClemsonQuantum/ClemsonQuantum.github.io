@@ -1,15 +1,16 @@
 ---
 layout: default
-title: YQuantum 2025
-date: 2025-04-01
-summary: "Clemson Quantum competed at YQuantum 2025."
+title: YQuantum 2026
+date: 2026-04-01
+summary: "Clemson Quantum at YQuantum 2026. (Details coming soon.)"
+image: "/images/Question.jpg"
 ---
 
 <div class="competitor-page">
 
 <div class="competitor-hero">
-  <p class="competitor-hero-eyebrow">Attended &bull; 2025</p>
-  <h1>YQuantum 2025</h1>
+  <p class="competitor-hero-eyebrow">Attended &bull; 2026</p>
+  <h1>YQuantum 2026</h1>
   <p class="competitor-hero-sub">[PLACEHOLDER — City] &bull; [PLACEHOLDER — Host]</p>
 </div>
 
@@ -17,7 +18,7 @@ summary: "Clemson Quantum competed at YQuantum 2025."
 
 ## About the Event
 
-[PLACEHOLDER — Description of the YQuantum event.]
+[PLACEHOLDER — Description of the YQuantum 2026 event and Clemson Quantum's participation.]
 
 </div>
 

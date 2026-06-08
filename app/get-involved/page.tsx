@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import siteConfig from '@/data/site-config.json';
+import ContactForm from '@/components/ContactForm';
 
 export const metadata: Metadata = {
   title: 'Get Involved',
@@ -10,22 +11,6 @@ export const metadata: Metadata = {
 
 const meetingDayDisplay =
   siteConfig.meetingDay.charAt(0).toUpperCase() + siteConfig.meetingDay.slice(1);
-
-// The contact form posts to Formspree when a real form ID is configured in
-// data/site-config.json. Until then it falls back to a mailto: submission that
-// opens the visitor's email app pre-addressed to the club — so the form is
-// always functional, with no third-party setup required.
-const formspreeReady =
-  Boolean(siteConfig.formspreeId) && siteConfig.formspreeId !== 'your-form-id';
-const formProps = formspreeReady
-  ? { action: `https://formspree.io/f/${siteConfig.formspreeId}`, method: 'POST' }
-  : {
-      action: `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(
-        'Message from the Clemson Quantum website'
-      )}`,
-      method: 'post',
-      encType: 'text/plain',
-    };
 
 export default function GetInvolvedPage() {
   return (
@@ -93,6 +78,13 @@ export default function GetInvolvedPage() {
             Join the Discord community
           </a>
           <a
+            href={siteConfig.linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Follow us on LinkedIn
+          </a>
+          <a
             href={siteConfig.tigerquestUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -100,11 +92,25 @@ export default function GetInvolvedPage() {
             Find us on TigerQuest
           </a>
           <a
-            href={siteConfig.linkedinUrl}
+            href={siteConfig.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
-            Follow us on LinkedIn
+            See our code on GitHub
+          </a>
+          <a
+            href={siteConfig.groupmeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Join the GroupMe
+          </a>
+          <a
+            href={siteConfig.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Follow us on Instagram
           </a>
           <Link href="/events/">Browse upcoming events</Link>
         </div>
@@ -127,41 +133,7 @@ export default function GetInvolvedPage() {
           </p>
         </div>
         <div>
-          <form {...formProps}>
-            <label htmlFor="gi-name">Name</label>
-            <input id="gi-name" type="text" name="name" autoComplete="name" required />
-
-            <label htmlFor="gi-email">Email</label>
-            <input
-              id="gi-email"
-              type="email"
-              name="email"
-              autoComplete="email"
-              required
-            />
-
-            <label htmlFor="gi-message">Message</label>
-            <textarea id="gi-message" name="message" rows={5} required />
-
-            {formspreeReady && (
-              <input
-                type="hidden"
-                name="_subject"
-                value="New message from the Clemson Quantum website"
-              />
-            )}
-            <button type="submit">Send message</button>
-          </form>
-          {!formspreeReady && (
-            <p className="form-note">
-              Pressing send opens your email app with your message ready to send
-              to{' '}
-              <a href={`mailto:${siteConfig.contactEmail}`}>
-                {siteConfig.contactEmail}
-              </a>
-              .
-            </p>
-          )}
+          <ContactForm />
         </div>
       </section>
     </article>

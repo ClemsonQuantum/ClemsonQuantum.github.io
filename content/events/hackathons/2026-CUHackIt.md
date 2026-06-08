@@ -1,23 +1,26 @@
 ---
 layout: default
-title: YQuantum 2025
-date: 2025-04-01
-summary: "Clemson Quantum competed at YQuantum 2025."
+title: "CUhackit 2026"
+date: 2026-05-01
+summary: "Clemson Quantum at CUhackit 2026, Clemson University's student hackathon. (Details coming soon.)"
+image: "/images/Question.jpg"
 ---
 
 <div class="competitor-page">
 
 <div class="competitor-hero">
-  <p class="competitor-hero-eyebrow">Attended &bull; 2025</p>
-  <h1>YQuantum 2025</h1>
-  <p class="competitor-hero-sub">[PLACEHOLDER — City] &bull; [PLACEHOLDER — Host]</p>
+  <p class="competitor-hero-eyebrow">Attended &bull; 2026</p>
+  <h1>CUhackit 2026</h1>
+  <p class="competitor-hero-sub">Clemson, SC &bull; Clemson University</p>
 </div>
 
 <div class="competitor-section">
 
 ## About the Event
 
-[PLACEHOLDER — Description of the YQuantum event.]
+CUhackit is Clemson University's annual student hackathon. The Clemson Quantum Club participates with quantum computing workshops and mentoring.
+
+[PLACEHOLDER — Details about Clemson Quantum's participation in CUhackit 2026 coming soon.]
 
 </div>
 

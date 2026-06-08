@@ -14,10 +14,6 @@ export default function EventsPage() {
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Events</h1>
-        <p className="archive-hero__lead">
-          Browse Clemson Quantum hackathons, workshops, seminars, and club
-          meetings across the archive.
-        </p>
       </header>
 
       <section className="archive-section">

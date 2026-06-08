@@ -3,7 +3,7 @@ layout: default
 title: SC Quantathon v3 2026
 date: 2026-09-25
 summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
-image: /images/Watt.jpg
+image: "/images/SCQv3 graphic.png"
 ---
 
 <div class="hackathon-page">
@@ -193,7 +193,7 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
     <div class="hackathon-team-role">Challenge and Activities Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/blank-profile.svg" alt="Caroline Cadena" class="hackathon-team-photo" />
+    <img src="/images/Caroline-Cadena.jpeg" alt="Caroline Cadena" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Logistics Lead</div>
   </div>
