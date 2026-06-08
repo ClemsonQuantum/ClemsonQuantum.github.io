@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 const focusAreas = [
   {
-    title: 'Biweekly access',
+    title: 'Community access',
     text:
-      'Students can drop into biweekly meetings without an application, dues, or prior quantum computing background.',
+      'Students can drop into meetings without an application, dues, or prior quantum computing background.',
   },
   {
     title: 'Hands-on learning',
@@ -43,19 +43,6 @@ export default function AboutPage() {
       <header className="about-page__hero">
         <div className="about-page__hero-copy">
           <h1>Student-led quantum computing at Clemson</h1>
-          <div className="about-page__hero-actions">
-            <Link href="/get-involved/" className="cta-button cta-button--outline">
-              Get involved
-            </Link>
-            <a
-              href={siteConfig.discordInvite}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cta-button cta-button--outline"
-            >
-              Join Discord
-            </a>
-          </div>
         </div>
         <aside className="about-page__meeting-card" aria-label="Meeting details">
           <p className="about-page__card-label">Biweekly meetings</p>
@@ -63,7 +50,7 @@ export default function AboutPage() {
             <div>
               <dt>When</dt>
               <dd>
-                {meetingDayDisplay}, {siteConfig.meetingTime}
+                {meetingDayDisplay} @ {siteConfig.meetingTime}
               </dd>
             </div>
             <div>
@@ -128,15 +115,12 @@ export default function AboutPage() {
           <p>
             Members participate in workshops, hackathons, and student projects,
             including events connected to MIT iQuHACK and the SC Quantathon
-            series. Clemson Quantum is also preparing to host{' '}
-            <Link href="/events/hackathons/2026-SC-Quantathon-v3/">
-              SC Quantathon v3
-            </Link>
-            , a student-focused quantum hackathon at Clemson.
+            series, our student-focused quantum hackathon at Clemson.
           </p>
         </div>
         <div className="about-page__link-panel">
           <Link href="/events/">Browse events</Link>
+          <Link href="/events/workshops-and-seminars/">Workshops &amp; seminars</Link>
           <Link href="/resources/learning-resources/">Learning resources</Link>
           <Link href="/resources/student-work-and-projects/">
             Student work &amp; projects

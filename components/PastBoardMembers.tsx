@@ -25,7 +25,7 @@ export default function PastBoardMembers() {
           <p>Previous student officers who helped build Clemson Quantum.</p>
         </div>
         <button
-          className="about-past-board__toggle"
+          className="view-all-link"
           onClick={() => setExpanded((e) => !e)}
           aria-expanded={expanded}
         >
