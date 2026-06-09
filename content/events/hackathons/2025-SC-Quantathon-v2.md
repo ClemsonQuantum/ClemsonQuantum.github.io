@@ -3,9 +3,7 @@ layout: default
 title: SC Quantathon v2 2025
 date: 2025-10-09
 summary: "Clemson Quantum competed at SC Quantathon v2 in Columbia, SC."
-image: "/images/SCQv2 graphic.webp"
-link: "https://www.scquantum.org/events/iqc25-championship-quantathonv2"
-cta_label: "Official Site"
+image: "/images/scq-v2-graphic.webp"
 ---
 
 <div class="competitor-page">

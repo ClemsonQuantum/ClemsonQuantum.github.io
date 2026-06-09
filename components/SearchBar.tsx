@@ -27,7 +27,7 @@ export default function SearchBar() {
   }, []);
 
   useEffect(() => {
-    if (query.trim().length < 2) {
+    if (query.trim().length < 1) {
       setResults([]);
       setActiveIndex(-1);
       return;
@@ -91,7 +91,7 @@ export default function SearchBar() {
     [results, activeIndex]
   );
 
-  const hasMinQuery = query.trim().length >= 2;
+  const hasMinQuery = query.trim().length >= 1;
   const hasResults = results.length > 0;
   const isOpen = hasMinQuery;
 
@@ -144,9 +144,6 @@ export default function SearchBar() {
               }}
             >
               <div className="search-item-title">{r.title}</div>
-              <div className="search-item-sub">
-                {r.url.replace(/\/$/, '')}
-              </div>
             </a>
           ))}
         </div>

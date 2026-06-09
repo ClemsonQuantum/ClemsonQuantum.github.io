@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkshopPage({ params }: Props) {
   const { slug } = await params;
   const page = getPageBySlug('events/workshops-and-seminars', slug);
-  if (!page || !page.content) return <div>Page not found.</div>;
+  if (!page || !page.data) return <div>Page not found.</div>;
   const { content } = page;
 
   return (

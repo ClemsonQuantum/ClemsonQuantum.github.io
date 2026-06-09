@@ -3,7 +3,7 @@
     "name": "Nathan Jones",
     "role": "President",
     "description": "Computer Science Ph.D. Candidate and Clemson Alumnus\nResearch in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing",
-    "image": "/images/Nathan.jpeg",
+    "image": "/images/nathan-jones.jpg",
     "email": "najones@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/njonescomputing/",
     "github": "https://github.com/njones93531/"
@@ -11,17 +11,18 @@
   {
     "name": "Valentine Mohaugen",
     "role": "Vice President",
-    "description": "Physics M.S. Student and Clemson Alumnus\nResearch in Topological Materials, Quantum Error Correction, and Variational Quantum Algorithms",
-    "image": "/images/Valentine.jpg",
+    "description": "Physics M.S. Student and Clemson Alumnus\nResearch in Topological Materials, Variational Quantum Algorithms, and Quantum Error Correction",
+    "image": "/images/valentine-mohaugen.jpg",
     "email": "valentm@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/valmohaugen/",
-    "github": "https://github.com/Valmohaugen/"
+    "github": "https://github.com/Valmohaugen/",
+    "website": "https://valmohaugen.com"
   },
   {
     "name": "Ashton McEntarffer",
     "role": "Secretary",
     "description": "Senior in Computer Science\nResearch in Computer Science",
-    "image": "/images/Ashton.jpg",
+    "image": "/images/ashton-mcentarffer.jpg",
     "email": "amcenta@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/ashtonmc/",
     "github": "https://github.com/AshtonMcEntarffer"
@@ -39,7 +40,7 @@
     "name": "Rong Ge",
     "role": "Advisor",
     "description": "Professor in the School of Computing\nResearch in High Performance Computing, Parallel and Distributed Systems, and Performance and Power Analysis and Modeling",
-    "image": "/images/Rong.jpg",
+    "image": "/images/rong-ge.jpg",
     "email": "rge@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/"
   }

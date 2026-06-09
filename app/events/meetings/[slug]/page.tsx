@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MeetingPage({ params }: Props) {
   const { slug } = await params;
   const page = getPageBySlug('events/meetings', slug);
-  if (!page || !page.content) {
+  if (!page || !page.data) {
     return (
       <div className="page-content">
         <h1>Not Found</h1>

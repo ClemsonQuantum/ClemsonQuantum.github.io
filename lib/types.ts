@@ -7,11 +7,13 @@ export interface PageMeta {
   slug: string;
   title: string;
   date: string | null;
+  dateDisplay: string | null;
   summary: string | null;
   image: string | null;
   external_url: string | null;
   link: string | null;
   cta_label: string | null;
+  source: string | null;
   type: string | null;
   authors: Author[] | null;
   href: string;

@@ -14,12 +14,7 @@ export default function WorkshopsPage() {
       </header>
       <div className="preview-grid">
         {workshops.map((item) => (
-          <PreviewCard
-            key={item.slug}
-            item={item}
-            kind="event"
-            metaLabel="Workshop"
-          />
+          <PreviewCard key={item.slug} item={item} kind="event" />
         ))}
       </div>
     </div>
