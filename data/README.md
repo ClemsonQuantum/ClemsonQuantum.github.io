@@ -17,7 +17,7 @@ Each person is an object with these fields:
 | `name` | Yes | Full name |
 | `role` | Yes | Title (President, Vice President, etc.) |
 | `description` | Yes | Short bio — major, research area, etc. |
-| `image` | Yes | Path to their photo, e.g. `/images/Nathan.jpeg` |
+| `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg` |
 | `linkedin` | No | Full LinkedIn URL |
 | `github` | No | Full GitHub URL |
 

@@ -3,7 +3,7 @@ layout: default
 title: SC Quantathon v3 2026
 date: 2026-09-25
 summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
-image: "/images/SCQv3 graphic.png"
+image: "/images/scq-v3-graphic.webp"
 ---
 
 <div class="hackathon-page">
@@ -27,7 +27,7 @@ image: "/images/SCQv3 graphic.png"
 
 <div class="hackathon-section-header">
   <h2>About</h2>
-  <a href="mailto:cqc@clemson.edu?subject=SC%20Quantathon%20v3%20Participant%20Updates" class="view-all-link">Request participant updates</a>
+  <a href="#participant-updates" class="view-all-link">Request participant updates</a>
 </div>
 
 **SC Quantathon v3** carries forward the student-centered quantum computing event that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, the Clemson Quantum Club and Clemson University are now hosting the event, building a weekend that brings students together to learn, build, and collaborate on real quantum computing challenges.
@@ -49,7 +49,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 <div class="hackathon-details-grid">
   <div class="hackathon-detail-card">
     <div class="hackathon-detail-label">Dates</div>
-    <div class="hackathon-detail-value">September 25-27, 2026</div>
+    <div class="hackathon-detail-value">September 25-27, 2026 (5:00 PM Fri – 5:00 PM Sun)</div>
   </div>
   <div class="hackathon-detail-card">
     <div class="hackathon-detail-label">Location</div>
@@ -83,11 +83,11 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-schedule-day">
     <h3>Day 1 - Friday, September 25</h3>
     <table>
-      <tr><td class="hackathon-time">3:00 PM</td><td>Check-in and registration</td></tr>
-      <tr><td class="hackathon-time">4:00 PM</td><td>Opening program and welcome</td></tr>
-      <tr><td class="hackathon-time">5:00 PM</td><td>Challenge tracks released</td></tr>
-      <tr><td class="hackathon-time">5:30 PM</td><td>Team formation and project planning</td></tr>
-      <tr><td class="hackathon-time">6:30 PM</td><td>Dinner and evening social</td></tr>
+      <tr><td class="hackathon-time">5:00 PM</td><td>Check-in and registration</td></tr>
+      <tr><td class="hackathon-time">5:30 PM</td><td>Opening program and welcome</td></tr>
+      <tr><td class="hackathon-time">6:00 PM</td><td>Challenge tracks released</td></tr>
+      <tr><td class="hackathon-time">6:30 PM</td><td>Team formation and project planning</td></tr>
+      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner and evening social</td></tr>
     </table>
   </div>
   <div class="hackathon-schedule-day">
@@ -175,7 +175,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 <div class="hackathon-section-header">
   <h2>Sponsors</h2>
-  <a href="mailto:cqc@clemson.edu?subject=SC%20Quantathon%20v3%20Sponsorship" class="view-all-link">Sponsor the event</a>
+  <a href="#sponsor" class="view-all-link">Sponsor the event</a>
 </div>
 
 We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, and Silver sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
@@ -188,27 +188,27 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
-    <img src="/images/Nathan.jpeg" alt="Nathan Jones" class="hackathon-team-photo" />
+    <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Nathan Jones</div>
     <div class="hackathon-team-role">Challenge and Activities Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/Caroline-Cadena.jpeg" alt="Caroline Cadena" class="hackathon-team-photo" />
+    <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Logistics Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/Valentine.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" />
+    <img src="/images/valentine-mohaugen.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
     <div class="hackathon-team-role">Technology Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/Ashton.jpg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
+    <img src="/images/ashton-mcentarffer.jpg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Ashton McEntarffer</div>
     <div class="hackathon-team-role">Finance Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/blank-profile.svg" alt="Varun Sethi" class="hackathon-team-photo" />
+    <img src="/images/varun-sethi.webp" alt="Varun Sethi" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Varun Sethi</div>
     <div class="hackathon-team-role">Communications Lead</div>
   </div>

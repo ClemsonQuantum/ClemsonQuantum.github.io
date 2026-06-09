@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import siteConfig from '@/data/site-config.json';
+import SiteImage from '@/components/SiteImage';
 import PastBoardMembers from '@/components/PastBoardMembers';
 
 export const metadata: Metadata = {
@@ -34,9 +34,6 @@ const memberActivities = [
   'Connect with faculty, student research pathways, and the Creative Inquiry program.',
 ];
 
-const meetingDayDisplay =
-  siteConfig.meetingDay.charAt(0).toUpperCase() + siteConfig.meetingDay.slice(1);
-
 export default function AboutPage() {
   return (
     <article className="about-page">
@@ -44,26 +41,11 @@ export default function AboutPage() {
         <div className="about-page__hero-copy">
           <h1>Student-led quantum computing at Clemson</h1>
         </div>
-        <aside className="about-page__meeting-card" aria-label="Meeting details">
-          <p className="about-page__card-label">Biweekly meetings</p>
-          <dl>
-            <div>
-              <dt>When</dt>
-              <dd>
-                {meetingDayDisplay} @ {siteConfig.meetingTime}
-              </dd>
-            </div>
-            <div>
-              <dt>Where</dt>
-              <dd>{siteConfig.location}</dd>
-            </div>
-            <div>
-              <dt>Who</dt>
-              <dd>Open to students from any major and experience level</dd>
-            </div>
-          </dl>
-        </aside>
       </header>
+
+      <div className="about-page__photo">
+        <SiteImage src="/images/club-photo.webp" alt="Clemson Quantum Club members" />
+      </div>
 
       <section className="about-page__section about-page__section--intro">
         <div>

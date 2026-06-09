@@ -55,7 +55,7 @@ export default function HomePage() {
         </div>
         <div className="home-hero__visual">
           <SiteImage
-            src="/images/image-4.jpg"
+            src="/images/iquhack-2025-team.jpg"
             alt="Clemson Quantum members at MIT iQuHack 2025"
             className="home-hero__image"
           />
@@ -116,6 +116,7 @@ export default function HomePage() {
               email={m.email}
               linkedin={m.linkedin}
               github={m.github}
+              website={'website' in m ? m.website : undefined}
             />
           ))}
         </div>

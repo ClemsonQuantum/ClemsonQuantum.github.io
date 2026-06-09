@@ -1353,27 +1353,6 @@ footer {
   font-size: 0.8rem;
 }
 
-/* --- Utilities --- */
-.show-more-btn {
-  display: block;
-  margin: var(--space-xl) auto;
-  padding: 0.625rem 1.75rem;
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-full);
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.show-more-btn:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
-}
-
 /* Focus visible for accessibility */
 :focus-visible {
   outline: 2px solid var(--color-accent);
@@ -2261,30 +2240,6 @@ main:has(.competitor-page) {
    Show More Button & Events Section
    =================================================================== */
 
-.show-more {
-  display: block;
-  margin: var(--space-xl) auto;
-  padding: 0.625rem 1.75rem;
-  background: var(--color-accent);
-  color: #fff;
-  border: none;
-  border-radius: var(--radius-full);
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-}
-
-.show-more:hover {
-  background: var(--color-accent-hover);
-  transform: translateY(-1px);
-}
-
-.more-container {
-  text-align: center;
-}
-
 .events-section {
   margin-top: var(--space-2xl);
 }
@@ -2300,45 +2255,216 @@ main:has(.competitor-page) {
    Student Work & Projects
    =================================================================== */
 
-.student-work-item {
-  padding: var(--space-xl) 0;
+/* Student Work & Projects — clean editorial listing (matches Learning Resources) */
+.sw-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+}
+.sw-filter__btn {
+  margin-bottom: -1px;
+  padding: 0.5rem 0.15rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-secondary);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.sw-filter__btn:hover {
+  color: var(--color-text);
+}
+.sw-filter__btn.is-active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+.sw-filter__count {
+  margin-left: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.7;
 }
 
-.student-work-item + .student-work-item {
+.sw-empty {
+  padding: var(--space-xl) 0 var(--space-2xl);
+  color: var(--color-text-secondary);
+}
+
+.sw-list {
+  padding-bottom: var(--space-2xl);
+}
+
+/* Student Work & Projects — individual project page */
+.sw-detail {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 var(--space-xl) var(--space-2xl);
+}
+.sw-detail__header {
+  margin-bottom: var(--space-lg);
+}
+.sw-detail__title {
+  margin: 0.15rem 0 0.6rem;
+  /* Cancel the global h1's center + horizontal padding so the title sits flush
+     with the body/abstract below it (only the page's normal left offset). */
+  padding: 0;
+  text-align: left;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  line-height: 1.15;
+  color: var(--color-text);
+}
+.sw-detail__meta {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+.sw-detail__mentors {
+  margin: 0.35rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.sw-media {
+  display: block;
+  margin: var(--space-lg) 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.sw-media__image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sw-media--image {
+  transition: border-color 0.15s;
+}
+.sw-media--image:hover {
+  border-color: var(--color-accent);
+}
+.sw-media__pdf {
+  display: block;
+  width: 100%;
+  height: 80vh;
+  min-height: 480px;
+  border: 0;
+}
+.sw-media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  border-style: dashed;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.sw-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 var(--space-xl);
+}
+.sw-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.6rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.sw-action:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.sw-detail__body {
+  color: var(--color-text-secondary);
+}
+.sw-detail__body h2 {
+  margin: var(--space-lg) 0 0.5rem;
+  font-size: 1.15rem;
+  color: var(--color-text);
+}
+.sw-detail__body p {
+  margin: 0 0 1rem;
+  line-height: 1.7;
+}
+.sw-detail__body a {
+  color: var(--color-accent);
+}
+
+.sw-item {
+  padding: var(--space-xl) 0;
   border-top: 1px solid var(--color-border);
 }
-
-.student-work-item hr {
-  display: none;
+.sw-item:first-child {
+  border-top: none;
+  padding-top: var(--space-lg);
 }
 
-.student-work-item h3 {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 0 0 var(--space-sm);
-}
-
-.student-work-item h3 a {
-  color: var(--color-accent);
-  text-decoration: none;
-}
-
-.student-work-item h3 a:hover {
-  text-decoration: underline;
-}
-
-.type-label {
+.sw-type {
   display: inline-block;
-  background: var(--color-accent-light);
-  color: var(--color-accent);
-  font-size: 0.75rem;
-  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: var(--color-violet);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-full);
-  margin-left: var(--space-sm);
-  vertical-align: middle;
+}
+
+.sw-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.22rem;
+  font-weight: 600;
+}
+.sw-title a {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.sw-title a:hover {
+  color: var(--color-accent);
+}
+
+.sw-meta {
+  margin: 0 0 0.6rem;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.sw-summary {
+  max-width: 72ch;
+  margin: 0 0 0.75rem;
+  color: var(--color-text-secondary);
+  font-size: 0.97rem;
+  line-height: 1.65;
+}
+
+.sw-link {
+  display: inline-block;
+  color: var(--color-text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.sw-link::after {
+  content: ' ↗';
+}
+.sw-link:hover {
+  color: var(--color-accent);
 }
 
 .meta {
@@ -2888,36 +3014,6 @@ main:has(.competitor-page) {
 }
 
 /* ===================================================================
-   Scroll Reveal Animations
-   =================================================================== */
-
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-delay-1 { transition-delay: 0.08s; }
-.reveal-delay-2 { transition-delay: 0.16s; }
-.reveal-delay-3 { transition-delay: 0.24s; }
-.reveal-delay-4 { transition-delay: 0.32s; }
-.reveal-delay-5 { transition-delay: 0.40s; }
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
-/* ===================================================================
    Article Hero Image
    =================================================================== */
 
@@ -2983,6 +3079,96 @@ main:has(.competitor-page) {
   gap: var(--space-lg);
   margin-top: var(--space-lg);
 }
+.resource-cards .hackathon-resource-title {
+  text-align: center;
+  font-size: 1.2rem;
+}
+/* Match the news/event preview-card interaction: lift + accent border + shadow.
+   Scoped to .resource-cards so it overrides the shared card's `transform: none`
+   hover without affecting the same class elsewhere. */
+.resource-cards .hackathon-resource-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.resource-cards .hackathon-resource-card:hover,
+.resource-cards .hackathon-resource-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(var(--color-accent-rgb), 0.22);
+  box-shadow: var(--shadow-md);
+}
+
+/* Quantum faculty — distinct 2-column people layout (role eyebrow + headshot +
+   bio), intentionally different from the executive-board rows. */
+.faculty-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-xl) var(--space-2xl);
+  margin-top: var(--space-lg);
+}
+.faculty-card__top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+.faculty-card__photo {
+  flex-shrink: 0;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-border);
+}
+.faculty-card__role {
+  margin: 0 0 0.15rem;
+  color: var(--color-violet);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.faculty-card__name {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.faculty-card__links {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 0.55rem;
+}
+.faculty-card__link {
+  display: inline-flex;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.faculty-card__link:hover {
+  color: var(--color-accent);
+}
+.faculty-card__link-icon {
+  width: 22px;
+  height: 22px;
+  opacity: 0.75;
+  transition: opacity 0.15s;
+}
+.faculty-card__link:hover .faculty-card__link-icon {
+  opacity: 1;
+}
+.faculty-card__bio {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+  .faculty-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 .resource-faculty__role {
   margin: 0 0 var(--space-sm);
@@ -3016,34 +3202,6 @@ main:has(.competitor-page) {
    CTA Button
    =================================================================== */
 
-.cta-button {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--color-accent);
-  color: #fff !important;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  transition: background 0.2s, transform 0.2s;
-  border: 2px solid var(--color-accent);
-}
-
-.cta-button:hover {
-  background: var(--color-accent-hover);
-  border-color: var(--color-accent-hover);
-  color: #fff !important;
-  transform: translateY(-1px);
-}
-
-.cta-button--outline {
-  background: transparent;
-  color: var(--color-accent) !important;
-}
-
-.cta-button--outline:hover {
-  background: var(--color-accent);
-  color: #fff !important;
-}
-
 /* ===================================================================
    About Page
    =================================================================== */
@@ -3055,11 +3213,85 @@ main:has(.competitor-page) {
 }
 
 .about-page__hero {
+  margin-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+/* When the hero has a meeting card (get-involved), restore the two-column
+   layout so the card sits top-right. The about hero (no card) stays full-width. */
+.about-page__hero:has(.about-page__meeting-card) {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
   gap: clamp(2rem, 5vw, 4rem);
   align-items: center;
-  margin-bottom: clamp(3rem, 7vw, 5.5rem);
+}
+
+/* About page lead photo placeholder (swap for a real club photo). */
+.about-page__photo {
+  aspect-ratio: 16 / 7;
+  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.about-page__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Bias the crop downward — the upper ~40% of the photo is building/palms,
+     so center the visible slice on the students rather than the empty space. */
+  object-position: center 80%;
+  display: block;
+}
+
+/* Get-involved channels — stacked under the heading (not the title-left /
+   box-right split), as a responsive grid of tiles. */
+.gi-channels-intro {
+  max-width: 60ch;
+  color: var(--color-text-secondary);
+}
+.gi-channels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md) var(--space-xl);
+  margin-top: var(--space-lg);
+}
+.gi-channel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--space-md);
+  padding: 0.85rem 0;
+  color: var(--color-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.gi-channel:hover {
+  color: var(--color-accent);
+}
+.gi-channel__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+}
+/* Tiger paw rendered as a currentColor mask so it stays monochrome and tints on
+   hover like the SVG glyphs (a raster <img> can't inherit currentColor). */
+.tiger-paw-icon {
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: url('/images/tiger-paw.webp') center / contain no-repeat;
+  mask: url('/images/tiger-paw.webp') center / contain no-repeat;
+}
+@media (max-width: 860px) {
+  .gi-channels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .gi-channels {
+    grid-template-columns: 1fr;
+  }
 }
 
 .about-page__hero-copy {
@@ -3087,6 +3319,21 @@ main:has(.competitor-page) {
   line-height: 1.02;
   color: var(--color-text);
   text-align: left;
+}
+/* Center the About hero title (the about hero has no meeting card; get-involved
+   keeps its title left next to the card). The copy block is full-width here so
+   the title centers across the whole page, not within the 760px column. */
+.about-page__hero:not(:has(.about-page__meeting-card)) .about-page__hero-copy {
+  max-width: none;
+}
+.about-page__hero:not(:has(.about-page__meeting-card)) h1 {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  /* One line on a full window, scaling down with the viewport. */
+  white-space: nowrap;
+  font-size: clamp(1.3rem, 4.4vw, 3.4rem);
 }
 
 .about-page__tagline {
@@ -3306,7 +3553,7 @@ main:has(.competitor-page) {
 }
 
 @media (max-width: 899px) {
-  .about-page__hero,
+  .about-page__hero:has(.about-page__meeting-card),
   .about-page__section--intro,
   .about-page__section--split {
     grid-template-columns: 1fr;
@@ -3533,6 +3780,7 @@ button.view-all-link {
   --color-text: #162033;
   --color-text-secondary: #4f5d73;
   --color-accent: #f56600;
+  --color-accent-rgb: 245, 102, 0;
   --color-accent-hover: #cf5500;
   --color-accent-light: #fff0e4;
   --color-accent-900: #19243a;
@@ -3704,7 +3952,7 @@ a:hover {
 
 .search:focus-within {
   border-color: rgba(22, 32, 51, 0.3);
-  box-shadow: 0 0 0 4px rgba(245, 102, 0, 0.1);
+  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.1);
 }
 
 .search-icon {
@@ -3729,7 +3977,8 @@ main {
 /* Archive pages (News, Events, Resources) lead with a centered title and no
    lead text, so drop the generic main top padding and let the hero supply a
    small gap — keeps the title close to the sticky header. */
-main:has(.archive-page) {
+main:has(.archive-page),
+main:has(.home-hero) {
   padding-top: 0;
 }
 
@@ -3746,7 +3995,7 @@ main:has(.archive-page) {
      matching the home hero. Small top gap so the title sits just under the header. */
   max-width: none;
   margin: 0;
-  padding: var(--space-md) 0 var(--space-xl);
+  padding: var(--space-xl) 0 var(--space-xl);
 }
 
 .archive-hero__eyebrow,
@@ -3809,6 +4058,16 @@ main:has(.archive-page) {
   margin-bottom: var(--space-2xl);
 }
 
+/* When the grid is at 2 columns and the last row holds a single orphan card,
+   center it instead of leaving it left-justified. */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .preview-grid > .preview-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - var(--space-lg)) / 2);
+  }
+}
+
 .preview-card {
   display: flex;
   flex-direction: column;
@@ -3827,7 +4086,7 @@ main:has(.archive-page) {
 .preview-card:focus-visible {
   color: inherit;
   transform: translateY(-3px);
-  border-color: rgba(245, 102, 0, 0.22);
+  border-color: rgba(var(--color-accent-rgb), 0.22);
   box-shadow: var(--shadow-md);
 }
 
@@ -3844,27 +4103,64 @@ main:has(.archive-page) {
   display: block;
 }
 
-/* The SC Quantathon v3 poster is more square (1199x829) than the 16:9 card
-   slot, so the default `cover` crops its top and bottom. Show the whole poster
-   with `contain`, and fill the resulting letterbox with a blurred, zoomed copy
-   of the same poster so the card still reads as a full-bleed image rather than
-   bars. Targeted to this one image via its src so all other cards keep `cover`. */
-.preview-card__media:has(.preview-card__image[src$="SCQv3 graphic.png"]) {
+/* Posters that are more square/portrait than the 16:9 card slot get cropped by
+   the default `cover`. For these, show the whole image with `contain` and fill
+   the letterbox with a blurred, zoomed copy of the same image so the card still
+   reads as full-bleed rather than having bars. Targeted per image via its src;
+   all other cards keep `cover`. */
+.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"]),
+.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"]),
+.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"]),
+.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"]) {
   position: relative;
 }
 
-.preview-card__media:has(.preview-card__image[src$="SCQv3 graphic.png"])::before {
+.preview-card__image[src$="scq-v3-graphic.webp"],
+.preview-card__image[src$="scq-v1-graphic.webp"],
+.preview-card__image[src$="scq-v2-graphic.webp"],
+.preview-card__image[src$="iquhack-2026.webp"] {
+  position: relative;
+  object-fit: contain;
+}
+
+.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"])::before,
+.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before,
+.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before,
+.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: url('/images/SCQv3 graphic.png') center / cover no-repeat;
   filter: blur(20px) brightness(0.8);
   transform: scale(1.18);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
-.preview-card__image[src$="SCQv3 graphic.png"] {
-  position: relative;
+.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"])::before {
+  background-image: url('/images/scq-v3-graphic.webp');
+}
+.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before {
+  background-image: url('/images/scq-v1-graphic.webp');
+}
+.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before {
+  background-image: url('/images/scq-v2-graphic.webp');
+}
+.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before {
+  background-image: url('/images/iquhack-2026.webp');
+}
+
+/* Tiger Prowl is a wide logo on a white background; show it whole and centered
+   (contain) on a white slot so it isn't cropped and the letterbox blends with
+   the logo's own white background. */
+.preview-card__media:has(.preview-card__image[src$="tiger-prowl.png"]) {
+  background: #ffffff;
+}
+
+.preview-card__image[src$="tiger-prowl.png"] {
   object-fit: contain;
+  object-position: center;
+  padding: 0.5rem;
 }
 
 .preview-card__body {
@@ -3949,7 +4245,10 @@ main:has(.archive-page) {
   align-items: start;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 4.5rem) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
+  /* Slightly tighter top gap than the archive heroes — the large centered home
+     title carries more visual whitespace above it (line-height 1.0), so a
+     smaller padding makes the gap read the same as the News/Events/Resources titles. */
+  padding: var(--space-lg) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
 }
 
 .home-hero__title {
@@ -4306,7 +4605,7 @@ footer {
 
   .home-hero {
     grid-template-columns: 1fr;
-    padding: 1.1rem var(--space-md) 2rem;
+    padding: 1rem var(--space-md) 2rem;
   }
 
   .home-hero__visual {
@@ -4496,7 +4795,7 @@ main:has(.hackathon-page) {
   height: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .hackathon-hero-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -4512,7 +4811,7 @@ main:has(.hackathon-page) {
 .hackathon-video {
   width: 100%;
   max-width: 820px;
-  margin: 1.5rem 0 0;
+  margin: 1.5rem auto 0;
   aspect-ratio: 16 / 9;
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -4524,6 +4823,319 @@ main:has(.hackathon-page) {
   width: 100%;
   height: 100%;
   border: 0;
+}
+
+/* --- Modal "bubble" (e.g. SC Quantathon v3 participant-updates sign-up) --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: rgba(8, 6, 15, 0.66);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  animation: modal-fade 0.18s ease-out;
+}
+
+.modal-bubble {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  padding: 1.85rem 1.75rem 1.6rem;
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
+  animation: modal-pop 0.18s ease-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.55rem;
+  right: 0.7rem;
+  padding: 0.2rem 0.45rem;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.modal-close:hover,
+.modal-close:focus-visible {
+  color: var(--color-text);
+}
+
+.modal-title {
+  margin: 0 0 0.35rem;
+  font-size: 1.3rem;
+}
+
+.modal-subtitle {
+  margin: 0 0 1.15rem;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+.modal-form label {
+  margin-bottom: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.modal-form input[type='text'],
+.modal-form input[type='email'],
+.modal-form textarea {
+  margin-bottom: 0.95rem;
+  padding: 0.6rem 0.7rem;
+  font: inherit;
+  color: var(--color-text);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 0.55rem;
+}
+.modal-form textarea {
+  resize: vertical;
+  min-height: 4.75rem;
+}
+.modal-form input:focus-visible,
+.modal-form textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+.modal-form .hackathon-cta {
+  align-self: flex-start;
+  margin-top: 0.2rem;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.modal-form .hackathon-cta:disabled {
+  opacity: 0.65;
+  cursor: default;
+}
+
+@keyframes modal-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes modal-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-overlay,
+  .modal-bubble {
+    animation: none;
+  }
+}
+
+/* --- Learning Resources: leveled guide (Beginner / Intermediate / Advanced) --- */
+.lr-section--beginner {
+  --lr-accent: #2bb3a3;
+}
+.lr-section--intermediate {
+  --lr-accent: var(--color-violet);
+}
+.lr-section--advanced {
+  --lr-accent: var(--color-accent);
+}
+
+.lr-intro {
+  max-width: 62ch;
+  margin: 0 0 var(--space-2xl);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.lr-section {
+  position: relative;
+  margin: 0 0 var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.lr-section__num {
+  position: absolute;
+  top: 0.5rem;
+  right: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(3.25rem, 10vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--lr-accent);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.lr-section__eyebrow {
+  display: block;
+  margin: 0 0 0.55rem;
+  color: var(--lr-accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lr-section__title {
+  margin: 0 0 0.5rem;
+  font-size: clamp(1.5rem, 3vw, 2.05rem);
+  text-align: left;
+}
+
+.lr-section__blurb {
+  max-width: 60ch;
+  margin: 0 0 var(--space-lg);
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.lr-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lr-item {
+  display: flex;
+  gap: 1.1rem;
+  padding: 0.95rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.lr-item:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.lr-item__tag {
+  flex: 0 0 5.5rem;
+  padding-top: 0.15rem;
+  color: var(--lr-accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.lr-item__body {
+  display: block;
+  flex: 1;
+}
+
+.lr-item__title {
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+}
+.lr-item__title::after {
+  content: ' ↗';
+  color: var(--lr-accent);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.lr-item:hover .lr-item__title {
+  color: var(--lr-accent);
+}
+.lr-item:hover .lr-item__title::after {
+  opacity: 1;
+}
+
+.lr-item__desc {
+  display: block;
+  margin-top: 0.22rem;
+  color: var(--color-text-secondary);
+  font-size: 0.93rem;
+  line-height: 1.55;
+}
+
+.lr-ongoing {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+.lr-ongoing__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.4rem;
+  text-align: left;
+}
+.lr-ongoing__note {
+  margin: 0 0 1rem;
+  color: var(--color-text-secondary);
+  font-size: 0.93rem;
+}
+.lr-ongoing__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 2.5rem;
+}
+.lr-ongoing__item {
+  display: block;
+  text-decoration: none;
+}
+.lr-ongoing__cat {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--color-text-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.lr-ongoing__name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.lr-ongoing__name::after {
+  content: ' ↗';
+  color: var(--color-accent);
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.lr-ongoing__item:hover .lr-ongoing__name {
+  color: var(--color-accent);
+}
+.lr-ongoing__item:hover .lr-ongoing__name::after {
+  opacity: 1;
+}
+.lr-ongoing__desc {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .lr-ongoing__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .lr-item {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .lr-item__tag {
+    flex-basis: auto;
+    padding-top: 0;
+  }
+  .lr-section__num {
+    font-size: 3rem;
+  }
 }
 
 /* Contextual call-to-action under a section */
@@ -4556,14 +5168,14 @@ main:has(.hackathon-page) {
 .hackathon-cta-outline {
   background: transparent;
   color: var(--color-accent);
-  border-color: rgba(245, 102, 0, 0.28);
+  border-color: rgba(var(--color-accent-rgb), 0.28);
   box-shadow: none;
 }
 
 .hackathon-cta-outline:hover {
   background: var(--color-accent-light);
   color: var(--color-accent-hover);
-  border-color: rgba(245, 102, 0, 0.36);
+  border-color: rgba(var(--color-accent-rgb), 0.36);
   box-shadow: none;
 }
 
@@ -4662,7 +5274,7 @@ main:has(.hackathon-page) {
   border: 1px solid rgba(22, 32, 51, 0.1);
   border-radius: 1rem;
   box-shadow: var(--shadow-sm);
-  text-align: left;
+  text-align: center;
 }
 
 .hackathon-detail-card:hover {
@@ -4784,8 +5396,16 @@ main:has(.hackathon-page) {
 
 .hackathon-prize-grand {
   background: var(--color-orange-light);
-  border-color: rgba(245, 102, 0, 0.25);
-  box-shadow: inset 0 0 0 1px rgba(245, 102, 0, 0.12);
+  border-color: rgba(var(--color-accent-rgb), 0.25);
+  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
+}
+
+/* Keep the grand-prize highlight on hover — the generic .hackathon-prize-tier:hover
+   would otherwise swap its orange ring for the default shadow. */
+.hackathon-prize-grand:hover {
+  background: var(--color-orange-light);
+  border-color: rgba(var(--color-accent-rgb), 0.25);
+  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
 }
 
 .hackathon-prize-value {

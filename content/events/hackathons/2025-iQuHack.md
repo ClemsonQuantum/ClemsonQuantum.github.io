@@ -3,9 +3,7 @@ layout: default
 title: iQuHack 2025
 date: 2025-01-31
 summary: "Clemson Quantum competed at MIT's annual quantum hackathon in Cambridge, MA."
-image: /images/iQuHack2025.png
-link: "https://www.iquise.mit.edu/iQuHACK/2025-01-31"
-cta_label: "Official Site"
+image: /images/iquhack-2025.jpg
 ---
 
 <div class="competitor-page">

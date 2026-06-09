@@ -35,11 +35,13 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
           ? data.date.toISOString().slice(0, 10)
           : String(data.date)
         : null,
+      dateDisplay: data.dateDisplay ?? null,
       summary: data.summary ?? null,
       image: data.image ?? null,
       external_url: data.external_url ?? null,
       link: data.link ?? null,
       cta_label: data.cta_label ?? null,
+      source: data.source ?? null,
       type: data.type ?? null,
       authors: data.authors ?? null,
       href: isExternal ? destination! : internalHref,

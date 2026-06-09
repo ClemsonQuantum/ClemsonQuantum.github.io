@@ -27,12 +27,7 @@ export default function EventsPage() {
         </div>
         <div className="preview-grid">
           {hackathons.slice(0, 3).map((item) => (
-            <PreviewCard
-              key={item.slug}
-              item={item}
-              kind="event"
-              metaLabel="Hackathon"
-            />
+            <PreviewCard key={item.slug} item={item} kind="event" />
           ))}
         </div>
       </section>
@@ -51,12 +46,7 @@ export default function EventsPage() {
         </div>
         <div className="preview-grid">
           {workshops.slice(0, 3).map((item) => (
-            <PreviewCard
-              key={item.slug}
-              item={item}
-              kind="event"
-              metaLabel="Workshop"
-            />
+            <PreviewCard key={item.slug} item={item} kind="event" />
           ))}
         </div>
       </section>
@@ -72,12 +62,7 @@ export default function EventsPage() {
         </div>
         <div className="preview-grid">
           {meetings.slice(0, 3).map((item) => (
-            <PreviewCard
-              key={item.slug}
-              item={item}
-              kind="event"
-              metaLabel="Meeting"
-            />
+            <PreviewCard key={item.slug} item={item} kind="event" />
           ))}
         </div>
       </section>

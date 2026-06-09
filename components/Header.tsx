@@ -16,7 +16,7 @@ interface HeaderProps {
   navData: NavData;
 }
 
-const HACKATHONS_IN_DROPDOWN = 3;
+const EVENTS_IN_DROPDOWN = 3;
 
 type DropdownId = 'events' | 'resources' | null;
 type EventsSubmenuId = 'hackathons' | 'workshops' | 'meetings' | null;
@@ -156,8 +156,12 @@ export default function Header({ navData }: HeaderProps) {
     },
   });
 
-  const visibleHackathons = navData.hackathons.slice(0, HACKATHONS_IN_DROPDOWN);
-  const hackathonsTruncated = navData.hackathons.length > HACKATHONS_IN_DROPDOWN;
+  const visibleHackathons = navData.hackathons.slice(0, EVENTS_IN_DROPDOWN);
+  const hackathonsTruncated = navData.hackathons.length > EVENTS_IN_DROPDOWN;
+  const visibleWorkshops = navData.workshops.slice(0, EVENTS_IN_DROPDOWN);
+  const workshopsTruncated = navData.workshops.length > EVENTS_IN_DROPDOWN;
+  const visibleMeetings = navData.meetings.slice(0, EVENTS_IN_DROPDOWN);
+  const meetingsTruncated = navData.meetings.length > EVENTS_IN_DROPDOWN;
 
   return (
     <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
@@ -225,21 +229,21 @@ export default function Header({ navData }: HeaderProps) {
                 id="workshops"
                 label="Workshops & Seminars"
                 href="/events/workshops-and-seminars/"
-                items={navData.workshops}
+                items={visibleWorkshops}
                 openSubmenu={openSubmenu}
                 setOpenSubmenu={setOpenSubmenu}
                 closeMenus={closeMenus}
-                viewAllLabel="View all workshops & seminars"
+                viewAllLabel={workshopsTruncated ? 'View all workshops & seminars' : undefined}
               />
               <EventsSubmenu
                 id="meetings"
                 label="Meetings"
                 href="/events/meetings/"
-                items={navData.meetings}
+                items={visibleMeetings}
                 openSubmenu={openSubmenu}
                 setOpenSubmenu={setOpenSubmenu}
                 closeMenus={closeMenus}
-                viewAllLabel="View all meetings"
+                viewAllLabel={meetingsTruncated ? 'View all meetings' : undefined}
               />
               <Link
                 href="/events/"
