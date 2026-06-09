@@ -10,6 +10,12 @@ interface PreviewCardProps {
 }
 
 function getSourceLabel(item: PageMeta): string | null {
+  // An explicit `source` credits the original publisher (e.g. an internally
+  // hosted recap of a Clemson News or SC Quantum article still names the outlet).
+  if (item.source) {
+    return item.source;
+  }
+
   if (!item.isExternal) {
     return 'Clemson Quantum';
   }
@@ -44,6 +50,9 @@ export default function PreviewCard({
 }: PreviewCardProps) {
   const footerLabel = kind === 'news' ? getSourceLabel(item) : metaLabel;
   const summary = item.summary ?? item.excerpt;
+  // `dateDisplay` lets a card show custom text (e.g. "TBD") in the date slot
+  // while a real `date` is still used for sorting and the Upcoming badge.
+  const dateText = item.dateDisplay ?? (item.date ? formatDate(item.date) : null);
   // Centralized badge: an explicit `badge` overrides, otherwise event cards show
   // "Upcoming" automatically based on the entry's date — so every card, on every
   // page, stays consistent and is maintained in one place.
@@ -67,8 +76,8 @@ export default function PreviewCard({
       )}
       <div className="preview-card__body">
         <div className="preview-card__meta">
-          {item.date && (
-            <span className="preview-card__date">{formatDate(item.date)}</span>
+          {dateText && (
+            <span className="preview-card__date">{dateText}</span>
           )}
           {effectiveBadge && (
             <span className="preview-card__badge">{effectiveBadge}</span>

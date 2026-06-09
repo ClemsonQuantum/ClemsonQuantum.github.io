@@ -14,12 +14,7 @@ export default function MeetingsPage() {
       </header>
       <div className="preview-grid">
         {meetings.map((item) => (
-          <PreviewCard
-            key={item.slug}
-            item={item}
-            kind="event"
-            metaLabel="Meeting"
-          />
+          <PreviewCard key={item.slug} item={item} kind="event" />
         ))}
       </div>
     </div>

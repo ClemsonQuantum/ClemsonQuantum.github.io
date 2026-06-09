@@ -3,6 +3,9 @@ title: "[HEADLINE]"
 date: YYYY-MM-DD
 summary: "[One or two sentence summary for the card preview]"
 image: "/images/[PLACEHOLDER].jpg"
+# Publisher shown on the card footer (e.g. "Clemson News", "SC Quantum").
+# Omit to default to "Clemson Quantum".
+source: "Clemson News"
 # For external articles (linking to another site):
 # external_url: "https://example.com/article"
 # cta_label: "Read on Example News"

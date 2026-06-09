@@ -3,9 +3,7 @@ layout: default
 title: NYUAD Hackathon 2025
 date: 2025-04-25
 summary: "Clemson Quantum competed at the NYUAD International Hackathon in Abu Dhabi."
-image: /images/NYUAD2025.jpg
-link: "https://hackathon.nyuad.nyu.edu/"
-cta_label: "Official Site"
+image: /images/nyuad-2025.jpg
 ---
 
 <div class="competitor-page">

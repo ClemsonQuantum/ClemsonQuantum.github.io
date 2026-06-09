@@ -14,12 +14,7 @@ export default function HackathonsPage() {
       </header>
       <div className="preview-grid">
         {hackathons.map((item) => (
-          <PreviewCard
-            key={item.slug}
-            item={item}
-            kind="event"
-            metaLabel="Hackathon"
-          />
+          <PreviewCard key={item.slug} item={item} kind="event" />
         ))}
       </div>
     </div>
