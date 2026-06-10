@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
 import StudentWorkList from '@/components/StudentWorkList';
 
-export const metadata: Metadata = { title: 'Student Work & Projects' };
+export const metadata: Metadata = {
+  title: 'Student Work & Projects',
+  description:
+    'Posters, papers, and projects by Clemson Quantum Club members — student research from Creative Inquiry, SRNL, and club hackathons.',
+};
 
 export default function StudentWorkPage() {
   const works = sortPages(getAllPages('resources/student-work-and-projects'));

@@ -17,16 +17,11 @@
   --color-accent-950: #0f172a; /* near-black slate — competitor page hero */
   --color-violet: #6d28d9;
   --color-violet-light: #efe7ff;
-  --color-orange: #f56600;
-  --color-orange-light: #fff5eb;
-  --color-highlight: #fef08a;
   --color-border: rgba(22, 32, 51, 0.12);
-  --color-nav-bg: #162033;
-  --color-nav-text: #f8fafc;
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Fraunces', Georgia, serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -84,9 +79,8 @@ img {
   width: 100%;
   border-bottom: 1px solid var(--color-border);
   transition: box-shadow 0.3s, border-color 0.3s;
-  /* background, backdrop-filter, border-bottom-color, and the .nav--scrolled
-     shadow/border are all set by the 2026 Refresh `.nav` / `.nav--scrolled`
-     rules below (they win by cascade order). */
+  /* background, backdrop-filter, and the .nav--scrolled shadow/border are set by
+     the later .nav / .nav--scrolled rules, which win by cascade order. */
 }
 
 .nav-inner {
@@ -95,7 +89,6 @@ img {
   justify-content: space-between;
   max-width: var(--max-width);
   margin: 0 auto;
-  /* height + padding → 2026 Refresh `.nav-inner` (72px) + the mobile @media */
 }
 
 /* --- Brand (logo + wordmark) --- */
@@ -116,7 +109,6 @@ img {
   width: auto;
   vertical-align: middle;
   display: block;
-  /* height → 2026 Refresh `.nav-logo` (44px) */
 }
 
 /* --- Nav links (desktop row / mobile column) --- */
@@ -138,8 +130,6 @@ img {
   border-radius: var(--radius-sm);
   transition: color 0.2s, background 0.2s;
   white-space: nowrap;
-  /* color, font-size, font-weight, letter-spacing + the hover/focus colors
-     → 2026 Refresh `.nav-link` / `.nav-link:hover` below */
 }
 
 /* Active underline indicator — on hover */
@@ -184,8 +174,6 @@ img {
   background: var(--color-surface);
   z-index: 1500;
   transition: opacity 0.2s, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-  /* top, min-width, padding, border, border-radius, box-shadow
-     → 2026 Refresh `.nav-dropdown-panel` below */
 }
 
 /* Invisible bridge so cursor can travel from trigger to panel */
@@ -234,8 +222,6 @@ img {
   text-decoration: none;
   transition: background 0.15s, color 0.15s;
   line-height: 1.4;
-  /* border-radius + the hover/focus colors → 2026 Refresh
-     `.nav-dropdown-link` / `.nav-dropdown-link:hover` below */
 }
 
 /* "View all" link inside dropdown — visually distinct from items */
@@ -270,7 +256,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* font-weight → 2026 Refresh `.nav-dropdown-link--parent` (600) */
 }
 
 .nav-dropdown-link--parent::after {
@@ -526,7 +511,7 @@ img {
   z-index: 1200;
   border-radius: 1rem;
   border-color: rgba(22, 32, 51, 0.12);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 .search-item {
@@ -571,10 +556,7 @@ h1, h2, h3 {
 
 h1 {
   font-size: clamp(2rem, 5vw, 3rem);
-  text-align: center;
-  color: var(--color-accent);
   font-weight: 700;
-  padding: 0 var(--space-md);
   margin-bottom: var(--space-xs);
 }
 
@@ -623,21 +605,6 @@ section p {
   opacity: 1;
 }
 
-/* Image overlay (lightbox) */
-
-/* --- Event Cards (Expandable) --- */
-/* --- Event Items (matches home news grid style) --- */
-
-/* --- Board / People Section --- */
-
-/* Organizer rows — desktop layout */
-
-/* People cards — expandable pattern for all screen sizes */
-
-/* Mobile: show people cards, hide organizer rows */
-
-/* --- Article Items (editorial list layout) --- */
-
 /* --- Page Content (Markdown pages) --- */
 .page-content {
   max-width: 800px;
@@ -652,6 +619,7 @@ section p {
 .page-content h1 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+  padding: 0;
   color: var(--color-text);
   text-align: left;
 }
@@ -736,7 +704,7 @@ form textarea:focus,
 form select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15);
 }
 
 form textarea {
@@ -918,7 +886,7 @@ footer {
 }
 
 .hackathon-cta-outline {
-  border: 2px solid var(--color-accent);
+  border: 1px solid var(--color-accent);
   background: transparent;
   color: var(--color-accent);
   border-color: rgba(var(--color-accent-rgb), 0.28);
@@ -930,11 +898,6 @@ footer {
   color: var(--color-accent-hover);
   border-color: rgba(var(--color-accent-rgb), 0.36);
   box-shadow: none;
-}
-
-.hackathon-cta-large {
-  padding: 1.1rem 3.5rem;
-  font-size: 1.25rem;
 }
 
 /* Sections — padded content areas between full-bleed blocks */
@@ -983,12 +946,8 @@ footer {
   border-bottom: none;
 }
 
-/* Tracks & Prizes (grids + cards) are defined once in the 2026 Refresh block
-   below — search ".hackathon-tracks-grid,\n.hackathon-prizes". The earlier
-   legacy definitions were fully overridden by the refresh and have been removed;
-   their few surviving declarations (display:grid, transition, position,
-   text-align, the h3 resets, card-text color, prize-value weight/margin) were
-   folded into the refresh rules. */
+/* Tracks & Prizes grids and cards are defined in a single rule below; search
+   ".hackathon-tracks-grid,\n.hackathon-prizes". */
 
 /* Resources list override */
 .hackathon-section ul {
@@ -1079,12 +1038,6 @@ footer {
   font-size: 0.8rem;
   color: var(--color-text-secondary);
   margin-top: 0.15rem;
-}
-
-@media (max-width: 639px) {
-  .hackathon-team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 /* Apply Section — full-bleed solid */
@@ -1393,6 +1346,27 @@ main:has(.competitor-page) {
   opacity: 0.7;
 }
 
+/* On phones the tab row scrolls horizontally instead of wrapping. */
+@media (max-width: 767px) {
+  .sw-filter {
+    flex-wrap: nowrap;
+    gap: 1.1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .sw-filter::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sw-filter__btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+}
+
 .sw-empty {
   padding: var(--space-xl) 0 var(--space-2xl);
   color: var(--color-text-secondary);
@@ -1413,8 +1387,6 @@ main:has(.competitor-page) {
 }
 .sw-detail__title {
   margin: 0.15rem 0 0.6rem;
-  /* Cancel the global h1's center + horizontal padding so the title sits flush
-     with the body/abstract below it (only the page's normal left offset). */
   padding: 0;
   text-align: left;
   font-size: clamp(1.6rem, 3.5vw, 2.3rem);
@@ -1570,81 +1542,6 @@ main:has(.competitor-page) {
 /* ===================================================================
    Board Member — single responsive component (replaces dual OrganizerRow + PeopleCard)
    =================================================================== */
-
-.board-member__toggle:hover {
-  color: var(--color-accent-hover);
-}
-
-.board-member__details-inner {
-  overflow: hidden;
-}
-
-@media (max-width: 639px) {
-  .board-members-list {
-    gap: var(--space-md);
-    padding: var(--space-md);
-    max-width: 480px;
-  }
-
-  .board-member {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--space-md);
-    padding: var(--space-md);
-  }
-
-  .board-member__avatar {
-    width: 80px;
-    height: 80px;
-  }
-
-  .board-member__body {
-    width: 100%;
-    align-items: center;
-  }
-
-  .board-member__head {
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .board-member__name {
-    font-size: 1.1rem;
-  }
-
-  .board-member__toggle {
-    display: inline-block;
-    margin-left: 0;
-  }
-
-  /* Mobile: animated expand/collapse */
-  .board-member__details {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.3s ease;
-    width: 100%;
-  }
-
-  .board-member__details[data-open='true'] {
-    grid-template-rows: 1fr;
-  }
-
-  .board-member__links {
-    justify-content: center;
-  }
-}
-
-/* ===================================================================
-   Section Divider — small visual break between major homepage sections
-   =================================================================== */
-
-@media (max-width: 767px) {
-  /* On mobile, news grid collapses to 1 column, so the
-     "card 1 to card 3" relationship is no longer geometrically meaningful.
-     Fall back to a proportional but visually compact width. */
-}
 
 /* ===================================================================
    Section Heading (homepage h2)
@@ -2021,9 +1918,6 @@ main:has(.competitor-page) {
 }
 
 .about-page__hero h1 {
-  /* Cancel the global h1's `padding: 0 var(--space-md)` so the title sits flush
-     at the page's left margin, aligned with the section headings below it and
-     the moved archive/home hero titles. */
   padding: 0;
   max-width: 15ch;
   margin-bottom: var(--space-md);
@@ -2043,9 +1937,9 @@ main:has(.competitor-page) {
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  /* One line on a full window, scaling down with the viewport. */
-  white-space: nowrap;
-  font-size: clamp(1.3rem, 4.4vw, 3.4rem);
+  /* Single line on a full desktop window; wraps on narrower viewports
+     (never force nowrap on titles — it clips instead of wrapping). */
+  font-size: clamp(2rem, 4.4vw, 3.1rem);
 }
 
 .about-page__tagline {
@@ -2143,22 +2037,35 @@ main:has(.competitor-page) {
   margin-bottom: var(--space-xl);
 }
 
-.about-page__focus-grid {
+.about-page__why-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-page__why-item {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 3.2rem minmax(0, 1fr);
   gap: var(--space-md);
+  align-items: start;
+  padding: var(--space-lg) 0;
 }
 
-.about-page__focus-card {
-  min-height: 100%;
-  padding: var(--space-lg);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+/* Hairline rules between items only. */
+.about-page__why-item + .about-page__why-item {
+  border-top: 1px solid var(--color-border);
 }
 
-.about-page__focus-card h3 {
+.about-page__why-num {
+  padding-top: 0.2rem; /* optically align with the h3 cap height */
+  color: var(--color-accent);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.about-page__why-item h3 {
   margin: 0 0 var(--space-sm);
   color: var(--color-text);
   font-family: var(--font-serif);
@@ -2238,10 +2145,6 @@ main:has(.competitor-page) {
   .about-page__hero h1,
   .about-page__section h2 {
     max-width: 16ch;
-  }
-
-  .about-page__focus-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -2381,14 +2284,6 @@ button.view-all-link {
   }
 }
 
-/* Wordmark removed from markup — only the logo identifies the brand.
-   Mild link/gap tightening at intermediate widths keeps 5 links + search
-   from cramping at 768–1023px. */
-
-/* ===================================================================
-   2026 Refresh Overrides
-   =================================================================== */
-
 body {
   width: 100%;
   overflow-x: hidden;
@@ -2455,7 +2350,7 @@ a:hover {
   padding: 0.65rem;
   border-radius: 1rem;
   border: 1px solid rgba(22, 32, 51, 0.1);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  box-shadow: var(--shadow-lg);
 }
 
 .nav-dropdown--open > .nav-dropdown-panel {
@@ -2529,7 +2424,7 @@ a:hover {
     background: var(--color-surface);
     border: 1px solid rgba(22, 32, 51, 0.1);
     border-radius: 1rem;
-    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+    box-shadow: var(--shadow-lg);
     transition: opacity 0.16s ease, transform 0.16s ease;
   }
 
@@ -2591,8 +2486,7 @@ main:has(.home-hero) {
 }
 
 .archive-page,
-.home-section,
-.home-proof {
+.home-section {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--space-xl);
@@ -2629,11 +2523,17 @@ main:has(.home-hero) {
   margin-bottom: var(--space-lg);
 }
 
+/* Wrapping flex (not grid) so an incomplete last row centers at every width;
+   full rows are indistinguishable from a 3-column grid. */
 .preview-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--space-lg);
-  align-items: stretch;
+}
+
+.preview-grid > .preview-card {
+  flex: 0 0 calc((100% - 2 * var(--space-lg)) / 3);
 }
 
 /* Pages that drop a card grid straight into .archive-page (News, Hackathons,
@@ -2644,21 +2544,9 @@ main:has(.home-hero) {
   margin-bottom: var(--space-2xl);
 }
 
-/* When the grid is at 2 columns and the last row holds a single orphan card,
-   center it instead of leaving it left-justified. */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .preview-grid > .preview-card:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    justify-self: center;
-    width: calc((100% - var(--space-lg)) / 2);
-  }
-}
-
 .preview-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 100%;
   color: inherit;
   background: var(--color-surface);
   border: 1px solid rgba(22, 32, 51, 0.1);
@@ -2697,14 +2585,16 @@ main:has(.home-hero) {
 .preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"]),
 .preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"]),
 .preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"]),
-.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"]) {
+.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"]),
+.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"]) {
   position: relative;
 }
 
 .preview-card__image[src$="scq-v3-graphic.webp"],
 .preview-card__image[src$="scq-v1-graphic.webp"],
 .preview-card__image[src$="scq-v2-graphic.webp"],
-.preview-card__image[src$="iquhack-2026.webp"] {
+.preview-card__image[src$="iquhack-2026.webp"],
+.preview-card__image[src$="building-quantum-talent.webp"] {
   position: relative;
   object-fit: contain;
 }
@@ -2712,7 +2602,8 @@ main:has(.home-hero) {
 .preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"])::before,
 .preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before,
 .preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before,
-.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before {
+.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before,
+.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"])::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -2735,6 +2626,9 @@ main:has(.home-hero) {
 .preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before {
   background-image: url('/images/iquhack-2026.webp');
 }
+.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"])::before {
+  background-image: url('/images/building-quantum-talent.webp');
+}
 
 /* Tiger Prowl is a wide logo on a white background; show it whole and centered
    (contain) on a white slot so it isn't cropped and the letterbox blends with
@@ -2750,6 +2644,7 @@ main:has(.home-hero) {
 }
 
 .preview-card__body {
+  position: relative; /* anchors the absolutely-positioned Upcoming badge */
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -2773,7 +2668,13 @@ main:has(.home-hero) {
   text-transform: uppercase;
 }
 
+/* Pinned to the top-right of the card's text area (below the image) at every
+   breakpoint, aligned with the date line. */
 .preview-card__badge {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.25rem;
+  z-index: 1;
   padding: 0.22rem 0.58rem;
   border-radius: 999px;
   background: var(--color-violet-light);
@@ -2828,7 +2729,6 @@ main:has(.home-hero) {
   margin-top: 1.3rem;
 }
 
-.home-proof,
 .home-section {
   padding-top: var(--space-xl);
   padding-bottom: var(--space-2xl);
@@ -2904,15 +2804,10 @@ main:has(.home-hero) {
   padding: 1.4rem 0;
   background: transparent;
   border: 0;
-  border-top: 1px solid rgba(22, 32, 51, 0.12);
+  border-top: 1px solid var(--color-border);
   border-radius: 0;
   box-shadow: none;
   transition: none;
-}
-
-.board-member:hover {
-  box-shadow: none;
-  border-color: rgba(22, 32, 51, 0.12);
 }
 
 /* Last board member intentionally has no bottom border — only the footer
@@ -2960,23 +2855,6 @@ main:has(.home-hero) {
   font-size: 1rem;
 }
 
-.board-member__toggle {
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  padding: 0.2rem 0.5rem;
-  margin-left: auto;
-  display: none;
-}
-
-.board-member__details {
-  display: block;
-}
-
 .board-member__description {
   margin: 0;
   color: var(--color-text-secondary);
@@ -3011,18 +2889,69 @@ main:has(.home-hero) {
   margin-right: auto;
 }
 
-/* Card-grid ladder: 3 columns on desktop (base rule), 2 on tablet, 1 on
-   phones. The tablet range ends at 1024 to match the nav's hamburger
-   breakpoint, so the desktop layout and desktop nav arrive together. */
+/* Card ladder: 3-up on desktop (base rule), 2-up on tablet, 1-up on phones.
+   The tablet range ends at 1024 to match the nav's hamburger breakpoint, so
+   the desktop layout and desktop nav arrive together. */
 @media (min-width: 768px) and (max-width: 1024px) {
-  .preview-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .preview-grid > .preview-card {
+    flex-basis: calc((100% - var(--space-lg)) / 2);
   }
 }
 
 @media (max-width: 767px) {
-  .preview-grid {
-    grid-template-columns: 1fr;
+  .preview-grid > .preview-card {
+    flex-basis: 100%;
+  }
+
+  .preview-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.9rem;
+    height: auto;
+    min-height: 0;
+    padding: 0.8rem;
+    border-radius: 1rem;
+  }
+
+  .preview-card__media {
+    flex: 0 0 96px;
+    width: 96px;
+    height: 96px; /* overrides the base 16/9 aspect-ratio */
+    border-radius: 0.7rem;
+  }
+
+  .preview-card__body {
+    min-width: 0;
+    padding: 0;
+    gap: 0.35rem;
+  }
+
+  .preview-card__meta {
+    justify-content: flex-start;
+    gap: 0.6rem;
+    min-height: 0;
+  }
+
+  .preview-card__date {
+    font-size: 0.72rem;
+  }
+
+  .preview-card__badge {
+    top: 0;
+    right: 0;
+    padding: 0.16rem 0.5rem;
+    font-size: 0.64rem;
+  }
+
+  .preview-card__title {
+    font-size: 1rem;
+    line-height: 1.25;
+    -webkit-line-clamp: 2;
+  }
+
+  .preview-card__summary,
+  .preview-card__footer {
+    display: none;
   }
 }
 
@@ -3032,8 +2961,8 @@ main:has(.home-hero) {
     padding: 0 var(--space-md);
   }
 
-  /* Reset the refresh-half's floating-panel styling so the mobile dropdown is
-     plain inline (overrides .nav-dropdown-panel @2543 + the open transform @2553). */
+  /* Reset the floating-panel styling so the mobile dropdown renders plain inline;
+     overrides the desktop .nav-dropdown-panel rule and its open transform. */
   .nav-dropdown-panel {
     border: none;
     border-radius: 0;
@@ -3065,8 +2994,7 @@ main:has(.home-hero) {
   }
 
   .archive-page,
-  .home-section,
-  .home-proof {
+  .home-section {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
   }
@@ -3091,6 +3019,7 @@ main:has(.home-hero) {
 
   .home-section__title {
     text-align: left;
+    font-size: clamp(2rem, 9vw, 2.6rem);
   }
 
   .home-section__header {
@@ -3103,36 +3032,35 @@ main:has(.home-hero) {
   }
 
   .board-member {
-    grid-template-columns: 1fr;
-    gap: 0;
-    padding: 1.2rem;
-    border: 1px solid rgba(22, 32, 51, 0.1);
-    border-radius: 1.15rem;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .board-member:hover {
-    box-shadow: var(--shadow-sm);
-    border-color: rgba(22, 32, 51, 0.1);
-  }
-
-  .board-member + .board-member {
-    margin-top: 1rem;
+    grid-template-columns: 68px minmax(0, 1fr);
+    column-gap: 1rem;
+    row-gap: 0.7rem;
+    align-items: center;
+    padding: 1.15rem 0;
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--color-border);
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .board-member:last-child {
-    border-bottom: 1px solid rgba(22, 32, 51, 0.1);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .board-member__avatar {
-    width: 86px;
-    height: 86px;
-    margin-bottom: 1rem;
+    width: 68px;
+    height: 68px;
+  }
+
+  /* Promote head/description/links to grid items of .board-member so the
+     description and icon row span full width below the avatar+name row. */
+  .board-member__body {
+    display: contents;
   }
 
   .board-member__head {
-    align-items: center;
+    min-width: 0;
   }
 
   .board-member__name {
@@ -3143,31 +3071,13 @@ main:has(.home-hero) {
     font-size: 0.95rem;
   }
 
-  .board-member__toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: auto;
-    padding: 0.35rem 0.7rem;
-    border: 1px solid rgba(22, 32, 51, 0.12);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--color-accent);
-    font-size: 0.82rem;
-    font-weight: 700;
+  .board-member__description,
+  .board-member__links {
+    grid-column: 1 / -1;
   }
 
-  .board-member__details {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: max-height 0.22s ease, opacity 0.22s ease, margin-top 0.22s ease;
-  }
-
-  .board-member__details[data-open='true'] {
-    max-height: 320px;
-    opacity: 1;
-    margin-top: 0.9rem;
+  .board-member__links {
+    margin-top: 0;
   }
 }
 
@@ -3598,14 +3508,9 @@ main:has(.hackathon-page) {
   }
 }
 
-/* Contextual call-to-action under a section */
-
-/* "Apply" CTA centered in the open band between the hero and the first section.
-   Sized up here because the redesigned .hackathon-cta rule above overrides the
-   global .hackathon-cta-large modifier (same specificity, later in the file). */
-/* Zero the hero's bottom padding and the About section's top padding around the
-   Apply CTA so the button's own equal vertical padding defines the gap — keeping
-   it centered in a small band at every viewport width. */
+/* Apply CTA band: zero the hero's bottom padding and the About section's top
+   padding so the button's own equal vertical padding defines the gap, keeping it
+   centered in a small band at every viewport width. */
 .hackathon-hero:has(+ .hackathon-hero-cta) {
   padding-bottom: 0;
 }
@@ -3854,7 +3759,7 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-prize-grand {
-  background: var(--color-orange-light);
+  background: var(--color-accent-light);
   border-color: rgba(var(--color-accent-rgb), 0.25);
   box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
 }
@@ -3862,7 +3767,7 @@ main:has(.hackathon-page) {
 /* Keep the grand-prize highlight on hover — the generic .hackathon-prize-tier:hover
    would otherwise swap its orange ring for the default shadow. */
 .hackathon-prize-grand:hover {
-  background: var(--color-orange-light);
+  background: var(--color-accent-light);
   border-color: rgba(var(--color-accent-rgb), 0.25);
   box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
 }
@@ -3936,14 +3841,23 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  gap: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.25rem 1.5rem;
   margin-top: 1.5rem;
 }
 
 .hackathon-team-member {
+  flex: 0 0 170px;
   text-align: center;
+}
+
+/* Must follow the base rule: its `flex` shorthand also sets flex-basis. */
+@media (max-width: 639px) {
+  .hackathon-team-member {
+    flex-basis: calc(50% - 0.75rem);
+  }
 }
 
 .hackathon-team-photo {
@@ -4004,21 +3918,17 @@ main:has(.hackathon-page) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-  --color-highlight: #4a3d1a;
   --color-bg: #0f0d13;
   --color-surface: #1a1625;
   --color-text: #e5e2eb;
   --color-text-secondary: #aaa3b8;
   --color-accent: #fb923c;
+  --color-accent-rgb: 251, 146, 60;
   --color-accent-hover: #fdba74;
   --color-accent-light: #2d2015;
   --color-accent-900: #181225;
   --color-accent-950: #0f0d13;
-  --color-orange: #fb923c;
-  --color-orange-light: #2d2015;
   --color-border: rgba(229, 226, 235, 0.14);
-  --color-nav-bg: #0f0d13;
-  --color-nav-text: #f8fafc;
   --color-violet: #c4b5fd;
   --color-violet-light: #2d2044;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
@@ -4093,14 +4003,8 @@ main:has(.hackathon-page) {
   }
 
   .preview-card__footer,
-  .board-member,
-  .board-member:last-child,
   .hackathon-section + .hackathon-section,
   .hackathon-schedule-day td {
-    border-color: rgba(229, 226, 235, 0.12);
-  }
-
-  .board-member:hover {
     border-color: rgba(229, 226, 235, 0.12);
   }
 
@@ -4117,10 +4021,6 @@ main:has(.hackathon-page) {
     background: #f4f0fa;
   }
 
-  .board-member__toggle {
-    border-color: rgba(229, 226, 235, 0.14);
-  }
-
   .footer-links a,
   .footer-copy {
     color: rgba(248, 250, 252, 0.84);
@@ -4131,19 +4031,6 @@ main:has(.hackathon-page) {
   .dropdown-submenu-content {
     background: transparent;
     box-shadow: none;
-  }
-
-  .board-member {
-    border-color: rgba(229, 226, 235, 0.12);
-    background: var(--color-surface);
-  }
-
-  .board-member:hover {
-    border-color: rgba(229, 226, 235, 0.12);
-  }
-
-  .board-member:last-child {
-    border-bottom-color: rgba(229, 226, 235, 0.12);
   }
 }
 

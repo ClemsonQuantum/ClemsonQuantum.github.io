@@ -9,7 +9,7 @@ After editing, push to the `main` branch — the site rebuilds automatically.
 ## Adding a new hackathon
 
 1. Create a new file in `content/events/hackathons/`
-2. Name it like: `2026-My-Hackathon.md`
+2. Name it like: `2026-my-hackathon.md`
 3. Paste this template and fill it in:
 
 ```markdown
@@ -30,7 +30,7 @@ Write event details here. You can use **bold**, *italics*, and [links](https://e
 ## Adding a new workshop or seminar
 
 1. Create a new file in `content/events/workshops-and-seminars/`
-2. Name it like: `2026-Workshop-Name.md`
+2. Name it like: `2026-workshop-name.md`
 3. Use the same template as hackathons above.
 
 ---
@@ -61,7 +61,7 @@ If the article is on an external site, set `external_url` and the card will link
 ## Adding student work (poster or paper)
 
 1. Create a new file in `content/resources/student-work-and-projects/`
-2. Name it like: `My-Project-Name.md`
+2. Name it like: `my-project-name.md`
 3. Template:
 
 ```markdown
@@ -108,6 +108,6 @@ The `---` block at the top of each file is called "front matter." Here are all t
 ## Tips
 
 - **Images:** Put them in `public/images/` and reference as `/images/filename.jpg`
-- **File names:** Use dashes instead of spaces (e.g. `2026-My-Event.md`)
+- **File names:** Use all-lowercase kebab-case with dashes instead of spaces (e.g. `2026-my-event.md`). The filename becomes the page URL verbatim, so any uppercase letter produces a mixed-case URL that breaks on the case-sensitive deploy server.
 - **Dates:** Must be `YYYY-MM-DD` format — events are sorted by date automatically
 - **Adding a new event type:** Currently supports hackathons and workshops. To add a new category, a developer will need to create a new folder and route.

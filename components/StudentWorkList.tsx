@@ -7,8 +7,8 @@ import { formatDate } from '@/lib/types';
 import type { PageMeta } from '@/lib/types';
 
 const ALL = 'all';
-// Categories always offered, even before any entries of that type exist, so the
-// filter is visible and ready. Any other types found in the data are appended.
+// Categories always offered, even with no entries of that type. Other types
+// found in the data are appended.
 const KNOWN_TYPES = ['poster', 'paper'];
 
 function pluralLabel(type: string): string {

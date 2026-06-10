@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import EmailIcon from '@/components/icons/EmailIcon';
+import WebsiteIcon from '@/components/icons/WebsiteIcon';
 import { LinkedInIcon } from '@/components/icons/ChannelIcons';
 
 export const metadata: Metadata = {
@@ -149,20 +150,7 @@ export default function ResourcesPage() {
                           rel="noopener noreferrer"
                           aria-label={`${person.name} faculty page`}
                         >
-                          <svg
-                            className="faculty-card__link-icon"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                          >
-                            <circle cx="12" cy="12" r="9" />
-                            <path d="M3 12h18" />
-                            <path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z" />
-                          </svg>
+                          <WebsiteIcon className="faculty-card__link-icon" />
                         </a>
                       )}
                     </div>

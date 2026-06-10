@@ -4,10 +4,8 @@ import { useState } from 'react';
 import type { FormEvent } from 'react';
 import siteConfig from '@/data/site-config.json';
 
-// When a real Web3Forms access key is set in data/site-config.json, the form
-// submits via AJAX to Web3Forms, which emails the message to the club and keeps
-// the visitor on the page. Until a key is configured it falls back to a mailto:
-// submission that opens the visitor's email app — so the form is always usable.
+// With a configured Web3Forms access key, submit via AJAX to Web3Forms.
+// Without one, fall back to a mailto: submission.
 const web3formsReady =
   Boolean(siteConfig.web3formsKey) &&
   siteConfig.web3formsKey !== 'your-access-key';
@@ -59,7 +57,7 @@ export default function ContactForm() {
     );
   }
 
-  // Fallback: no key configured yet → behave like the original mailto form.
+  // No key configured: mailto fallback.
   if (!web3formsReady) {
     return (
       <>
