@@ -18,7 +18,7 @@ function getSourceLabel(item: PageMeta): string | null {
   }
 
   if (!item.isExternal) {
-    return 'Clemson Quantum';
+    return 'Clemson Quantum Club';
   }
 
   if (item.cta_label?.startsWith('Read on ')) {

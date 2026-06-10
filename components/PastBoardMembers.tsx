@@ -22,7 +22,7 @@ export default function PastBoardMembers() {
       <div className="about-past-board__header">
         <div>
           <h2>Past board members</h2>
-          <p>Previous student officers who helped build Clemson Quantum.</p>
+          <p>Previous student officers who helped build Clemson Quantum Club.</p>
         </div>
         <button
           className="view-all-link"

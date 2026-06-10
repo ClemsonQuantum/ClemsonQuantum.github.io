@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import '../assets/css/style.css';
 import Header from '@/components/Header';
@@ -20,18 +20,19 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Clemson Quantum',
-    default: 'Clemson Quantum',
+    template: '%s | Clemson Quantum Club',
+    default: 'Clemson Quantum Club',
   },
   description:
     'The Clemson Quantum Club (CQC) is a student-led organization making quantum computing accessible at Clemson University. Workshops, hackathons, research, and community.',
   metadataBase: new URL('https://clemsonquantum.com'),
+  alternates: { canonical: './' },
   openGraph: {
-    title: 'Clemson Quantum',
+    title: 'Clemson Quantum Club',
     description:
       'Student-led quantum computing club at Clemson University — workshops, hackathons, and research.',
     url: 'https://clemsonquantum.com',
-    siteName: 'Clemson Quantum',
+    siteName: 'Clemson Quantum Club',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -54,6 +55,13 @@ export const metadata: Metadata = {
     ],
     apple: '/apple-icon.png',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f6f3ee' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f0d13' },
+  ],
 };
 
 // Organization JSON-LD: gives search engines an authoritative logo signal so
@@ -95,7 +103,6 @@ export default function RootLayout({
             content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; form-action 'self' mailto:"
           />
         )}
-        <meta name="theme-color" content="#f6f3ee" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}

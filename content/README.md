@@ -9,7 +9,7 @@ After editing, push to the `main` branch — the site rebuilds automatically.
 ## Adding a new hackathon
 
 1. Create a new file in `content/events/hackathons/`
-2. Name it like: `2026-my-hackathon.md`
+2. Name it like: `my-hackathon-2026.md` (descriptive name first, year at the end — the filename becomes the page URL)
 3. Paste this template and fill it in:
 
 ```markdown
@@ -30,7 +30,7 @@ Write event details here. You can use **bold**, *italics*, and [links](https://e
 ## Adding a new workshop or seminar
 
 1. Create a new file in `content/events/workshops-and-seminars/`
-2. Name it like: `2026-workshop-name.md`
+2. Name it like: `workshop-name-2026.md` (descriptive name first, year at the end)
 3. Use the same template as hackathons above.
 
 ---
@@ -108,6 +108,8 @@ The `---` block at the top of each file is called "front matter." Here are all t
 ## Tips
 
 - **Images:** Put them in `public/images/` and reference as `/images/filename.jpg`
-- **File names:** Use all-lowercase kebab-case with dashes instead of spaces (e.g. `2026-my-event.md`). The filename becomes the page URL verbatim, so any uppercase letter produces a mixed-case URL that breaks on the case-sensitive deploy server.
-- **Dates:** Must be `YYYY-MM-DD` format — events are sorted by date automatically
+- **File names:** Use all-lowercase kebab-case with dashes instead of spaces. The filename becomes the page URL verbatim, so any uppercase letter produces a mixed-case URL that breaks on the case-sensitive deploy server.
+  - Events (hackathons, workshops, meetings): descriptive name first, **year at the end** (e.g. `my-event-2026.md` → `/events/.../my-event-2026/`).
+  - News: name by date (e.g. `2026-03-15.md`).
+- **Dates:** The `date:` field must be `YYYY-MM-DD` format — listings are sorted by this field, not by the filename, so the filename order doesn't affect sorting.
 - **Adding a new event type:** Currently supports hackathons and workshops. To add a new category, a developer will need to create a new folder and route.

@@ -1,12 +1,9 @@
-import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPages, sortPages } from '@/lib/content';
 import SiteImage from '@/components/SiteImage';
 import BoardMember from '@/components/BoardMember';
 import PreviewCard from '@/components/PreviewCard';
 import boardMembers from '@/data/board-members.json';
-
-export const metadata: Metadata = { title: 'Home' };
 
 export default function HomePage() {
   const newsItems = sortPages(getAllPages('news'));
@@ -56,7 +53,7 @@ export default function HomePage() {
         <div className="home-hero__visual">
           <SiteImage
             src="/images/iquhack-2025-team.jpg"
-            alt="Clemson Quantum members at MIT iQuHack 2025"
+            alt="Clemson Quantum Club members at MIT iQuHack 2025"
             className="home-hero__image"
           />
         </div>

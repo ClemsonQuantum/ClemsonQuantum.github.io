@@ -1,7 +1,7 @@
 ---
 title: iQuHack 2025
 date: 2025-01-31
-summary: "Clemson Quantum competed at MIT's annual quantum hackathon in Cambridge, MA."
+summary: "Clemson Quantum Club competed at MIT's annual quantum hackathon in Cambridge, MA."
 image: /images/iquhack-2025.jpg
 ---
 
