@@ -1877,10 +1877,18 @@ main:has(.competitor-page) {
   color: var(--color-accent);
 }
 .faculty-card__link-icon {
-  width: 22px;
-  height: 22px;
+  /* Same box as .board-member__link-icon so both sections' icons match. */
+  width: 1.45rem;
+  height: 1.45rem;
   opacity: 0.75;
   transition: opacity 0.15s;
+}
+/* Brand glyphs (LinkedIn, GitHub) draw edge-to-edge in their viewBox while
+   the stroked envelope/globe leave ~25% internal margin — inset the brand
+   marks so every icon in a row reads the same optical size. */
+.link-icon--brand {
+  box-sizing: border-box;
+  padding: 0.14rem;
 }
 .faculty-card__link:hover .faculty-card__link-icon {
   opacity: 1;
@@ -2271,14 +2279,12 @@ main:has(.competitor-page) {
   /* Organizer avatar background */
 }
 
-/* Inline SVG icons inside board-member link rows (envelope) */
+/* Inline SVG icons inside board-member link rows (envelope, LinkedIn, GitHub,
+   website globe). Color only — sizing comes from .board-member__link-icon so
+   every icon in the row shares the same box. */
 .board-member__links svg.board-member__link-icon {
   color: var(--color-text);
   display: block;
-  /* The envelope only fills ~75% of its viewBox, so it reads smaller than the
-     solid LinkedIn/GitHub icons — size it up a touch to match visually. */
-  width: 1.7rem;
-  height: 1.7rem;
 }
 
 /* Past board members archive on /about page */
@@ -2640,7 +2646,7 @@ main:has(.home-hero) {
 
 /* When the grid is at 2 columns and the last row holds a single orphan card,
    center it instead of leaving it left-justified. */
-@media (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 768px) and (max-width: 1024px) {
   .preview-grid > .preview-card:last-child:nth-child(odd) {
     grid-column: 1 / -1;
     justify-self: center;
@@ -3005,9 +3011,18 @@ main:has(.home-hero) {
   margin-right: auto;
 }
 
-@media (max-width: 1023px) {
+/* Card-grid ladder: 3 columns on desktop (base rule), 2 on tablet, 1 on
+   phones. The tablet range ends at 1024 to match the nav's hamburger
+   breakpoint, so the desktop layout and desktop nav arrive together. */
+@media (min-width: 768px) and (max-width: 1024px) {
   .preview-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .preview-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -3076,11 +3091,6 @@ main:has(.home-hero) {
 
   .home-section__title {
     text-align: left;
-  }
-
-  .home-proof__grid,
-  .preview-grid {
-    grid-template-columns: 1fr;
   }
 
   .home-section__header {
@@ -4164,14 +4174,3 @@ main:has(.hackathon-page) {
   }
 }
 
-/* ===================================================================
-   Board member GitHub icon — light version for dark mode
-   =================================================================== */
-@media (prefers-color-scheme: dark) {
-  /* The GitHub mark is a dark (#24292f) SVG; invert it to a light version so it
-     reads on the dark surface. (LinkedIn is blue and the email uses currentColor,
-     so they're fine as-is.) */
-  .board-member__link-icon[src*='github'] {
-    filter: invert(1);
-  }
-}
