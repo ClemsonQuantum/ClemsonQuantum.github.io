@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import EmailIcon from '@/components/icons/EmailIcon';
+import { LinkedInIcon } from '@/components/icons/ChannelIcons';
 
 export const metadata: Metadata = {
   title: 'Resources',
@@ -128,11 +129,7 @@ export default function ResourcesPage() {
                           rel="noopener noreferrer"
                           aria-label={`${person.name} on LinkedIn`}
                         >
-                          <SiteImage
-                            src="/images/linkedin.png"
-                            alt=""
-                            className="faculty-card__link-icon"
-                          />
+                          <LinkedInIcon className="faculty-card__link-icon link-icon--brand" />
                         </a>
                       )}
                       {person.email && (

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import SiteImage from './SiteImage';
 import EmailIcon from './icons/EmailIcon';
+import { LinkedInIcon, GitHubIcon } from './icons/ChannelIcons';
 
 export interface BoardMemberData {
   name: string;
@@ -73,11 +74,7 @@ export default function BoardMember({
                     rel="noopener noreferrer"
                     aria-label={`${name} on LinkedIn`}
                   >
-                    <SiteImage
-                      src="/images/linkedin.png"
-                      alt=""
-                      className="board-member__link-icon"
-                    />
+                    <LinkedInIcon className="board-member__link-icon link-icon--brand" />
                   </a>
                 )}
                 {github && (
@@ -87,11 +84,7 @@ export default function BoardMember({
                     rel="noopener noreferrer"
                     aria-label={`${name} on GitHub`}
                   >
-                    <SiteImage
-                      src="/images/github.svg"
-                      alt=""
-                      className="board-member__link-icon"
-                    />
+                    <GitHubIcon className="board-member__link-icon link-icon--brand" />
                   </a>
                 )}
                 {website && (
