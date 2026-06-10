@@ -43,9 +43,10 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    // Square CQC mark (atom + letters, wordmark text cropped off) so the
-    // favicon stays legible at small sizes. favicon.ico at the site root is
-    // what Google/crawlers prefer; the PNG provides a high-res variant.
+    // Full CQC logo (atom + letters + wordmark) on a square canvas. The .ico
+    // frames are exact downscales of favicon-512.png so every size shows the
+    // mark at the same relative scale. favicon.ico at the site root is what
+    // Google/crawlers prefer; the PNG provides a high-res variant.
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon-512.png', type: 'image/png', sizes: '512x512' },
