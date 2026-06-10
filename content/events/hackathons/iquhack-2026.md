@@ -1,7 +1,7 @@
 ---
 title: iQuHack 2026
 date: 2026-01-30
-summary: "Clemson Quantum at MIT's annual quantum hackathon in Cambridge, MA. (Details coming soon.)"
+summary: "Clemson Quantum Club at MIT's annual quantum hackathon in Cambridge, MA. (Details coming soon.)"
 image: "/images/iquhack-2026.webp"
 ---
 
@@ -20,7 +20,7 @@ image: "/images/iquhack-2026.webp"
 
 iQuHACK (interdisciplinary Quantum HACKathon) is MIT's annual quantum computing hackathon, organized by MIT's iQuISE student group.
 
-[PLACEHOLDER — Details about Clemson Quantum's participation in iQuHack 2026 coming soon.]
+[PLACEHOLDER — Details about Clemson Quantum Club's participation in iQuHack 2026 coming soon.]
 
 </div>
 

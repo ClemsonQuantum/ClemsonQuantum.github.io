@@ -20,12 +20,22 @@ function semesterRank(label: string): number {
   return Number(year) * 10 + (SEASON_ORDER[season] ?? 0);
 }
 
+// Term-filtered archive grid. Shared by the event archive pages and the News
+// page — the semester tabs derive purely from each item's `date`, so it works
+// for any dated content. `kind`/`showFooter`/`emptyText` default to the event
+// behavior, so existing event pages need no changes.
 export default function EventArchive({
   items,
   metaLabel,
+  kind = 'event',
+  showFooter = true,
+  emptyText = 'No events yet — check back soon.',
 }: {
   items: PageMeta[];
   metaLabel?: string;
+  kind?: 'news' | 'event';
+  showFooter?: boolean;
+  emptyText?: string;
 }) {
   // Distinct semesters among dated items, newest-first. Undated items contribute
   // no tab and surface only under All.
@@ -75,15 +85,16 @@ export default function EventArchive({
       )}
 
       {visible.length === 0 ? (
-        <p className="sw-empty">No events yet — check back soon.</p>
+        <p className="sw-empty">{emptyText}</p>
       ) : (
         <div className="preview-grid">
           {visible.map((item) => (
             <PreviewCard
               key={item.slug}
               item={item}
-              kind="event"
+              kind={kind}
               metaLabel={metaLabel}
+              showFooter={showFooter}
             />
           ))}
         </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
-import PreviewCard from '@/components/PreviewCard';
+import EventArchive from '@/components/EventArchive';
 
 export const metadata: Metadata = {
   title: 'News',
@@ -16,11 +16,12 @@ export default function NewsPage() {
       <header className="archive-hero">
         <h1 className="archive-hero__title">News</h1>
       </header>
-      <div className="preview-grid">
-        {items.map((item) => (
-          <PreviewCard key={item.slug} item={item} kind="news" showFooter={false} />
-        ))}
-      </div>
+      <EventArchive
+        items={items}
+        kind="news"
+        showFooter={false}
+        emptyText="No news yet — check back soon."
+      />
     </div>
   );
 }
