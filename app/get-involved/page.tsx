@@ -38,7 +38,7 @@ export default function GetInvolvedPage() {
     <article className="about-page">
       <header className="about-page__hero">
         <div className="about-page__hero-copy">
-          <h1>Get involved with Clemson Quantum</h1>
+          <h1>Get involved with Clemson Quantum Club</h1>
           <p className="about-page__tagline">
             No application, dues, or prior quantum background required. Drop into
             a meeting, join our Discord, or send us a message — students from

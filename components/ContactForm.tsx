@@ -10,7 +10,7 @@ const web3formsReady =
   Boolean(siteConfig.web3formsKey) &&
   siteConfig.web3formsKey !== 'your-access-key';
 
-const SUBJECT = 'New message from the Clemson Quantum website';
+const SUBJECT = 'New message from the Clemson Quantum Club website';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
@@ -27,7 +27,7 @@ export default function ContactForm() {
     const data = new FormData(form);
     data.append('access_key', siteConfig.web3formsKey);
     data.append('subject', SUBJECT);
-    data.append('from_name', 'Clemson Quantum website');
+    data.append('from_name', 'Clemson Quantum Club website');
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {

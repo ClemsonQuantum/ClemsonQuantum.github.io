@@ -190,7 +190,7 @@ img {
    static and dropdowns open on tap (.nav-dropdown--open); leaving these
    ungated let `:hover` (specificity 0,3,0) beat the mobile `transform:none`
    reset and slide the open panel off-screen via translateX(-50%). */
-@media (min-width: 1025px) {
+@media (min-width: 801px) {
   .nav-dropdown:hover > .nav-dropdown-panel,
   .nav-dropdown:focus-within > .nav-dropdown-panel {
     opacity: 1;
@@ -345,7 +345,7 @@ img {
    Desktop (>= 768px)
    =================================================================== */
 
-@media (min-width: 1025px) {
+@media (min-width: 801px) {
   .nav-toggle {
     display: none;
   }
@@ -361,7 +361,7 @@ img {
    Mobile (< 768px)
    =================================================================== */
 
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
   .nav-inner {
     height: 56px;
     padding: 0 var(--space-md);
@@ -412,13 +412,25 @@ img {
   }
 
   .nav-link {
-    padding: 0.75rem 0.5rem;
+    padding: 0.7rem 0.85rem;
     font-size: 1rem;
-    border-radius: 0;
+    border-radius: 0.7rem;
   }
 
   .nav-link::after {
     display: none;
+  }
+
+  /* Cleaner drawer hover: a soft rounded accent tint instead of a flat grey
+     block. Scoped to .nav-links so the (0,3,0) specificity beats the base
+     light/dark `.nav-link:hover` (0,2,0) rules regardless of source order;
+     accent tokens keep it correct in both colour schemes. */
+  .nav-links .nav-link:hover,
+  .nav-links .nav-link:focus-visible,
+  .nav-links .nav-dropdown-link:hover,
+  .nav-links .nav-dropdown-link:focus-visible {
+    background: var(--color-accent-light);
+    color: var(--color-accent);
   }
 
   /* Dropdown on mobile — collapsed by default, expands on tap (.nav-dropdown--open) */
@@ -472,9 +484,7 @@ img {
 
   .nav-search-slot {
     margin-left: 0;
-    margin-top: 0.5rem;
-    padding-top: 0.5rem;
-    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-md);
   }
 
   .nav-search-slot .search {
@@ -2397,7 +2407,7 @@ a:hover {
   margin-top: 0.85rem;
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 801px) {
   .dropdown-submenu {
     position: relative;
   }
@@ -2955,7 +2965,7 @@ main:has(.home-hero) {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
   .nav-inner {
     height: 64px;
     padding: 0 var(--space-md);
@@ -4021,6 +4031,16 @@ main:has(.hackathon-page) {
     background: #f4f0fa;
   }
 
+  .hackathon-cta-outline {
+    color: var(--color-accent);
+    background: transparent;
+  }
+
+  .hackathon-cta-outline:hover {
+    color: var(--color-accent-hover);
+    background: var(--color-accent-light);
+  }
+
   .footer-links a,
   .footer-copy {
     color: rgba(248, 250, 252, 0.84);
@@ -4058,6 +4078,18 @@ main:has(.hackathon-page) {
   /* The banner logo is a solid-black SVG; invert it to white for the dark banner. */
   .hackathon-hero-logo {
     filter: invert(1);
+  }
+}
+
+/* Accessibility: honor the OS-level reduced-motion preference site-wide. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

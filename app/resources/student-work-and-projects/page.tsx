@@ -17,7 +17,7 @@ export default function StudentWorkPage() {
         <h1 className="archive-hero__title">Student Work &amp; Projects</h1>
       </header>
       <p className="lr-intro">
-        Posters and papers from Clemson Quantum members. Click a title for the
+        Posters and papers from Clemson Quantum Club members. Click a title for the
         full project page, or open the poster or paper directly.
       </p>
       <StudentWorkList works={works} />

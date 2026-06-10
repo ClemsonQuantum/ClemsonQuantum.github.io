@@ -1,7 +1,7 @@
 ---
 title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
-summary: "[One-line description — e.g., Clemson Quantum competed at EVENT NAME in CITY]"
+summary: "[One-line description — e.g., Clemson Quantum Club competed at EVENT NAME in CITY]"
 image: /images/[PLACEHOLDER].jpg
 link: "[URL to official event site]"
 cta_label: "Official Site"

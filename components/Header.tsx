@@ -188,7 +188,7 @@ export default function Header({ navData }: HeaderProps) {
             />
             <SiteImage
               src="/images/logo-light.png"
-              alt="Clemson Quantum"
+              alt="Clemson Quantum Club"
               className="nav-logo"
             />
           </picture>
