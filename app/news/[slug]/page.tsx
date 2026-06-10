@@ -35,8 +35,12 @@ export default async function NewsArticlePage({ params }: Props) {
   }
   const { data, content } = page;
   const date = data.date ? String(data.date) : null;
-  const externalUrl =
-    typeof data.external_url === 'string' ? data.external_url : null;
+  // `source_url` links to the original article on the detail page WITHOUT making
+  // the card itself external (unlike `external_url`, which `lib/content` treats as
+  // the card's destination). `external_url` still works for fully off-site items.
+  const linkUrl =
+    (typeof data.external_url === 'string' ? data.external_url : null) ??
+    (typeof data.source_url === 'string' ? data.source_url : null);
   const ctaLabel =
     typeof data.cta_label === 'string' ? data.cta_label : 'Read Full Article';
   const image = typeof data.image === 'string' ? data.image : null;
@@ -57,10 +61,10 @@ export default async function NewsArticlePage({ params }: Props) {
       <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
         {content}
       </ReactMarkdown>
-      {externalUrl && (
+      {linkUrl && (
         <p className="news-external-cta">
           <a
-            href={externalUrl}
+            href={linkUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hackathon-cta"
