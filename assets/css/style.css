@@ -5,21 +5,24 @@
 /* --- Design Tokens --- */
 :root {
   /* Colors */
-  --color-bg: #fafafa;
+  --color-bg: #f6f3ee;
   --color-surface: #ffffff;
-  --color-text: #1f2937;
-  --color-text-secondary: #4b5563;
-  --color-accent: #7c3aed;
-  --color-accent-hover: #6d28d9;
-  --color-accent-light: #ede9fe;
-  --color-accent-900: #4c1d95; /* deep purple — hackathon section heros */
-  --color-accent-950: #1e1b4b; /* indigo-black — competitor page hero */
-  --color-orange: #f97316;
-  --color-orange-light: #fff7ed;
+  --color-text: #162033;
+  --color-text-secondary: #4f5d73;
+  --color-accent: #f56600;
+  --color-accent-rgb: 245, 102, 0;
+  --color-accent-hover: #cf5500;
+  --color-accent-light: #fff0e4;
+  --color-accent-900: #19243a; /* deep slate — hackathon section heros */
+  --color-accent-950: #0f172a; /* near-black slate — competitor page hero */
+  --color-violet: #6d28d9;
+  --color-violet-light: #efe7ff;
+  --color-orange: #f56600;
+  --color-orange-light: #fff5eb;
   --color-highlight: #fef08a;
-  --color-border: #e5e7eb;
-  --color-nav-bg: #2d1054;
-  --color-nav-text: #f9fafb;
+  --color-border: rgba(22, 32, 51, 0.12);
+  --color-nav-bg: #162033;
+  --color-nav-text: #f8fafc;
 
   /* Typography */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -35,9 +38,9 @@
   --space-3xl: 4rem;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 18px 40px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
 
   /* Border radius */
   --radius-sm: 0.375rem;
@@ -46,7 +49,7 @@
   --radius-full: 9999px;
 
   /* Layout */
-  --max-width: 1200px;
+  --max-width: 1220px;
 }
 
 /* --- Reset --- */
@@ -63,28 +66,7 @@ html {
   scrollbar-gutter: stable;
 }
 
-body {
-  width: 100%;
-  overflow-x: hidden;
-}
-
 /* --- Global --- */
-body {
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-bg);
-}
-
-a {
-  color: var(--color-accent);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-a:hover {
-  color: var(--color-accent-hover);
-}
 
 img {
   max-width: 100%;
@@ -100,16 +82,11 @@ img {
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(14px) saturate(1.6);
-  -webkit-backdrop-filter: blur(14px) saturate(1.6);
   border-bottom: 1px solid var(--color-border);
   transition: box-shadow 0.3s, border-color 0.3s;
-}
-
-.nav--scrolled {
-  box-shadow: 0 1px 12px rgba(45, 16, 84, 0.06);
-  border-bottom-color: rgba(124, 58, 237, 0.1);
+  /* background, backdrop-filter, border-bottom-color, and the .nav--scrolled
+     shadow/border are all set by the 2026 Refresh `.nav` / `.nav--scrolled`
+     rules below (they win by cascade order). */
 }
 
 .nav-inner {
@@ -118,8 +95,7 @@ img {
   justify-content: space-between;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--space-lg);
-  height: 64px;
+  /* height + padding → 2026 Refresh `.nav-inner` (72px) + the mobile @media */
 }
 
 /* --- Brand (logo + wordmark) --- */
@@ -137,24 +113,10 @@ img {
 }
 
 .nav-logo {
-  height: 48px;
   width: auto;
   vertical-align: middle;
   display: block;
-}
-
-.nav-brand-text {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--color-nav-bg);
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-
-.nav-brand:hover .nav-brand-text {
-  color: var(--color-accent);
+  /* height → 2026 Refresh `.nav-logo` (44px) */
 }
 
 /* --- Nav links (desktop row / mobile column) --- */
@@ -172,19 +134,12 @@ img {
   gap: 0.3rem;
   padding: 0.4rem 0.7rem;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
   text-decoration: none;
   border-radius: var(--radius-sm);
   transition: color 0.2s, background 0.2s;
   white-space: nowrap;
-}
-
-.nav-link:hover,
-.nav-link:focus-visible {
-  color: var(--color-accent);
-  background: var(--color-accent-light);
+  /* color, font-size, font-weight, letter-spacing + the hover/focus colors
+     → 2026 Refresh `.nav-link` / `.nav-link:hover` below */
 }
 
 /* Active underline indicator — on hover */
@@ -222,19 +177,15 @@ img {
 
 .nav-dropdown-panel {
   position: absolute;
-  top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%) translateY(4px);
   opacity: 0;
   pointer-events: none;
   background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 12px 40px rgba(45, 16, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
-  padding: 0.75rem;
-  min-width: 220px;
   z-index: 1500;
   transition: opacity 0.2s, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  /* top, min-width, padding, border, border-radius, box-shadow
+     → 2026 Refresh `.nav-dropdown-panel` below */
 }
 
 /* Invisible bridge so cursor can travel from trigger to panel */
@@ -247,15 +198,21 @@ img {
   height: 14px;
 }
 
-.nav-dropdown:hover > .nav-dropdown-panel,
-.nav-dropdown:focus-within > .nav-dropdown-panel {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
-}
+/* Hover-reveal is DESKTOP-ONLY. On the ≤1024 hamburger overlay the panel is
+   static and dropdowns open on tap (.nav-dropdown--open); leaving these
+   ungated let `:hover` (specificity 0,3,0) beat the mobile `transform:none`
+   reset and slide the open panel off-screen via translateX(-50%). */
+@media (min-width: 1025px) {
+  .nav-dropdown:hover > .nav-dropdown-panel,
+  .nav-dropdown:focus-within > .nav-dropdown-panel {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
 
-.nav-dropdown:hover .nav-chevron {
-  transform: rotate(180deg);
+  .nav-dropdown:hover .nav-chevron {
+    transform: rotate(180deg);
+  }
 }
 
 .nav-dropdown-section {
@@ -268,16 +225,6 @@ img {
   border-top: 1px solid var(--color-border);
 }
 
-.nav-dropdown-heading {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-text-secondary);
-  padding: 0.25rem 0.75rem 0.35rem;
-}
-
 .nav-dropdown-link {
   display: block;
   padding: 0.45rem 0.75rem;
@@ -285,14 +232,10 @@ img {
   font-weight: 400;
   color: var(--color-text);
   text-decoration: none;
-  border-radius: var(--radius-sm);
   transition: background 0.15s, color 0.15s;
   line-height: 1.4;
-}
-
-.nav-dropdown-link:hover {
-  background: var(--color-accent-light);
-  color: var(--color-accent);
+  /* border-radius + the hover/focus colors → 2026 Refresh
+     `.nav-dropdown-link` / `.nav-dropdown-link:hover` below */
 }
 
 /* "View all" link inside dropdown — visually distinct from items */
@@ -324,10 +267,10 @@ img {
 
 /* Parent link with arrow indicator */
 .nav-dropdown-link--parent {
-  font-weight: 500;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /* font-weight → 2026 Refresh `.nav-dropdown-link--parent` (600) */
 }
 
 .nav-dropdown-link--parent::after {
@@ -417,7 +360,7 @@ img {
    Desktop (>= 768px)
    =================================================================== */
 
-@media (min-width: 768px) {
+@media (min-width: 1025px) {
   .nav-toggle {
     display: none;
   }
@@ -433,7 +376,7 @@ img {
    Mobile (< 768px)
    =================================================================== */
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .nav-inner {
     height: 56px;
     padding: 0 var(--space-md);
@@ -443,18 +386,28 @@ img {
     display: flex;
   }
 
+  /* Mobile menu = full-screen opaque drawer below the bar. Fills the viewport
+     so no page content bleeds through, and submenus expand inline onto the same
+     solid, scrollable surface. */
   .nav-links {
     display: none;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 64px;
     left: 0;
     right: 0;
+    /* vh/dvh are viewport-relative regardless of the containing block (.nav's
+       backdrop-filter would otherwise trap a fixed `bottom:0`). dvh tracks the
+       mobile URL bar; the vh line is the fallback. */
+    height: calc(100vh - 64px);
+    height: calc(100dvh - 64px);
     flex-direction: column;
     align-items: stretch;
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    padding: var(--space-sm) var(--space-md) var(--space-md);
+    padding: var(--space-sm) var(--space-md) var(--space-xl);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     animation: navPanelOpen 0.25s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -483,7 +436,7 @@ img {
     display: none;
   }
 
-  /* Dropdown on mobile — always open, no hover */
+  /* Dropdown on mobile — collapsed by default, expands on tap (.nav-dropdown--open) */
   .nav-dropdown-panel {
     position: static;
     opacity: 1;
@@ -495,14 +448,15 @@ img {
     background: transparent;
     min-width: 0;
     transition: none;
+    display: none;
+  }
+
+  .nav-dropdown--open > .nav-dropdown-panel {
+    display: block;
   }
 
   .nav-dropdown::after {
     display: none;
-  }
-
-  .nav-dropdown-heading {
-    padding: 0.5rem 0.5rem 0.25rem;
   }
 
   .nav-dropdown-link {
@@ -516,11 +470,18 @@ img {
   }
 
   .dropdown-submenu-content {
-    display: block;
     padding-left: var(--space-md);
   }
 
+  .dropdown-submenu--open > .dropdown-submenu-content {
+    display: block;
+  }
+
   .nav-dropdown-link--parent::after {
+    transform: rotate(45deg);
+  }
+
+  .dropdown-submenu--open > .nav-dropdown-link--parent::after {
     transform: rotate(135deg);
   }
 
@@ -539,41 +500,6 @@ img {
 /* ===================================================================
    Search Bar
    =================================================================== */
-
-.search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0.4rem 0.75rem;
-  border-radius: var(--radius-full);
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  width: clamp(160px, 18vw, 220px);
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.search:focus-within {
-  border-color: var(--color-text-secondary);
-}
-
-.search .material-symbols-outlined {
-  font-size: 18px;
-  color: var(--color-text-secondary);
-}
-
-.search-input {
-  font-size: 0.85rem;
-  font-family: var(--font-sans);
-  color: var(--color-text);
-  margin-left: 0.4rem;
-  outline: none;
-  border: none;
-  background: transparent;
-  flex: 1;
-  min-width: 0;
-  -webkit-appearance: none;
-  appearance: none;
-}
 
 .search-input::placeholder {
   color: var(--color-text-secondary);
@@ -595,11 +521,12 @@ img {
   min-width: 280px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 12px 40px rgba(45, 16, 84, 0.1), 0 2px 8px rgba(0, 0, 0, 0.04);
   max-height: 320px;
   overflow-y: auto;
   z-index: 1200;
+  border-radius: 1rem;
+  border-color: rgba(22, 32, 51, 0.12);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
 }
 
 .search-item {
@@ -629,32 +556,13 @@ img {
   text-overflow: ellipsis;
 }
 
-.search-item-sub {
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  margin-top: 0.15rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .search-empty {
   padding: 0.625rem 0.75rem;
   color: var(--color-text-secondary);
   font-size: 0.8125rem;
 }
 
-.search-highlight {
-  background: var(--color-highlight, #fef08a);
-  padding: 1px 3px;
-  border-radius: 2px;
-}
-
 /* --- Main & Layout --- */
-main {
-  padding-top: var(--space-2xl);
-  margin-bottom: 0;
-}
 
 h1, h2, h3 {
   font-family: var(--font-serif);
@@ -699,63 +607,6 @@ section p {
 }
 
 /* --- Gallery --- */
-.gallery-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  margin: var(--space-lg) auto;
-  max-width: 100%;
-  padding: 0 var(--space-md);
-}
-
-.gallery {
-  width: 1100px;
-  max-width: calc(100vw - 100px);
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  display: flex;
-  gap: var(--space-lg);
-  padding: var(--space-lg) 0;
-}
-
-.gallery::-webkit-scrollbar {
-  display: none;
-}
-
-.gallery span {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.gallery img {
-  width: 280px;
-  height: 200px;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery img:hover {
-  transform: scale(1.03);
-  box-shadow: var(--shadow-lg);
-  z-index: 10;
-  position: relative;
-}
-
-.gallery-caption {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  text-align: center;
-  font-weight: 500;
-  max-width: 280px;
-  line-height: 1.3;
-}
 
 #backBtn,
 #nextBtn {
@@ -773,362 +624,19 @@ section p {
 }
 
 /* Image overlay (lightbox) */
-.img-overlay {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-}
-
-.img-overlay.active {
-  display: flex;
-}
-
-.img-overlay-pic {
-  max-width: 90vw;
-  max-height: 90vh;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  border-radius: var(--radius-md);
-}
 
 /* --- Event Cards (Expandable) --- */
 /* --- Event Items (matches home news grid style) --- */
-.event-cards-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
-  padding: 0 var(--space-xl);
-}
-
-@media (max-width: 767px) {
-  .event-cards-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-}
-
-.event-item {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.2s;
-}
-
-.event-item:hover {
-  opacity: 0.8;
-}
-
-.event-item__img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-sm);
-}
-
-.event-item__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.event-item__date {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-secondary);
-}
-
-.event-item__title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.4;
-  margin: 0;
-}
-
-.event-item__location {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-  margin: 0;
-}
 
 /* --- Board / People Section --- */
 
 /* Organizer rows — desktop layout */
-.organizer-cards {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
-  padding: var(--space-lg);
-}
-
-.organizer-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xl);
-  max-width: 100%;
-}
-
-.organizer-row h2 {
-  font-size: 1.35rem;
-  margin: 0 0 0.375rem;
-  color: var(--color-text);
-}
-
-.organizer-row h2 span {
-  font-weight: 400;
-  color: var(--color-text-secondary);
-}
-
-.organizer-row p {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  margin: 0 0 0.375rem;
-  line-height: 1.5;
-}
-
-.organizer-description {
-  font-size: 0.9rem;
-}
 
 /* People cards — expandable pattern for all screen sizes */
-.people-cards-grid {
-  display: none;
-}
-
-.people-card {
-  display: none;
-  background: var(--color-surface);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: box-shadow 0.3s ease;
-}
-
-.people-card:hover {
-  box-shadow: var(--shadow-lg);
-}
-
-.people-card-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-lg);
-  cursor: pointer;
-}
-
-.people-card-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-
-.people-card-info h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin-bottom: 2px;
-}
-
-.people-card-info p {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.people-card-expand {
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  font-weight: 600;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 0;
-  margin-left: auto;
-  font-family: var(--font-sans);
-}
-
-.people-card-details {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.3s ease;
-}
-
-.people-card-details[data-open='true'] {
-  grid-template-rows: 1fr;
-}
-
-.people-card-details-inner {
-  overflow: hidden;
-}
-
-.people-card-details-content {
-  padding: 0 var(--space-lg) var(--space-lg);
-}
-
-.people-card-details-content p {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-sm);
-}
-
-.people-card-links {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  margin-top: var(--space-sm);
-}
-
-.people-card-links img {
-  height: 28px;
-  width: 28px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.people-card-links img:hover {
-  opacity: 1;
-}
 
 /* Mobile: show people cards, hide organizer rows */
-@media (max-width: 639px) {
-  .organizer-row {
-    display: none;
-  }
-
-  .organizer-cards {
-    display: none;
-  }
-
-  .people-cards-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
-    padding: 0 var(--space-md);
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .people-card {
-    display: block;
-  }
-}
 
 /* --- Article Items (editorial list layout) --- */
-.news-cards {
-  margin: var(--space-2xl) 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.article-item {
-  border-top: 1px solid var(--color-border);
-  padding: var(--space-xl) 0;
-}
-
-.article-item:last-child {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.article-item__layout {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  gap: var(--space-xl);
-  align-items: start;
-}
-
-.article-item__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.article-item__date {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin: 0;
-}
-
-.article-item__title {
-  margin: 0;
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--color-text);
-}
-
-.article-item__title a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.article-item__title a:hover {
-  color: var(--color-accent);
-}
-
-.article-item__summary {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--color-text-secondary);
-}
-
-.article-item__cta {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  margin-top: 0.25rem;
-  align-self: flex-start;
-}
-
-.article-item__cta:hover {
-  color: var(--color-accent-hover);
-}
-
-.article-item__image {
-  width: 100%;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
-}
-
-.article-item__image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-@media (max-width: 639px) {
-  .article-item__layout {
-    grid-template-columns: 1fr;
-  }
-
-  .article-item__image {
-    aspect-ratio: 16/9;
-    order: -1;
-  }
-}
 
 /* --- Page Content (Markdown pages) --- */
 .page-content {
@@ -1190,54 +698,7 @@ section p {
   color: var(--color-text-secondary);
 }
 
-.page-content .schedule-list {
-  background: transparent;
-  padding-left: 0;
-  list-style: none;
-}
-
-.page-content .schedule-list li {
-  padding: 0.375rem 0;
-  border-bottom: 1px dashed var(--color-border);
-}
-
 /* Festival day layout */
-.ff-day {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: var(--space-xl);
-  align-items: start;
-  padding: var(--space-lg);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
-}
-
-.ff-day + .ff-day {
-  margin-top: var(--space-md);
-}
-
-.ff-left {
-  padding-right: 0.375rem;
-}
-
-.ff-right {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  background: var(--color-bg);
-  padding: var(--space-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-}
-
-@media (max-width: 639px) {
-  .ff-day {
-    grid-template-columns: 1fr;
-  }
-  .ff-right {
-    order: 2;
-  }
-}
 
 /* --- Forms (Get Involved) --- */
 form {
@@ -1315,10 +776,10 @@ footer {
   -webkit-backdrop-filter: blur(14px) saturate(1.6);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-secondary);
-  margin-top: var(--space-3xl);
-  padding: var(--space-xl) 0;
   font-size: 0.9rem;
   text-align: center;
+  margin-top: 0;
+  padding: 2.2rem var(--space-xl);
 }
 
 .footer-links {
@@ -1394,28 +855,9 @@ footer {
    Hackathon Landing Page
    =================================================================== */
 
-.page-content:has(.hackathon-page) {
-  max-width: none;
-  padding: 0;
-}
-
 /* Remove main padding when hackathon page is shown */
-main:has(.hackathon-page) {
-  padding-top: 0;
-}
-
-.hackathon-page {
-  max-width: 100%;
-  margin: 0;
-}
 
 /* Hero — full-bleed solid banner */
-.hackathon-hero {
-  text-align: center;
-  padding: 2.5rem var(--space-xl) 2rem;
-  background: var(--color-accent-900);
-  color: #fff;
-}
 
 .hackathon-hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
@@ -1453,36 +895,41 @@ main:has(.hackathon-page) {
 /* CTA Buttons */
 .hackathon-cta {
   display: inline-block;
-  padding: 1rem 2.75rem;
-  background: var(--color-orange);
-  color: #fff;
   font-family: var(--font-sans);
   font-weight: 700;
-  font-size: 1.1rem;
   border-radius: var(--radius-full);
   text-decoration: none;
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-  border: none;
   cursor: pointer;
   letter-spacing: 0.02em;
+  padding: 0.95rem 1.35rem;
+  background: var(--color-text);
+  color: #fff;
+  border: 1px solid var(--color-text);
+  font-size: 0.96rem;
+  box-shadow: 0 12px 28px rgba(22, 32, 51, 0.12);
 }
 
 .hackathon-cta:hover {
-  background: #ea580c;
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);
+  background: #24314b;
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(22, 32, 51, 0.14);
 }
 
 .hackathon-cta-outline {
-  background: transparent;
   border: 2px solid var(--color-accent);
+  background: transparent;
   color: var(--color-accent);
+  border-color: rgba(var(--color-accent-rgb), 0.28);
+  box-shadow: none;
 }
 
 .hackathon-cta-outline:hover {
-  background: var(--color-accent);
-  color: #fff;
-  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.35);
+  background: var(--color-accent-light);
+  color: var(--color-accent-hover);
+  border-color: rgba(var(--color-accent-rgb), 0.36);
+  box-shadow: none;
 }
 
 .hackathon-cta-large {
@@ -1491,13 +938,11 @@ main:has(.hackathon-page) {
 }
 
 /* Sections — padded content areas between full-bleed blocks */
+
 .hackathon-section {
   max-width: 1000px;
   margin: 0 auto;
   padding: var(--space-2xl) clamp(1.5rem, 5vw, 4rem) var(--space-3xl);
-}
-
-.hackathon-section {
   text-align: center;
 }
 
@@ -1505,22 +950,7 @@ main:has(.hackathon-page) {
   text-align: left;
 }
 
-.hackathon-section h2 {
-  font-size: 1.85rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-sm);
-  border-bottom: 3px solid var(--color-accent);
-  display: inline-block;
-}
-
 /* About section — slightly larger text */
-.hackathon-section p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: var(--color-text-secondary);
-}
 
 /* Alternate section backgrounds for visual rhythm */
 .hackathon-section:nth-child(odd) {
@@ -1534,54 +964,7 @@ main:has(.hackathon-page) {
   border-bottom: 1px solid var(--color-border);
 }
 
-.hackathon-section:nth-child(even) > * {
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 /* Key Details Grid */
-.hackathon-details-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-detail-card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-xl) var(--space-lg);
-  text-align: center;
-  transition: box-shadow 0.25s, transform 0.25s;
-}
-
-.hackathon-detail-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-3px);
-}
-
-.hackathon-detail-icon {
-  font-size: 2.25rem;
-  margin-bottom: var(--space-sm);
-}
-
-.hackathon-detail-label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-accent);
-  margin-bottom: var(--space-xs);
-}
-
-.hackathon-detail-value {
-  font-size: 0.95rem;
-  color: var(--color-text);
-  font-weight: 500;
-  line-height: 1.45;
-}
 
 @media (max-width: 639px) {
   .hackathon-details-grid {
@@ -1590,174 +973,22 @@ main:has(.hackathon-page) {
 }
 
 /* Schedule */
-.hackathon-schedule {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xl);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-schedule-day {
-  background: var(--color-bg);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
-
-.hackathon-schedule-day h3 {
-  background: var(--color-accent-900);
-  color: #fff;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0;
-  border-radius: 0;
-  letter-spacing: 0.01em;
-}
 
 .hackathon-schedule-day table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.hackathon-schedule-day td {
-  padding: 0.85rem 1.5rem;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 0.95rem;
-  color: var(--color-text);
-}
-
 .hackathon-schedule-day tr:last-child td {
   border-bottom: none;
 }
 
-.hackathon-schedule-day tr:hover td {
-  background: rgba(124, 58, 237, 0.04);
-}
-
-.hackathon-time {
-  font-weight: 600;
-  color: var(--color-accent);
-  white-space: nowrap;
-  width: 110px;
-}
-
-/* Widen Tracks / Resources / Prizes / Team sections */
-.hackathon-section:has(.hackathon-tracks-grid),
-.hackathon-section:has(.hackathon-resources-grid),
-.hackathon-section:has(.hackathon-prizes),
-.hackathon-section:has(.hackathon-team-grid) {
-  max-width: none;
-}
-
-.hackathon-section:has(.hackathon-tracks-grid) > *,
-.hackathon-section:has(.hackathon-resources-grid) > *,
-.hackathon-section:has(.hackathon-prizes) > *,
-.hackathon-section:has(.hackathon-team-grid) > * {
-  max-width: 1400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.hackathon-tracks-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-track {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-xl) var(--space-xl);
-  transition: box-shadow 0.25s, transform 0.25s;
-  border-top: 4px solid var(--color-accent);
-  position: relative;
-}
-
-.hackathon-track:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-4px);
-}
-
-.hackathon-track h3 {
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin: 0 0 var(--space-sm);
-  color: var(--color-text);
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-}
-
-.hackathon-track-sponsor {
-  font-size: 0.85rem;
-  color: var(--color-accent);
-  font-weight: 600;
-  margin-bottom: var(--space-md);
-}
-
-.hackathon-track p {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  line-height: 1.65;
-}
-
-/* Prizes */
-.hackathon-prizes {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-prize-tier {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-2xl) var(--space-xl);
-  text-align: center;
-  transition: box-shadow 0.25s, transform 0.25s;
-}
-
-.hackathon-prize-tier:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.hackathon-prize-grand {
-  border: 2px solid var(--color-orange);
-  background: var(--color-orange-light, #fff7ed);
-  box-shadow: 0 4px 20px rgba(249, 115, 22, 0.1);
-}
-
-.hackathon-prize-tier h3 {
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin: 0 0 var(--space-sm);
-  color: var(--color-text);
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-}
-
-.hackathon-prize-value {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  margin-bottom: var(--space-sm);
-}
-
-.hackathon-prize-tier p {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  line-height: 1.55;
-}
+/* Tracks & Prizes (grids + cards) are defined once in the 2026 Refresh block
+   below — search ".hackathon-tracks-grid,\n.hackathon-prizes". The earlier
+   legacy definitions were fully overridden by the refresh and have been removed;
+   their few surviving declarations (display:grid, transition, position,
+   text-align, the h3 resets, card-text color, prize-value weight/margin) were
+   folded into the refresh rules. */
 
 /* Resources list override */
 .hackathon-section ul {
@@ -1840,82 +1071,9 @@ main:has(.hackathon-page) {
   border-color: var(--color-accent);
 }
 
-.hackathon-sponsor-cta {
-  text-align: center;
-  margin-top: var(--space-2xl);
-  padding: var(--space-2xl);
-  background: var(--color-accent-light);
-  border-radius: var(--radius-lg);
-}
-
-.hackathon-sponsor-cta p {
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: var(--color-text);
-  margin-bottom: var(--space-lg);
-}
-
 /* FAQ */
-.hackathon-faq {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-  gap: var(--space-md);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-faq-item {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-xl);
-  transition: box-shadow 0.2s;
-}
-
-.hackathon-faq-item:hover {
-  box-shadow: var(--shadow-sm);
-}
-
-.hackathon-faq-item h4 {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--color-text);
-  margin: 0 0 var(--space-sm);
-}
-
-.hackathon-faq-item p {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  line-height: 1.65;
-  margin: 0;
-}
 
 /* Hackathon Team Grid */
-.hackathon-team-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-xl);
-  margin-top: var(--space-lg);
-}
-
-.hackathon-team-member {
-  text-align: center;
-}
-
-.hackathon-team-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: var(--space-sm);
-  border: 2px solid var(--color-border);
-}
-
-.hackathon-team-name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--color-text);
-  line-height: 1.3;
-}
 
 .hackathon-team-role {
   font-size: 0.8rem;
@@ -1978,10 +1136,6 @@ main:has(.hackathon-page) {
     grid-template-columns: 1fr;
   }
 
-  .hackathon-faq {
-    grid-template-columns: 1fr;
-  }
-
   .hackathon-apply {
     padding: 3.5rem var(--space-lg);
   }
@@ -1990,46 +1144,6 @@ main:has(.hackathon-page) {
 /* ===================================================================
    Hackathon Resource Cards
    =================================================================== */
-
-.hackathon-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-lg);
-  margin-top: var(--space-xl);
-}
-
-.hackathon-resource-card {
-  display: block;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-xl);
-  text-decoration: none;
-  color: var(--color-text);
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-
-.hackathon-resource-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.hackathon-resource-icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-}
-
-.hackathon-resource-title {
-  font-weight: 600;
-  font-size: 1rem;
-  margin-bottom: var(--space-xs);
-}
-
-.hackathon-resource-desc {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary);
-  line-height: 1.5;
-}
 
 /* ===================================================================
    Competitor Hackathon Page
@@ -2240,17 +1354,6 @@ main:has(.competitor-page) {
    Show More Button & Events Section
    =================================================================== */
 
-.events-section {
-  margin-top: var(--space-2xl);
-}
-
-.events-section h2 {
-  font-size: clamp(1.75rem, 2.6vw, 2.1rem);
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-lg);
-}
-
 /* ===================================================================
    Student Work & Projects
    =================================================================== */
@@ -2452,21 +1555,6 @@ main:has(.competitor-page) {
   line-height: 1.65;
 }
 
-.sw-link {
-  display: inline-block;
-  color: var(--color-text-secondary);
-  font-size: 0.88rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: color 0.15s;
-}
-.sw-link::after {
-  content: ' ↗';
-}
-.sw-link:hover {
-  color: var(--color-accent);
-}
-
 .meta {
   font-size: 0.85rem;
   color: var(--color-text-secondary);
@@ -2483,122 +1571,12 @@ main:has(.competitor-page) {
    Board Member — single responsive component (replaces dual OrganizerRow + PeopleCard)
    =================================================================== */
 
-.board-members-list {
-  max-width: 1000px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  padding: var(--space-lg);
-}
-
-.board-member {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xl);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.25s, border-color 0.25s;
-}
-
-.board-member:hover {
-  box-shadow: var(--shadow-md);
-  border-color: rgba(124, 58, 237, 0.2);
-}
-
-.board-member__avatar {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  flex-shrink: 0;
-  background: var(--color-bg);
-}
-
-.board-member__body {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.board-member__head {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.board-member__name {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 600;
-  margin: 0;
-  color: var(--color-text);
-  letter-spacing: -0.01em;
-}
-
-.board-member__role {
-  font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: 1rem;
-  color: var(--color-text-secondary);
-  letter-spacing: 0;
-}
-
-.board-member__toggle {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--color-accent);
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-family: var(--font-sans);
-  padding: 0.2rem 0.5rem;
-  margin-left: auto;
-}
-
 .board-member__toggle:hover {
   color: var(--color-accent-hover);
 }
 
-.board-member__details {
-  display: block;
-}
-
 .board-member__details-inner {
   overflow: hidden;
-}
-
-.board-member__description {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  margin: 0;
-  line-height: 1.55;
-}
-
-.board-member__links {
-  display: flex;
-  gap: 0.75rem;
-  align-items: center;
-  margin-top: var(--space-sm);
-}
-
-.board-member__link-icon {
-  height: 28px;
-  width: 28px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-
-.board-member__links a:hover .board-member__link-icon {
-  opacity: 1;
 }
 
 @media (max-width: 639px) {
@@ -2662,271 +1640,74 @@ main:has(.competitor-page) {
    Section Divider — small visual break between major homepage sections
    =================================================================== */
 
-.section-divider {
-  display: block;
-  /* Spans from middle of first news card to middle of third news card.
-     Derivation: news grid has 3 1fr cards with var(--space-xl) gap
-     and var(--space-xl) horizontal padding. The distance between
-     card-1-middle and card-3-middle = (2/3) × (parent_width − gap).
-     Since gap == padding here, both terms simplify to space-xl. */
-  width: calc((100% - var(--space-xl)) * 2 / 3);
-  height: 3px;
-  background: var(--color-accent);
-  border: none;
-  border-radius: var(--radius-full);
-  margin: var(--space-2xl) auto 0;
-  opacity: 0.45;
-}
-
 @media (max-width: 767px) {
   /* On mobile, news grid collapses to 1 column, so the
      "card 1 to card 3" relationship is no longer geometrically meaningful.
      Fall back to a proportional but visually compact width. */
-  .section-divider {
-    width: calc((100% - var(--space-md)) * 0.55);
-  }
 }
 
 /* ===================================================================
    Section Heading (homepage h2)
    =================================================================== */
 
-.section-heading {
-  font-family: var(--font-serif);
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 700;
-  color: var(--color-accent);
-  text-align: center;
-  letter-spacing: -0.02em;
-  margin-top: var(--space-3xl);
-  margin-bottom: var(--space-xs);
-}
-
 /* ===================================================================
    Homepage News Grid
    =================================================================== */
-
-.home-news-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
-  margin: var(--space-xl) 0;
-  padding: 0 var(--space-xl);
-}
-
-.home-news-item {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-}
-
-.home-news-item:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
-}
-
-.home-news-item__img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  display: block;
-}
-
-.home-news-item__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: var(--space-md) var(--space-lg);
-}
-
-.home-news-item__date {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-text-secondary);
-}
-
-.home-news-item__title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-text);
-  line-height: 1.35;
-  margin: 0;
-}
-
-.home-news-item__summary {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-  margin: 0;
-}
-
-.view-all-link {
-  display: block;
-  text-align: center;
-  margin-top: var(--space-lg);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-accent);
-  text-decoration: none;
-  letter-spacing: 0.03em;
-}
-
-.view-all-link:hover {
-  color: var(--color-accent-hover);
-}
-
-@media (max-width: 767px) {
-  .home-news-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
-  }
-}
 
 /* ===================================================================
    Homepage Event Card — variant of home-news-item with badge + prominent date
    =================================================================== */
 
-.home-event-item {
-  position: relative;
-  border-top: 3px solid transparent;
-}
-
-.home-event-item--upcoming {
-  border-top-color: var(--color-accent);
-}
-
 /* Top row of event card body: date on left, "Upcoming" badge on right */
-.home-event-item__top-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-sm);
-  width: 100%;
-}
-
-.home-event-item__badge {
-  display: inline-block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-full);
-  background: var(--color-accent);
-  color: #fff;
-  flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.home-event-item__date-prominent {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-text);
-  letter-spacing: -0.005em;
-  margin: 0;
-}
 
 /* ===================================================================
    Home About — paragraph spacing
    =================================================================== */
-
-.home-about p + p {
-  margin-top: var(--space-md);
-}
 
 /* ===================================================================
    Homepage Hero — photo + dual CTAs
    =================================================================== */
 
 .home-hero {
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
   gap: var(--space-2xl);
-  align-items: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  column-gap: clamp(2rem, 4vw, 4rem);
+  row-gap: clamp(1.25rem, 2.5vw, 2rem);
+  align-items: start;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: var(--space-xl) var(--space-xl) var(--space-2xl);
+  padding: var(--space-lg) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
 }
 
 .home-hero__title {
   font-family: var(--font-serif);
-  font-size: clamp(2.25rem, 5.2vw, 3.5rem);
   font-weight: 700;
-  line-height: 1.05;
   letter-spacing: -0.025em;
-  color: var(--color-text);
-  text-align: left;
-  margin: 0 0 var(--space-md);
+  grid-column: 1 / -1;
+  margin: 0;
   padding: 0;
+  color: var(--color-text);
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  line-height: 1;
+  text-align: center;
 }
 
 .home-hero__subtitle {
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  margin: 0 0 var(--space-xl);
-  max-width: 58ch;
   text-align: left;
-}
-
-.home-hero__ctas {
-  display: flex;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.home-hero__cta {
-  display: inline-block;
-  padding: 0.85rem 2rem;
-  border-radius: var(--radius-full);
-  font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: transform 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
-  border: 2px solid transparent;
-  letter-spacing: 0.01em;
-}
-
-.home-hero__cta--primary {
-  background: var(--color-accent);
-  color: #fff;
-}
-
-.home-hero__cta--primary:hover {
-  background: var(--color-accent-hover);
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(124, 58, 237, 0.28);
-}
-
-.home-hero__cta--secondary {
-  background: transparent;
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
-.home-hero__cta--secondary:hover {
-  background: var(--color-accent);
-  color: #fff;
-  transform: translateY(-2px);
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  max-width: 58ch;
 }
 
 .home-hero__visual {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
   aspect-ratio: 4 / 3;
-  background: var(--color-surface);
+  overflow: hidden;
+  border-radius: 1.6rem;
+  background: #ece7df;
+  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
 }
 
 .home-hero__image {
@@ -2950,68 +1731,19 @@ main:has(.competitor-page) {
     margin-right: auto;
   }
 
-  .home-hero__ctas {
-    justify-content: center;
-  }
-
-  .home-hero__cta {
-    flex: 1 1 auto;
-    text-align: center;
-  }
-
   .home-hero__visual {
     order: -1;
     aspect-ratio: 16 / 10;
   }
 }
 
-
 /* ===================================================================
    Organizer Row — extracted inline styles
    =================================================================== */
 
-.organizer-row__avatar {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
-  margin-right: 32px;
-  background: var(--color-surface);
-  flex-shrink: 0;
-}
-
-.organizer-row__links {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.organizer-row__link-icon {
-  height: 32px;
-}
-
 /* ===================================================================
    Gallery — semantic buttons
    =================================================================== */
-
-.gallery-nav-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.gallery-nav-btn img {
-  display: block;
-}
-
-.gallery-item {
-  cursor: pointer;
-  text-decoration: none;
-  color: inherit;
-}
 
 /* ===================================================================
    Article Hero Image
@@ -3032,10 +1764,6 @@ main:has(.competitor-page) {
 /* ===================================================================
    Page-specific layout utilities
    =================================================================== */
-
-.get-involved-cta {
-  margin-top: var(--space-md);
-}
 
 /* Inline notice shown above the contact form until Formspree is configured */
 .form-note {
@@ -3170,15 +1898,6 @@ main:has(.competitor-page) {
   }
 }
 
-.resource-faculty__role {
-  margin: 0 0 var(--space-sm);
-  color: var(--color-violet);
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
 @media (max-width: 639px) {
   .resource-cards {
     grid-template-columns: 1fr;
@@ -3190,13 +1909,6 @@ main:has(.competitor-page) {
 }
 
 /* External-link indicator on cards */
-.home-news-item__external-icon {
-  display: inline-block;
-  margin-left: 0.35rem;
-  font-size: 0.75rem;
-  color: var(--color-text-secondary);
-  vertical-align: 0.05em;
-}
 
 /* ===================================================================
    CTA Button
@@ -3250,12 +1962,14 @@ main:has(.competitor-page) {
   color: var(--color-text-secondary);
 }
 .gi-channels {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-md) var(--space-xl);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  row-gap: var(--space-lg);
   margin-top: var(--space-lg);
 }
 .gi-channel {
+  flex: 0 1 30%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3284,28 +1998,18 @@ main:has(.competitor-page) {
   mask: url('/images/tiger-paw.webp') center / contain no-repeat;
 }
 @media (max-width: 860px) {
-  .gi-channels {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .gi-channel {
+    flex-basis: 42%;
   }
 }
 @media (max-width: 560px) {
-  .gi-channels {
-    grid-template-columns: 1fr;
+  .gi-channel {
+    flex-basis: 100%;
   }
 }
 
 .about-page__hero-copy {
   max-width: 760px;
-}
-
-.about-page__eyebrow {
-  margin: 0 0 0.6rem;
-  color: var(--color-accent);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.2;
-  text-transform: uppercase;
 }
 
 .about-page__hero h1 {
@@ -3342,13 +2046,6 @@ main:has(.competitor-page) {
   color: var(--color-text-secondary);
   font-size: clamp(1.05rem, 1.5vw, 1.25rem);
   line-height: 1.65;
-}
-
-.about-page__hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-md);
-  margin-top: var(--space-xl);
 }
 
 .about-page__meeting-card {
@@ -3523,35 +2220,6 @@ main:has(.competitor-page) {
   background: var(--color-accent-light);
 }
 
-.about-page__section--cta {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  text-align: center;
-  box-shadow: var(--shadow-md);
-}
-
-.about-page__section--cta h2 {
-  max-width: none;
-  text-align: center;
-}
-
-.about-page__section--cta p {
-  text-align: center;
-  max-width: 56ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.about-page__ctas {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
-  margin-top: var(--space-md);
-}
-
 @media (max-width: 899px) {
   .about-page__hero:has(.about-page__meeting-card),
   .about-page__section--intro,
@@ -3575,19 +2243,6 @@ main:has(.competitor-page) {
     padding-right: var(--space-md);
   }
 
-  .about-page__hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .about-page__ctas {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .about-page__section--cta {
-    padding: var(--space-lg) var(--space-md);
-  }
 }
 
 /* ===================================================================
@@ -3595,25 +2250,6 @@ main:has(.competitor-page) {
    =================================================================== */
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #0f0d13;
-    --color-surface: #1a1625;
-    --color-text: #e5e2eb;
-    --color-text-secondary: #9b95a8;
-    --color-accent: #a78bfa;
-    --color-accent-hover: #c4b5fd;
-    --color-accent-light: #2d2044;
-    --color-border: #2d2640;
-    --color-orange: #fb923c;
-    --color-orange-light: #2d2015;
-    --color-highlight: #4a3d1a;
-
-    /* Shadows need adjustment for dark backgrounds */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
-  }
-
   /* Frosted glass — dark variant */
   .nav {
     background: rgba(15, 13, 19, 0.82);
@@ -3628,22 +2264,11 @@ main:has(.competitor-page) {
     background: rgba(15, 13, 19, 0.82);
   }
 
-  .nav-brand-text {
-    color: var(--color-text);
-  }
-
-  .nav-brand:hover .nav-brand-text {
-    color: var(--color-accent);
-  }
-
   .nav-toggle span {
     background: var(--color-text);
   }
 
   /* Organizer avatar background */
-  .organizer-row__avatar {
-    background: var(--color-surface);
-  }
 }
 
 /* Inline SVG icons inside board-member link rows (envelope) */
@@ -3753,52 +2378,16 @@ button.view-all-link {
 /* Wordmark removed from markup — only the logo identifies the brand.
    Mild link/gap tightening at intermediate widths keeps 5 links + search
    from cramping at 768–1023px. */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .nav-links {
-    gap: 0;
-  }
-  .nav-link {
-    padding: 0.4rem 0.55rem;
-    font-size: 0.85rem;
-  }
-  .nav-link::after {
-    left: 0.55rem;
-    right: 0.55rem;
-  }
-  .nav-search-slot {
-    margin-left: 0.25rem;
-  }
-}
 
 /* ===================================================================
    2026 Refresh Overrides
    =================================================================== */
 
-:root {
-  --color-bg: #f6f3ee;
-  --color-surface: #ffffff;
-  --color-text: #162033;
-  --color-text-secondary: #4f5d73;
-  --color-accent: #f56600;
-  --color-accent-rgb: 245, 102, 0;
-  --color-accent-hover: #cf5500;
-  --color-accent-light: #fff0e4;
-  --color-accent-900: #19243a;
-  --color-accent-950: #0f172a;
-  --color-orange: #f56600;
-  --color-orange-light: #fff5eb;
-  --color-border: rgba(22, 32, 51, 0.12);
-  --color-nav-bg: #162033;
-  --color-nav-text: #f8fafc;
-  --color-violet: #6d28d9;
-  --color-violet-light: #efe7ff;
-  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
-  --shadow-md: 0 18px 40px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 24px 60px rgba(15, 23, 42, 0.12);
-  --max-width: 1220px;
-}
-
 body {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  line-height: 1.6;
   color: var(--color-text);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
@@ -3806,6 +2395,8 @@ body {
 }
 
 a {
+  text-decoration: none;
+  transition: color 0.2s;
   color: var(--color-accent);
 }
 
@@ -3905,7 +2496,7 @@ a:hover {
   margin-top: 0.85rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1025px) {
   .dropdown-submenu {
     position: relative;
   }
@@ -3944,6 +2535,12 @@ a:hover {
 }
 
 .search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  transition: border-color 0.2s, box-shadow 0.2s;
   width: clamp(180px, 18vw, 230px);
   padding: 0.55rem 0.85rem;
   border-color: rgba(22, 32, 51, 0.12);
@@ -3961,16 +2558,21 @@ a:hover {
 }
 
 .search-input {
+  font-size: 0.85rem;
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  outline: none;
+  border: none;
+  background: transparent;
+  flex: 1;
+  min-width: 0;
+  -webkit-appearance: none;
+  appearance: none;
   margin-left: 0.55rem;
 }
 
-.search-results-dropdown {
-  border-radius: 1rem;
-  border-color: rgba(22, 32, 51, 0.12);
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
-}
-
 main {
+  margin-bottom: 0;
   padding-top: var(--space-xl);
 }
 
@@ -3998,18 +2600,6 @@ main:has(.home-hero) {
   padding: var(--space-xl) 0 var(--space-xl);
 }
 
-.archive-hero__eyebrow,
-.home-hero__eyebrow,
-.home-proof__eyebrow,
-.home-section__eyebrow {
-  margin: 0 0 0.65rem;
-  color: var(--color-violet);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 .archive-hero__title {
   margin: 0;
   padding: 0;
@@ -4017,16 +2607,6 @@ main:has(.home-hero) {
   text-align: center;
   font-size: clamp(2.5rem, 5vw, 4rem);
   line-height: 0.95;
-}
-
-.archive-hero__lead {
-  /* No ch cap — let the caption fill the hero width so it sits on one line on
-     desktop and wraps to a new line only when the viewport is too narrow. */
-  max-width: none;
-  margin: 1rem 0 0;
-  color: var(--color-text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.7;
 }
 
 .archive-section {
@@ -4237,101 +2817,9 @@ main:has(.home-hero) {
   text-transform: uppercase;
 }
 
-.home-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-  column-gap: clamp(2rem, 4vw, 4rem);
-  row-gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: start;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  /* Slightly tighter top gap than the archive heroes — the large centered home
-     title carries more visual whitespace above it (line-height 1.0), so a
-     smaller padding makes the gap read the same as the News/Events/Resources titles. */
-  padding: var(--space-lg) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
-}
-
-.home-hero__title {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: 0;
-  color: var(--color-text);
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
-  line-height: 1;
-  /* Spans the full hero width, so centering the text keeps the club name
-     centered on the page at any viewport. */
-  text-align: center;
-}
-
-.home-hero__subtitle {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 1.1rem;
-  line-height: 1.75;
-  max-width: 58ch;
-}
-
 /* Space between the two stacked hero paragraphs */
 .home-hero__text > p + p {
   margin-top: 1.3rem;
-}
-
-.home-hero__ctas {
-  display: flex;
-  gap: 0.9rem;
-  margin-top: 1.75rem;
-  flex-wrap: wrap;
-}
-
-.home-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 10rem;
-  padding: 0.95rem 1.4rem;
-  border-radius: 999px;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-
-.home-hero__cta--primary {
-  color: #fff;
-  background: var(--color-text);
-  box-shadow: 0 16px 36px rgba(22, 32, 51, 0.16);
-}
-
-.home-hero__cta--primary:hover {
-  color: #fff;
-  background: #24314b;
-  transform: translateY(-2px);
-}
-
-.home-hero__cta--secondary {
-  color: var(--color-text);
-  background: transparent;
-  border: 1px solid rgba(22, 32, 51, 0.16);
-}
-
-.home-hero__cta--secondary:hover {
-  color: var(--color-text);
-  background: rgba(22, 32, 51, 0.04);
-  transform: translateY(-2px);
-}
-
-.home-hero__visual {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 1.6rem;
-  background: #ece7df;
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
-}
-
-.home-hero__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 .home-proof,
@@ -4340,56 +2828,12 @@ main:has(.home-hero) {
   padding-bottom: var(--space-2xl);
 }
 
-.home-proof {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-  gap: var(--space-2xl);
-  align-items: start;
-}
-
 .home-section__title {
   margin: 0;
   color: var(--color-text);
   font-size: clamp(2rem, 4vw, 2.8rem);
   text-align: left;
   line-height: 1.02;
-}
-
-.home-section__lead {
-  margin: 1rem 0 0;
-  max-width: 60ch;
-  color: var(--color-text-secondary);
-  font-size: 1.02rem;
-  line-height: 1.72;
-}
-
-.home-proof__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
-}
-
-.home-proof__item {
-  min-height: 12rem;
-  padding: 1.25rem;
-  border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.88);
-}
-
-.home-proof__value {
-  display: block;
-  color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1;
-}
-
-.home-proof__label {
-  margin: 0.85rem 0 0;
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
 }
 
 .home-section__header {
@@ -4407,6 +2851,9 @@ main:has(.home-hero) {
 }
 
 .view-all-link {
+  text-align: center;
+  margin-top: var(--space-lg);
+  text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -4435,6 +2882,7 @@ main:has(.home-hero) {
 }
 
 .board-members-list {
+  gap: var(--space-lg);
   max-width: 1000px;
   margin: 0 auto;
   padding: 0;
@@ -4465,6 +2913,8 @@ main:has(.home-hero) {
    follows it on the homepage, so a trailing rule would dangle. */
 
 .board-member__avatar {
+  object-position: center;
+  flex-shrink: 0;
   width: 120px;
   height: 120px;
   border-radius: 999px;
@@ -4473,6 +2923,7 @@ main:has(.home-hero) {
 }
 
 .board-member__body {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -4487,17 +2938,32 @@ main:has(.home-hero) {
 }
 
 .board-member__name {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
   margin: 0;
   color: var(--color-text);
   font-size: 1.45rem;
 }
 
 .board-member__role {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--color-text-secondary);
   font-size: 1rem;
 }
 
 .board-member__toggle {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  padding: 0.2rem 0.5rem;
+  margin-left: auto;
   display: none;
 }
 
@@ -4513,6 +2979,7 @@ main:has(.home-hero) {
 }
 
 .board-member__links {
+  margin-top: var(--space-sm);
   display: flex;
   align-items: center;
   gap: 0.85rem;
@@ -4531,11 +2998,6 @@ main:has(.home-hero) {
   transform: translateY(-1px);
 }
 
-footer {
-  margin-top: 0;
-  padding: 2.2rem var(--space-xl);
-}
-
 .footer-links,
 .footer-copy {
   max-width: var(--max-width);
@@ -4547,29 +3009,28 @@ footer {
   .preview-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .home-proof {
-    grid-template-columns: 1fr;
-  }
-
-  .home-proof__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .nav-inner {
     height: 64px;
     padding: 0 var(--space-md);
   }
 
-  .nav-links {
-    background: rgba(251, 250, 247, 0.98);
-  }
-
+  /* Reset the refresh-half's floating-panel styling so the mobile dropdown is
+     plain inline (overrides .nav-dropdown-panel @2543 + the open transform @2553). */
   .nav-dropdown-panel {
+    border: none;
     border-radius: 0;
     box-shadow: none;
+    padding: 0 0 0 var(--space-md);
+    min-width: 0;
+    top: auto;
+    left: auto;
+  }
+
+  .nav-dropdown--open > .nav-dropdown-panel {
+    transform: none;
   }
 
   .dropdown-submenu-content {
@@ -4615,14 +3076,6 @@ footer {
 
   .home-section__title {
     text-align: left;
-  }
-
-  .home-hero__ctas {
-    flex-direction: column;
-  }
-
-  .home-hero__cta {
-    width: 100%;
   }
 
   .home-proof__grid,
@@ -4718,9 +3171,8 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-page {
-  /* One continuous gradient across the whole page so the banner flows seamlessly
-     into the page below — the banner's soft lavender at the top melts into the
-     warm cream page. (Dark mode overrides this with a dark-purple version.) */
+  max-width: 100%;
+  margin: 0;
   background: linear-gradient(
     180deg,
     rgb(238, 231, 247) 0,
@@ -4733,8 +3185,6 @@ main:has(.hackathon-page) {
   padding: clamp(3.2rem, 8vw, 5rem) var(--space-xl);
   color: var(--color-text);
   text-align: left;
-  /* Background lives on .hackathon-page so the banner flows seamlessly into the
-     page (both themes); the hero itself is transparent with no hard edge. */
   background: transparent;
   border: none;
 }
@@ -5139,45 +3589,6 @@ main:has(.hackathon-page) {
 }
 
 /* Contextual call-to-action under a section */
-.hackathon-section-cta {
-  margin-top: 1.75rem;
-}
-
-.hackathon-hero-actions {
-  display: flex;
-  gap: 0.9rem;
-  flex-wrap: wrap;
-  margin-top: 1.75rem;
-}
-
-.hackathon-cta {
-  padding: 0.95rem 1.35rem;
-  background: var(--color-text);
-  color: #fff;
-  border: 1px solid var(--color-text);
-  font-size: 0.96rem;
-  box-shadow: 0 12px 28px rgba(22, 32, 51, 0.12);
-}
-
-.hackathon-cta:hover {
-  background: #24314b;
-  color: #fff;
-  box-shadow: 0 16px 34px rgba(22, 32, 51, 0.14);
-}
-
-.hackathon-cta-outline {
-  background: transparent;
-  color: var(--color-accent);
-  border-color: rgba(var(--color-accent-rgb), 0.28);
-  box-shadow: none;
-}
-
-.hackathon-cta-outline:hover {
-  background: var(--color-accent-light);
-  color: var(--color-accent-hover);
-  border-color: rgba(var(--color-accent-rgb), 0.36);
-  box-shadow: none;
-}
 
 /* "Apply" CTA centered in the open band between the hero and the first section.
    Sized up here because the redesigned .hackathon-cta rule above overrides the
@@ -5225,6 +3636,10 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-section h2 {
+  font-weight: 700;
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-sm);
+  border-bottom: 3px solid var(--color-accent);
   display: block;
   margin: 0 0 1.4rem;
   padding: 0;
@@ -5259,16 +3674,20 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-detail-icon {
+  font-size: 2.25rem;
+  margin-bottom: var(--space-sm);
   display: none;
 }
 
 .hackathon-details-grid {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
 .hackathon-detail-card {
+  transition: box-shadow 0.25s, transform 0.25s;
   padding: 1.3rem;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(22, 32, 51, 0.1);
@@ -5283,22 +3702,30 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-detail-label {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   margin-bottom: 0.5rem;
   color: var(--color-violet);
   font-size: 0.74rem;
 }
 
 .hackathon-detail-value {
+  color: var(--color-text);
+  font-weight: 500;
   font-size: 1rem;
   line-height: 1.55;
 }
 
 .hackathon-schedule {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
 .hackathon-schedule-day {
+  overflow: hidden;
   border: 1px solid rgba(22, 32, 51, 0.1);
   border-radius: 1rem;
   background: var(--color-surface);
@@ -5306,6 +3733,10 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-schedule-day h3 {
+  font-weight: 600;
+  margin: 0;
+  border-radius: 0;
+  letter-spacing: 0.01em;
   background: var(--color-text);
   color: #fff;
   padding: 1rem 1.25rem;
@@ -5313,6 +3744,9 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-schedule-day td {
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.95rem;
+  color: var(--color-text);
   padding: 0.85rem 1.25rem;
   border-bottom-color: rgba(22, 32, 51, 0.08);
 }
@@ -5322,6 +3756,8 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-time {
+  font-weight: 600;
+  white-space: nowrap;
   width: 118px;
   color: var(--color-text);
 }
@@ -5344,6 +3780,7 @@ main:has(.hackathon-page) {
 
 .hackathon-tracks-grid,
 .hackathon-prizes {
+  display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
@@ -5360,10 +3797,16 @@ main:has(.hackathon-page) {
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.25s, transform 0.25s;
 }
 
 .hackathon-track {
+  position: relative;
   border-top: 3px solid var(--color-accent);
+}
+
+.hackathon-prize-tier {
+  text-align: center;
 }
 
 .hackathon-track:hover,
@@ -5374,9 +3817,14 @@ main:has(.hackathon-page) {
 
 .hackathon-track h3,
 .hackathon-prize-tier h3 {
-  margin-bottom: 0.7rem;
+  margin: 0 0 0.7rem;
   color: var(--color-text);
   font-size: 1.22rem;
+  font-weight: 700;
+  background: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
 }
 
 .hackathon-track-sponsor {
@@ -5392,6 +3840,7 @@ main:has(.hackathon-page) {
 .hackathon-prize-tier p {
   font-size: 0.96rem;
   line-height: 1.68;
+  color: var(--color-text-secondary);
 }
 
 .hackathon-prize-grand {
@@ -5412,15 +3861,22 @@ main:has(.hackathon-page) {
   color: var(--color-accent);
   font-size: 0.96rem;
   line-height: 1.55;
+  font-weight: 700;
+  margin-bottom: var(--space-sm);
 }
 
 .hackathon-resources-grid {
+  display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 1.5rem;
 }
 
 .hackathon-resource-card {
+  display: block;
+  text-decoration: none;
+  color: var(--color-text);
+  transition: box-shadow 0.2s, transform 0.2s;
   padding: 1.3rem;
   border: 1px solid rgba(22, 32, 51, 0.1);
   border-radius: 1rem;
@@ -5434,10 +3890,13 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-resource-icon {
+  font-size: 2rem;
+  margin-bottom: var(--space-sm);
   display: none;
 }
 
 .hackathon-resource-title {
+  font-weight: 600;
   margin-bottom: 0.6rem;
   color: var(--color-text);
   font-size: 1rem;
@@ -5451,6 +3910,7 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-sponsor-cta {
+  text-align: center;
   margin-top: 1.4rem;
   padding: 1.6rem;
   border: 1px solid rgba(22, 32, 51, 0.08);
@@ -5459,12 +3919,14 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-sponsor-cta p {
+  font-size: 1.15rem;
   margin-bottom: 1rem;
   color: var(--color-text);
   font-weight: 600;
 }
 
 .hackathon-team-grid {
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: 1.25rem;
   margin-top: 1.5rem;
@@ -5475,12 +3937,19 @@ main:has(.hackathon-page) {
 }
 
 .hackathon-team-photo {
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: var(--space-sm);
   width: 92px;
   height: 92px;
   border: 2px solid rgba(22, 32, 51, 0.08);
 }
 
 .hackathon-team-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.3;
   margin-top: 0.75rem;
 }
 
@@ -5494,10 +3963,6 @@ main:has(.hackathon-page) {
 @media (max-width: 767px) {
   .hackathon-hero {
     padding: 2.2rem var(--space-md);
-  }
-
-  .hackathon-hero-actions {
-    flex-direction: column;
   }
 
   .hackathon-cta {
@@ -5529,26 +3994,27 @@ main:has(.hackathon-page) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0f0d13;
-    --color-surface: #1a1625;
-    --color-text: #e5e2eb;
-    --color-text-secondary: #aaa3b8;
-    --color-accent: #fb923c;
-    --color-accent-hover: #fdba74;
-    --color-accent-light: #2d2015;
-    --color-accent-900: #181225;
-    --color-accent-950: #0f0d13;
-    --color-orange: #fb923c;
-    --color-orange-light: #2d2015;
-    --color-border: rgba(229, 226, 235, 0.14);
-    --color-nav-bg: #0f0d13;
-    --color-nav-text: #f8fafc;
-    --color-violet: #c4b5fd;
-    --color-violet-light: #2d2044;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
-    --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
-    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
-  }
+  --color-highlight: #4a3d1a;
+  --color-bg: #0f0d13;
+  --color-surface: #1a1625;
+  --color-text: #e5e2eb;
+  --color-text-secondary: #aaa3b8;
+  --color-accent: #fb923c;
+  --color-accent-hover: #fdba74;
+  --color-accent-light: #2d2015;
+  --color-accent-900: #181225;
+  --color-accent-950: #0f0d13;
+  --color-orange: #fb923c;
+  --color-orange-light: #2d2015;
+  --color-border: rgba(229, 226, 235, 0.14);
+  --color-nav-bg: #0f0d13;
+  --color-nav-text: #f8fafc;
+  --color-violet: #c4b5fd;
+  --color-violet-light: #2d2044;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
+}
 
   body {
     background:
@@ -5641,16 +4107,6 @@ main:has(.hackathon-page) {
     background: #f4f0fa;
   }
 
-  .home-hero__cta--secondary {
-    color: var(--color-text);
-    border-color: rgba(229, 226, 235, 0.18);
-  }
-
-  .home-hero__cta--secondary:hover {
-    color: var(--color-text);
-    background: rgba(229, 226, 235, 0.08);
-  }
-
   .board-member__toggle {
     border-color: rgba(229, 226, 235, 0.14);
   }
@@ -5659,14 +4115,9 @@ main:has(.hackathon-page) {
   .footer-copy {
     color: rgba(248, 250, 252, 0.84);
   }
-
 }
 
 @media (prefers-color-scheme: dark) and (max-width: 767px) {
-  .nav-links {
-    background: rgba(15, 13, 19, 0.98);
-  }
-
   .dropdown-submenu-content {
     background: transparent;
     box-shadow: none;
