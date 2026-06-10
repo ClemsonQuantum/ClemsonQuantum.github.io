@@ -1,5 +1,4 @@
 ---
-layout: default
 title: SC Quantathon v3 2026
 date: 2026-09-25
 summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
@@ -20,7 +19,7 @@ image: "/images/scq-v3-graphic.webp"
 </div>
 
 <div class="hackathon-hero-cta">
-  <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-large">Apply Now</a>
+  <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta">Apply Now</a>
 </div>
 
 <div class="hackathon-section">

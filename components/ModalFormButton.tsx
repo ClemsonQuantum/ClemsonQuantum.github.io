@@ -4,10 +4,8 @@ import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import siteConfig from '@/data/site-config.json';
 
-// A button that opens an in-page modal ("bubble") form instead of a mailto:
-// link, so the visitor never leaves the page or launches their mail app.
-// Submits via Web3Forms (same service as the contact form). Reused for both
-// the participant-updates and sponsorship forms — only the copy/fields differ.
+// Button that opens an in-page modal form and submits via Web3Forms.
+// Shared by the participant-updates and sponsorship forms; copy/fields differ per use.
 const web3formsReady =
   Boolean(siteConfig.web3formsKey) &&
   siteConfig.web3formsKey !== 'your-access-key';

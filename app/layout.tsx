@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
-import './globals.css';
+import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { getNavData } from '@/lib/navData';
+import siteConfig from '@/data/site-config.json';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -55,6 +56,23 @@ export const metadata: Metadata = {
   },
 };
 
+// Organization JSON-LD: gives search engines an authoritative logo signal so
+// the mark shows up in result branding (Google reads Organization.logo).
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Clemson Quantum Club',
+  url: 'https://clemsonquantum.com',
+  logo: 'https://clemsonquantum.com/images/logo-light.png',
+  sameAs: [
+    siteConfig.linkedinUrl,
+    siteConfig.instagramUrl,
+    siteConfig.githubUrl,
+    siteConfig.discordInvite,
+    siteConfig.tigerquestUrl,
+  ].filter((url) => url && url !== '#'),
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -77,7 +95,11 @@ export default function RootLayout({
             content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; form-action 'self' mailto:"
           />
         )}
-        <meta name="theme-color" content="#2d1054" />
+        <meta name="theme-color" content="#f6f3ee" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
       </head>
       <body className={`${inter.variable} ${playfair.variable}`}>
         <a href="#main" className="skip-link">Skip to main content</a>

@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = { title: 'Learning Resources' };
+export const metadata: Metadata = {
+  title: 'Learning Resources',
+  description:
+    'Curated quantum computing learning path from the Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
+};
 
 interface Resource {
   type: string;

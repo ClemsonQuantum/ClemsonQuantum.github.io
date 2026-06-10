@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "IBM Quantum Qiskit Fall Fest 2026"
 date: 2026-10-12
 dateDisplay: "TBD"

@@ -1,5 +1,4 @@
 ---
-layout: default
 title: YQuantum 2026
 date: 2026-04-04
 summary: "Clemson Quantum at YQuantum 2026. (Details coming soon.)"

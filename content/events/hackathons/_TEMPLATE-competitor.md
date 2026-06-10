@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
 summary: "[One-line description — e.g., Clemson Quantum competed at EVENT NAME in CITY]"

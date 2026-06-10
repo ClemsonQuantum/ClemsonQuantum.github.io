@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
 summary: "[One-line description of the hackathon]"
@@ -198,7 +197,7 @@ image: /images/[PLACEHOLDER].jpg
 
 Applications are open! Apply by **[DEADLINE DATE]** to secure your spot.
 
-<a href="[APPLICATION URL]" class="hackathon-cta hackathon-cta-large">Apply Now</a>
+<a href="[APPLICATION URL]" class="hackathon-cta">Apply Now</a>
 
 <p class="hackathon-apply-note">Have questions? Reach out at <a href="mailto:[EMAIL]">[EMAIL]</a>.</p>
 

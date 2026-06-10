@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "Advancing Materials Development with Quantum AI and VQE Simulations of Majorana Edge States and Topological Phases"
 date: 2025-07-01
 type: poster

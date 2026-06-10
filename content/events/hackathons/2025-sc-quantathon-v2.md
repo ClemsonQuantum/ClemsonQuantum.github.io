@@ -1,5 +1,4 @@
 ---
-layout: default
 title: SC Quantathon v2 2025
 date: 2025-10-09
 summary: "Clemson Quantum competed at SC Quantathon v2 in Columbia, SC."

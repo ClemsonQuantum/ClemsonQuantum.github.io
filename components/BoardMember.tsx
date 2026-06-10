@@ -1,8 +1,6 @@
-'use client';
-
-import { useState } from 'react';
 import SiteImage from './SiteImage';
 import EmailIcon from './icons/EmailIcon';
+import WebsiteIcon from './icons/WebsiteIcon';
 import { LinkedInIcon, GitHubIcon } from './icons/ChannelIcons';
 
 export interface BoardMemberData {
@@ -26,7 +24,6 @@ export default function BoardMember({
   github,
   website,
 }: BoardMemberData) {
-  const [open, setOpen] = useState(false);
   const lines = description.split('\n');
 
   return (
@@ -38,82 +35,57 @@ export default function BoardMember({
             {name}
             <span className="board-member__role"> | {role}</span>
           </h3>
-          <button
-            className="board-member__toggle"
-            aria-expanded={open}
-            aria-label={open ? `Hide details about ${name}` : `Show details about ${name}`}
-            onClick={() => setOpen((o) => !o)}
-          >
-            {open ? 'Less' : 'More'}
-          </button>
         </div>
-        <div className="board-member__details" data-open={open}>
-          <div className="board-member__details-inner">
-            <p className="board-member__description">
-              {lines.map((line, i) => (
-                <span key={i}>
-                  {line}
-                  {i < lines.length - 1 && <br />}
-                </span>
-              ))}
-            </p>
-            {(email || linkedin || github || website) && (
-              <div className="board-member__links">
-                {email && (
-                  <a
-                    href={`mailto:${email}`}
-                    aria-label={`Email ${name}`}
-                  >
-                    <EmailIcon className="board-member__link-icon" />
-                  </a>
-                )}
-                {linkedin && (
-                  <a
-                    href={linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${name} on LinkedIn`}
-                  >
-                    <LinkedInIcon className="board-member__link-icon link-icon--brand" />
-                  </a>
-                )}
-                {github && (
-                  <a
-                    href={github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${name} on GitHub`}
-                  >
-                    <GitHubIcon className="board-member__link-icon link-icon--brand" />
-                  </a>
-                )}
-                {website && (
-                  <a
-                    href={website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${name} website`}
-                  >
-                    <svg
-                      className="board-member__link-icon"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <circle cx="12" cy="12" r="9" />
-                      <path d="M3 12h18" />
-                      <path d="M12 3a15 15 0 0 1 0 18 15 15 0 0 1 0-18z" />
-                    </svg>
-                  </a>
-                )}
-              </div>
+        <p className="board-member__description">
+          {lines.map((line, i) => (
+            <span key={i}>
+              {line}
+              {i < lines.length - 1 && <br />}
+            </span>
+          ))}
+        </p>
+        {(email || linkedin || github || website) && (
+          <div className="board-member__links">
+            {email && (
+              <a
+                href={`mailto:${email}`}
+                aria-label={`Email ${name}`}
+              >
+                <EmailIcon className="board-member__link-icon" />
+              </a>
+            )}
+            {linkedin && (
+              <a
+                href={linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${name} on LinkedIn`}
+              >
+                <LinkedInIcon className="board-member__link-icon link-icon--brand" />
+              </a>
+            )}
+            {github && (
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${name} on GitHub`}
+              >
+                <GitHubIcon className="board-member__link-icon link-icon--brand" />
+              </a>
+            )}
+            {website && (
+              <a
+                href={website}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${name} website`}
+              >
+                <WebsiteIcon className="board-member__link-icon" />
+              </a>
             )}
           </div>
-        </div>
+        )}
       </div>
     </article>
   );

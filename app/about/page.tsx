@@ -64,14 +64,19 @@ export default function AboutPage() {
         <div className="about-page__section-heading">
           <h2>Why join</h2>
         </div>
-        <div className="about-page__focus-grid">
-          {focusAreas.map((area) => (
-            <div key={area.title} className="about-page__focus-card">
-              <h3>{area.title}</h3>
-              <p>{area.text}</p>
-            </div>
+        <ol className="about-page__why-list" role="list">
+          {focusAreas.map((area, i) => (
+            <li key={area.title} className="about-page__why-item">
+              <span className="about-page__why-num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div>
+                <h3>{area.title}</h3>
+                <p>{area.text}</p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </section>
 
       <section className="about-page__section about-page__section--split">

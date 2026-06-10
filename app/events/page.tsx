@@ -3,7 +3,11 @@ import Link from 'next/link';
 import { getAllPages, sortPages } from '@/lib/content';
 import PreviewCard from '@/components/PreviewCard';
 
-export const metadata: Metadata = { title: 'Events' };
+export const metadata: Metadata = {
+  title: 'Events',
+  description:
+    'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by the Clemson Quantum Club.',
+};
 
 export default function EventsPage() {
   const hackathons = sortPages(getAllPages('events/hackathons'));

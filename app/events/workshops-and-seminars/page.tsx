@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
-import PreviewCard from '@/components/PreviewCard';
+import EventArchive from '@/components/EventArchive';
 
-export const metadata: Metadata = { title: 'Workshops & Seminars' };
+export const metadata: Metadata = {
+  title: 'Workshops & Seminars',
+  description:
+    'Workshops and seminars from the Clemson Quantum Club, including the IBM Qiskit Fall Fest series and hands-on quantum programming sessions.',
+};
 
 export default function WorkshopsPage() {
   const workshops = sortPages(getAllPages('events/workshops-and-seminars'));
@@ -12,11 +16,7 @@ export default function WorkshopsPage() {
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Workshops &amp; Seminars</h1>
       </header>
-      <div className="preview-grid">
-        {workshops.map((item) => (
-          <PreviewCard key={item.slug} item={item} kind="event" />
-        ))}
-      </div>
+      <EventArchive items={workshops} />
     </div>
   );
 }

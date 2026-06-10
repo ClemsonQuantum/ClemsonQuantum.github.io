@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "Detecting Majorana Zero Mode with ResNet and Winding Number Invariant"
 date: 2025-06-15
 type: poster
