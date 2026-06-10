@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "[WORKSHOP/SEMINAR NAME]"
 date: YYYY-MM-DD
 summary: "[One-line description]"

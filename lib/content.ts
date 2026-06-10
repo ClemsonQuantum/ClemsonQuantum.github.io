@@ -8,6 +8,17 @@ export { formatDate } from './types';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
 
+// Strip markdown/HTML to a plain-text preview capped at 160 chars. Used for card
+// excerpts and as the SEO description fallback when a page has no `summary`.
+export function makeExcerpt(content: string): string {
+  return content
+    .replace(/<[^>]+>/g, '')
+    .replace(/[#*`_[\](){}|]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 160);
+}
+
 export function getAllPages(contentSubdir: string): PageMeta[] {
   const dir = path.join(CONTENT_ROOT, contentSubdir);
   if (!fs.existsSync(dir)) return [];
@@ -46,12 +57,7 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
       authors: data.authors ?? null,
       href: isExternal ? destination! : internalHref,
       isExternal,
-      excerpt: content
-        .replace(/<[^>]+>/g, '')
-        .replace(/[#*`_[\](){}|]/g, '')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .slice(0, 160),
+      excerpt: makeExcerpt(content),
     };
   });
 }

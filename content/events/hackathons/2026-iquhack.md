@@ -1,5 +1,4 @@
 ---
-layout: default
 title: iQuHack 2026
 date: 2026-01-30
 summary: "Clemson Quantum at MIT's annual quantum hackathon in Cambridge, MA. (Details coming soon.)"

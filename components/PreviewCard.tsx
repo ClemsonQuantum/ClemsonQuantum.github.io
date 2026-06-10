@@ -7,6 +7,7 @@ interface PreviewCardProps {
   kind: 'news' | 'event';
   badge?: string | null;
   metaLabel?: string | null;
+  showFooter?: boolean;
 }
 
 function getSourceLabel(item: PageMeta): string | null {
@@ -47,15 +48,15 @@ export default function PreviewCard({
   kind,
   badge,
   metaLabel,
+  showFooter = true,
 }: PreviewCardProps) {
   const footerLabel = kind === 'news' ? getSourceLabel(item) : metaLabel;
   const summary = item.summary ?? item.excerpt;
   // `dateDisplay` lets a card show custom text (e.g. "TBD") in the date slot
   // while a real `date` is still used for sorting and the Upcoming badge.
   const dateText = item.dateDisplay ?? (item.date ? formatDate(item.date) : null);
-  // Centralized badge: an explicit `badge` overrides, otherwise event cards show
-  // "Upcoming" automatically based on the entry's date — so every card, on every
-  // page, stays consistent and is maintained in one place.
+  // Badge resolution is centralized here: an explicit `badge` overrides;
+  // otherwise event cards derive "Upcoming" from the entry's date.
   const effectiveBadge =
     badge ?? (kind === 'event' && isUpcoming(item) ? 'Upcoming' : null);
 
@@ -85,7 +86,7 @@ export default function PreviewCard({
         </div>
         <h3 className="preview-card__title">{item.title}</h3>
         {summary && <p className="preview-card__summary">{summary}</p>}
-        {footerLabel && (
+        {showFooter && footerLabel && (
           <div className="preview-card__footer">
             <span className="preview-card__label">{footerLabel}</span>
           </div>

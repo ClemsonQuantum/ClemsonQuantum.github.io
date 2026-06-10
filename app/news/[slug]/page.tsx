@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug, formatDate } from '@/lib/content';
+import { getAllPages, getPageBySlug, formatDate, makeExcerpt } from '@/lib/content';
 import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -19,7 +19,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!page || !page.data) {
     return { title: String(slug) };
   }
-  return { title: String(page.data.title ?? slug) };
+  const title = String(page.data.title ?? slug);
+  const description =
+    (typeof page.data.summary === 'string' && page.data.summary) ||
+    makeExcerpt(page.content ?? '');
+  return {
+    title,
+    description,
+    openGraph: { title, description, url: `/news/${slug}/` },
+  };
 }
 
 export default async function NewsArticlePage({ params }: Props) {

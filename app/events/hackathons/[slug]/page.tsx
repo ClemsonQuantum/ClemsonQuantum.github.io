@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug } from '@/lib/content';
+import { getAllPages, getPageBySlug, makeExcerpt } from '@/lib/content';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -87,7 +87,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!page || !page.data) {
     return { title: String(slug) };
   }
-  return { title: String(page.data.title ?? slug) };
+  const title = String(page.data.title ?? slug);
+  const description =
+    (typeof page.data.summary === 'string' && page.data.summary) ||
+    makeExcerpt(page.content ?? '');
+  return {
+    title,
+    description,
+    openGraph: { title, description, url: `/events/hackathons/${slug}/` },
+  };
 }
 
 export default async function HackathonPage({ params }: Props) {

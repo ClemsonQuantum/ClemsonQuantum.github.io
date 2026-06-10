@@ -1,5 +1,4 @@
 ---
-layout: default
 title: YQuantum 2025
 date: 2025-04-12
 summary: "Clemson Quantum competed at YQuantum 2025."

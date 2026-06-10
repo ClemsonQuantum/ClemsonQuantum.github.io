@@ -1,5 +1,4 @@
 ---
-layout: default
 title: "Hardware-Aware Quantum Circuit Synthesis"
 date: 2025-06-15
 type: poster

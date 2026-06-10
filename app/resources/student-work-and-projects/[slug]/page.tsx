@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug, formatDate } from '@/lib/content';
+import { getAllPages, getPageBySlug, formatDate, makeExcerpt } from '@/lib/content';
 import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -21,7 +21,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const page = getPageBySlug('resources/student-work-and-projects', slug);
   if (!page || !page.data) return { title: String(slug) };
-  return { title: String(page.data.title ?? slug) };
+  const title = String(page.data.title ?? slug);
+  const description =
+    (typeof page.data.summary === 'string' && page.data.summary) ||
+    makeExcerpt(page.content ?? '');
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/resources/student-work-and-projects/${slug}/`,
+    },
+  };
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
