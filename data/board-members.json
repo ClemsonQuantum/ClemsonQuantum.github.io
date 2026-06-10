@@ -21,7 +21,7 @@
   {
     "name": "Ashton McEntarffer",
     "role": "Secretary",
-    "description": "Senior in Computer Science\nResearch in Computer Science",
+    "description": "Senior in Computer Science\nResearch in Classical and Quantum Machine Learning, and Computer Vision",
     "image": "/images/ashton-mcentarffer.jpg",
     "email": "amcenta@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/ashtonmc/",
@@ -31,7 +31,7 @@
     "name": "Jack Layton",
     "role": "Treasurer",
     "description": "Industrial Engineering Ph.D. Student and Clemson Alumnus\nResearch in Quantum Optimization, Variational Quantum Algorithms, and Operations Research",
-    "image": "/images/blank-profile.svg",
+    "image": "/images/jack-layton.jpg",
     "email": "jslayto@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/jack-layton-668231b0/",
     "github": "https://github.com/cosmicdrifter423"

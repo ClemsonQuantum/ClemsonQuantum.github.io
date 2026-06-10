@@ -18,6 +18,10 @@ interface HeaderProps {
 
 const EVENTS_IN_DROPDOWN = 3;
 
+// On the hamburger nav (≤1024px), dropdowns/submenus open on tap, not hover.
+const isMobileNav = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px)').matches;
+
 type DropdownId = 'events' | 'resources' | null;
 type EventsSubmenuId = 'hackathons' | 'workshops' | 'meetings' | null;
 
@@ -47,8 +51,8 @@ function EventsSubmenu({
   return (
     <div
       className={`dropdown-submenu${isOpen ? ' dropdown-submenu--open' : ''}`}
-      onMouseEnter={() => setOpenSubmenu(id)}
-      onFocus={() => setOpenSubmenu(id)}
+      onMouseEnter={() => { if (!isMobileNav()) setOpenSubmenu(id); }}
+      onFocus={() => { if (!isMobileNav()) setOpenSubmenu(id); }}
       onBlur={(e: ReactFocusEvent<HTMLDivElement>) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node)) {
           setOpenSubmenu((cur) => (cur === id ? null : cur));
@@ -61,7 +65,14 @@ function EventsSubmenu({
         role="menuitem"
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        onClick={closeMenus}
+        onClick={(e) => {
+          if (isMobileNav()) {
+            e.preventDefault();
+            setOpenSubmenu((cur) => (cur === id ? null : id));
+          } else {
+            closeMenus();
+          }
+        }}
       >
         {label}
       </Link>
@@ -135,16 +146,17 @@ export default function Header({ navData }: HeaderProps) {
 
   const dropdownHandlers = (id: Exclude<DropdownId, null>) => ({
     onMouseEnter: () => {
-      setOpenDropdown(id);
+      if (!isMobileNav()) setOpenDropdown(id);
     },
     onMouseLeave: () => {
+      if (isMobileNav()) return;
       setOpenDropdown((cur) => (cur === id ? null : cur));
       if (id === 'events') {
         setOpenSubmenu(null);
       }
     },
     onFocus: () => {
-      setOpenDropdown(id);
+      if (!isMobileNav()) setOpenDropdown(id);
     },
     onBlur: (e: ReactFocusEvent<HTMLDivElement>) => {
       if (!e.currentTarget.contains(e.relatedTarget as Node)) {
@@ -208,6 +220,13 @@ export default function Header({ navData }: HeaderProps) {
               className="nav-link nav-dropdown-trigger"
               aria-haspopup="menu"
               aria-expanded={openDropdown === 'events'}
+              onClick={(e) => {
+                if (isMobileNav()) {
+                  e.preventDefault();
+                  setOpenSubmenu(null);
+                  setOpenDropdown((cur) => (cur === 'events' ? null : 'events'));
+                }
+              }}
             >
               Events
               <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
@@ -265,6 +284,13 @@ export default function Header({ navData }: HeaderProps) {
               className="nav-link nav-dropdown-trigger"
               aria-haspopup="menu"
               aria-expanded={openDropdown === 'resources'}
+              onClick={(e) => {
+                if (isMobileNav()) {
+                  e.preventDefault();
+                  setOpenSubmenu(null);
+                  setOpenDropdown((cur) => (cur === 'resources' ? null : 'resources'));
+                }
+              }}
             >
               Resources
               <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
