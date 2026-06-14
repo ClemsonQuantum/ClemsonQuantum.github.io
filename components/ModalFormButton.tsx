@@ -25,6 +25,10 @@ interface Props {
   title: string;
   subtitle: string;
   subject: string;
+  /** Optional email-subject template; `{fieldName}` tokens are replaced with
+   *  submitted values (e.g. "{name} has requested participant updates").
+   *  Falls back to `subject` when omitted. */
+  subjectTemplate?: string;
   successMessage: string;
   submitLabel?: string;
   fields: ModalFormField[];
@@ -42,6 +46,7 @@ export default function ModalFormButton({
   title,
   subtitle,
   subject,
+  subjectTemplate,
   successMessage,
   submitLabel = 'Submit',
   fields,
@@ -90,8 +95,15 @@ export default function ModalFormButton({
     setErrorMsg('');
 
     const data = new FormData(form);
+    // Personalize the subject (Web3Forms renders it as the email's headline)
+    // by filling `{fieldName}` tokens from what the visitor submitted.
+    const composedSubject = subjectTemplate
+      ? subjectTemplate.replace(/\{(\w+)\}/g, (_, key) =>
+          String(data.get(key) ?? '').trim(),
+        )
+      : subject;
     data.append('access_key', siteConfig.web3formsKey);
-    data.append('subject', subject);
+    data.append('subject', composedSubject);
     data.append('from_name', subject);
 
     try {
