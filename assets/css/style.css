@@ -3249,8 +3249,17 @@ main:has(.hackathon-page) {
   color: var(--color-text);
 }
 
-.modal-title {
+/* Scoped to .modal-bubble so it beats the generic `.page-content h3` rule
+   (specificity 0,1,1) that otherwise leaks a surface chip background, shadow,
+   and padding onto the modal heading — the modal is injected inside
+   `.page-content` via react-markdown's custom link renderer. */
+.modal-bubble .modal-title {
   margin: 0 0 0.35rem;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
   font-size: 1.3rem;
 }
 
@@ -3276,7 +3285,9 @@ main:has(.hackathon-page) {
   margin-bottom: 0.95rem;
   padding: 0.6rem 0.7rem;
   font: inherit;
-  color: var(--color-text);
+  /* Fixed dark text to pair with the always-white field background below —
+     var(--color-text) would flip to near-white in dark mode and vanish. */
+  color: #162033;
   background: #fff;
   border: 1px solid var(--color-border);
   border-radius: 0.55rem;

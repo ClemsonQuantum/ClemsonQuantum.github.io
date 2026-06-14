@@ -47,6 +47,7 @@ function MarkdownLink({
         title="Get SC Quantathon v3 updates"
         subtitle="Drop your name and email and we’ll keep you posted on the event."
         subject="SC Quantathon v3 — Participant updates sign-up"
+        subjectTemplate="{name} has requested participant updates for SC Quantathon v3"
         successMessage="You’re on the list! We’ll email SC Quantathon v3 updates to you."
         submitLabel="Notify me"
         fields={PARTICIPANT_FIELDS}
@@ -60,6 +61,7 @@ function MarkdownLink({
         title="Sponsor SC Quantathon v3"
         subtitle="Tell us a bit about you and we’ll follow up with sponsorship details."
         subject="SC Quantathon v3 — Sponsorship inquiry"
+        subjectTemplate="{name} from {organization} is interested in sponsoring SC Quantathon v3"
         successMessage="Thanks for your interest in sponsoring SC Quantathon v3! We’ll be in touch soon."
         submitLabel="Get in touch"
         fields={SPONSOR_FIELDS}
