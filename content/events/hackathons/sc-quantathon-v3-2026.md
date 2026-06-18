@@ -83,34 +83,28 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <h3>Day 1 - Friday, September 25</h3>
     <table>
       <tr><td class="hackathon-time">5:00 PM</td><td>Check-in and registration</td></tr>
-      <tr><td class="hackathon-time">5:30 PM</td><td>Opening program and welcome</td></tr>
-      <tr><td class="hackathon-time">6:00 PM</td><td>Challenge tracks released</td></tr>
-      <tr><td class="hackathon-time">6:30 PM</td><td>Team formation and project planning</td></tr>
-      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner and evening social</td></tr>
+      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner</td></tr>
     </table>
   </div>
   <div class="hackathon-schedule-day">
     <h3>Day 2 - Saturday, September 26</h3>
     <table>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">9:00 AM</td><td>Workshop: Intro to quantum circuits</td></tr>
-      <tr><td class="hackathon-time">10:00 AM</td><td>Hacking begins</td></tr>
-      <tr><td class="hackathon-time">10:30 AM</td><td>Partner workshop details coming soon</td></tr>
-      <tr><td class="hackathon-time">12:00 PM</td><td>Lunch and networking</td></tr>
-      <tr><td class="hackathon-time">1:00 PM</td><td>Mentor office hours</td></tr>
-      <tr><td class="hackathon-time">3:00 PM</td><td>Mid-event team check-in</td></tr>
-      <tr><td class="hackathon-time">6:00 PM</td><td>Dinner</td></tr>
-      <tr><td class="hackathon-time">9:00 PM</td><td>Late-night snacks and work session</td></tr>
+      <tr><td class="hackathon-time">9:00 AM</td><td>Opening ceremony</td></tr>
+      <tr><td class="hackathon-time">10:00 AM</td><td>Hacking begins and challenges open</td></tr>
+      <tr><td class="hackathon-time">1:00 PM</td><td>Lunch</td></tr>
+      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner</td></tr>
     </table>
   </div>
   <div class="hackathon-schedule-day">
     <h3>Day 3 - Sunday, September 27</h3>
     <table>
+      <tr><td class="hackathon-time">12:00 AM</td><td>Midnight snack</td></tr>
       <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">10:00 AM</td><td>Hacking ends — project submissions due</td></tr>
-      <tr><td class="hackathon-time">10:30 AM</td><td>Team presentations and demos</td></tr>
-      <tr><td class="hackathon-time">12:30 PM</td><td>Judging deliberation and lunch</td></tr>
-      <tr><td class="hackathon-time">1:30 PM</td><td>Awards and closing program</td></tr>
+      <tr><td class="hackathon-time">10:00 AM</td><td>Challenges close</td></tr>
+      <tr><td class="hackathon-time">10:30 AM</td><td>Presentations begin</td></tr>
+      <tr><td class="hackathon-time">1:00 PM</td><td>Lunch</td></tr>
+      <tr><td class="hackathon-time">3:00 PM</td><td>Award ceremony</td></tr>
     </table>
   </div>
 </div>
@@ -133,7 +127,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
   </div>
   <div class="hackathon-track">
-    <h3>Quantum hardware and devices</h3>
+    <h3>Quantum hardware and analysis</h3>
     <p class="hackathon-track-sponsor">Track partner details coming soon</p>
     <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
   </div>
@@ -177,7 +171,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <a href="#sponsor" class="view-all-link">Sponsor the event</a>
 </div>
 
-We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, and Silver sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
+We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, Silver, and Bronze sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
 
 </div>
 
