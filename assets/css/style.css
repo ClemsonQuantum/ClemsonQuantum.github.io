@@ -511,9 +511,11 @@ img {
 .search-results-dropdown {
   position: absolute;
   top: calc(100% + 6px);
-  left: 0;
   right: 0;
-  min-width: 280px;
+  /* Right-anchored so the panel grows leftward into the page — the nav
+     search box sits at the viewport edge, so a left anchor would push
+     the extra width off-screen. */
+  width: max(100%, 280px);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   max-height: 320px;

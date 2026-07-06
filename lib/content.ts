@@ -32,7 +32,9 @@ export function getAllPages(contentSubdir: string): PageMeta[] {
     const raw = fs.readFileSync(path.join(dir, filename), 'utf-8');
     const { data, content } = matter(raw);
 
-    const destination = data.link ?? data.external_url ?? null;
+    // `source_url` (news source articles) counts as a destination too: entries
+    // with any external destination link straight there and get no detail page.
+    const destination = data.link ?? data.external_url ?? data.source_url ?? null;
     const isExternal =
       typeof destination === 'string' && destination.includes('://');
 

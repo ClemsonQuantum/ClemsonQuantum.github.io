@@ -32,7 +32,10 @@ const CONTENT_DIRS = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const contentRoutes = CONTENT_DIRS.flatMap((dir) =>
-    getAllPages(dir).map((page) => `/${dir}/${page.slug}/`)
+    getAllPages(dir)
+      // External entries have no internal page, so they don't belong here.
+      .filter((page) => !page.isExternal)
+      .map((page) => `/${dir}/${page.slug}/`)
   );
 
   return [...STATIC_ROUTES, ...contentRoutes].map((route) => ({

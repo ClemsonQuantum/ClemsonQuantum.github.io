@@ -48,7 +48,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 <div class="hackathon-details-grid">
   <div class="hackathon-detail-card">
     <div class="hackathon-detail-label">Dates</div>
-    <div class="hackathon-detail-value">September 25-27, 2026 (5:00 PM Fri – 5:00 PM Sun)</div>
+    <div class="hackathon-detail-value">September 25-27, 2026</div>
   </div>
   <div class="hackathon-detail-card">
     <div class="hackathon-detail-label">Location</div>
