@@ -80,7 +80,11 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return getAllPages('events/hackathons').map((p) => ({ slug: p.slug }));
+  // Entries with an external destination link straight to the official event
+  // site from cards/nav/search — no internal detail page is generated for them.
+  return getAllPages('events/hackathons')
+    .filter((p) => !p.isExternal)
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -93,10 +97,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     (typeof page.data.summary === 'string' && page.data.summary) ||
     makeExcerpt(page.content ?? '');
+  const image = typeof page.data.image === 'string' ? page.data.image : undefined;
   return {
     title,
     description,
-    openGraph: { title, description, url: `/events/hackathons/${slug}/` },
+    openGraph: {
+      title,
+      description,
+      url: `/events/hackathons/${slug}/`,
+      ...(image ? { images: [image] } : {}),
+    },
   };
 }
 

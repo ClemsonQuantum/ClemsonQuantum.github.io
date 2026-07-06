@@ -26,7 +26,11 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
   );
 
   async function generateStaticParams() {
-    return getAllPages(contentSubdir).map((p) => ({ slug: p.slug }));
+    // Entries with an external destination link straight there from cards,
+    // nav, and search — no internal detail page is generated for them.
+    return getAllPages(contentSubdir)
+      .filter((p) => !p.isExternal)
+      .map((p) => ({ slug: p.slug }));
   }
 
   async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -37,10 +41,16 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
     const description =
       (typeof page.data.summary === 'string' && page.data.summary) ||
       makeExcerpt(page.content ?? '');
+    const image = typeof page.data.image === 'string' ? page.data.image : undefined;
     return {
       title,
       description,
-      openGraph: { title, description, url: `/${contentSubdir}/${slug}/` },
+      openGraph: {
+        title,
+        description,
+        url: `/${contentSubdir}/${slug}/`,
+        ...(image ? { images: [image] } : {}),
+      },
     };
   }
 

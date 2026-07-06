@@ -6,11 +6,11 @@ image: "/images/[PLACEHOLDER].jpg"
 # Publisher shown on the card footer (e.g. "Clemson News", "SC Quantum").
 # Omit to default to "Clemson Quantum Club".
 source: "Clemson News"
-# For external articles (linking to another site):
-# external_url: "https://example.com/article"
-# cta_label: "Read on Example News"
+# Link to the original article. Cards, nav, and search send readers straight
+# there — NO internal article page is generated for entries with a source_url
+# (or external_url), so the body below can stay empty.
+source_url: "https://example.com/article"
+cta_label: "Read on Example News"
 ---
 
-[Full article content goes here. Use markdown formatting.]
-
-[For external articles, write a brief summary/excerpt here since the full article lives elsewhere.]
+[Optional: a brief summary/excerpt. Only used as a search-index/SEO fallback when `summary` is missing.]
