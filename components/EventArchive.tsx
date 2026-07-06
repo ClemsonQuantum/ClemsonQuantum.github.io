@@ -8,8 +8,11 @@ import PreviewCard from './PreviewCard';
 const ALL = 'all';
 const SEASON_ORDER: Record<string, number> = { Fall: 2, Summer: 1, Spring: 0 };
 
-function semesterOf(date: string): string {
+// Returns null for non-ISO dates (e.g. a "TBD" placeholder), so those items
+// contribute no semester tab and surface only under All.
+function semesterOf(date: string): string | null {
   const [y, m] = date.split('-').map(Number);
+  if (!Number.isFinite(y) || !Number.isFinite(m)) return null;
   if (m >= 8) return `Fall ${y}`;
   if (m <= 5) return `Spring ${y}`;
   return `Summer ${y}`;
@@ -41,7 +44,10 @@ export default function EventArchive({
   // no tab and surface only under All.
   const semesters = Array.from(
     new Set(
-      items.filter((i) => i.date).map((i) => semesterOf(i.date as string))
+      items
+        .filter((i) => i.date)
+        .map((i) => semesterOf(i.date as string))
+        .filter((s): s is string => s !== null)
     )
   ).sort((a, b) => semesterRank(b) - semesterRank(a));
 

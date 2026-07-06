@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description =
     (typeof page.data.summary === 'string' && page.data.summary) ||
     makeExcerpt(page.content ?? '');
+  const image = typeof page.data.image === 'string' ? page.data.image : undefined;
   return {
     title,
     description,
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       title,
       description,
       url: `/resources/student-work-and-projects/${slug}/`,
+      ...(image ? { images: [image] } : {}),
     },
   };
 }

@@ -37,8 +37,14 @@ function walkDir(dir, results = []) {
       const { data, content } = parseFrontMatter(raw);
       const relDir = path.relative(CONTENT_ROOT, path.dirname(fullPath));
       const slug = entry.name.replace(/\.md$/, '');
-      const url = `/${relDir}/${slug}/`.replace(/\\/g, '/');
-      const excerpt = content
+      // Mirror lib/content.ts: entries with an external destination have no
+      // internal page, so search results must point at the external URL.
+      const destination = data.link ?? data.external_url ?? data.source_url;
+      const url =
+        typeof destination === 'string' && destination.includes('://')
+          ? destination
+          : `/${relDir}/${slug}/`.replace(/\\/g, '/');
+      const excerpt = (content || data.summary || '')
         .replace(/<[^>]+>/g, '')
         .replace(/[#*`_[\](){}|]/g, '')
         .replace(/\s+/g, ' ')
