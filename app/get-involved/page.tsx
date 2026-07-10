@@ -7,7 +7,6 @@ import {
   LinkedInIcon,
   TigerQuestIcon,
   GitHubIcon,
-  GroupMeIcon,
   InstagramIcon,
 } from '@/components/icons/ChannelIcons';
 
@@ -27,10 +26,9 @@ const channels: {
 }[] = [
   { href: siteConfig.discordInvite, label: 'Join the Discord community', Icon: DiscordIcon },
   { href: siteConfig.linkedinUrl, label: 'Follow us on LinkedIn', Icon: LinkedInIcon },
-  { href: siteConfig.tigerquestUrl, label: 'Find us on TigerQuest', Icon: TigerQuestIcon },
-  { href: siteConfig.githubUrl, label: 'See our code on GitHub', Icon: GitHubIcon },
-  { href: siteConfig.groupmeUrl, label: 'Join the GroupMe', Icon: GroupMeIcon },
   { href: siteConfig.instagramUrl, label: 'Follow us on Instagram', Icon: InstagramIcon },
+  { href: siteConfig.githubUrl, label: 'See our code on GitHub', Icon: GitHubIcon },
+  { href: siteConfig.tigerquestUrl, label: 'Find us on TigerQuest', Icon: TigerQuestIcon },
 ];
 
 export default function GetInvolvedPage() {
@@ -69,9 +67,9 @@ export default function GetInvolvedPage() {
       <section className="about-page__section">
         <h2>Ways to join</h2>
         <p className="gi-channels-intro">
-          The club lives on Discord and meets in person on a biweekly basis.
-          Pick whichever way is easiest to get started — there is no wrong door,
-          and no commitment required to show up.
+          The club lives on Discord and meets in person every other week.
+          Pick whichever way is easiest to get started — there&apos;s no wrong
+          door, and no commitment required to show up.
         </p>
         <div className="gi-channels">
           {channels

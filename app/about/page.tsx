@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 
 const focusAreas = [
   {
-    title: 'Community access',
+    title: 'Open to everyone',
     text:
-      'Students can drop into meetings without an application, dues, or prior quantum computing background.',
+      'Drop into any meeting — no application, no dues, no prior quantum background.',
   },
   {
     title: 'Hands-on learning',
@@ -21,9 +21,9 @@ const focusAreas = [
       'Workshops and study groups help members move from core concepts to writing and running quantum circuits.',
   },
   {
-    title: 'Community pathways',
+    title: 'Find your people',
     text:
-      'Members find peers for projects, hackathon teams, research conversations, and course planning.',
+      'Meet teammates for projects and hackathons, plus people to talk research and course planning with.',
   },
 ];
 
@@ -101,8 +101,8 @@ export default function AboutPage() {
           <h2>Events and pathways</h2>
           <p>
             Members participate in workshops, hackathons, and student projects,
-            including events connected to MIT iQuHACK and the SC Quantathon
-            series, our student-focused quantum hackathon at Clemson.
+            from MIT iQuHack to the SC Quantathon series, the student-focused
+            quantum hackathon we help run at Clemson.
           </p>
         </div>
         <div className="about-page__link-panel">

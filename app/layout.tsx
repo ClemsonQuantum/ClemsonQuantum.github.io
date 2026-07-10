@@ -3,6 +3,7 @@ import { Playfair_Display, Inter } from 'next/font/google';
 import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ScrollReveal from '@/components/ScrollReveal';
 import { getNavData } from '@/lib/navData';
 import siteConfig from '@/data/site-config.json';
 
@@ -113,6 +114,7 @@ export default function RootLayout({
         <Header navData={navData} />
         <main id="main">{children}</main>
         <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );

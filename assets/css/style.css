@@ -45,6 +45,11 @@
 
   /* Layout */
   --max-width: 1220px;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-duration: 0.55s;
+  --reveal-distance: 14px;
 }
 
 /* --- Reset --- */
@@ -144,7 +149,7 @@ img {
   border-radius: 1px;
   transform: scaleX(0);
   transform-origin: center;
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.25s var(--ease-out-soft);
 }
 
 .nav-link:hover::after {
@@ -173,7 +178,7 @@ img {
   pointer-events: none;
   background: var(--color-surface);
   z-index: 1500;
-  transition: opacity 0.2s, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: opacity 0.2s, transform 0.2s var(--ease-out-soft);
 }
 
 /* Invisible bridge so cursor can travel from trigger to panel */
@@ -393,7 +398,7 @@ img {
     padding: var(--space-sm) var(--space-md) var(--space-xl);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    animation: navPanelOpen 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: navPanelOpen 0.25s var(--ease-out-soft);
   }
 
   .nav-links--open {
@@ -749,7 +754,9 @@ form button[type='submit']:hover {
   transform: translateY(-1px);
 }
 
-/* --- Footer — mirrors the frosted-glass nav --- */
+/* --- Footer — mirrors the frosted-glass nav. One row on desktop (brand /
+   quick links / social icons), stacked and centered on small screens, with
+   the quantum wire divider above the copyright line. --- */
 footer {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(14px) saturate(1.6);
@@ -759,7 +766,37 @@ footer {
   font-size: 0.9rem;
   text-align: center;
   margin-top: 0;
-  padding: 2.2rem var(--space-xl);
+  padding: 2.2rem var(--space-xl) 1.6rem;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.footer-brand {
+  text-align: left;
+}
+
+.footer-logo-link {
+  display: inline-block;
+}
+
+.footer-logo {
+  height: 30px;
+  width: auto;
+  display: block;
+}
+
+.footer-meeting {
+  margin: 0.45rem 0 0;
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
 }
 
 .footer-links {
@@ -767,7 +804,6 @@ footer {
   gap: 0.25rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 0.75rem;
 }
 
 .footer-links a {
@@ -787,11 +823,74 @@ footer {
   color: var(--color-accent);
 }
 
+.footer-social {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.footer-social a {
+  display: inline-flex;
+  padding: 0.5rem;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  transition: color 0.2s, transform 0.25s var(--ease-out-soft);
+}
+
+.footer-social a:hover,
+.footer-social a:focus-visible {
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.footer-social__icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* The same "entangled pair" wire as the title flourish, stretched into a
+   full-width separator with the nodes gathered at center. */
+.footer-divider {
+  height: 9px;
+  max-width: var(--max-width);
+  margin: 1.4rem auto 1rem;
+  opacity: 0.7;
+  background:
+    radial-gradient(circle 3.5px at calc(50% - 69px) 4.5px, var(--color-accent) 97%, transparent),
+    radial-gradient(circle 3.5px at calc(50% + 69px) 4.5px, var(--color-accent) 97%, transparent),
+    radial-gradient(circle 3px at 50% 4.5px, transparent 55%, var(--color-violet) 60% 97%, transparent),
+    linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.35) 30% 70%, transparent)
+      center / 100% 1.5px no-repeat;
+}
+
 .footer-copy {
   margin: 0;
   color: var(--color-text-secondary);
   opacity: 0.75;
   font-size: 0.8rem;
+}
+
+.footer-copy a {
+  color: inherit;
+}
+
+.footer-copy a:hover,
+.footer-copy a:focus-visible {
+  color: var(--color-accent);
+}
+
+@media (max-width: 800px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-brand {
+    text-align: center;
+  }
+
+  .footer-logo-link {
+    display: inline-block;
+  }
 }
 
 /* Focus visible for accessibility */
@@ -1647,6 +1746,30 @@ main:has(.competitor-page) {
 }
 
 /* ===================================================================
+   Quantum flourish — an "entangled pair" mark under centered display
+   titles: a hairline circuit wire with two solid accent nodes at the
+   ends and one open violet node at center. Applied only to titles that
+   are already text-align: center (home hero + archive heroes); the
+   global h1 rule and left-aligned page h1s are untouched. Built from
+   tokens so the dark :root override recolors it automatically.
+   =================================================================== */
+
+.home-hero__title::after,
+.archive-hero__title::after {
+  content: '';
+  display: block;
+  width: 148px;
+  height: 9px;
+  margin: 0.9rem auto 0;
+  background:
+    radial-gradient(circle 3.5px at 5px 4.5px, var(--color-accent) 97%, transparent),
+    radial-gradient(circle 3.5px at 143px 4.5px, var(--color-accent) 97%, transparent),
+    radial-gradient(circle 3px at 74px 4.5px, transparent 55%, var(--color-violet) 60% 97%, transparent),
+    linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.35) 18% 82%, transparent)
+      center / 100% 1.5px no-repeat;
+}
+
+/* ===================================================================
    Organizer Row — extracted inline styles
    =================================================================== */
 
@@ -1905,6 +2028,11 @@ main:has(.competitor-page) {
   width: 1.25rem;
   height: 1.25rem;
   flex-shrink: 0;
+  transition: transform 0.25s var(--ease-out-soft);
+}
+.gi-channel:hover .gi-channel__icon,
+.gi-channel:focus-visible .gi-channel__icon {
+  transform: translateY(-2px);
 }
 /* Tiger paw rendered as a currentColor mask so it stays monochrome and tints on
    hover like the SVG glyphs (a raster <img> can't inherit currentColor). */
@@ -2034,6 +2162,10 @@ main:has(.competitor-page) {
   color: var(--color-text-secondary);
   margin: 0;
   text-align: left;
+}
+
+.about-page__section h2 + p {
+  margin-top: 0.35rem;
 }
 
 .about-page__section--intro,
@@ -2587,6 +2719,14 @@ main:has(.home-hero) {
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.45s var(--ease-out-soft);
+}
+
+/* Gentle image drift on card hover, paired with the existing lift. The media
+   slot's overflow: hidden clips the scaled image. */
+.preview-card:hover .preview-card__image,
+.preview-card:focus-visible .preview-card__image {
+  transform: scale(1.03);
 }
 
 /* Posters that are more square/portrait than the 16:9 card slot get cropped by
@@ -2780,10 +2920,31 @@ main:has(.home-hero) {
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.01em;
+  position: relative;
 }
 
 .view-all-link:hover {
   color: var(--color-accent-hover);
+}
+
+/* Underline sweep on hover — same motion language as the nav links. */
+.view-all-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.2rem;
+  height: 2px;
+  background: currentColor;
+  border-radius: var(--radius-full);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s var(--ease-out-soft);
+}
+
+.view-all-link:hover::after,
+.view-all-link:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .home-section--board {
@@ -2894,7 +3055,6 @@ main:has(.home-hero) {
   transform: translateY(-1px);
 }
 
-.footer-links,
 .footer-copy {
   max-width: var(--max-width);
   margin-left: auto;
@@ -3332,6 +3492,26 @@ main:has(.hackathon-page) {
   }
 }
 
+/* --- Scroll reveal — classes applied by components/ScrollReveal.tsx to
+   below-the-fold cards/sections only. Doubly gated: the styles live behind
+   no-preference here, and the JS bails out via matchMedia before hiding
+   anything, on top of the global reduced-motion kill-switch. --- */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--reveal-duration) var(--ease-out-soft),
+      transform var(--reveal-duration) var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+}
+
 /* --- Learning Resources: leveled guide (Beginner / Intermediate / Advanced) --- */
 .lr-section--beginner {
   --lr-accent: #2bb3a3;
@@ -3609,6 +3789,10 @@ main:has(.hackathon-page) {
   color: var(--color-text-secondary);
   font-size: 1.02rem;
   line-height: 1.74;
+}
+
+.hackathon-section p + p {
+  margin-top: 1rem;
 }
 
 .hackathon-detail-icon {
@@ -4055,8 +4239,13 @@ main:has(.hackathon-page) {
   }
 
   .footer-links a,
+  .footer-social a,
   .footer-copy {
     color: rgba(248, 250, 252, 0.84);
+  }
+
+  .footer-meeting {
+    color: rgba(248, 250, 252, 0.62);
   }
 }
 
@@ -4101,7 +4290,9 @@ main:has(.hackathon-page) {
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0.01ms !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }

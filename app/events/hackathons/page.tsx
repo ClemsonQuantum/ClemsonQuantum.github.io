@@ -5,7 +5,7 @@ import EventArchive from '@/components/EventArchive';
 export const metadata: Metadata = {
   title: 'Hackathons',
   description:
-    'Quantum hackathons the Clemson Quantum Club hosts and competes in, including SC Quantathon, MIT iQuHACK, and YQuantum.',
+    'Quantum hackathons the Clemson Quantum Club hosts and competes in, including SC Quantathon, MIT iQuHack, and YQuantum.',
 };
 
 export default function HackathonsPage() {
