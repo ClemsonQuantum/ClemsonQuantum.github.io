@@ -7,6 +7,8 @@ import type { ComponentPropsWithoutRef } from 'react';
 import ModalFormButton, {
   type ModalFormField,
 } from '@/components/ModalFormButton';
+import EventCountdown from '@/components/EventCountdown';
+import QuantumCanvas from '@/components/QuantumCanvas';
 
 const PARTICIPANT_FIELDS: ModalFormField[] = [
   { name: 'name', label: 'Name', type: 'text', required: true },
@@ -75,6 +77,44 @@ function MarkdownLink({
   );
 }
 
+// Render marker divs as interactive client components, dispatched on sentinel
+// classes so pages that don't opt in render exactly as before:
+//   .hackathon-hero--quantum  → animated qubit-particle canvas behind the hero
+//   .event-countdown          → live countdown (data-target / data-end)
+function MarkdownDiv(props: ComponentPropsWithoutRef<'div'> & { node?: unknown }) {
+  // Strip react-markdown's `node` prop so it is never spread onto the DOM.
+  const { node, className, children, ...rest } = props;
+  void node;
+  const classes = className?.split(/\s+/) ?? [];
+  if (classes.includes('hackathon-hero--quantum')) {
+    return (
+      <div className={className} {...rest}>
+        <QuantumCanvas />
+        {children}
+      </div>
+    );
+  }
+  if (classes.includes('event-countdown')) {
+    const data = rest as Record<string, unknown>;
+    const target = data['data-target'] ?? data['dataTarget'];
+    const end = data['data-end'] ?? data['dataEnd'];
+    const srSummary = data['data-sr-summary'] ?? data['dataSrSummary'];
+    if (typeof target !== 'string') return null;
+    return (
+      <EventCountdown
+        target={target}
+        end={typeof end === 'string' ? end : undefined}
+        srSummary={typeof srSummary === 'string' ? srSummary : undefined}
+      />
+    );
+  }
+  return (
+    <div className={className} {...rest}>
+      {children}
+    </div>
+  );
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -128,7 +168,7 @@ export default async function HackathonPage({ params }: Props) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
-        components={{ a: MarkdownLink }}
+        components={{ a: MarkdownLink, div: MarkdownDiv }}
       >
         {content}
       </ReactMarkdown>
