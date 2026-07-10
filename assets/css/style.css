@@ -16,6 +16,7 @@
   --color-accent-900: #19243a; /* deep slate — hackathon section heros */
   --color-accent-950: #0f172a; /* near-black slate — competitor page hero */
   --color-violet: #6d28d9;
+  --color-violet-rgb: 109, 40, 217;
   --color-violet-light: #efe7ff;
   --color-border: rgba(22, 32, 51, 0.12);
 
@@ -50,6 +51,10 @@
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
   --reveal-duration: 0.55s;
   --reveal-distance: 14px;
+
+  /* Shared orange→violet accent gradient (recomputes automatically in dark
+     mode from the swapped --color-accent / --color-violet tokens). */
+  --grad-accent: linear-gradient(135deg, var(--color-accent), var(--color-violet));
 }
 
 /* --- Reset --- */
@@ -1038,27 +1043,8 @@ footer {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Key Details Grid */
-
-@media (max-width: 639px) {
-  .hackathon-details-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Schedule */
-
-.hackathon-schedule-day table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.hackathon-schedule-day tr:last-child td {
-  border-bottom: none;
-}
-
-/* Tracks & Prizes grids and cards are defined in a single rule below; search
-   ".hackathon-tracks-grid,\n.hackathon-prizes". */
+/* Key Details spec sheet, Schedule timeline, Tracks rows, and Prizes podium
+   are defined in the main hackathon block below; search ".hackathon-specs". */
 
 /* Resources list override */
 .hackathon-section ul {
@@ -1141,6 +1127,17 @@ footer {
   border-color: var(--color-accent);
 }
 
+/* Confirmed sponsor: solid hairline and upright type, vs. the dashed
+   italic "coming soon" placeholder slots. */
+.hackathon-sponsor-logo--confirmed {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 1.02rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
 /* FAQ */
 
 /* Hackathon Team Grid */
@@ -1193,11 +1190,6 @@ footer {
 
   .hackathon-section {
     padding: var(--space-2xl) var(--space-lg);
-  }
-
-  .hackathon-tracks-grid,
-  .hackathon-prizes {
-    grid-template-columns: 1fr;
   }
 
   .hackathon-apply {
@@ -3795,103 +3787,162 @@ main:has(.hackathon-page) {
   margin-top: 1rem;
 }
 
-.hackathon-detail-icon {
-  font-size: 2.25rem;
-  margin-bottom: var(--space-sm);
-  display: none;
-}
-
-.hackathon-details-grid {
+/* Key Details — spec sheet: hairline top rules only, no card chrome. */
+.hackathon-specs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  column-gap: clamp(1.75rem, 4vw, 3.5rem);
+  row-gap: 0.5rem;
   margin-top: 1.5rem;
 }
 
-.hackathon-detail-card {
-  transition: box-shadow 0.25s, transform 0.25s;
-  padding: 1.3rem;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: 1rem;
-  box-shadow: var(--shadow-sm);
-  text-align: center;
+.hackathon-spec {
+  border-top: 1px solid var(--color-border);
+  padding: 1.15rem 0 1.5rem;
+  text-align: left;
 }
 
-.hackathon-detail-card:hover {
-  transform: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.hackathon-detail-label {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.hackathon-spec-label {
   margin-bottom: 0.5rem;
   color: var(--color-violet);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
 }
 
-.hackathon-detail-value {
+.hackathon-spec-value {
   color: var(--color-text);
+  font-size: 1.05rem;
   font-weight: 500;
-  font-size: 1rem;
   line-height: 1.55;
 }
 
+@media (max-width: 1023px) {
+  .hackathon-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .hackathon-specs {
+    grid-template-columns: 1fr;
+    row-gap: 0;
+  }
+}
+
+/* Schedule — three always-visible day columns, each a vertical timeline. */
 .hackathon-schedule {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+  align-items: start;
   margin-top: 1.5rem;
 }
 
-.hackathon-schedule-day {
-  overflow: hidden;
-  border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: 1rem;
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
-}
-
+/* Every reset here is load-bearing against the generic .page-content h3 card style. */
 .hackathon-schedule-day h3 {
-  font-weight: 600;
-  margin: 0;
-  border-radius: 0;
-  letter-spacing: 0.01em;
-  background: var(--color-text);
-  color: #fff;
-  padding: 1rem 1.25rem;
-  font-size: 1.05rem;
-}
-
-.hackathon-schedule-day td {
+  margin: 0 0 1.15rem;
+  padding: 0 0 0.9rem;
+  background: none;
+  border: 0;
   border-bottom: 1px solid var(--color-border);
-  font-size: 0.95rem;
+  border-radius: 0;
+  box-shadow: none;
   color: var(--color-text);
-  padding: 0.85rem 1.25rem;
-  border-bottom-color: rgba(22, 32, 51, 0.08);
+  font-family: var(--font-serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
-.hackathon-schedule-day tr:hover td {
-  background: rgba(22, 32, 51, 0.03);
+.hackathon-schedule-date {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--color-violet);
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Timeline spine: 2px orange→violet gradient down the left. */
+.hackathon-schedule-items {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.hackathon-schedule-items::before {
+  content: '';
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(var(--color-accent-rgb), 0.7),
+    rgba(var(--color-violet-rgb), 0.7)
+  );
+}
+
+.hackathon-schedule-item {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 0.52rem 0;
+}
+
+/* 6px dot marker centered on the 2px spine. */
+.hackathon-schedule-item::before {
+  content: '';
+  position: absolute;
+  left: calc(-1.25rem - 2px);
+  top: calc(0.52rem + 0.32em);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
 }
 
 .hackathon-time {
+  flex: 0 0 4.8rem;
+  color: var(--color-text);
+  font-size: 0.92rem;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
-  width: 118px;
+}
+
+.hackathon-schedule-event {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  transition: color 0.2s;
+}
+
+.hackathon-schedule-item:hover .hackathon-schedule-event {
   color: var(--color-text);
 }
 
-.hackathon-section:has(.hackathon-tracks-grid),
+@media (max-width: 900px) {
+  .hackathon-schedule {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+}
+
+.hackathon-section:has(.hackathon-tracks),
 .hackathon-section:has(.hackathon-resources-grid),
 .hackathon-section:has(.hackathon-prizes),
 .hackathon-section:has(.hackathon-team-grid) {
   max-width: var(--max-width);
 }
 
-.hackathon-section:has(.hackathon-tracks-grid) > *,
+.hackathon-section:has(.hackathon-tracks) > *,
 .hackathon-section:has(.hackathon-resources-grid) > *,
 .hackathon-section:has(.hackathon-prizes) > *,
 .hackathon-section:has(.hackathon-team-grid) > * {
@@ -3900,91 +3951,207 @@ main:has(.hackathon-page) {
   margin-right: 0;
 }
 
-.hackathon-tracks-grid,
-.hackathon-prizes {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
+/* Challenge Tracks — editorial numbered rows separated by hairlines. */
+.hackathon-tracks {
   margin-top: 1.5rem;
-}
-
-.hackathon-prizes {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.hackathon-track,
-.hackathon-prize-tier {
-  padding: 1.35rem;
-  border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow 0.25s, transform 0.25s;
+  border-top: 1px solid var(--color-border);
 }
 
 .hackathon-track {
   position: relative;
-  border-top: 3px solid var(--color-accent);
+  display: grid;
+  grid-template-columns: clamp(72px, 9vw, 120px) 1fr;
+  column-gap: clamp(1.25rem, 3vw, 2.75rem);
+  padding: clamp(1.6rem, 3vw, 2.4rem) 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color 0.3s;
 }
 
-.hackathon-prize-tier {
-  text-align: center;
-}
-
-.hackathon-track:hover,
-.hackathon-prize-tier:hover {
-  transform: none;
-  box-shadow: var(--shadow-sm);
-}
-
-.hackathon-track h3,
-.hackathon-prize-tier h3 {
-  margin: 0 0 0.7rem;
-  color: var(--color-text);
-  font-size: 1.22rem;
+/* Giant serif index numeral. The gradient runs vertically so both the orange
+   and the violet read clearly within the glyph height. */
+.hackathon-track-num {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 700;
-  background: none;
+  line-height: 0.9;
+  background: linear-gradient(180deg, var(--color-accent), var(--color-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+/* Hover: left gradient bar drops in, numeral saturates, faint tint sweep. */
+.hackathon-track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: -1px;
+  left: -0.9rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--grad-accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.35s var(--ease-out-soft);
+}
+
+@media (hover: hover) {
+  .hackathon-track:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(var(--color-accent-rgb), 0.05),
+      rgba(var(--color-violet-rgb), 0.04) 55%,
+      transparent
+    );
+  }
+
+  .hackathon-track:hover .hackathon-track-num {
+    opacity: 1;
+  }
+
+  .hackathon-track:hover::after {
+    transform: scaleY(1);
+  }
+}
+
+/* Resets are load-bearing against the generic .page-content h3 card style. */
+.hackathon-track h3 {
+  margin: 0 0 0.45rem;
   padding: 0;
-  border: none;
+  background: none;
+  border: 0;
   border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
+  font-weight: 700;
 }
 
-.hackathon-track-sponsor {
-  margin-bottom: 0.9rem;
+/* Scoped under .hackathon-track-body so it outranks the generic
+   .hackathon-section p color/size rule. */
+.hackathon-track-body .hackathon-track-sponsor {
+  margin: 0 0 0.75rem;
   color: var(--color-violet);
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.hackathon-track p,
-.hackathon-prize-tier p {
-  font-size: 0.96rem;
-  line-height: 1.68;
+.hackathon-track-body p:not(.hackathon-track-sponsor) {
+  max-width: 62ch;
   color: var(--color-text-secondary);
+  font-size: 0.98rem;
+  line-height: 1.7;
 }
 
-.hackathon-prize-grand {
-  background: var(--color-accent-light);
-  border-color: rgba(var(--color-accent-rgb), 0.25);
-  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
+@media (max-width: 639px) {
+  .hackathon-track {
+    grid-template-columns: 52px 1fr;
+    column-gap: 1rem;
+  }
+
+  .hackathon-track-num {
+    font-size: 2rem;
+  }
+
+  .hackathon-track::after {
+    left: 0;
+  }
 }
 
-/* Keep the grand-prize highlight on hover — the generic .hackathon-prize-tier:hover
-   would otherwise swap its orange ring for the default shadow. */
-.hackathon-prize-grand:hover {
-  background: var(--color-accent-light);
-  border-color: rgba(var(--color-accent-rgb), 0.25);
-  box-shadow: inset 0 0 0 1px rgba(var(--color-accent-rgb), 0.12);
+/* Prizes — podium hierarchy: minimal flanking entries, gradient-framed grand. */
+.hackathon-prizes {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: center;
+  margin-top: 1.5rem;
 }
 
-.hackathon-prize-value {
-  color: var(--color-accent);
-  font-size: 0.96rem;
-  line-height: 1.55;
+.hackathon-prize {
+  border-top: 1px solid var(--color-border);
+  padding: 1.4rem 0 0.25rem;
+  text-align: left;
+}
+
+/* Resets are load-bearing against the generic .page-content h3 card style. */
+.hackathon-prize h3 {
+  margin: 0 0 0.55rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: var(--space-sm);
+}
+
+/* Scoped under .hackathon-prize so it outranks the generic
+   .hackathon-section p color/size rule. */
+.hackathon-prize .hackathon-prize-value {
+  margin: 0 0 0.7rem;
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hackathon-prize p:not(.hackathon-prize-value) {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+/* The grand prize is the section's single feature object: transparent fill,
+   sharp corners, 1px gradient frame. */
+.hackathon-prize--grand {
+  border-top: 0;
+  padding: clamp(1.9rem, 3.5vw, 2.6rem) clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid transparent;
+  border-image: linear-gradient(
+      135deg,
+      rgba(var(--color-accent-rgb), 0.65),
+      rgba(var(--color-violet-rgb), 0.65)
+    )
+    1;
+  background: none;
+  text-align: center;
+}
+
+.hackathon-prize--grand h3 {
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+}
+
+/* Decorative diamond; the / '' alt syntax hides it from screen readers. */
+.hackathon-prize--grand h3::before {
+  content: '◆' / '';
+  display: block;
+  margin-bottom: 0.7rem;
+  font-size: 0.85rem;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (max-width: 767px) {
+  .hackathon-prizes {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .hackathon-prize--grand {
+    order: -1;
+  }
 }
 
 .hackathon-resources-grid {
@@ -4085,7 +4252,6 @@ main:has(.hackathon-page) {
 }
 
 @media (max-width: 1023px) {
-  .hackathon-tracks-grid,
   .hackathon-resources-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -4107,19 +4273,156 @@ main:has(.hackathon-page) {
     padding-right: var(--space-md);
   }
 
-  .hackathon-details-grid,
-  .hackathon-tracks-grid,
-  .hackathon-prizes,
   .hackathon-resources-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .hackathon-schedule-day td {
-    padding: 0.78rem 1rem;
-  }
+/* ===================================================================
+   SC Quantathon v3 — interactive enhancements
+   (quantum hero canvas, countdown, CTA row)
+   =================================================================== */
 
-  .hackathon-time {
-    width: 96px;
+/* Quantum hero canvas: decorative backdrop layered behind the hero content.
+   QuantumCanvas.tsx reads --color-accent-rgb / --color-violet-rgb at runtime,
+   so the particles recolor automatically with the light/dark token swap. */
+.hackathon-hero--quantum {
+  position: relative;
+  overflow: hidden;
+}
+
+/* max-width/margin: the generic `.hackathon-hero > *` rule caps direct children
+   at 920px; the canvas must span the full hero instead. */
+.quantum-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  pointer-events: none;
+}
+
+.hackathon-hero--quantum .hackathon-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero CTA band: countdown stacked above the button row. */
+.hackathon-hero-cta {
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hackathon-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+/* --- Event countdown (EventCountdown.tsx) --- */
+.event-countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+}
+
+.event-countdown-label {
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Short gradient rule under the eyebrow. */
+.event-countdown-label::after {
+  content: '';
+  display: block;
+  width: 36px;
+  height: 2px;
+  margin: 0.6rem auto 0;
+  border-radius: 1px;
+  background: var(--grad-accent);
+}
+
+/* Launch-clock digits: pure typography, no card chrome. Groups and separators
+   must never wrap apart, hence no flex-wrap (fits 375px at clamp minimum). */
+.event-countdown-units {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(0.5rem, 2.2vw, 1.1rem);
+}
+
+.event-countdown-unit {
+  min-width: 2ch;
+  text-align: center;
+}
+
+.event-countdown-num {
+  display: block;
+  color: var(--color-text);
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.event-countdown-sep {
+  padding-top: 0.18em; /* optically centers ":" against the taller digits */
+  color: var(--color-text-secondary);
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1;
+  opacity: 0.35;
+}
+
+.event-countdown-unit-label {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--color-violet);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.event-countdown-live {
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(var(--color-accent-rgb), 0.35);
+  border-radius: var(--radius-full);
+  background: rgba(var(--color-accent-rgb), 0.12);
+  color: var(--color-accent);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.event-countdown-done {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Screen-reader-only summary (digits themselves are aria-hidden). */
+.event-countdown-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .hackathon-cta-row {
+    flex-direction: column;
+    width: 100%;
   }
 }
 
@@ -4137,6 +4440,7 @@ main:has(.hackathon-page) {
   --color-accent-950: #0f0d13;
   --color-border: rgba(229, 226, 235, 0.14);
   --color-violet: #c4b5fd;
+  --color-violet-rgb: 196, 181, 253;
   --color-violet-light: #2d2044;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
@@ -4189,10 +4493,6 @@ main:has(.hackathon-page) {
   }
 
   .preview-card,
-  .hackathon-detail-card,
-  .hackathon-schedule-day,
-  .hackathon-track,
-  .hackathon-prize-tier,
   .hackathon-resource-card {
     border-color: rgba(229, 226, 235, 0.12);
     background: rgba(26, 22, 37, 0.92);
@@ -4210,14 +4510,12 @@ main:has(.hackathon-page) {
   }
 
   .preview-card__footer,
-  .hackathon-section + .hackathon-section,
-  .hackathon-schedule-day td {
+  .hackathon-section + .hackathon-section {
     border-color: rgba(229, 226, 235, 0.12);
   }
 
   .home-hero__cta--primary,
-  .hackathon-cta,
-  .hackathon-schedule-day h3 {
+  .hackathon-cta {
     color: #0f0d13;
     background: var(--color-text);
   }

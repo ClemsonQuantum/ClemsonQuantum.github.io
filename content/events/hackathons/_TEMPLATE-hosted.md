@@ -30,36 +30,30 @@ image: /images/[PLACEHOLDER].jpg
 
 ## Key Details
 
-<div class="hackathon-details-grid">
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128197;</div>
-    <div class="hackathon-detail-label">Dates</div>
-    <div class="hackathon-detail-value">[MONTH DAY – DAY, YEAR]</div>
+<div class="hackathon-specs">
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Dates</div>
+    <div class="hackathon-spec-value">[MONTH DAY – DAY, YEAR]</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128205;</div>
-    <div class="hackathon-detail-label">Location</div>
-    <div class="hackathon-detail-value">[VENUE]<br/>[UNIVERSITY / CITY]</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Location</div>
+    <div class="hackathon-spec-value">[VENUE]<br/>[UNIVERSITY / CITY]</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128101;</div>
-    <div class="hackathon-detail-label">Team Size</div>
-    <div class="hackathon-detail-value">[1 – N] members</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Team Size</div>
+    <div class="hackathon-spec-value">[1 – N] members</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#127891;</div>
-    <div class="hackathon-detail-label">Eligibility</div>
-    <div class="hackathon-detail-value">[Who can participate]</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Eligibility</div>
+    <div class="hackathon-spec-value">[Who can participate]</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128187;</div>
-    <div class="hackathon-detail-label">Format</div>
-    <div class="hackathon-detail-value">[In-person / Hybrid / Remote]</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Format</div>
+    <div class="hackathon-spec-value">[In-person / Hybrid / Remote]</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-icon">&#128176;</div>
-    <div class="hackathon-detail-label">Cost</div>
-    <div class="hackathon-detail-value">[Free / $X — what's included]</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Cost</div>
+    <div class="hackathon-spec-value">[Free / $X — what's included]</div>
   </div>
 </div>
 
@@ -71,26 +65,26 @@ image: /images/[PLACEHOLDER].jpg
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 — [DAY, DATE]</h3>
-    <table>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-    </table>
+    <h3>Day 1 <span class="hackathon-schedule-date">[DAY, DATE]</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+    </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 — [DAY, DATE]</h3>
-    <table>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-    </table>
+    <h3>Day 2 <span class="hackathon-schedule-date">[DAY, DATE]</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+    </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 — [DAY, DATE]</h3>
-    <table>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-      <tr><td class="hackathon-time">[TIME]</td><td>[Activity]</td></tr>
-    </table>
+    <h3>Day 3 <span class="hackathon-schedule-date">[DAY, DATE]</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">[Activity]</span></div>
+    </div>
   </div>
 </div>
 
@@ -100,21 +94,30 @@ image: /images/[PLACEHOLDER].jpg
 
 ## Challenge Tracks
 
-<div class="hackathon-tracks-grid">
+<div class="hackathon-tracks">
   <div class="hackathon-track">
-    <h3>[Track 1 Name]</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
-    <p>[Description of this challenge track]</p>
+    <span class="hackathon-track-num" aria-hidden="true">01</span>
+    <div class="hackathon-track-body">
+      <h3>[Track 1 Name]</h3>
+      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
+      <p>[Description of this challenge track]</p>
+    </div>
   </div>
   <div class="hackathon-track">
-    <h3>[Track 2 Name]</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
-    <p>[Description of this challenge track]</p>
+    <span class="hackathon-track-num" aria-hidden="true">02</span>
+    <div class="hackathon-track-body">
+      <h3>[Track 2 Name]</h3>
+      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
+      <p>[Description of this challenge track]</p>
+    </div>
   </div>
   <div class="hackathon-track">
-    <h3>[Track 3 Name]</h3>
-    <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
-    <p>[Description of this challenge track]</p>
+    <span class="hackathon-track-num" aria-hidden="true">03</span>
+    <div class="hackathon-track-body">
+      <h3>[Track 3 Name]</h3>
+      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
+      <p>[Description of this challenge track]</p>
+    </div>
   </div>
 </div>
 
@@ -124,18 +127,20 @@ image: /images/[PLACEHOLDER].jpg
 
 ## Prizes
 
+<!-- The grand prize goes in the MIDDLE position (visual centerpiece on desktop;
+     ordered first automatically on mobile). -->
 <div class="hackathon-prizes">
-  <div class="hackathon-prize-tier hackathon-prize-grand">
-    <h3>Grand Prize</h3>
-    <p class="hackathon-prize-value">[PRIZE VALUE]</p>
-    <p>[Description]</p>
-  </div>
-  <div class="hackathon-prize-tier">
+  <div class="hackathon-prize">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">[PRIZE VALUE]</p>
     <p>[Description]</p>
   </div>
-  <div class="hackathon-prize-tier">
+  <div class="hackathon-prize hackathon-prize--grand">
+    <h3>Grand Prize</h3>
+    <p class="hackathon-prize-value">[PRIZE VALUE]</p>
+    <p>[Description]</p>
+  </div>
+  <div class="hackathon-prize">
     <h3>[Special Award]</h3>
     <p class="hackathon-prize-value">[PRIZE VALUE]</p>
     <p>[Description]</p>

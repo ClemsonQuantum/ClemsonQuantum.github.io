@@ -5,8 +5,10 @@ import { usePathname } from 'next/navigation';
 
 // Below-the-fold elements matching these component classes get a gentle
 // fade-and-rise entrance as they scroll into view. Only component classes —
-// never `.page-content` descendants, whose markdown-injected markup must not
-// pick up layout side effects.
+// never generic `.page-content` descendants, whose markdown-injected markup
+// must not pick up layout side effects. The `.hackathon-*` classes are a
+// deliberate opt-in exception: stable hand-authored HTML on hosted event
+// pages.
 const REVEAL_SELECTOR = [
   '.preview-card',
   '.home-section__header',
@@ -14,6 +16,12 @@ const REVEAL_SELECTOR = [
   '.about-page__section',
   '.gi-channel',
   '.faculty-card',
+  '.hackathon-spec',
+  '.hackathon-track',
+  '.hackathon-prize',
+  '.hackathon-team-member',
+  '.hackathon-video',
+  '.hackathon-schedule-day',
 ].join(', ');
 
 const STAGGER_MS = 60;

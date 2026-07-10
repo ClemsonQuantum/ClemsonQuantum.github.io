@@ -7,7 +7,7 @@ image: "/images/scq-v3-graphic.webp"
 
 <div class="hackathon-page">
 
-<div class="hackathon-hero">
+<div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
       <p class="hackathon-hero-eyebrow">September 25-27, 2026 • Clemson, South Carolina</p>
@@ -19,7 +19,11 @@ image: "/images/scq-v3-graphic.webp"
 </div>
 
 <div class="hackathon-hero-cta">
-  <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta">Apply Now</a>
+  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T15:00:00-04:00" data-sr-summary="The event starts September 25, 2026."></div>
+  <div class="hackathon-cta-row">
+    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta">Apply Now</a>
+    <a href="https://sc-quantathon-v3.devpost.com/?ref_content=default&ref_feature=challenge&ref_medium=portfolio" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline">View on Devpost</a>
+  </div>
 </div>
 
 <div class="hackathon-section">
@@ -45,30 +49,30 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 ## Key Details
 
-<div class="hackathon-details-grid">
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Dates</div>
-    <div class="hackathon-detail-value">September 25-27, 2026</div>
+<div class="hackathon-specs">
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Dates</div>
+    <div class="hackathon-spec-value">September 25-27, 2026</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Location</div>
-    <div class="hackathon-detail-value">TBD</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Location</div>
+    <div class="hackathon-spec-value">TBD</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Team Size</div>
-    <div class="hackathon-detail-value">1-5 students</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Team Size</div>
+    <div class="hackathon-spec-value">1-5 students</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Eligibility</div>
-    <div class="hackathon-detail-value">Undergraduate and graduate students</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Eligibility</div>
+    <div class="hackathon-spec-value">Undergraduate and graduate students</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Format</div>
-    <div class="hackathon-detail-value">In person</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Format</div>
+    <div class="hackathon-spec-value">In person</div>
   </div>
-  <div class="hackathon-detail-card">
-    <div class="hackathon-detail-label">Cost</div>
-    <div class="hackathon-detail-value">Free to attend. Meals and event materials will be provided.</div>
+  <div class="hackathon-spec">
+    <div class="hackathon-spec-label">Cost</div>
+    <div class="hackathon-spec-value">Free to attend. Meals and event materials will be provided.</div>
   </div>
 </div>
 
@@ -80,32 +84,32 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 - Friday, September 25</h3>
-    <table>
-      <tr><td class="hackathon-time">5:00 PM</td><td>Check-in and registration</td></tr>
-      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner</td></tr>
-    </table>
+    <h3>Day 1 <span class="hackathon-schedule-date">Friday, September 25</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Check-in and registration</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">7:00 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
+    </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 - Saturday, September 26</h3>
-    <table>
-      <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">9:00 AM</td><td>Opening ceremony</td></tr>
-      <tr><td class="hackathon-time">10:00 AM</td><td>Hacking begins and challenges open</td></tr>
-      <tr><td class="hackathon-time">1:00 PM</td><td>Lunch</td></tr>
-      <tr><td class="hackathon-time">7:00 PM</td><td>Dinner</td></tr>
-    </table>
+    <h3>Day 2 <span class="hackathon-schedule-date">Saturday, September 26</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">8:00 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Hacking begins and challenges open</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">1:00 PM</span><span class="hackathon-schedule-event">Lunch</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">7:00 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
+    </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 - Sunday, September 27</h3>
-    <table>
-      <tr><td class="hackathon-time">12:00 AM</td><td>Midnight snack</td></tr>
-      <tr><td class="hackathon-time">8:00 AM</td><td>Breakfast</td></tr>
-      <tr><td class="hackathon-time">10:00 AM</td><td>Challenges close</td></tr>
-      <tr><td class="hackathon-time">10:30 AM</td><td>Presentations begin</td></tr>
-      <tr><td class="hackathon-time">1:00 PM</td><td>Lunch</td></tr>
-      <tr><td class="hackathon-time">3:00 PM</td><td>Award ceremony</td></tr>
-    </table>
+    <h3>Day 3 <span class="hackathon-schedule-date">Sunday, September 27</span></h3>
+    <div class="hackathon-schedule-items">
+      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">8:00 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Challenges close</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:30 AM</span><span class="hackathon-schedule-event">Presentations begin</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">1:00 PM</span><span class="hackathon-schedule-event">Lunch</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">3:00 PM</span><span class="hackathon-schedule-event">Award ceremony</span></div>
+    </div>
   </div>
 </div>
 
@@ -115,26 +119,38 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 ## Challenge Tracks
 
-<div class="hackathon-tracks-grid">
+<div class="hackathon-tracks">
   <div class="hackathon-track">
-    <h3>Quantum machine learning</h3>
-    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
-    <p>Projects in this track will explore hybrid quantum-classical approaches to classification, kernels, and related machine learning workflows.</p>
+    <span class="hackathon-track-num" aria-hidden="true">01</span>
+    <div class="hackathon-track-body">
+      <h3>Quantum machine learning</h3>
+      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+      <p>Projects in this track will explore hybrid quantum-classical approaches to classification, kernels, and related machine learning workflows.</p>
+    </div>
   </div>
   <div class="hackathon-track">
-    <h3>Quantum chemistry and simulation</h3>
-    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
-    <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
+    <span class="hackathon-track-num" aria-hidden="true">02</span>
+    <div class="hackathon-track-body">
+      <h3>Quantum chemistry and simulation</h3>
+      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+      <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
+    </div>
   </div>
   <div class="hackathon-track">
-    <h3>Quantum hardware and analysis</h3>
-    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
-    <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
+    <span class="hackathon-track-num" aria-hidden="true">03</span>
+    <div class="hackathon-track-body">
+      <h3>Quantum hardware and analysis</h3>
+      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+      <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
+    </div>
   </div>
   <div class="hackathon-track">
-    <h3>Open innovation</h3>
-    <p class="hackathon-track-sponsor">Track partner details coming soon</p>
-    <p>This track supports original student ideas spanning education, software tooling, optimization, visualization, and experimental project concepts.</p>
+    <span class="hackathon-track-num" aria-hidden="true">04</span>
+    <div class="hackathon-track-body">
+      <h3>Open innovation</h3>
+      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
+      <p>This track supports original student ideas spanning education, software tooling, optimization, visualization, and experimental project concepts.</p>
+    </div>
   </div>
 </div>
 
@@ -145,17 +161,17 @@ Students from computing, physics, engineering, mathematics, and related fields a
 ## Prizes
 
 <div class="hackathon-prizes">
-  <div class="hackathon-prize-tier">
+  <div class="hackathon-prize">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
     <p>Each challenge track is expected to include a dedicated recognition award.</p>
   </div>
-  <div class="hackathon-prize-tier hackathon-prize-grand">
+  <div class="hackathon-prize hackathon-prize--grand">
     <h3>Grand Prize</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
     <p>The overall award will recognize the strongest project presented across the event.</p>
   </div>
-  <div class="hackathon-prize-tier">
+  <div class="hackathon-prize">
     <h3>Best Newcomer</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
     <p>This award will highlight strong work from teams that are new to quantum computing.</p>
@@ -172,6 +188,18 @@ Students from computing, physics, engineering, mathematics, and related fields a
 </div>
 
 We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, Silver, and Bronze sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
+
+<div class="hackathon-sponsors">
+  <div class="hackathon-sponsor-tier">
+    <h3>Platinum Sponsors</h3>
+    <div class="hackathon-sponsor-logos">
+      <div class="hackathon-sponsor-logo hackathon-sponsor-logo--confirmed">Savannah River National Laboratory</div>
+      <div class="hackathon-sponsor-logo">Coming soon</div>
+      <div class="hackathon-sponsor-logo">Coming soon</div>
+      <div class="hackathon-sponsor-logo">Coming soon</div>
+    </div>
+  </div>
+</div>
 
 </div>
 
