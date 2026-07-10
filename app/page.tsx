@@ -40,14 +40,14 @@ export default function HomePage() {
         <h1 className="home-hero__title">Clemson Quantum Club</h1>
         <div className="home-hero__text">
           <p className="home-hero__subtitle">
-            Clemson has a student-led quantum club. We participate in
-            hackathons, host workshops and seminars, and meet biweekly to learn
-            and build together.
+            We&apos;re Clemson&apos;s student-led quantum computing club. We
+            compete in hackathons, host workshops and seminars, and meet
+            biweekly to learn and build together.
           </p>
           <p className="home-hero__subtitle">
-            No prior experience is required, and students from every major are
-            welcome to learn the fundamentals, join a hackathon team, and
-            explore quantum computing together.
+            No prior experience is required &mdash; students from every major
+            are welcome to pick up the fundamentals, join a hackathon team, and
+            see what quantum computing can do.
           </p>
         </div>
         <div className="home-hero__visual">

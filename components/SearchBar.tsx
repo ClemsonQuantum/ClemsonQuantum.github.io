@@ -132,7 +132,7 @@ export default function SearchBar() {
         <div className="search-results-dropdown" role="listbox" id={listboxId}>
           {results.map((r, i) => (
             <a
-              key={r.url}
+              key={`${r.url}-${r.title}`}
               id={`search-option-${i}`}
               href={r.url}
               className={`search-item${i === activeIndex ? ' search-item--active' : ''}`}

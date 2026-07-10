@@ -183,7 +183,7 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
   <div class="hackathon-team-member">
     <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" />
     <div class="hackathon-team-name">Nathan Jones</div>
-    <div class="hackathon-team-role">Challenge and Activities Lead</div>
+    <div class="hackathon-team-role">Challenge Lead</div>
   </div>
   <div class="hackathon-team-member">
     <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" />

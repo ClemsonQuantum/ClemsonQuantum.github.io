@@ -97,8 +97,8 @@ export default function ResourcesPage() {
           practical experience with quantum computing platforms, participate in
           quantum hackathons, and work collaboratively on quantum algorithms and
           computational problem-solving. The program welcomes students from all
-          majors and has produced teams that have competed at MIT iQuHACK, the
-          NYUAD International Hackathon, and the SC Quantathon series.
+          majors and has sent teams to MIT iQuHack, the NYUAD International
+          Hackathon, and the SC Quantathon series.
         </p>
       </section>
 
