@@ -16,14 +16,26 @@ interface Particle {
   color: 0 | 1; // index into the two theme triplets
 }
 
-// Decorative "entangled qubits" backdrop for the SC Quantathon v3 hero:
+interface QuantumCanvasProps {
+  /** px of parent width per particle — higher = sparser field. */
+  pxPerParticle?: number;
+  /** Hard ceiling on the particle count regardless of width. */
+  maxCount?: number;
+}
+
+// Decorative "entangled qubits" backdrop (SC Quantathon v3 hero, homepage hero):
 // drifting particles joined by proximity lines, gently repelled by the cursor.
 // Colors come from the CSS tokens (--color-accent-rgb / --color-violet-rgb),
 // re-read when the OS color scheme flips, since dark mode on this site is a
 // pure CSS media-query token swap with no JS theme signal. The rAF loop only
 // runs while the canvas is on screen, the tab is visible, and the visitor has
 // not requested reduced motion (then a single static frame is drawn instead).
-export default function QuantumCanvas() {
+// The canvas sizes itself from its parent element, so it must be a direct
+// child of the hero it decorates.
+export default function QuantumCanvas({
+  pxPerParticle = 28,
+  maxCount = 60,
+}: QuantumCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -51,7 +63,7 @@ export default function QuantumCanvas() {
     }
 
     function seedParticles() {
-      const count = Math.min(60, Math.max(24, Math.round(width / 28)));
+      const count = Math.min(maxCount, Math.max(24, Math.round(width / pxPerParticle)));
       particles = Array.from({ length: count }, (_, i) => {
         const speed = 9 + Math.random() * 13; // px/s
         const angle = Math.random() * Math.PI * 2;
@@ -249,7 +261,7 @@ export default function QuantumCanvas() {
       parent.removeEventListener('pointermove', onPointerMove);
       parent.removeEventListener('pointerleave', onPointerLeave);
     };
-  }, []);
+  }, [pxPerParticle, maxCount]);
 
   return <canvas ref={canvasRef} className="quantum-canvas" aria-hidden="true" />;
 }

@@ -99,24 +99,33 @@ image: /images/[PLACEHOLDER].jpg
     <span class="hackathon-track-num" aria-hidden="true">01</span>
     <div class="hackathon-track-body">
       <h3>[Track 1 Name]</h3>
-      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
       <p>[Description of this challenge track]</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">[SPONSOR or "Coming soon"]</span>
     </div>
   </div>
   <div class="hackathon-track">
     <span class="hackathon-track-num" aria-hidden="true">02</span>
     <div class="hackathon-track-body">
       <h3>[Track 2 Name]</h3>
-      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
       <p>[Description of this challenge track]</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">[SPONSOR or "Coming soon"]</span>
     </div>
   </div>
   <div class="hackathon-track">
     <span class="hackathon-track-num" aria-hidden="true">03</span>
     <div class="hackathon-track-body">
       <h3>[Track 3 Name]</h3>
-      <p class="hackathon-track-sponsor">Sponsored by [SPONSOR]</p>
       <p>[Description of this challenge track]</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">[SPONSOR or "Coming soon"]</span>
     </div>
   </div>
 </div>
@@ -127,15 +136,14 @@ image: /images/[PLACEHOLDER].jpg
 
 ## Prizes
 
-<!-- The grand prize goes in the MIDDLE position (visual centerpiece on desktop;
-     ordered first automatically on mobile). -->
+<!-- Three parallel award categories styled as equals (not ranked). -->
 <div class="hackathon-prizes">
   <div class="hackathon-prize">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">[PRIZE VALUE]</p>
     <p>[Description]</p>
   </div>
-  <div class="hackathon-prize hackathon-prize--grand">
+  <div class="hackathon-prize">
     <h3>Grand Prize</h3>
     <p class="hackathon-prize-value">[PRIZE VALUE]</p>
     <p>[Description]</p>

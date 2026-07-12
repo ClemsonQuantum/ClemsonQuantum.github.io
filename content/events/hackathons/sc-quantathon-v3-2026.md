@@ -124,32 +124,44 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <span class="hackathon-track-num" aria-hidden="true">01</span>
     <div class="hackathon-track-body">
       <h3>Quantum machine learning</h3>
-      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
       <p>Projects in this track will explore hybrid quantum-classical approaches to classification, kernels, and related machine learning workflows.</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">Coming soon</span>
     </div>
   </div>
   <div class="hackathon-track">
     <span class="hackathon-track-num" aria-hidden="true">02</span>
     <div class="hackathon-track-body">
       <h3>Quantum chemistry and simulation</h3>
-      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
       <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">Coming soon</span>
     </div>
   </div>
   <div class="hackathon-track">
     <span class="hackathon-track-num" aria-hidden="true">03</span>
     <div class="hackathon-track-body">
       <h3>Quantum hardware and analysis</h3>
-      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
       <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">Coming soon</span>
     </div>
   </div>
   <div class="hackathon-track">
     <span class="hackathon-track-num" aria-hidden="true">04</span>
     <div class="hackathon-track-body">
       <h3>Open innovation</h3>
-      <p class="hackathon-track-sponsor">Track partner details coming soon</p>
       <p>This track supports original student ideas spanning education, software tooling, optimization, visualization, and experimental project concepts.</p>
+    </div>
+    <div class="hackathon-track-slot">
+      <span class="hackathon-track-slot-label">Track sponsor</span>
+      <span class="hackathon-track-slot-box">Coming soon</span>
     </div>
   </div>
 </div>
@@ -164,17 +176,17 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-prize">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>Each challenge track is expected to include a dedicated recognition award.</p>
+    <p>One prize per challenge track, awarded to the team with the strongest project in that track.</p>
   </div>
-  <div class="hackathon-prize hackathon-prize--grand">
+  <div class="hackathon-prize">
     <h3>Grand Prize</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>The overall award will recognize the strongest project presented across the event.</p>
+    <p>The top overall award &mdash; selected from among the track winners for the best project of the event.</p>
   </div>
   <div class="hackathon-prize">
     <h3>Best Newcomer</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>This award will highlight strong work from teams that are new to quantum computing.</p>
+    <p>A recognition award for the strongest work from a team that is new to quantum computing.</p>
   </div>
 </div>
 
@@ -188,18 +200,6 @@ Students from computing, physics, engineering, mathematics, and related fields a
 </div>
 
 We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, Silver, and Bronze sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
-
-<div class="hackathon-sponsors">
-  <div class="hackathon-sponsor-tier">
-    <h3>Platinum Sponsors</h3>
-    <div class="hackathon-sponsor-logos">
-      <div class="hackathon-sponsor-logo hackathon-sponsor-logo--confirmed">Savannah River National Laboratory</div>
-      <div class="hackathon-sponsor-logo">Coming soon</div>
-      <div class="hackathon-sponsor-logo">Coming soon</div>
-      <div class="hackathon-sponsor-logo">Coming soon</div>
-    </div>
-  </div>
-</div>
 
 </div>
 

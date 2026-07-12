@@ -4,6 +4,7 @@ import SiteImage from '@/components/SiteImage';
 import EmailIcon from '@/components/icons/EmailIcon';
 import WebsiteIcon from '@/components/icons/WebsiteIcon';
 import { LinkedInIcon } from '@/components/icons/ChannelIcons';
+import ConstellationDivider from '@/components/ConstellationDivider';
 
 export const metadata: Metadata = {
   title: 'Resources',
@@ -61,6 +62,7 @@ export default function ResourcesPage() {
     <div className="archive-page">
       <header className="archive-hero">
         <h1 className="archive-hero__title">Resources</h1>
+        <ConstellationDivider />
       </header>
 
       <section className="archive-section">

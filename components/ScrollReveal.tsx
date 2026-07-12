@@ -22,6 +22,7 @@ const REVEAL_SELECTOR = [
   '.hackathon-team-member',
   '.hackathon-video',
   '.hackathon-schedule-day',
+  '.constellation-divider',
 ].join(', ');
 
 const STAGGER_MS = 60;
