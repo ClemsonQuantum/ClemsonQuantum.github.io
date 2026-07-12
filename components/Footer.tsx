@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import siteConfig from '@/data/site-config.json';
 import SiteImage from '@/components/SiteImage';
+import ConstellationDivider from '@/components/ConstellationDivider';
 import {
   DiscordIcon,
   LinkedInIcon,
@@ -65,7 +66,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="footer-divider" aria-hidden="true" />
+      <ConstellationDivider wide />
 
       <p className="footer-copy">
         &copy; {new Date().getFullYear()} Clemson Quantum Club &middot;{' '}

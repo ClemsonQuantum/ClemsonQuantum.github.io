@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllPages, sortPages } from '@/lib/content';
 import PreviewCard from '@/components/PreviewCard';
+import ConstellationDivider from '@/components/ConstellationDivider';
 
 export const metadata: Metadata = {
   title: 'Events',
@@ -18,6 +19,7 @@ export default function EventsPage() {
     <div className="archive-page">
       <header className="archive-hero archive-hero--events">
         <h1 className="archive-hero__title">Events</h1>
+        <ConstellationDivider />
       </header>
 
       <section className="archive-section">

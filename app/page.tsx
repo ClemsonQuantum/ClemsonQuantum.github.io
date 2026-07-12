@@ -3,6 +3,8 @@ import { getAllPages, sortPages } from '@/lib/content';
 import SiteImage from '@/components/SiteImage';
 import BoardMember from '@/components/BoardMember';
 import PreviewCard from '@/components/PreviewCard';
+import QuantumCanvas from '@/components/QuantumCanvas';
+import ConstellationDivider from '@/components/ConstellationDivider';
 import boardMembers from '@/data/board-members.json';
 
 export default function HomePage() {
@@ -37,7 +39,11 @@ export default function HomePage() {
   return (
     <>
       <section className="home-hero">
+        {/* Sparser than the hackathon hero (34px/particle vs 28) so the
+            headline and intro copy stay easy to read over the animation. */}
+        <QuantumCanvas pxPerParticle={34} maxCount={48} />
         <h1 className="home-hero__title">Clemson Quantum Club</h1>
+        <ConstellationDivider />
         <div className="home-hero__text">
           <p className="home-hero__subtitle">
             We&apos;re Clemson&apos;s student-led quantum computing club. We
