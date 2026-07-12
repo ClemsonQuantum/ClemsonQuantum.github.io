@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import ConstellationDivider from '@/components/ConstellationDivider';
+import BlochSphere from '@/components/BlochSphere';
 
 export const metadata: Metadata = {
   title: 'Learning Resources',
@@ -36,6 +38,12 @@ const LEVELS: Level[] = [
         title: 'IBM Quantum Learning',
         desc: 'Interactive lessons that take you from qubits to running real circuits, with code built right in.',
         href: 'https://learning.quantum.ibm.com/',
+      },
+      {
+        type: 'Tool',
+        title: 'IBM Quantum Composer',
+        desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate — the fastest way to see quantum operations.',
+        href: 'https://quantum.ibm.com/composer',
       },
       {
         type: 'Practice',
@@ -141,6 +149,7 @@ export default function LearningResourcesPage() {
     <div className="archive-page">
       <header className="archive-hero">
         <h1 className="archive-hero__title">Learning Resources</h1>
+        <ConstellationDivider />
       </header>
       <p className="lr-intro">
         A curated path through quantum computing — from your very first qubit to
@@ -162,6 +171,7 @@ export default function LearningResourcesPage() {
           </p>
           <h2 className="lr-section__title">{level.title}</h2>
           <p className="lr-section__blurb">{level.blurb}</p>
+          {level.id === 'beginner' && <BlochSphere />}
 
           <ul className="lr-list">
             {level.resources.map((r) => (

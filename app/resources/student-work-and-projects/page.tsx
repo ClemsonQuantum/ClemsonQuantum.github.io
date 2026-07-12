@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getAllPages, sortPages } from '@/lib/content';
 import StudentWorkList from '@/components/StudentWorkList';
+import ConstellationDivider from '@/components/ConstellationDivider';
 
 export const metadata: Metadata = {
   title: 'Student Work & Projects',
@@ -15,6 +16,7 @@ export default function StudentWorkPage() {
     <div className="archive-page">
       <header className="archive-hero">
         <h1 className="archive-hero__title">Student Work &amp; Projects</h1>
+        <ConstellationDivider />
       </header>
       <p className="lr-intro">
         Posters and papers from Clemson Quantum Club members. Click a title for the

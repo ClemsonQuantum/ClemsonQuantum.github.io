@@ -21,8 +21,18 @@
   --color-border: rgba(22, 32, 51, 0.12);
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Playfair Display', Georgia, serif;
+
+  /* Starfield dot colors (see "Galaxy starfield" section). Light mode gets
+     faint violet/orange/slate specks on the cream sky; the dark :root swap
+     re-inks them as bright stars. */
+  --star-a: rgba(109, 40, 217, 0.32);
+  --star-b: rgba(109, 40, 217, 0.2);
+  --star-c: rgba(22, 32, 51, 0.26);
+  --star-d: rgba(245, 102, 0, 0.3);
+  --star-e: rgba(22, 32, 51, 0.17);
+  --star-f: rgba(109, 40, 217, 0.16);
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -850,21 +860,6 @@ footer {
 .footer-social__icon {
   width: 1.25rem;
   height: 1.25rem;
-}
-
-/* The same "entangled pair" wire as the title flourish, stretched into a
-   full-width separator with the nodes gathered at center. */
-.footer-divider {
-  height: 9px;
-  max-width: var(--max-width);
-  margin: 1.4rem auto 1rem;
-  opacity: 0.7;
-  background:
-    radial-gradient(circle 3.5px at calc(50% - 69px) 4.5px, var(--color-accent) 97%, transparent),
-    radial-gradient(circle 3.5px at calc(50% + 69px) 4.5px, var(--color-accent) 97%, transparent),
-    radial-gradient(circle 3px at 50% 4.5px, transparent 55%, var(--color-violet) 60% 97%, transparent),
-    linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.35) 30% 70%, transparent)
-      center / 100% 1.5px no-repeat;
 }
 
 .footer-copy {
@@ -1707,7 +1702,10 @@ main:has(.competitor-page) {
   overflow: hidden;
   border-radius: 1.6rem;
   background: #ece7df;
-  box-shadow: 0 28px 70px rgba(15, 23, 42, 0.14);
+  /* Base drop shadow plus a whisper of violet "field" around the photo. */
+  box-shadow:
+    0 28px 70px rgba(15, 23, 42, 0.14),
+    0 0 34px rgba(109, 40, 217, 0.08);
 }
 
 .home-hero__image {
@@ -1737,28 +1735,106 @@ main:has(.competitor-page) {
   }
 }
 
+/* Homepage hero canvas: the absolutely-positioned .quantum-canvas (z-index: 0)
+   sits behind these lifted siblings, mirroring .hackathon-hero--quantum. No
+   overflow: hidden here — the canvas clips to its own bounds anyway, and
+   clipping would cut off the visual's 70px box-shadow. */
+.home-hero {
+  position: relative;
+}
+
+.home-hero__title,
+.home-hero__text,
+.home-hero__visual {
+  position: relative;
+  z-index: 1;
+}
+
 /* ===================================================================
-   Quantum flourish — an "entangled pair" mark under centered display
-   titles: a hairline circuit wire with two solid accent nodes at the
-   ends and one open violet node at center. Applied only to titles that
-   are already text-align: center (home hero + archive heroes); the
-   global h1 rule and left-aligned page h1s are untouched. Built from
-   tokens so the dark :root override recolors it automatically.
+   Constellation divider — a mini Bloch sphere on a hairline wire, the
+   SVG replacement for the old entangled-pair flourish. Rendered by
+   ConstellationDivider.tsx under centered display titles and in the
+   footer; the global h1 rule and left-aligned page h1s are untouched.
+   Stroke/fill colors come from tokens, so dark mode recolors it.
+   Draw-in: paths have pathLength=1, so dasharray/dashoffset animate in
+   normalized units when ScrollReveal flips reveal-init -> reveal-in.
    =================================================================== */
 
-.home-hero__title::after,
-.archive-hero__title::after {
-  content: '';
+.constellation-divider {
   display: block;
-  width: 148px;
-  height: 9px;
-  margin: 0.9rem auto 0;
-  background:
-    radial-gradient(circle 3.5px at 5px 4.5px, var(--color-accent) 97%, transparent),
-    radial-gradient(circle 3.5px at 143px 4.5px, var(--color-accent) 97%, transparent),
-    radial-gradient(circle 3px at 74px 4.5px, transparent 55%, var(--color-violet) 60% 97%, transparent),
-    linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.35) 18% 82%, transparent)
-      center / 100% 1.5px no-repeat;
+  width: 210px;
+  height: 36px;
+  margin: 0.55rem auto 0;
+}
+
+.constellation-divider--wide {
+  width: min(340px, 82%);
+  margin: 1.4rem auto 1rem;
+  opacity: 0.85;
+}
+
+.constellation-divider .cd-path {
+  fill: none;
+  stroke: rgba(var(--color-accent-rgb), 0.4);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+.constellation-divider .cd-sphere {
+  stroke: rgba(var(--color-violet-rgb), 0.6);
+}
+
+.constellation-divider .cd-vector {
+  stroke: var(--color-accent);
+  stroke-width: 1.6;
+}
+
+.constellation-divider .cd-dot {
+  fill: var(--color-accent);
+}
+
+.constellation-divider .cd-dot--violet,
+.constellation-divider .cd-dot--vector {
+  fill: var(--color-violet);
+}
+
+/* Home hero: the divider is a grid child under the full-width title and
+   must sit above the hero canvas like its siblings. */
+.home-hero .constellation-divider {
+  grid-column: 1 / -1;
+  position: relative;
+  z-index: 1;
+  margin-top: -0.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .constellation-divider .cd-path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.1s var(--ease-out-soft);
+    transition-delay: var(--cd-delay, 0s);
+  }
+
+  .constellation-divider .cd-dot {
+    transition: opacity 0.5s var(--ease-out-soft);
+    transition-delay: var(--cd-delay, 0s);
+  }
+
+  .constellation-divider.reveal-init .cd-path {
+    stroke-dashoffset: 1;
+  }
+
+  .constellation-divider.reveal-init .cd-dot {
+    opacity: 0;
+  }
+
+  .constellation-divider.reveal-in .cd-path {
+    stroke-dashoffset: 0;
+  }
+
+  .constellation-divider.reveal-in .cd-dot {
+    opacity: 1;
+  }
 }
 
 /* ===================================================================
@@ -1975,6 +2051,9 @@ main:has(.competitor-page) {
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow:
+    0 24px 60px rgba(15, 23, 42, 0.12),
+    0 0 34px rgba(109, 40, 217, 0.08);
 }
 
 .about-page__photo img {
@@ -2209,9 +2288,9 @@ main:has(.competitor-page) {
   line-height: 1.2;
 }
 
+/* "What members do": editorial rows — hairline rules and a small glowing
+   node marker per line, no card bubbles (matches the Why-join list). */
 .about-page__activity-list {
-  display: grid;
-  gap: var(--space-sm);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -2219,56 +2298,62 @@ main:has(.competitor-page) {
 
 .about-page__activity-list li {
   position: relative;
-  padding: 1rem 1.1rem 1rem 3rem;
+  padding: 0.9rem 0 0.9rem 1.7rem;
   color: var(--color-text);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  line-height: 1.45;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.about-page__activity-list li + li {
+  border-top: 1px solid var(--color-border);
 }
 
 .about-page__activity-list li::before {
   content: '';
   position: absolute;
-  top: 1.15rem;
-  left: 1.1rem;
-  width: 0.75rem;
-  height: 0.75rem;
+  top: 1.42rem;
+  left: 0;
+  width: 7px;
+  height: 7px;
   background: var(--color-accent);
   border-radius: 50%;
-  box-shadow: 0 0 0 0.35rem var(--color-accent-light);
+  box-shadow: 0 0 8px rgba(var(--color-violet-rgb), 0.45);
 }
 
+/* "Events and pathways": plain ruled link rows instead of a boxed panel. */
 .about-page__link-panel {
-  display: grid;
-  gap: var(--space-sm);
-  padding: var(--space-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  display: block;
 }
 
 .about-page__link-panel a {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   gap: var(--space-md);
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 0.15rem;
   color: var(--color-text);
-  border-radius: var(--radius-sm);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
 }
 
+.about-page__link-panel a + a {
+  border-top: 1px solid var(--color-border);
+}
+
 .about-page__link-panel a::after {
-  content: '->';
+  content: '\2192';
   color: var(--color-accent);
+  transition: transform 0.2s var(--ease-out-soft);
 }
 
 .about-page__link-panel a:hover,
 .about-page__link-panel a:focus-visible {
-  color: var(--color-text);
-  background: var(--color-accent-light);
+  color: var(--color-accent);
+}
+
+.about-page__link-panel a:hover::after,
+.about-page__link-panel a:focus-visible::after {
+  transform: translateX(4px);
 }
 
 @media (max-width: 899px) {
@@ -2299,7 +2384,7 @@ main:has(.competitor-page) {
 @media (prefers-color-scheme: dark) {
   /* Frosted glass — dark variant */
   .nav {
-    background: rgba(15, 13, 19, 0.82);
+    background: rgba(11, 16, 32, 0.82);
   }
 
   .nav--scrolled {
@@ -2308,7 +2393,7 @@ main:has(.competitor-page) {
   }
 
   footer {
-    background: rgba(15, 13, 19, 0.82);
+    background: rgba(11, 16, 32, 0.82);
   }
 
   .nav-toggle span {
@@ -2428,6 +2513,8 @@ body {
   color: var(--color-text);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
+    radial-gradient(ellipse 50% 32% at 88% -4%, rgba(109, 40, 217, 0.07), transparent 60%),
+    radial-gradient(ellipse 42% 26% at 8% 38%, rgba(245, 102, 0, 0.04), transparent 55%),
     linear-gradient(180deg, #fbfaf7 0%, var(--color-bg) 100%);
 }
 
@@ -2689,15 +2776,23 @@ main:has(.home-hero) {
   border-radius: 1.25rem;
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  transition:
+    transform 0.25s var(--ease-out-soft),
+    box-shadow 0.25s var(--ease-out-soft),
+    border-color 0.25s var(--ease-out-soft);
 }
 
+/* Lift plus a faint violet "field" halo — the quantum glow reads subtly in
+   light mode and blooms against the dark navy. */
 .preview-card:hover,
 .preview-card:focus-visible {
   color: inherit;
-  transform: translateY(-3px);
-  border-color: rgba(var(--color-accent-rgb), 0.22);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: rgba(var(--color-accent-rgb), 0.28);
+  box-shadow:
+    var(--shadow-md),
+    0 0 26px rgba(var(--color-violet-rgb), 0.14),
+    0 0 0 1px rgba(var(--color-violet-rgb), 0.08);
 }
 
 .preview-card__media {
@@ -3257,11 +3352,13 @@ main:has(.hackathon-page) {
 .hackathon-page {
   max-width: 100%;
   margin: 0;
+  /* Fades to transparent so the body's galaxy backdrop (tint + starfield)
+     shows through below the banner — mirrors the dark-mode override. */
   background: linear-gradient(
     180deg,
     rgb(238, 231, 247) 0,
-    rgb(245, 241, 249) 200px,
-    var(--color-bg) 600px
+    rgba(245, 241, 249, 0.72) 200px,
+    transparent 600px
   );
 }
 
@@ -3960,11 +4057,38 @@ main:has(.hackathon-page) {
 .hackathon-track {
   position: relative;
   display: grid;
-  grid-template-columns: clamp(72px, 9vw, 120px) 1fr;
+  grid-template-columns: clamp(72px, 9vw, 120px) 1fr clamp(150px, 17vw, 210px);
   column-gap: clamp(1.25rem, 3vw, 2.75rem);
+  align-items: center;
   padding: clamp(1.6rem, 3vw, 2.4rem) 0.25rem;
   border-bottom: 1px solid var(--color-border);
   transition: background-color 0.3s;
+}
+
+/* Right-hand sponsor slot: a labeled dashed placeholder (same language as
+   the sponsor-logo slots) that a partner logo/name will replace later. */
+.hackathon-track-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.hackathon-track-slot-label {
+  color: var(--color-violet);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hackathon-track-slot-box {
+  padding: 1.1rem 0.75rem;
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-style: italic;
 }
 
 /* Giant serif index numeral. The gradient runs vertically so both the orange
@@ -4033,16 +4157,7 @@ main:has(.hackathon-page) {
 
 /* Scoped under .hackathon-track-body so it outranks the generic
    .hackathon-section p color/size rule. */
-.hackathon-track-body .hackathon-track-sponsor {
-  margin: 0 0 0.75rem;
-  color: var(--color-violet);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.hackathon-track-body p:not(.hackathon-track-sponsor) {
+.hackathon-track-body p {
   max-width: 62ch;
   color: var(--color-text-secondary);
   font-size: 0.98rem;
@@ -4053,10 +4168,18 @@ main:has(.hackathon-page) {
   .hackathon-track {
     grid-template-columns: 52px 1fr;
     column-gap: 1rem;
+    align-items: start;
   }
 
   .hackathon-track-num {
     font-size: 2rem;
+  }
+
+  /* Slot drops below the description, aligned with the body column. */
+  .hackathon-track-slot {
+    grid-column: 2;
+    margin-top: 1rem;
+    max-width: 220px;
   }
 
   .hackathon-track::after {
@@ -4064,12 +4187,14 @@ main:has(.hackathon-page) {
   }
 }
 
-/* Prizes — podium hierarchy: minimal flanking entries, gradient-framed grand. */
+/* Prizes — three parallel award categories (track winners, grand, newcomer),
+   deliberately styled as equals: same hairline entry treatment, no featured
+   center — they aren't ranked against each other. */
 .hackathon-prizes {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: center;
+  align-items: start;
   margin-top: 1.5rem;
 }
 
@@ -4110,47 +4235,10 @@ main:has(.hackathon-page) {
   line-height: 1.65;
 }
 
-/* The grand prize is the section's single feature object: transparent fill,
-   sharp corners, 1px gradient frame. */
-.hackathon-prize--grand {
-  border-top: 0;
-  padding: clamp(1.9rem, 3.5vw, 2.6rem) clamp(1.25rem, 2.5vw, 2rem);
-  border: 1px solid transparent;
-  border-image: linear-gradient(
-      135deg,
-      rgba(var(--color-accent-rgb), 0.65),
-      rgba(var(--color-violet-rgb), 0.65)
-    )
-    1;
-  background: none;
-  text-align: center;
-}
-
-.hackathon-prize--grand h3 {
-  font-size: clamp(1.7rem, 3vw, 2.1rem);
-}
-
-/* Decorative diamond; the / '' alt syntax hides it from screen readers. */
-.hackathon-prize--grand h3::before {
-  content: '◆' / '';
-  display: block;
-  margin-bottom: 0.7rem;
-  font-size: 0.85rem;
-  background: var(--grad-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
 @media (max-width: 767px) {
   .hackathon-prizes {
     grid-template-columns: 1fr;
     gap: 1.75rem;
-  }
-
-  .hackathon-prize--grand {
-    order: -1;
   }
 }
 
@@ -4428,20 +4516,26 @@ main:has(.hackathon-page) {
 
 @media (prefers-color-scheme: dark) {
   :root {
-  --color-bg: #0f0d13;
-  --color-surface: #1a1625;
-  --color-text: #e5e2eb;
-  --color-text-secondary: #aaa3b8;
+  --color-bg: #0b1020;
+  --color-surface: #141b31;
+  --color-text: #e8eaf6;
+  --color-text-secondary: #a7aec7;
   --color-accent: #fb923c;
   --color-accent-rgb: 251, 146, 60;
   --color-accent-hover: #fdba74;
-  --color-accent-light: #2d2015;
-  --color-accent-900: #181225;
-  --color-accent-950: #0f0d13;
-  --color-border: rgba(229, 226, 235, 0.14);
+  --color-accent-light: #2a1c10;
+  --color-accent-900: #10162c;
+  --color-accent-950: #0b1020;
+  --color-border: rgba(232, 234, 246, 0.14);
   --color-violet: #c4b5fd;
   --color-violet-rgb: 196, 181, 253;
-  --color-violet-light: #2d2044;
+  --color-violet-light: #241d45;
+  --star-a: rgba(232, 234, 246, 0.8);
+  --star-b: rgba(196, 181, 253, 0.55);
+  --star-c: rgba(232, 234, 246, 0.65);
+  --star-d: rgba(251, 146, 60, 0.5);
+  --star-e: rgba(232, 234, 246, 0.45);
+  --star-f: rgba(196, 181, 253, 0.4);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
   --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
@@ -4449,12 +4543,13 @@ main:has(.hackathon-page) {
 
   body {
     background:
-      radial-gradient(circle at top left, rgba(45, 32, 68, 0.42), transparent 32%),
-      linear-gradient(180deg, #14101c 0%, var(--color-bg) 100%);
+      radial-gradient(ellipse 60% 42% at 12% -6%, rgba(109, 40, 217, 0.26), transparent 62%),
+      radial-gradient(ellipse 46% 34% at 90% 12%, rgba(251, 146, 60, 0.06), transparent 55%),
+      linear-gradient(180deg, #101632 0%, var(--color-bg) 100%);
   }
 
   .nav {
-    background: rgba(15, 13, 19, 0.88);
+    background: rgba(11, 16, 32, 0.88);
     border-bottom-color: rgba(229, 226, 235, 0.1);
   }
 
@@ -4484,7 +4579,7 @@ main:has(.hackathon-page) {
 
   .search {
     border-color: rgba(229, 226, 235, 0.14);
-    background: rgba(26, 22, 37, 0.82);
+    background: rgba(20, 27, 49, 0.82);
   }
 
   .search:focus-within {
@@ -4495,18 +4590,32 @@ main:has(.hackathon-page) {
   .preview-card,
   .hackathon-resource-card {
     border-color: rgba(229, 226, 235, 0.12);
-    background: rgba(26, 22, 37, 0.92);
+    background: rgba(20, 27, 49, 0.92);
   }
 
   .preview-card:hover,
   .preview-card:focus-visible {
     border-color: rgba(251, 146, 60, 0.34);
+    box-shadow:
+      var(--shadow-md),
+      0 0 26px rgba(var(--color-violet-rgb), 0.2),
+      0 0 0 1px rgba(var(--color-violet-rgb), 0.12);
   }
 
   .preview-card__media,
   .home-hero__visual,
   .board-member__avatar {
-    background: #211b2d;
+    background: #1a2140;
+  }
+
+  /* Club photos: swap the slate drop shadow for a nebula-like violet glow
+     with a faint orange counterpoint — reads as a lit object in the dark. */
+  .home-hero__visual,
+  .about-page__photo {
+    box-shadow:
+      0 24px 60px rgba(0, 0, 0, 0.45),
+      0 0 46px rgba(var(--color-violet-rgb), 0.16),
+      0 0 90px rgba(var(--color-accent-rgb), 0.07);
   }
 
   .preview-card__footer,
@@ -4516,13 +4625,13 @@ main:has(.hackathon-page) {
 
   .home-hero__cta--primary,
   .hackathon-cta {
-    color: #0f0d13;
+    color: #0b1020;
     background: var(--color-text);
   }
 
   .home-hero__cta--primary:hover,
   .hackathon-cta:hover {
-    color: #0f0d13;
+    color: #0b1020;
     background: #f4f0fa;
   }
 
@@ -4558,15 +4667,18 @@ main:has(.hackathon-page) {
    SC Quantathon hero — dark-mode banner (night version)
    =================================================================== */
 @media (prefers-color-scheme: dark) {
-  /* One continuous gradient across the whole hackathon page: the banner's purple
-     at the top flows seamlessly down into the page's dark purple. The banner
-     itself is transparent, so there is no separate region and no hard edge. */
+  /* One continuous gradient across the whole hackathon page: the banner's
+     purple flows down and FADES TO TRANSPARENT so the site's galaxy backdrop
+     (body nebula + fixed starfield at z-index -1) shows through below the
+     banner — an opaque gradient here would paint over the stars and leave
+     the page flat and gloomy. Slight translucency even at the top lets a
+     few stars glimmer through the banner purple. */
   .hackathon-page {
     background: linear-gradient(
       180deg,
-      rgb(56, 42, 62) 0,
-      rgb(42, 32, 66) 220px,
-      var(--color-bg) 620px
+      rgba(56, 42, 62, 0.92) 0,
+      rgba(45, 34, 70, 0.7) 220px,
+      transparent 680px
     );
   }
 
@@ -4578,6 +4690,313 @@ main:has(.hackathon-page) {
   /* The banner logo is a solid-black SVG; invert it to white for the dark banner. */
   .hackathon-hero-logo {
     filter: invert(1);
+  }
+}
+
+/* ===================================================================
+   Galaxy starfield — both modes; dot colors come from the --star-* tokens
+   (faint violet/orange specks on the light cream sky, bright starlight in
+   dark). Two fixed pseudo-layers at z-index -1: body's background
+   propagates to the canvas (html must keep NO background of its own, or
+   these vanish behind it), so the stars paint above the nebula gradient
+   but below all content. Offset tile sizes/positions between the layers
+   keep the repeat from reading as a grid; the twinkle is a composited
+   opacity animation.
+   =================================================================== */
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle 1px at 25px 35px, var(--star-a) 98%, transparent),
+    radial-gradient(circle 1px at 210px 160px, var(--star-b) 98%, transparent),
+    radial-gradient(circle 1.4px at 340px 80px, var(--star-c) 98%, transparent),
+    radial-gradient(circle 0.8px at 120px 280px, var(--star-d) 98%, transparent),
+    radial-gradient(circle 1px at 60px 190px, var(--star-e) 98%, transparent),
+    radial-gradient(circle 0.7px at 290px 240px, var(--star-f) 98%, transparent);
+  background-size:
+    430px 430px,
+    390px 390px,
+    510px 510px,
+    470px 470px,
+    350px 350px,
+    450px 450px;
+}
+
+body::after {
+  background-position:
+    160px 90px,
+    60px 250px,
+    240px 330px,
+    350px 40px,
+    130px 20px,
+    20px 140px;
+  opacity: 0.7;
+}
+
+/* Twinkle only when the OS allows motion; reduced-motion keeps static stars. */
+@media (prefers-reduced-motion: no-preference) {
+  body::before {
+    animation: star-twinkle 9s ease-in-out infinite;
+  }
+
+  body::after {
+    animation: star-twinkle 13s ease-in-out 2s infinite reverse;
+  }
+}
+
+/* --- Bloch sphere widget (BlochSphere.tsx), learning-resources Beginner
+   section: a compact interactive figure. Strokes come from tokens, so both
+   modes recolor automatically. touch-action: none lets pointer-drag own the
+   gesture on touch screens without scrolling the page mid-drag. --- */
+.bloch-figure {
+  margin: 1.4rem 0 0.4rem;
+  max-width: 270px;
+}
+
+/* Desktop: park the sphere at the far right of the Beginner section (below
+   the big "01" numeral) so the resource list reads exactly as before; the
+   list gets matching right padding so rows never run underneath it. On
+   narrow screens the figure stays in flow under the blurb. */
+@media (min-width: 1024px) {
+  .lr-section--beginner .bloch-figure {
+    position: absolute;
+    top: 7.5rem;
+    right: 0;
+    width: 230px;
+    margin: 0;
+  }
+
+  .lr-section--beginner .lr-list {
+    padding-right: 280px;
+  }
+}
+
+.bloch-stage {
+  cursor: grab;
+  touch-action: none;
+  border-radius: var(--radius-md);
+}
+
+.bloch-stage:active {
+  cursor: grabbing;
+}
+
+.bloch-stage:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.bloch-stage svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.bloch-outline {
+  fill: none;
+  stroke: rgba(var(--color-violet-rgb), 0.5);
+  stroke-width: 1.4;
+}
+
+.bloch-equator,
+.bloch-meridian {
+  fill: none;
+  stroke: var(--color-border);
+  stroke-width: 1;
+}
+
+.bloch-axis {
+  stroke: var(--color-border);
+  stroke-width: 1;
+  stroke-dasharray: 3 5;
+}
+
+.bloch-label {
+  fill: var(--color-text-secondary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+
+.bloch-vector {
+  stroke: var(--color-accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.bloch-tip {
+  fill: var(--color-violet);
+}
+
+.bloch-readout {
+  margin: 0.5rem 0 0;
+  color: var(--color-text);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.bloch-caption {
+  margin: 0.2rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* --- Quantum 404 (app/not-found.tsx): own scoped section, deliberately NOT
+   .page-content so the generic markdown styles can't leak in. The canvas box
+   is position: relative for the absolutely-positioned .quantum-canvas. --- */
+.qf-404 {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-xl) var(--space-3xl);
+  text-align: center;
+}
+
+.qf-404__canvas {
+  position: relative;
+  height: 230px;
+  margin-bottom: var(--space-md);
+}
+
+.qf-404__title {
+  margin: 0 0 0.6rem;
+}
+
+.qf-404__joke {
+  margin: 0 auto 1.9rem;
+  max-width: 46ch;
+  color: var(--color-text-secondary);
+  font-size: 1.08rem;
+  line-height: 1.65;
+}
+
+.qf-404__cta {
+  margin-bottom: var(--space-xl);
+}
+
+/* --- Title reveal (TitleReveal.tsx): per-word entrance for page h1s. The
+   spans are inline-block only so transform/filter apply; word wrap and the
+   h1's own alignment/spacing are untouched. Layout is identical once every
+   word settles. Runs only when the OS allows motion (the component also
+   bails, so reduced-motion titles are never split at all). --- */
+@keyframes tr-blur-settle {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+  }
+}
+
+@keyframes tr-fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tr-word {
+    display: inline-block;
+    animation-duration: 0.7s;
+    animation-timing-function: var(--ease-out-soft);
+    animation-delay: var(--tr-delay, 0s);
+    animation-fill-mode: both;
+  }
+
+  .tr-word--blur {
+    animation-name: tr-blur-settle;
+  }
+
+  .tr-word--fade {
+    animation-name: tr-fade-rise;
+  }
+}
+
+/* --- Shooting star: paw comet (ShootingStar.tsx spawns the streaks). The
+   layer clips streaks near the edges so they can never cause overflow;
+   z-index -1 keeps them in the same behind-content plane as the stars. --- */
+.shooting-star-layer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: no-preference) {
+  .shooting-star {
+    position: absolute;
+    left: var(--ss-x, 20vw);
+    top: var(--ss-y, 20vh);
+    width: 96px;
+    height: 12px;
+    opacity: 0;
+    transform: rotate(var(--ss-angle, 32deg)) translateX(0);
+    animation: shooting-star 1.5s ease-out forwards;
+  }
+
+  /* Gradient tail, brightest where it meets the paw. */
+  .shooting-star::before {
+    content: '';
+    position: absolute;
+    top: 5.25px;
+    right: 12px;
+    width: 84px;
+    height: 1.5px;
+    background: linear-gradient(270deg, rgba(232, 234, 246, 0.5), transparent);
+  }
+
+  /* The comet head IS a tiny tiger paw (same mask trick as .tiger-paw-icon). */
+  .shooting-star::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    background: rgba(232, 234, 246, 0.6);
+    mask: url('/images/tiger-paw.webp') center / contain no-repeat;
+    -webkit-mask: url('/images/tiger-paw.webp') center / contain no-repeat;
+  }
+
+  @keyframes shooting-star {
+    0% {
+      opacity: 0;
+      transform: rotate(var(--ss-angle, 32deg)) translateX(0);
+    }
+    12% {
+      opacity: 0.8;
+    }
+    85% {
+      opacity: 0.8;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--ss-angle, 32deg)) translateX(58vw);
+    }
   }
 }
 

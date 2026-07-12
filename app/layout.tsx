@@ -1,9 +1,11 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display, Inter } from 'next/font/google';
+import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
 import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
+import ShootingStar from '@/components/ShootingStar';
+import TitleReveal from '@/components/TitleReveal';
 import { getNavData } from '@/lib/navData';
 import siteConfig from '@/data/site-config.json';
 
@@ -13,9 +15,10 @@ const playfair = Playfair_Display({
   variable: '--font-serif',
 });
 
-const inter = Inter({
+// Variable font: no `weight` list, so the full 200–900 axis is available
+// (the countdown digits use 800, which Inter's fixed weights never loaded).
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
 });
 
@@ -38,10 +41,13 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/logo-light.png',
-        width: 1144,
-        height: 779,
-        alt: 'Clemson Quantum Club Logo',
+        // Galaxy-themed share card (generated; see og-card.png). The
+        // Organization JSON-LD below intentionally keeps the plain logo —
+        // that's a logo signal for search engines, not a social preview.
+        url: '/images/og-card.png',
+        width: 1200,
+        height: 630,
+        alt: 'Clemson Quantum Club logo over a starfield',
       },
     ],
   },
@@ -61,7 +67,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#f6f3ee' },
-    { media: '(prefers-color-scheme: dark)', color: '#0f0d13' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b1020' },
   ],
 };
 
@@ -109,12 +115,14 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={`${inter.variable} ${playfair.variable}`}>
+      <body className={`${sourceSans.variable} ${playfair.variable}`}>
         <a href="#main" className="skip-link">Skip to main content</a>
         <Header navData={navData} />
         <main id="main">{children}</main>
         <Footer />
         <ScrollReveal />
+        <TitleReveal />
+        <ShootingStar />
       </body>
     </html>
   );
