@@ -1,61 +1,37 @@
 import type { Metadata } from 'next';
+import { pageOpenGraph } from '@/lib/og';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import EmailIcon from '@/components/icons/EmailIcon';
 import WebsiteIcon from '@/components/icons/WebsiteIcon';
 import { LinkedInIcon } from '@/components/icons/ChannelIcons';
 import ConstellationDivider from '@/components/ConstellationDivider';
+import facultyData from '@/data/faculty.json';
 
 export const metadata: Metadata = {
   title: 'Resources',
   description:
     'Quantum computing learning materials, student work, and information about quantum faculty and programs at Clemson University.',
+  openGraph: pageOpenGraph({
+    title: 'Resources | Clemson Quantum Club',
+    description:
+      'Quantum computing learning materials, student work, and information about quantum faculty and programs at Clemson University.',
+    url: '/resources/',
+  }),
 };
 
-// To finish a card: set `image` to a headshot in /images, and fill any of
-// `linkedin` / `website` / `email` to surface those links.
-const faculty = [
-  {
-    name: 'Dr. Rong Ge',
-    role: 'Professor, School of Computing',
-    description:
-      'Faculty advisor for the Clemson Quantum Club and instructor of the Hands-on Quantum Computing Creative Inquiry and the graduate Quantum Computing course (CPSC 8230). Research interests include high-performance computing, quantum computing education, and quantum workforce development.',
-    image: '/images/rong-ge.jpg',
-    linkedin: 'https://www.linkedin.com/in/rong-ge-64416719/',
-    website: 'https://people.computing.clemson.edu/~rge/index.html',
-    email: 'rge@clemson.edu',
-  },
-  {
-    name: 'Dr. Emily Tucker',
-    role: 'Assistant Professor, Industrial Engineering',
-    description:
-      'Research focuses on quantum optimization for resilient systems, with applications in disaster relief, logistics, and supply chain resilience using stochastic, discrete, and quantum optimization methods.',
-    image: '/images/emily-tucker.jpg',
-    linkedin: 'https://www.linkedin.com/in/emilyltucker/',
-    website: 'https://sites.google.com/view/EmilyLTucker/',
-    email: 'etucke3@clemson.edu',
-  },
-  {
-    name: 'Dr. Ronnie Chowdhury',
-    role: 'Professor, Civil Engineering',
-    description:
-      'Eugene Douglas Mays Chair of Transportation and founding director of the USDOT Center for Connected Multimodal Mobility. His quantum work targets cybersecurity for transportation and smart-city / IoT infrastructure — integrating AI with quantum computing to detect and respond to cyber threats, including the SC Quantum Sentinel initiative. Named a 2024 Clemson University Researcher of the Year.',
-    image: '/images/ronnie-chowdhury.jpg',
-    linkedin: 'https://www.linkedin.com/in/mashrur-ronnie-chowdhury-ba313260/',
-    website: '',
-    email: 'mac@clemson.edu',
-  },
-  {
-    name: 'Dr. Sumanta Tewari',
-    role: 'Professor, Physics & Astronomy',
-    description:
-      'An American Physical Society Fellow whose research focuses on topological quantum computation, Majorana fermions, superconductivity, and condensed matter theory. His work on semiconductor–superconductor heterostructures is one of the most widely studied platforms for fault-tolerant quantum computing.',
-    image: '/images/sumanta-tewari.jpg',
-    linkedin: 'https://www.linkedin.com/in/sumanta-tewari-b2102270/',
-    website: '',
-    email: 'stewari@clemson.edu',
-  },
-];
+// Card data lives in data/faculty.json — see data/README.md for the fields.
+interface Faculty {
+  name: string;
+  role: string;
+  description: string;
+  image: string;
+  linkedin: string;
+  website: string;
+  email: string;
+}
+
+const faculty = facultyData as Faculty[];
 
 export default function ResourcesPage() {
   return (
@@ -68,17 +44,20 @@ export default function ResourcesPage() {
       <section className="archive-section">
         <h2>Start here</h2>
         <div className="resource-cards">
-          <Link href="/resources/learning-resources/" className="hackathon-resource-card">
+          <Link
+            href="/resources/learning-resources/"
+            className="hackathon-resource-card hackathon-resource-card--orange"
+          >
             <div className="hackathon-resource-title">Learning Resources</div>
             <div className="hackathon-resource-desc">
               Curated bootcamps, lecture series, textbooks, and problem sets to
-              learn quantum computing at every level — from hackathon prep to
+              learn quantum computing at every level, from hackathon prep to
               going deeper.
             </div>
           </Link>
           <Link
             href="/resources/student-work-and-projects/"
-            className="hackathon-resource-card"
+            className="hackathon-resource-card hackathon-resource-card--violet"
           >
             <div className="hackathon-resource-title">
               Student Work &amp; Projects
@@ -92,19 +71,39 @@ export default function ResourcesPage() {
       </section>
 
       <section className="archive-section">
-        <h2>Quantum Computing Creative Inquiry</h2>
-        <p>
-          The <strong>Hands-on Quantum Computing</strong> Creative Inquiry is an
-          undergraduate research course led by Dr. Rong Ge. Students gain
-          practical experience with quantum computing platforms, participate in
-          quantum hackathons, and work collaboratively on quantum algorithms and
-          computational problem-solving. The program welcomes students from all
-          majors and has sent teams to MIT iQuHack, the NYUAD International
-          Hackathon, and the SC Quantathon series.
-        </p>
+        <h2>Quantum Courses at Clemson</h2>
+        <div className="course-groups">
+          <div className="course-group">
+            <h3>CPSC</h3>
+            <ul>
+              <li>Creative Inquiry: Hands-on Quantum Computing (CPSC 3990)</li>
+              <li>Introduction to Quantum Computing (CPSC 4750; 6750)</li>
+              <li>Quantum Algorithms and Applications (CPSC 4760; 6760)</li>
+            </ul>
+          </div>
+          <div className="course-group">
+            <h3>PHYS</h3>
+            <ul>
+              <li>
+                Quantum Mechanics I/II (PHYS 4550/4560, 6550/6560; PHYS
+                9510/9520)
+              </li>
+              <li>Quantum Field Theory (PHYS 9530)</li>
+            </ul>
+          </div>
+          <div className="course-group">
+            <h3>IE</h3>
+            <ul>
+              <li>
+                Creative Inquiry: Quantum Optimization for Resilient Systems (IE
+                4040)
+              </li>
+            </ul>
+          </div>
+        </div>
       </section>
 
-      <section className="archive-section">
+      <section id="faculty" className="archive-section">
         <h2>Quantum Faculty at Clemson</h2>
         <p>
           Several Clemson professors conduct research and teach courses in

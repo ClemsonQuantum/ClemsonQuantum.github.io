@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Clemson Quantum Club',
     description:
-      'Student-led quantum computing club at Clemson University — workshops, hackathons, and research.',
+      'Student-led quantum computing club at Clemson University offering workshops, hackathons, and research.',
     url: 'https://clemsonquantum.com',
     siteName: 'Clemson Quantum Club',
     locale: 'en_US',
@@ -84,6 +84,7 @@ const organizationJsonLd = {
     siteConfig.instagramUrl,
     siteConfig.githubUrl,
     siteConfig.discordInvite,
+    siteConfig.groupmeUrl,
     siteConfig.tigerquestUrl,
   ].filter((url) => url && url !== '#'),
 };

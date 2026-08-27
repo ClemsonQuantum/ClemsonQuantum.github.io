@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageOpenGraph } from '@/lib/og';
 import Link from 'next/link';
 import { getAllPages, sortPages } from '@/lib/content';
 import PreviewCard from '@/components/PreviewCard';
@@ -8,6 +9,12 @@ export const metadata: Metadata = {
   title: 'Events',
   description:
     'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by the Clemson Quantum Club.',
+  openGraph: pageOpenGraph({
+    title: 'Events | Clemson Quantum Club',
+    description:
+      'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by the Clemson Quantum Club.',
+    url: '/events/',
+  }),
 };
 
 export default function EventsPage() {

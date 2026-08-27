@@ -2,7 +2,11 @@
 title: "[WORKSHOP/SEMINAR NAME]"
 date: YYYY-MM-DD
 summary: "[One-line description]"
-image: "/images/[PLACEHOLDER].jpg"
+image: "/images/[PLACEHOLDER].webp"
+# For an event hosted elsewhere (e.g. an IBM Fall Fest signup page), set
+# external_url so the card links straight there. Without it, the site
+# generates a detail page from the body below — so write one.
+# external_url: "https://example.com/event"
 ---
 
 # [WORKSHOP/SEMINAR NAME]

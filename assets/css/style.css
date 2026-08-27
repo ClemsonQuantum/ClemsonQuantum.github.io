@@ -12,9 +12,13 @@
   --color-accent: #f56600;
   --color-accent-rgb: 245, 102, 0;
   --color-accent-hover: #cf5500;
+  /* Body-copy link ink — Clemson orange deepened until it clears WCAG AA
+     contrast on the cream background and white surfaces.
+     Display-size headings and decorative accents stay on --color-accent. */
+  --color-link: #b04700;
+  --color-link-hover: #963c00;
   --color-accent-light: #fff0e4;
   --color-accent-900: #19243a; /* deep slate — hackathon section heros */
-  --color-accent-950: #0f172a; /* near-black slate — competitor page hero */
   --color-violet: #6d28d9;
   --color-violet-rgb: 109, 40, 217;
   --color-violet-light: #efe7ff;
@@ -119,10 +123,6 @@ img {
   gap: 0.625rem;
   text-decoration: none;
   flex-shrink: 0;
-}
-
-.nav-brand:hover {
-  opacity: 1;
 }
 
 .nav-logo {
@@ -248,7 +248,6 @@ img {
 .nav-dropdown-link--view-all {
   position: relative;
   font-size: 0.8rem;
-  color: var(--color-accent);
   font-weight: 600;
   /* Gap above the link; the divider is a separate ::before line sitting in the
      gap (outside the link's box) so it stays centered AND the hover highlight
@@ -267,7 +266,7 @@ img {
 }
 
 .nav-dropdown-link--view-all:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
   background: transparent;
 }
 
@@ -295,20 +294,6 @@ img {
 }
 
 /* --- Nested flyout submenus --- */
-
-.dropdown-submenu {
-  position: relative;
-}
-
-/* Invisible bridge so cursor can travel from parent to flyout */
-.dropdown-submenu::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: -14px;
-  width: 14px;
-  height: 100%;
-}
 
 /* Nested submenu content is revealed by the desktop/mobile nav overrides below. */
 .dropdown-submenu-content {
@@ -362,28 +347,11 @@ img {
 }
 
 /* ===================================================================
-   Desktop (>= 768px)
-   =================================================================== */
-
-@media (min-width: 801px) {
-  .nav-toggle {
-    display: none;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
-}
-
-/* ===================================================================
    Mobile (< 768px)
    =================================================================== */
 
 @media (max-width: 800px) {
   .nav-inner {
-    height: 56px;
     padding: 0 var(--space-md);
   }
 
@@ -412,7 +380,6 @@ img {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     padding: var(--space-sm) var(--space-md) var(--space-xl);
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     animation: navPanelOpen 0.25s var(--ease-out-soft);
   }
 
@@ -450,7 +417,7 @@ img {
   .nav-links .nav-dropdown-link:hover,
   .nav-links .nav-dropdown-link:focus-visible {
     background: var(--color-accent-light);
-    color: var(--color-accent);
+    color: var(--color-link);
   }
 
   /* Dropdown on mobile — collapsed by default, expands on tap (.nav-dropdown--open) */
@@ -542,7 +509,6 @@ img {
   overflow-y: auto;
   z-index: 1200;
   border-radius: 1rem;
-  border-color: rgba(22, 32, 51, 0.12);
   box-shadow: var(--shadow-lg);
 }
 
@@ -620,31 +586,14 @@ section p {
   line-height: 1.7;
 }
 
-/* --- Gallery --- */
-
-#backBtn,
-#nextBtn {
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  margin: 0 0.5rem;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-#backBtn:hover,
-#nextBtn:hover {
-  opacity: 1;
-}
-
 /* --- Page Content (Markdown pages) --- */
 .page-content {
   max-width: 800px;
   margin: 0 auto;
   /* Bottom cushion so detail pages (news articles, meeting/workshop pages) sit
      spaced above the footer, matching the archive pages. Full-bleed pages
-     (.hackathon-page / .competitor-page) reset this via their `:has` overrides
-     and supply their own bottom spacing through their last section. */
+     (.hackathon-page) reset this via their `:has` overrides and supply their
+     own bottom spacing through their last section. */
   padding: 0 var(--space-xl) var(--space-2xl);
 }
 
@@ -698,8 +647,6 @@ section p {
   color: var(--color-text-secondary);
 }
 
-/* Festival day layout */
-
 /* --- Forms (Get Involved) --- */
 form {
   max-width: 480px;
@@ -736,7 +683,9 @@ form textarea:focus,
 form select:focus {
   outline: none;
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.15);
+  /* Strong enough to read as a focus indicator on white (0.15 was nearly
+     invisible); the modal form keeps its solid outline. */
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.4);
 }
 
 form textarea {
@@ -753,7 +702,7 @@ form button[type='submit'] {
   width: 100%;
   margin-top: var(--space-xl);
   padding: 0.75rem;
-  background: var(--color-accent);
+  background: var(--color-link);
   color: #fff;
   border: none;
   border-radius: var(--radius-full);
@@ -765,7 +714,7 @@ form button[type='submit'] {
 }
 
 form button[type='submit']:hover {
-  background: var(--color-accent-hover);
+  background: var(--color-link-hover);
   transform: translateY(-1px);
 }
 
@@ -835,7 +784,7 @@ footer {
 
 .footer-links a:hover,
 .footer-links a:focus-visible {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 .footer-social {
@@ -853,7 +802,7 @@ footer {
 
 .footer-social a:hover,
 .footer-social a:focus-visible {
-  color: var(--color-accent);
+  color: var(--color-link);
   transform: translateY(-2px);
 }
 
@@ -867,6 +816,9 @@ footer {
   color: var(--color-text-secondary);
   opacity: 0.75;
   font-size: 0.8rem;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .footer-copy a {
@@ -875,7 +827,7 @@ footer {
 
 .footer-copy a:hover,
 .footer-copy a:focus-visible {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 @media (max-width: 800px) {
@@ -911,7 +863,7 @@ footer {
   clip-path: inset(50%);
   white-space: nowrap;
   padding: var(--space-sm) var(--space-md);
-  background: var(--color-accent);
+  background: var(--color-link);
   color: #fff;
   font-family: var(--font-sans);
   font-weight: 600;
@@ -934,15 +886,12 @@ footer {
    Hackathon Landing Page
    =================================================================== */
 
-/* Remove main padding when hackathon page is shown */
-
 /* Hero — full-bleed solid banner */
 
 .hackathon-hero h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 800;
   margin: 0 auto var(--space-sm);
-  color: #fff;
   letter-spacing: -0.03em;
   line-height: 1.15;
   text-align: center;
@@ -969,6 +918,17 @@ footer {
   margin: 0 auto var(--space-2xl);
   line-height: 1.6;
   font-weight: 400;
+}
+
+/* Visually hidden but exposed to assistive tech (same clip trick as the
+   skip link's resting state). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* CTA Buttons */
@@ -999,44 +959,59 @@ footer {
 .hackathon-cta-outline {
   border: 1px solid var(--color-accent);
   background: transparent;
-  color: var(--color-accent);
+  color: var(--color-link);
   border-color: rgba(var(--color-accent-rgb), 0.28);
   box-shadow: none;
 }
 
 .hackathon-cta-outline:hover {
   background: var(--color-accent-light);
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
   border-color: rgba(var(--color-accent-rgb), 0.36);
   box-shadow: none;
 }
 
+/* CTA color variants (SCQv3 hero): Apply in Clemson orange, Devpost in nebula
+   violet. Double-class selectors outrank the dark-mode .hackathon-cta invert,
+   and the tokens themselves swap to the dark-theme shades. */
+.hackathon-cta.hackathon-cta--orange {
+  /* Link-ink orange: #fff on --color-accent is only 3.1:1, below WCAG AA.
+     In dark mode --color-link matches the accent, so this only deepens the
+     light theme. */
+  background: var(--color-link);
+  border-color: var(--color-link);
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(var(--color-accent-rgb), 0.28);
+}
+
+.hackathon-cta.hackathon-cta--orange:hover {
+  background: var(--color-link-hover);
+  border-color: var(--color-link-hover);
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(var(--color-accent-rgb), 0.32);
+}
+
+.hackathon-cta-outline.hackathon-cta--violet {
+  color: var(--color-violet);
+  border-color: rgba(var(--color-violet-rgb), 0.4);
+}
+
+.hackathon-cta-outline.hackathon-cta--violet:hover {
+  background: var(--color-violet-light);
+  color: var(--color-violet);
+  border-color: rgba(var(--color-violet-rgb), 0.55);
+}
+
+/* Dark accent orange is light enough that white text loses contrast — use the
+   page's night-sky ink instead. */
+@media (prefers-color-scheme: dark) {
+  .hackathon-cta.hackathon-cta--orange,
+  .hackathon-cta.hackathon-cta--orange:hover {
+    color: #0b1020;
+  }
+}
+
 /* Sections — padded content areas between full-bleed blocks */
-
-.hackathon-section {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: var(--space-2xl) clamp(1.5rem, 5vw, 4rem) var(--space-3xl);
-  text-align: center;
-}
-
-.hackathon-section > *:not(h2) {
-  text-align: left;
-}
-
-/* About section — slightly larger text */
-
-/* Alternate section backgrounds for visual rhythm */
-.hackathon-section:nth-child(odd) {
-  background: transparent;
-}
-
-.hackathon-section:nth-child(even) {
-  background: var(--color-surface);
-  max-width: none;
-  border-top: 1px solid var(--color-border);
-  border-bottom: 1px solid var(--color-border);
-}
 
 /* Key Details spec sheet, Schedule timeline, Tracks rows, and Prizes podium
    are defined in the main hackathon block below; search ".hackathon-specs". */
@@ -1064,7 +1039,7 @@ footer {
 }
 
 .hackathon-section li a {
-  color: var(--color-accent);
+  color: var(--color-link);
   text-decoration: none;
   font-weight: 600;
 }
@@ -1133,8 +1108,6 @@ footer {
   font-weight: 600;
 }
 
-/* FAQ */
-
 /* Hackathon Team Grid */
 
 .hackathon-team-role {
@@ -1143,22 +1116,27 @@ footer {
   margin-top: 0.15rem;
 }
 
-/* Apply Section — full-bleed solid */
-.hackathon-apply {
+/* Apply Section — full-bleed solid. The template applies BOTH classes
+   (`hackathon-section hackathon-apply`), so these selectors double up the
+   class to outrank the later same-specificity `.hackathon-section` rules —
+   a single `.hackathon-apply` would lose the cascade and render the band's
+   white ink on a transparent background. */
+.hackathon-section.hackathon-apply {
   text-align: center;
   padding: 5rem clamp(1.5rem, 5vw, 4rem);
   background: var(--color-accent-900);
   color: #fff;
 }
 
-.hackathon-apply h2 {
+.hackathon-section.hackathon-apply h2 {
   color: #fff;
   border-bottom-color: rgba(255, 255, 255, 0.25);
   display: block;
   font-size: 2rem;
+  text-align: center;
 }
 
-.hackathon-apply p {
+.hackathon-section.hackathon-apply p {
   color: rgba(255, 255, 255, 0.9);
   font-size: 1.1rem;
   max-width: 550px;
@@ -1179,231 +1157,11 @@ footer {
 
 /* Responsive */
 @media (max-width: 639px) {
-  .hackathon-hero {
-    padding: 3.5rem var(--space-lg) 3rem;
-  }
-
-  .hackathon-section {
-    padding: var(--space-2xl) var(--space-lg);
-  }
-
-  .hackathon-apply {
+  /* Doubled class for the same cascade reason as the band rules above. */
+  .hackathon-section.hackathon-apply {
     padding: 3.5rem var(--space-lg);
   }
 }
-
-/* ===================================================================
-   Hackathon Resource Cards
-   =================================================================== */
-
-/* ===================================================================
-   Competitor Hackathon Page
-   =================================================================== */
-
-.competitor-page {
-  max-width: 100%;
-  margin: 0;
-}
-
-.page-content:has(.competitor-page) {
-  max-width: none;
-  padding: 0;
-}
-
-main:has(.competitor-page) {
-  padding-top: 0;
-}
-
-.competitor-hero {
-  text-align: center;
-  padding: 4rem var(--space-xl) 3rem;
-  background: var(--color-accent-950);
-  color: #fff;
-}
-
-.competitor-hero h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 800;
-  margin: 0 0 var(--space-sm);
-  color: #fff;
-  letter-spacing: -0.02em;
-}
-
-.competitor-hero-eyebrow {
-  display: inline-block;
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-md);
-  background: rgba(255, 255, 255, 0.12);
-  padding: 0.35rem 1rem;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.competitor-hero-sub {
-  font-size: 1.1rem;
-  opacity: 0.85;
-  margin: var(--space-sm) auto 0;
-  max-width: 500px;
-}
-
-.competitor-hero-link {
-  display: inline-block;
-  margin-top: var(--space-lg);
-  padding: 0.75rem 2rem;
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-}
-
-.competitor-hero-link:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.competitor-section {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: var(--space-2xl) clamp(1.5rem, 5vw, 4rem);
-}
-
-.competitor-section h2 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--color-text);
-  margin-bottom: var(--space-lg);
-  padding-bottom: var(--space-xs);
-  border-bottom: 3px solid var(--color-accent);
-  display: inline-block;
-}
-
-.competitor-section p {
-  font-size: 1.05rem;
-  line-height: 1.75;
-  color: var(--color-text-secondary);
-}
-
-.competitor-team-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-lg);
-  margin-top: var(--space-lg);
-}
-
-.competitor-team-member {
-  text-align: center;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: var(--space-xl) var(--space-lg);
-}
-
-.competitor-team-member img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: var(--space-sm);
-}
-
-.competitor-team-name {
-  font-weight: 600;
-  font-size: 1rem;
-  color: var(--color-text);
-}
-
-.competitor-team-role {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-}
-
-.competitor-results {
-  margin-top: var(--space-lg);
-}
-
-.competitor-result-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-md) var(--space-lg);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-sm);
-}
-
-.competitor-result-icon {
-  font-size: 1.5rem;
-}
-
-.competitor-result-text {
-  font-size: 1rem;
-  color: var(--color-text);
-}
-
-.competitor-result-text strong {
-  color: var(--color-accent);
-}
-
-.competitor-photos {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-}
-
-.competitor-photos img {
-  width: 100%;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-  aspect-ratio: 4/3;
-}
-
-.competitor-takeaways {
-  margin-top: var(--space-lg);
-  padding: 0;
-  list-style: none;
-}
-
-.competitor-takeaways li {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 1rem;
-  color: var(--color-text);
-  line-height: 1.6;
-}
-
-.competitor-takeaways li:last-child {
-  border-bottom: none;
-}
-
-@media (max-width: 639px) {
-  .competitor-hero {
-    padding: 3rem var(--space-lg) 2.5rem;
-  }
-
-  .competitor-section {
-    padding: var(--space-xl) var(--space-lg);
-  }
-
-  .competitor-team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .competitor-photos {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ===================================================================
-   Show More Button & Events Section
-   =================================================================== */
 
 /* ===================================================================
    Student Work & Projects
@@ -1435,7 +1193,7 @@ main:has(.competitor-page) {
 }
 .sw-filter__btn.is-active {
   color: var(--color-text);
-  border-bottom-color: var(--color-accent);
+  border-bottom-color: var(--color-link);
 }
 .sw-filter__count {
   margin-left: 0.35rem;
@@ -1451,7 +1209,6 @@ main:has(.competitor-page) {
     gap: 1.1rem;
     overflow-x: auto;
     overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
 
@@ -1558,8 +1315,8 @@ main:has(.competitor-page) {
   transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 .sw-action:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--color-link);
+  color: var(--color-link);
 }
 
 .sw-detail__body {
@@ -1575,7 +1332,7 @@ main:has(.competitor-page) {
   line-height: 1.7;
 }
 .sw-detail__body a {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 .sw-item {
@@ -1608,7 +1365,7 @@ main:has(.competitor-page) {
   transition: color 0.15s;
 }
 .sw-title a:hover {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 .sw-meta {
@@ -1625,46 +1382,16 @@ main:has(.competitor-page) {
   line-height: 1.65;
 }
 
-.meta {
-  font-size: 0.85rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-sm);
-}
-
-.summary {
-  font-size: 0.95rem;
-  color: var(--color-text-secondary);
-  line-height: 1.6;
-}
-
-/* ===================================================================
-   Board Member — single responsive component (replaces dual OrganizerRow + PeopleCard)
-   =================================================================== */
-
-/* ===================================================================
-   Section Heading (homepage h2)
-   =================================================================== */
-
-/* ===================================================================
-   Homepage News Grid
-   =================================================================== */
-
-/* ===================================================================
-   Homepage Event Card — variant of home-news-item with badge + prominent date
-   =================================================================== */
-
-/* Top row of event card body: date on left, "Upcoming" badge on right */
-
-/* ===================================================================
-   Home About — paragraph spacing
-   =================================================================== */
-
 /* ===================================================================
    Homepage Hero — photo + dual CTAs
    =================================================================== */
 
+/* position: relative — the absolutely-positioned .quantum-canvas (z-index: 0)
+   sits behind the lifted children, mirroring .hackathon-hero--quantum. No
+   overflow: hidden here — the canvas clips to its own bounds anyway, and
+   clipping would cut off the visual's 70px box-shadow. */
 .home-hero {
-  gap: var(--space-2xl);
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
   column-gap: clamp(2rem, 4vw, 4rem);
@@ -1680,12 +1407,20 @@ main:has(.competitor-page) {
   font-weight: 700;
   letter-spacing: -0.025em;
   grid-column: 1 / -1;
-  margin: 0;
+  /* A touch of air above and below so the headline doesn't crowd the header
+     or the divider. */
+  margin: 0.5rem 0 0.75rem;
   padding: 0;
   color: var(--color-text);
   font-size: clamp(2.6rem, 5vw, 4.2rem);
   line-height: 1;
   text-align: center;
+}
+
+/* Center the intro copy against the photo so the first paragraph sits toward
+   the middle of the image instead of hanging off its top edge. */
+.home-hero__text {
+  align-self: center;
 }
 
 .home-hero__subtitle {
@@ -1705,7 +1440,7 @@ main:has(.competitor-page) {
   /* Base drop shadow plus a whisper of violet "field" around the photo. */
   box-shadow:
     0 28px 70px rgba(15, 23, 42, 0.14),
-    0 0 34px rgba(109, 40, 217, 0.08);
+    0 0 34px rgba(var(--color-violet-rgb), 0.08);
 }
 
 .home-hero__image {
@@ -1717,9 +1452,7 @@ main:has(.competitor-page) {
 
 @media (max-width: 767px) {
   .home-hero {
-    grid-template-columns: 1fr;
     gap: var(--space-xl);
-    padding: var(--space-lg) var(--space-md) var(--space-xl);
   }
 
   .home-hero__title,
@@ -1728,19 +1461,6 @@ main:has(.competitor-page) {
     margin-left: auto;
     margin-right: auto;
   }
-
-  .home-hero__visual {
-    order: -1;
-    aspect-ratio: 16 / 10;
-  }
-}
-
-/* Homepage hero canvas: the absolutely-positioned .quantum-canvas (z-index: 0)
-   sits behind these lifted siblings, mirroring .hackathon-hero--quantum. No
-   overflow: hidden here — the canvas clips to its own bounds anyway, and
-   clipping would cut off the visual's 70px box-shadow. */
-.home-hero {
-  position: relative;
 }
 
 .home-hero__title,
@@ -1798,6 +1518,143 @@ main:has(.competitor-page) {
   fill: var(--color-violet);
 }
 
+/* Ambient wave dots: the two "atom" dots pop in somewhere on their
+   entanglement wave, glide a short distance, dissolve, and rematerialize at a
+   different spot — a little quantum-jump flourish. offset-path retraces the
+   same sine geometry as the .cd-path curves; cx/cy reset to 0 so the motion
+   path alone positions the dot. Position and opacity share one keyframe track
+   so every teleport (the back-to-back offset-distance stops) happens strictly
+   while opacity is 0. Browsers without motion-path support — and
+   reduced-motion visitors — keep the static dots. Gated off reveal-init so the
+   scroll-reveal fade still owns the entrance. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (offset-path: path('M0 0 L4 0')) {
+    /* reveal-init stays on after reveal-in is added, so "revealed or never
+       reveal-managed" is: not (reveal-init without reveal-in). */
+    .constellation-divider:not(.reveal-init) .cd-dot--wave,
+    .constellation-divider.reveal-in .cd-dot--wave {
+      cx: 0;
+      cy: 0;
+      offset-rotate: 0deg;
+      offset-path: path(
+        'M4 18 q5.25 -6.5 10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0'
+      );
+      animation: cd-jump-a 16s ease-in-out infinite;
+    }
+
+    .constellation-divider:not(.reveal-init) .cd-dot--wave.cd-dot--violet,
+    .constellation-divider.reveal-in .cd-dot--wave.cd-dot--violet {
+      offset-path: path(
+        'M151 18 q5.25 -6.5 10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0'
+      );
+      /* Different rhythm, positions, and glide direction so the sides never
+         sync. */
+      animation: cd-jump-b 19s ease-in-out infinite;
+    }
+  }
+}
+
+/* Four appearances per cycle at scattered spots, gliding forward ~6% each.
+   Segment lengths are deliberately uneven so jump times feel irregular, and
+   ConstellationDivider.tsx additionally randomizes each dot's duration and
+   phase per mount, so no two dots (or visits) share a rhythm. */
+@keyframes cd-jump-a {
+  0% {
+    offset-distance: 8%;
+    opacity: 0;
+  }
+  7%,
+  13% {
+    opacity: 1;
+  }
+  19% {
+    offset-distance: 14%;
+    opacity: 0;
+  }
+  19.01% {
+    offset-distance: 55%;
+  }
+  31%,
+  42% {
+    opacity: 1;
+  }
+  52% {
+    offset-distance: 62%;
+    opacity: 0;
+  }
+  52.01% {
+    offset-distance: 30%;
+  }
+  58%,
+  64% {
+    opacity: 1;
+  }
+  71% {
+    offset-distance: 35%;
+    opacity: 0;
+  }
+  71.01% {
+    offset-distance: 79%;
+  }
+  81%,
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 86%;
+    opacity: 0;
+  }
+}
+
+/* Violet twin: glides backward, different landing spots and rhythm. */
+@keyframes cd-jump-b {
+  0% {
+    offset-distance: 72%;
+    opacity: 0;
+  }
+  9%,
+  20% {
+    opacity: 1;
+  }
+  28% {
+    offset-distance: 65%;
+    opacity: 0;
+  }
+  28.01% {
+    offset-distance: 24%;
+  }
+  34%,
+  40% {
+    opacity: 1;
+  }
+  45% {
+    offset-distance: 18%;
+    opacity: 0;
+  }
+  45.01% {
+    offset-distance: 92%;
+  }
+  56%,
+  69% {
+    opacity: 1;
+  }
+  79% {
+    offset-distance: 85%;
+    opacity: 0;
+  }
+  79.01% {
+    offset-distance: 47%;
+  }
+  86%,
+  93% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 41%;
+    opacity: 0;
+  }
+}
+
 /* Home hero: the divider is a grid child under the full-width title and
    must sit above the hero canvas like its siblings. */
 .home-hero .constellation-divider {
@@ -1838,24 +1695,8 @@ main:has(.competitor-page) {
 }
 
 /* ===================================================================
-   Organizer Row — extracted inline styles
+   Search container — positioning anchor for the results dropdown
    =================================================================== */
-
-/* ===================================================================
-   Gallery — semantic buttons
-   =================================================================== */
-
-/* ===================================================================
-   Article Hero Image
-   =================================================================== */
-
-.article-hero-img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-lg);
-}
 
 .search-container {
   position: relative;
@@ -2012,16 +1853,6 @@ main:has(.competitor-page) {
   }
 }
 
-.news-external-cta {
-  margin-top: var(--space-xl);
-}
-
-/* External-link indicator on cards */
-
-/* ===================================================================
-   CTA Button
-   =================================================================== */
-
 /* ===================================================================
    About Page
    =================================================================== */
@@ -2053,7 +1884,7 @@ main:has(.competitor-page) {
   overflow: hidden;
   box-shadow:
     0 24px 60px rgba(15, 23, 42, 0.12),
-    0 0 34px rgba(109, 40, 217, 0.08);
+    0 0 34px rgba(var(--color-violet-rgb), 0.08);
 }
 
 .about-page__photo img {
@@ -2093,7 +1924,7 @@ main:has(.competitor-page) {
   transition: color 0.15s;
 }
 .gi-channel:hover {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 .gi-channel__icon {
   width: 1.25rem;
@@ -2348,7 +2179,7 @@ main:has(.competitor-page) {
 
 .about-page__link-panel a:hover,
 .about-page__link-panel a:focus-visible {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 .about-page__link-panel a:hover::after,
@@ -2383,24 +2214,9 @@ main:has(.competitor-page) {
 
 @media (prefers-color-scheme: dark) {
   /* Frosted glass — dark variant */
-  .nav {
-    background: rgba(11, 16, 32, 0.82);
-  }
-
-  .nav--scrolled {
-    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
-    border-bottom-color: rgba(167, 139, 250, 0.15);
-  }
-
   footer {
     background: rgba(11, 16, 32, 0.82);
   }
-
-  .nav-toggle span {
-    background: var(--color-text);
-  }
-
-  /* Organizer avatar background */
 }
 
 /* Inline SVG icons inside board-member link rows (envelope, LinkedIn, GitHub,
@@ -2513,19 +2329,19 @@ body {
   color: var(--color-text);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
-    radial-gradient(ellipse 50% 32% at 88% -4%, rgba(109, 40, 217, 0.07), transparent 60%),
-    radial-gradient(ellipse 42% 26% at 8% 38%, rgba(245, 102, 0, 0.04), transparent 55%),
+    radial-gradient(ellipse 50% 32% at 88% -4%, rgba(var(--color-violet-rgb), 0.07), transparent 60%),
+    radial-gradient(ellipse 42% 26% at 8% 38%, rgba(var(--color-accent-rgb), 0.04), transparent 55%),
     linear-gradient(180deg, #fbfaf7 0%, var(--color-bg) 100%);
 }
 
 a {
   text-decoration: none;
   transition: color 0.2s;
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 
 a:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
 }
 
 .nav {
@@ -2607,13 +2423,12 @@ a:hover {
 }
 
 .nav-dropdown-link--view-all {
-  color: var(--color-accent);
-  border-top-color: rgba(22, 32, 51, 0.08);
+  color: var(--color-link);
 }
 
 .nav-dropdown-link--view-all:hover,
 .nav-dropdown-link--view-all:focus-visible {
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
 }
 
 .nav-dropdown-link--all {
@@ -2667,13 +2482,12 @@ a:hover {
   transition: border-color 0.2s, box-shadow 0.2s;
   width: clamp(180px, 18vw, 230px);
   padding: 0.55rem 0.85rem;
-  border-color: rgba(22, 32, 51, 0.12);
   background: rgba(255, 255, 255, 0.78);
 }
 
 .search:focus-within {
-  border-color: rgba(22, 32, 51, 0.3);
-  box-shadow: 0 0 0 4px rgba(var(--color-accent-rgb), 0.1);
+  border-color: var(--color-link);
+  box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.45);
 }
 
 .search-icon {
@@ -2704,7 +2518,8 @@ main {
    lead text, so drop the generic main top padding and let the hero supply a
    small gap — keeps the title close to the sticky header. */
 main:has(.archive-page),
-main:has(.home-hero) {
+main:has(.home-hero),
+main:has(.hackathon-page) {
   padding-top: 0;
 }
 
@@ -2872,11 +2687,11 @@ main:has(.home-hero) {
 /* Tiger Prowl is a wide logo on a white background; show it whole and centered
    (contain) on a white slot so it isn't cropped and the letterbox blends with
    the logo's own white background. */
-.preview-card__media:has(.preview-card__image[src$="tiger-prowl.png"]) {
+.preview-card__media:has(.preview-card__image[src$="tiger-prowl.webp"]) {
   background: #ffffff;
 }
 
-.preview-card__image[src$="tiger-prowl.png"] {
+.preview-card__image[src$="tiger-prowl.webp"] {
   object-fit: contain;
   object-position: center;
   padding: 0.5rem;
@@ -2997,13 +2812,12 @@ main:has(.home-hero) {
 
 .view-all-link {
   text-align: center;
-  margin-top: var(--space-lg);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   margin: 0;
-  color: var(--color-accent);
+  color: var(--color-link);
   font-size: 0.92rem;
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -3011,7 +2825,7 @@ main:has(.home-hero) {
 }
 
 .view-all-link:hover {
-  color: var(--color-accent-hover);
+  color: var(--color-link-hover);
 }
 
 /* Underline sweep on hover — same motion language as the nav links. */
@@ -3140,12 +2954,6 @@ main:has(.home-hero) {
 .board-member__links a:hover .board-member__link-icon {
   opacity: 1;
   transform: translateY(-1px);
-}
-
-.footer-copy {
-  max-width: var(--max-width);
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* Card ladder: 3-up on desktop (base rule), 2-up on tablet, 1-up on phones.
@@ -3296,11 +3104,6 @@ main:has(.home-hero) {
     row-gap: 0.7rem;
     align-items: center;
     padding: 1.15rem 0;
-    background: transparent;
-    border: 0;
-    border-top: 1px solid var(--color-border);
-    border-radius: 0;
-    box-shadow: none;
   }
 
   .board-member:last-child {
@@ -3343,10 +3146,6 @@ main:has(.home-hero) {
 .page-content:has(.hackathon-page) {
   max-width: none;
   padding: 0;
-}
-
-main:has(.hackathon-page) {
-  padding-top: 0;
 }
 
 .hackathon-page {
@@ -3477,7 +3276,7 @@ main:has(.hackathon-page) {
   max-width: 26rem;
   padding: 1.85rem 1.75rem 1.6rem;
   background: var(--color-surface);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.5);
   animation: modal-pop 0.18s ease-out;
@@ -3609,11 +3408,10 @@ main:has(.hackathon-page) {
   --lr-accent: var(--color-violet);
 }
 .lr-section--advanced {
-  --lr-accent: var(--color-accent);
+  --lr-accent: var(--color-link);
 }
 
 .lr-intro {
-  max-width: 62ch;
   margin: 0 0 var(--space-2xl);
   font-size: 1.08rem;
   line-height: 1.7;
@@ -3707,6 +3505,12 @@ main:has(.hackathon-page) {
   opacity: 0;
   transition: opacity 0.15s;
 }
+/* When a line carries two links (e.g. MIT OCW 8.370 & 8.371), only the last
+   one gets the arrow suffix; the hidden ' ↗' on the first was rendering as a
+   phantom gap before the ampersand. */
+.lr-item__title:has(~ .lr-item__title)::after {
+  content: none;
+}
 .lr-item:hover .lr-item__title {
   color: var(--lr-accent);
 }
@@ -3763,12 +3567,12 @@ main:has(.hackathon-page) {
 }
 .lr-ongoing__name::after {
   content: ' ↗';
-  color: var(--color-accent);
+  color: var(--color-link);
   opacity: 0;
   transition: opacity 0.15s;
 }
 .lr-ongoing__item:hover .lr-ongoing__name {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 .lr-ongoing__item:hover .lr-ongoing__name::after {
   opacity: 1;
@@ -3784,9 +3588,6 @@ main:has(.hackathon-page) {
   .lr-ongoing__grid {
     grid-template-columns: 1fr;
   }
-}
-
-@media (max-width: 600px) {
   .lr-item {
     flex-direction: column;
     gap: 0.2rem;
@@ -3811,8 +3612,12 @@ main:has(.hackathon-page) {
   padding-top: 0;
 }
 
+/* Hero CTA band: countdown stacked above the button row. */
 .hackathon-hero-cta {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   justify-content: center;
   padding: clamp(1.75rem, 3.5vw, 2.5rem) var(--space-xl);
 }
@@ -3844,9 +3649,6 @@ main:has(.hackathon-page) {
 
 .hackathon-section h2 {
   font-weight: 700;
-  margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-sm);
-  border-bottom: 3px solid var(--color-accent);
   display: block;
   margin: 0 0 1.4rem;
   padding: 0;
@@ -4222,7 +4024,7 @@ main:has(.hackathon-page) {
    .hackathon-section p color/size rule. */
 .hackathon-prize .hackathon-prize-value {
   margin: 0 0 0.7rem;
-  color: var(--color-accent);
+  color: var(--color-link);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -4266,9 +4068,80 @@ main:has(.hackathon-page) {
   box-shadow: var(--shadow-md);
 }
 
-.hackathon-resource-icon {
-  font-size: 2rem;
+/* Resources "Start here" color variants: Learning Resources in Clemson
+   orange, Student Work in nebula violet. Double-class selectors outrank the
+   dark-mode border/background overrides; the tokens swap shades per theme. */
+.hackathon-resource-card.hackathon-resource-card--orange {
+  border-color: rgba(var(--color-accent-rgb), 0.45);
+}
+
+.hackathon-resource-card.hackathon-resource-card--orange .hackathon-resource-title {
+  color: var(--color-link);
+}
+
+.hackathon-resource-card.hackathon-resource-card--orange:hover {
+  border-color: var(--color-accent);
+  background: var(--color-accent-light);
+}
+
+.hackathon-resource-card.hackathon-resource-card--violet {
+  border-color: rgba(var(--color-violet-rgb), 0.45);
+}
+
+.hackathon-resource-card.hackathon-resource-card--violet .hackathon-resource-title {
+  color: var(--color-violet);
+}
+
+.hackathon-resource-card.hackathon-resource-card--violet:hover {
+  border-color: var(--color-violet);
+  background: var(--color-violet-light);
+}
+
+/* Quantum Courses at Clemson (resources page): department columns. */
+.course-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-lg) var(--space-2xl);
+  margin-top: var(--space-lg);
+}
+
+.course-group h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
   margin-bottom: var(--space-sm);
+}
+
+.course-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.course-group li {
+  line-height: 1.55;
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+/* Tiny accent atom as the bullet, echoing the constellation dots. */
+.course-group li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* The template markup still emits the icon div; keep it hidden. */
+.hackathon-resource-icon {
   display: none;
 }
 
@@ -4397,13 +4270,6 @@ main:has(.hackathon-page) {
   z-index: 1;
 }
 
-/* Hero CTA band: countdown stacked above the button row. */
-.hackathon-hero-cta {
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-}
-
 .hackathon-cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -4485,8 +4351,8 @@ main:has(.hackathon-page) {
   padding: 0.6rem 1.4rem;
   border: 1px solid rgba(var(--color-accent-rgb), 0.35);
   border-radius: var(--radius-full);
-  background: rgba(var(--color-accent-rgb), 0.12);
-  color: var(--color-accent);
+  background: rgba(var(--color-accent-rgb), 0.08);
+  color: var(--color-link);
   font-size: 1rem;
   font-weight: 700;
 }
@@ -4495,16 +4361,6 @@ main:has(.hackathon-page) {
   color: var(--color-text-secondary);
   font-size: 1rem;
   font-weight: 600;
-}
-
-/* Screen-reader-only summary (digits themselves are aria-hidden). */
-.event-countdown-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
 }
 
 @media (max-width: 767px) {
@@ -4523,9 +4379,12 @@ main:has(.hackathon-page) {
   --color-accent: #fb923c;
   --color-accent-rgb: 251, 146, 60;
   --color-accent-hover: #fdba74;
+  /* Starlight orange already clears AA on the night sky, so link ink can
+     share the accent hues. */
+  --color-link: #fb923c;
+  --color-link-hover: #fdba74;
   --color-accent-light: #2a1c10;
   --color-accent-900: #10162c;
-  --color-accent-950: #0b1020;
   --color-border: rgba(232, 234, 246, 0.14);
   --color-violet: #c4b5fd;
   --color-violet-rgb: 196, 181, 253;
@@ -4544,7 +4403,7 @@ main:has(.hackathon-page) {
   body {
     background:
       radial-gradient(ellipse 60% 42% at 12% -6%, rgba(109, 40, 217, 0.26), transparent 62%),
-      radial-gradient(ellipse 46% 34% at 90% 12%, rgba(251, 146, 60, 0.06), transparent 55%),
+      radial-gradient(ellipse 46% 34% at 90% 12%, rgba(var(--color-accent-rgb), 0.06), transparent 55%),
       linear-gradient(180deg, #101632 0%, var(--color-bg) 100%);
   }
 
@@ -4573,18 +4432,14 @@ main:has(.hackathon-page) {
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.36);
   }
 
-  .nav-dropdown-link--view-all {
-    border-top-color: rgba(229, 226, 235, 0.1);
-  }
-
   .search {
     border-color: rgba(229, 226, 235, 0.14);
     background: rgba(20, 27, 49, 0.82);
   }
 
   .search:focus-within {
-    border-color: rgba(251, 146, 60, 0.44);
-    box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.14);
+    border-color: rgba(var(--color-accent-rgb), 0.9);
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.45);
   }
 
   .preview-card,
@@ -4623,16 +4478,18 @@ main:has(.hackathon-page) {
     border-color: rgba(229, 226, 235, 0.12);
   }
 
-  .home-hero__cta--primary,
   .hackathon-cta {
     color: #0b1020;
     background: var(--color-text);
+    /* Deep-black shadow — the light theme's slate rgba(22,32,51,…) smudges
+       on the navy backdrop. */
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   }
 
-  .home-hero__cta--primary:hover,
   .hackathon-cta:hover {
     color: #0b1020;
     background: #f4f0fa;
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
   }
 
   .hackathon-cta-outline {
@@ -4654,9 +4511,31 @@ main:has(.hackathon-page) {
   .footer-meeting {
     color: rgba(248, 250, 252, 0.62);
   }
+
+  /* Contact-form status messages: lighter inks — the light-theme greens/reds
+     fail contrast on the dark surfaces. */
+  .form-success {
+    background: rgba(34, 139, 87, 0.16);
+    color: #6ee7b7;
+  }
+
+  .form-error {
+    background: rgba(196, 52, 32, 0.18);
+    color: #fca5a5;
+  }
+
+  .hackathon-team-photo {
+    border-color: rgba(229, 226, 235, 0.14);
+  }
+
+  /* Cream gradient + near-black border glare on the navy backdrop. */
+  .hackathon-sponsor-cta {
+    background: rgba(20, 27, 49, 0.9);
+    border-color: rgba(229, 226, 235, 0.12);
+  }
 }
 
-@media (prefers-color-scheme: dark) and (max-width: 767px) {
+@media (prefers-color-scheme: dark) and (max-width: 800px) {
   .dropdown-submenu-content {
     background: transparent;
     box-shadow: none;
@@ -4680,11 +4559,6 @@ main:has(.hackathon-page) {
       rgba(45, 34, 70, 0.7) 220px,
       transparent 680px
     );
-  }
-
-  .hackathon-hero {
-    background: transparent;
-    border: none;
   }
 
   /* The banner logo is a solid-black SVG; invert it to white for the dark banner. */

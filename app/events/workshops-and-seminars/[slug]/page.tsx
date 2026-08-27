@@ -1,8 +1,6 @@
 import { createSlugPage } from '@/lib/slugPage';
 
-const page = createSlugPage('events/workshops-and-seminars', {
-  notFound: <div>Page not found.</div>,
-});
+const page = createSlugPage('events/workshops-and-seminars');
 
 export const generateStaticParams = page.generateStaticParams;
 export const generateMetadata = page.generateMetadata;

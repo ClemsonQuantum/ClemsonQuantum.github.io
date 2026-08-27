@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 // lib/types only — lib/content uses Node fs and cannot enter a client bundle.
 import type { PageMeta } from '@/lib/types';
 import PreviewCard from './PreviewCard';
@@ -12,7 +12,7 @@ const SEASON_ORDER: Record<string, number> = { Fall: 2, Summer: 1, Spring: 0 };
 // contribute no semester tab and surface only under All.
 function semesterOf(date: string): string | null {
   const [y, m] = date.split('-').map(Number);
-  if (!Number.isFinite(y) || !Number.isFinite(m)) return null;
+  if (!Number.isFinite(y) || !Number.isFinite(m) || m < 1 || m > 12) return null;
   if (m >= 8) return `Fall ${y}`;
   if (m <= 5) return `Spring ${y}`;
   return `Summer ${y}`;
@@ -32,7 +32,7 @@ export default function EventArchive({
   metaLabel,
   kind = 'event',
   showFooter = true,
-  emptyText = 'No events yet — check back soon.',
+  emptyText = 'No events yet. Check back soon.',
 }: {
   items: PageMeta[];
   metaLabel?: string;
@@ -40,16 +40,21 @@ export default function EventArchive({
   showFooter?: boolean;
   emptyText?: string;
 }) {
-  // Distinct semesters among dated items, newest-first. Undated items contribute
-  // no tab and surface only under All.
-  const semesters = Array.from(
-    new Set(
-      items
-        .filter((i) => i.date)
-        .map((i) => semesterOf(i.date as string))
-        .filter((s): s is string => s !== null)
-    )
-  ).sort((a, b) => semesterRank(b) - semesterRank(a));
+  // Distinct semesters among dated items (newest-first) with per-semester
+  // counts, memoized so filter clicks don't recompute them.
+  const { semesters, counts } = useMemo(() => {
+    const tally = new Map<string, number>();
+    for (const item of items) {
+      const s = item.date ? semesterOf(item.date) : null;
+      if (s) tally.set(s, (tally.get(s) ?? 0) + 1);
+    }
+    return {
+      semesters: Array.from(tally.keys()).sort(
+        (a, b) => semesterRank(b) - semesterRank(a)
+      ),
+      counts: tally,
+    };
+  }, [items]);
 
   const [filter, setFilter] = useState<string>(ALL);
   const visible =
@@ -59,27 +64,25 @@ export default function EventArchive({
 
   return (
     <>
+      {/* Toggle-button group, not tabs — there are no tabpanels and no
+          arrow-key semantics; aria-pressed reflects the active filter. */}
       {semesters.length > 0 && (
-        <div className="sw-filter" role="tablist" aria-label="Filter by semester">
+        <div className="sw-filter" role="group" aria-label="Filter by semester">
           <button
             type="button"
-            role="tab"
-            aria-selected={filter === ALL}
+            aria-pressed={filter === ALL}
             className={`sw-filter__btn${filter === ALL ? ' is-active' : ''}`}
             onClick={() => setFilter(ALL)}
           >
             All <span className="sw-filter__count">{items.length}</span>
           </button>
           {semesters.map((s) => {
-            const count = items.filter(
-              (i) => i.date && semesterOf(i.date) === s
-            ).length;
+            const count = counts.get(s) ?? 0;
             return (
               <button
                 key={s}
                 type="button"
-                role="tab"
-                aria-selected={filter === s}
+                aria-pressed={filter === s}
                 className={`sw-filter__btn${filter === s ? ' is-active' : ''}`}
                 onClick={() => setFilter(s)}
               >

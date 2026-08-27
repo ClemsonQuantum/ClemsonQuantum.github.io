@@ -55,16 +55,46 @@ export default function ModalFormButton({
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
   const uid = useId();
 
-  // While open: focus the first field, close on Escape, and lock background scroll.
+  // While open: focus the first field, keep Tab cycling inside the dialog,
+  // close on Escape, and lock background scroll. Cleanup runs on every close
+  // path (Escape, X, overlay click, unmount) and hands focus back to the
+  // button that opened the modal.
   useEffect(() => {
     if (!open) return;
     dialogRef.current
       ?.querySelector<HTMLElement>('input:not([type="checkbox"]), textarea')
       ?.focus();
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+      // Visible controls only — offsetParent is null for the display:none
+      // honeypot, and tabIndex -1 skips anything deliberately unfocusable.
+      const focusables = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, textarea, select',
+        ),
+      ).filter((el) => el.tabIndex !== -1 && el.offsetParent !== null);
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey) {
+        if (active === first || !dialog.contains(active)) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (active === last || !dialog.contains(active)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener('keydown', onKey);
     const prevOverflow = document.body.style.overflow;
@@ -72,10 +102,17 @@ export default function ModalFormButton({
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
+      triggerRef.current?.focus();
+      triggerRef.current = null;
     };
   }, [open]);
 
   function openModal() {
+    // Remember the opener so the cleanup above can restore focus to it.
+    triggerRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
     setStatus('idle');
     setErrorMsg('');
     setOpen(true);
@@ -87,7 +124,7 @@ export default function ModalFormButton({
 
     if (!web3formsReady) {
       setStatus('error');
-      setErrorMsg('This form isn’t configured yet —');
+      setErrorMsg('This form isn’t configured yet.');
       return;
     }
 
@@ -117,17 +154,22 @@ export default function ModalFormButton({
         form.reset();
       } else {
         setStatus('error');
-        setErrorMsg(json.message || 'Something went wrong —');
+        setErrorMsg(json.message || 'Something went wrong.');
       }
     } catch {
       setStatus('error');
-      setErrorMsg('Network error —');
+      setErrorMsg('Network error.');
     }
   }
 
   return (
     <>
-      <button type="button" className="view-all-link" onClick={openModal}>
+      <button
+        type="button"
+        className="view-all-link"
+        aria-haspopup="dialog"
+        onClick={openModal}
+      >
         {label}
       </button>
 
@@ -155,7 +197,15 @@ export default function ModalFormButton({
             </button>
 
             {status === 'success' ? (
-              <p className="form-success" role="status">
+              // Replacing the form drops the focused submit button from the
+              // DOM; parking focus on the status keeps keyboard users inside
+              // the dialog and announces the result.
+              <p
+                className="form-success"
+                role="status"
+                tabIndex={-1}
+                ref={(el) => el?.focus()}
+              >
                 {successMessage}
               </p>
             ) : (
@@ -210,7 +260,7 @@ export default function ModalFormButton({
 
                   {status === 'error' && (
                     <p className="form-error" role="alert">
-                      {errorMsg} email us at{' '}
+                      {errorMsg} Please email us at{' '}
                       <a href={`mailto:${siteConfig.contactEmail}`}>
                         {siteConfig.contactEmail}
                       </a>

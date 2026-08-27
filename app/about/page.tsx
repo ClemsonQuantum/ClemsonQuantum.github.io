@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageOpenGraph } from '@/lib/og';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import PastBoardMembers from '@/components/PastBoardMembers';
@@ -7,13 +8,19 @@ export const metadata: Metadata = {
   title: 'About',
   description:
     'Learn about the Clemson Quantum Club, a student-led community for accessible quantum computing education, events, and peer support at Clemson.',
+  openGraph: pageOpenGraph({
+    title: 'About | Clemson Quantum Club',
+    description:
+      'Learn about the Clemson Quantum Club, a student-led community for accessible quantum computing education, events, and peer support at Clemson.',
+    url: '/about/',
+  }),
 };
 
 const focusAreas = [
   {
     title: 'Open to everyone',
     text:
-      'Drop into any meeting — no application, no dues, no prior quantum background.',
+      'Drop into any meeting. No application, no dues, no prior quantum background.',
   },
   {
     title: 'Hands-on learning',
@@ -21,9 +28,9 @@ const focusAreas = [
       'Workshops and study groups help members move from core concepts to writing and running quantum circuits.',
   },
   {
-    title: 'Find your people',
+    title: 'Connect with people',
     text:
-      'Meet teammates for projects and hackathons, plus people to talk research and course planning with.',
+      'Attend events and network with students, industry partners, and academic institutions.',
   },
 ];
 
@@ -100,9 +107,9 @@ export default function AboutPage() {
         <div>
           <h2>Events and pathways</h2>
           <p>
-            Members participate in workshops, hackathons, and student projects,
-            from MIT iQuHack to the SC Quantathon series, the student-focused
-            quantum hackathon we help run at Clemson.
+            Members participate in workshops, student projects, and hackathons,
+            from MIT iQuHack to SC Quantathon, the student-focused quantum
+            hackathon series we help run at Clemson.
           </p>
         </div>
         <div className="about-page__link-panel">

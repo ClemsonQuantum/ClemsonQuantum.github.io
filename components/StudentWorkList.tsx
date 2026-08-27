@@ -1,50 +1,59 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
 // Import from lib/types (not lib/content) — content.ts pulls in Node's `fs`,
 // which can't be bundled into a client component.
-import { formatDate } from '@/lib/types';
+import { capitalize, formatDate } from '@/lib/types';
+import { WORK_TYPES } from '@/lib/content-shared.mjs';
 import type { PageMeta } from '@/lib/types';
 
 const ALL = 'all';
 // Categories always offered, even with no entries of that type. Other types
 // found in the data are appended.
-const KNOWN_TYPES = ['poster', 'paper'];
+const KNOWN_TYPES = WORK_TYPES;
 
 function pluralLabel(type: string): string {
-  const cap = type.charAt(0).toUpperCase() + type.slice(1);
-  return cap.endsWith('s') ? cap : `${cap}s`;
+  const label = capitalize(type);
+  return label.endsWith('s') ? label : `${label}s`;
 }
 
 export default function StudentWorkList({ works }: { works: PageMeta[] }) {
-  const presentTypes = works
-    .map((w) => w.type)
-    .filter((t): t is string => Boolean(t));
-  const types = Array.from(new Set([...KNOWN_TYPES, ...presentTypes]));
+  // Type tabs and their counts, memoized so filter clicks don't recompute.
+  const { types, counts } = useMemo(() => {
+    const tally = new Map<string, number>();
+    for (const w of works) {
+      if (w.type) tally.set(w.type, (tally.get(w.type) ?? 0) + 1);
+    }
+    return {
+      types: Array.from(new Set([...KNOWN_TYPES, ...tally.keys()])),
+      counts: tally,
+    };
+  }, [works]);
 
   const [filter, setFilter] = useState<string>(ALL);
   const visible = filter === ALL ? works : works.filter((w) => w.type === filter);
 
   return (
     <>
-      <div className="sw-filter" role="tablist" aria-label="Filter by type">
+      {/* Toggle-button group, not tabs — there are no tabpanels and no
+          arrow-key semantics; aria-pressed reflects the active filter. */}
+      <div className="sw-filter" role="group" aria-label="Filter by type">
         <button
           type="button"
-          role="tab"
-          aria-selected={filter === ALL}
+          aria-pressed={filter === ALL}
           className={`sw-filter__btn${filter === ALL ? ' is-active' : ''}`}
           onClick={() => setFilter(ALL)}
         >
           All <span className="sw-filter__count">{works.length}</span>
         </button>
         {types.map((t) => {
-          const count = works.filter((w) => w.type === t).length;
+          const count = counts.get(t) ?? 0;
           return (
             <button
               key={t}
               type="button"
-              role="tab"
-              aria-selected={filter === t}
+              aria-pressed={filter === t}
               className={`sw-filter__btn${filter === t ? ' is-active' : ''}`}
               onClick={() => setFilter(t)}
             >
@@ -57,21 +66,21 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
       {visible.length === 0 ? (
         <p className="sw-empty">
           No {filter === ALL ? 'submissions' : pluralLabel(filter).toLowerCase()}{' '}
-          yet — check back soon.
+          yet. Check back soon.
         </p>
       ) : (
         <div className="sw-list">
           {visible.map((p) => (
             <article key={p.slug} className="sw-item">
               {p.type && (
-                <span className="sw-type">
-                  {p.type.charAt(0).toUpperCase() + p.type.slice(1)}
-                </span>
+                <span className="sw-type">{capitalize(p.type)}</span>
               )}
               <h3 className="sw-title">
-                <a href={`/resources/student-work-and-projects/${p.slug}/`}>
+                {/* p.href resolves external entries to their destination and
+                    internal ones to the generated detail page. */}
+                <Link href={p.href}>
                   {p.title}
-                </a>
+                </Link>
               </h3>
               <p className="sw-meta">
                 {p.date && <span>{formatDate(p.date)}</span>}
