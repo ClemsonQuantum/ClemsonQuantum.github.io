@@ -19,8 +19,14 @@ interface HeaderProps {
 const EVENTS_IN_DROPDOWN = 3;
 
 // On the hamburger nav (≤1024px), dropdowns/submenus open on tap, not hover.
-const isMobileNav = () =>
-  typeof window !== 'undefined' && window.matchMedia('(max-width: 1024px)').matches;
+// The MediaQueryList is created once and reused — handlers call this on every
+// hover/focus/click across the nav.
+let mobileNavQuery: MediaQueryList | null = null;
+const isMobileNav = () => {
+  if (typeof window === 'undefined') return false;
+  mobileNavQuery ??= window.matchMedia('(max-width: 1024px)');
+  return mobileNavQuery.matches;
+};
 
 type DropdownId = 'events' | 'resources' | null;
 type EventsSubmenuId = 'hackathons' | 'workshops' | 'meetings' | null;
@@ -62,8 +68,6 @@ function EventsSubmenu({
       <Link
         href={href}
         className="nav-dropdown-link nav-dropdown-link--parent"
-        role="menuitem"
-        aria-haspopup="menu"
         aria-expanded={isOpen}
         onClick={(e) => {
           if (isMobileNav()) {
@@ -76,13 +80,15 @@ function EventsSubmenu({
       >
         {label}
       </Link>
-      <div className="dropdown-submenu-content" role="menu">
+      {/* Disclosure-pattern nav (APG): plain links revealed by the parent's
+          aria-expanded — no menu roles, which would promise arrow-key
+          behavior this nav doesn't implement. */}
+      <div className="dropdown-submenu-content">
         {items.map((item) => (
           <Link
             key={item.slug}
             href={item.isExternal ? item.href : `${href}${item.slug}/`}
             className="nav-dropdown-link"
-            role="menuitem"
             onClick={closeMenus}
             {...(item.isExternal
               ? { target: '_blank', rel: 'noopener noreferrer' }
@@ -95,7 +101,6 @@ function EventsSubmenu({
           <Link
             href={href}
             className="nav-dropdown-link nav-dropdown-link--view-all"
-            role="menuitem"
             onClick={closeMenus}
           >
             {viewAllLabel} <span aria-hidden="true">&rarr;</span>
@@ -176,20 +181,30 @@ export default function Header({ navData }: HeaderProps) {
   const meetingsTruncated = navData.meetings.length > EVENTS_IN_DROPDOWN;
 
   return (
-    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} role="navigation" aria-label="Main navigation">
+    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} aria-label="Main navigation">
       <div className="nav-inner">
         <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
           <picture>
             {/* Dark-theme logo (white on black) swapped in via prefers-color-scheme;
                 light-theme logo (black on white) is the default <img>. */}
+            {/* The two logos have different aspect ratios, so the <source>
+                carries its own dimensions — otherwise dark mode reserves the
+                light logo's (wider) box and shifts layout. */}
             <source
               srcSet="/images/logo-dark.png"
               media="(prefers-color-scheme: dark)"
+              width={208}
+              height={176}
             />
+            {/* Above the fold on every page: load eagerly, and give intrinsic
+                dimensions so the header doesn't reflow as the logo arrives. */}
             <SiteImage
               src="/images/logo-light.png"
               alt="Clemson Quantum Club"
               className="nav-logo"
+              width={258}
+              height={176}
+              loading="eager"
             />
           </picture>
         </Link>
@@ -218,7 +233,6 @@ export default function Header({ navData }: HeaderProps) {
             <Link
               href="/events/"
               className="nav-link nav-dropdown-trigger"
-              aria-haspopup="menu"
               aria-expanded={openDropdown === 'events'}
               onClick={(e) => {
                 if (isMobileNav()) {
@@ -233,7 +247,7 @@ export default function Header({ navData }: HeaderProps) {
                 <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
-            <div className="nav-dropdown-panel" role="menu">
+            <div className="nav-dropdown-panel">
               <EventsSubmenu
                 id="hackathons"
                 label="Hackathons"
@@ -267,7 +281,6 @@ export default function Header({ navData }: HeaderProps) {
               <Link
                 href="/events/"
                 className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
-                role="menuitem"
                 onClick={closeMenus}
               >
                 All Events <span aria-hidden="true">&rarr;</span>
@@ -282,7 +295,6 @@ export default function Header({ navData }: HeaderProps) {
             <Link
               href="/resources/"
               className="nav-link nav-dropdown-trigger"
-              aria-haspopup="menu"
               aria-expanded={openDropdown === 'resources'}
               onClick={(e) => {
                 if (isMobileNav()) {
@@ -297,18 +309,17 @@ export default function Header({ navData }: HeaderProps) {
                 <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
-            <div className="nav-dropdown-panel" role="menu">
+            <div className="nav-dropdown-panel">
               <div className="nav-dropdown-section">
-                <Link href="/resources/learning-resources/" className="nav-dropdown-link" role="menuitem" onClick={closeMenus}>
+                <Link href="/resources/learning-resources/" className="nav-dropdown-link" onClick={closeMenus}>
                   Learning Resources
                 </Link>
-                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" role="menuitem" onClick={closeMenus}>
+                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" onClick={closeMenus}>
                   Student Work &amp; Projects
                 </Link>
                 <Link
                   href="/resources/"
                   className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
-                  role="menuitem"
                   onClick={closeMenus}
                 >
                   All Resources <span aria-hidden="true">&rarr;</span>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageOpenGraph } from '@/lib/og';
 import ConstellationDivider from '@/components/ConstellationDivider';
 import BlochSphere from '@/components/BlochSphere';
 
@@ -6,6 +7,12 @@ export const metadata: Metadata = {
   title: 'Learning Resources',
   description:
     'Curated quantum computing learning path from the Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
+  openGraph: pageOpenGraph({
+    title: 'Learning Resources | Clemson Quantum Club',
+    description:
+      'Curated quantum computing learning path from the Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
+    url: '/resources/learning-resources/',
+  }),
 };
 
 interface Resource {
@@ -13,6 +20,9 @@ interface Resource {
   title: string;
   desc: string;
   href: string;
+  /** Optional companion link rendered after the title (e.g. part II of a
+   * two-course sequence). */
+  secondary?: { title: string; href: string };
 }
 
 interface Level {
@@ -31,18 +41,18 @@ const LEVELS: Level[] = [
     label: 'Beginner',
     title: 'Start from zero',
     blurb:
-      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits — interactive, hands-on, and zero setup.',
+      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits. Interactive, hands-on, and zero setup.',
     resources: [
       {
         type: 'Course',
         title: 'IBM Quantum Learning',
-        desc: 'Interactive lessons that take you from qubits to running real circuits, with code built right in.',
+        desc: 'Interactive lessons for any level, with a detailed 4-part fundamentals course.',
         href: 'https://learning.quantum.ibm.com/',
       },
       {
         type: 'Tool',
         title: 'IBM Quantum Composer',
-        desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate — the fastest way to see quantum operations.',
+        desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate. The fastest way to see quantum operations.',
         href: 'https://quantum.ibm.com/composer',
       },
       {
@@ -55,7 +65,7 @@ const LEVELS: Level[] = [
         type: 'Video',
         title: 'Qiskit on YouTube',
         desc: 'Friendly video walkthroughs and coding tutorials from the Qiskit community.',
-        href: 'https://www.youtube.com/@qaboratory',
+        href: 'https://www.youtube.com/@qiskit',
       },
     ],
   },
@@ -65,25 +75,31 @@ const LEVELS: Level[] = [
     label: 'Intermediate',
     title: 'Build & compete',
     blurb:
-      'Comfortable with the basics? Put them to work — write real circuits, branch into a second framework, and sharpen up for hackathons.',
+      'Comfortable with the basics? Put them to work by writing real circuits, branching into a second framework, and sharpening up for hackathons.',
     resources: [
       {
         type: 'Course',
-        title: 'Cirq Tutorials',
-        desc: "Build circuits with Google's Cirq and broaden beyond a single framework.",
-        href: 'https://quantumai.google/cirq/start',
+        title: 'PennyLane QML Tutorials',
+        desc: "PennyLane's hands-on quantum machine learning tutorials, with runnable demos from variational circuits to quantum neural networks.",
+        href: 'https://pennylane.ai/qml',
+      },
+      {
+        type: 'Course',
+        title: 'Microsoft Quantum Fundamentals',
+        desc: 'A structured Microsoft Learn path through quantum concepts and programming, from theory to running code in Azure Quantum.',
+        href: 'https://learn.microsoft.com/en-us/training/paths/quantum-computing-fundamentals/',
       },
       {
         type: 'Practice',
-        title: 'IBM Quantum Challenge',
-        desc: 'Guided, themed challenges on current quantum topics — excellent hackathon prep.',
-        href: 'https://challenges.quantum.ibm.com/',
+        title: 'Microsoft Quantum Development Kit',
+        desc: 'The Q# development kit for VS Code, with the built-in Katas: self-paced exercises with answer checking as you learn.',
+        href: 'https://quantum.microsoft.com/en-us/tools/microsoft-quantum-development-kit',
       },
       {
-        type: 'Event',
-        title: 'Xanadu QHack',
-        desc: 'A global quantum machine-learning hackathon with coding challenges to test your skills.',
-        href: 'https://qhack.ai/',
+        type: 'Video',
+        title: 'Google Quantum AI on YouTube',
+        desc: "Talks, demos, and deep dives from Google's quantum team, from error correction milestones to algorithm walkthroughs.",
+        href: 'https://www.youtube.com/@GoogleQuantumAI/videos',
       },
     ],
   },
@@ -93,25 +109,35 @@ const LEVELS: Level[] = [
     label: 'Advanced',
     title: 'Go deep',
     blurb:
-      'Ready for the theory. Rigorous coursework, the canonical textbooks, and the math behind the algorithms.',
+      'Get ready for the theory. Rigorous coursework, the canonical textbooks, and the math behind the algorithms await.',
     resources: [
       {
         type: 'Course',
         title: 'MIT OCW 8.370',
-        desc: 'A rigorous university course in quantum information — full lecture notes, problem sets, and exams.',
+        desc: 'A rigorous two-part university sequence in quantum information with full lecture notes, problem sets, and exams.',
         href: 'https://ocw.mit.edu/courses/8-370x-quantum-information-science-i-spring-2018/',
+        secondary: {
+          title: '8.371',
+          href: 'https://ocw.mit.edu/courses/8-371x-quantum-information-science-ii-spring-2018/',
+        },
       },
       {
         type: 'Book',
         title: 'Nielsen & Chuang',
-        desc: '“Quantum Computation and Quantum Information” — the field’s standard reference.',
-        href: 'https://www.cambridge.org/highereducation/books/quantum-computation-and-quantum-information/01E10196D0A682A6AEFFEA52D53BE9AE',
+        desc: '“Quantum Computation and Quantum Information”, the field’s standard reference.',
+        href: 'https://ia802805.us.archive.org/22/items/QuantumInformation/QC10th_quantum_Computing.pdf',
       },
       {
         type: 'Book',
-        title: 'Hidary',
-        desc: '“Quantum Computing: An Applied Approach” — theory paired with real, runnable code.',
-        href: 'https://link.springer.com/book/10.1007/978-3-030-83274-2',
+        title: 'Simon',
+        desc: '“Topological Quantum: Lecture Notes and Proto-Book”, a modern introduction to anyons, topological phases, and topological quantum computation.',
+        href: 'https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2021/TopoBook-Sep28-2021.pdf',
+      },
+      {
+        type: 'Video',
+        title: 'Preskill’s Ph219 Lectures',
+        desc: 'Recorded lectures from Caltech’s Ph/CS 219A Quantum Computation course, taught by John Preskill.',
+        href: 'https://youtube.com/playlist?list=PL0ojjrEqIyPy-1RRD8cTD_lF1hflo89Iu',
       },
     ],
   },
@@ -132,9 +158,9 @@ const ONGOING: { cat: string; title: string; desc: string; href: string }[] = [
   },
   {
     cat: 'News',
-    title: 'Quantum Computing Report',
-    desc: 'Industry news, analysis, and tracking across the quantum field.',
-    href: 'https://quantumcomputingreport.com/',
+    title: 'The Quantum Insider',
+    desc: 'Daily news, interviews, and analysis from across the quantum industry.',
+    href: 'https://thequantuminsider.com/',
   },
   {
     cat: 'Reference',
@@ -152,9 +178,8 @@ export default function LearningResourcesPage() {
         <ConstellationDivider />
       </header>
       <p className="lr-intro">
-        A curated path through quantum computing — from your very first qubit to
-        research-level theory. Jump to the stage that fits where you are, and
-        work your way down.
+        A curated path through quantum computing, from your very first qubit to
+        winning hackathons. Feel free to explore each level!
       </p>
 
       {LEVELS.map((level) => (
@@ -186,6 +211,19 @@ export default function LearningResourcesPage() {
                   >
                     {r.title}
                   </a>
+                  {r.secondary && (
+                    <>
+                      {' & '}
+                      <a
+                        className="lr-item__title"
+                        href={r.secondary.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {r.secondary.title}
+                      </a>
+                    </>
+                  )}
                   <span className="lr-item__desc">{r.desc}</span>
                 </span>
               </li>

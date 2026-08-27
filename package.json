@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/generate-search-index.mjs",
+    "predev": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/generate-search-index.mjs",
-    "build": "next build && touch out/.nojekyll",
+    "prebuild": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs",
+    "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "gray-matter": "^4.0.3",
@@ -20,6 +21,7 @@
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.6",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

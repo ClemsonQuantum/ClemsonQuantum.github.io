@@ -2,7 +2,7 @@
 title: "[HEADLINE]"
 date: YYYY-MM-DD
 summary: "[One or two sentence summary for the card preview]"
-image: "/images/[PLACEHOLDER].jpg"
+image: "/images/[PLACEHOLDER].webp"
 # Publisher shown on the card footer (e.g. "Clemson News", "SC Quantum").
 # Omit to default to "Clemson Quantum Club".
 source: "Clemson News"

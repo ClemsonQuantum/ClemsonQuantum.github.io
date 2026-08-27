@@ -1,6 +1,7 @@
 ---
 title: SC Quantathon v3 2026
 date: 2026-09-25
+dateDisplay: "September 25-27, 2026"
 summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
 image: "/images/scq-v3-graphic.webp"
 ---
@@ -19,10 +20,10 @@ image: "/images/scq-v3-graphic.webp"
 </div>
 
 <div class="hackathon-hero-cta">
-  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T15:00:00-04:00" data-sr-summary="The event starts September 25, 2026."></div>
+  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T15:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
-    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta">Apply Now</a>
-    <a href="https://sc-quantathon-v3.devpost.com/?ref_content=default&ref_feature=challenge&ref_medium=portfolio" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline">View on Devpost</a>
+    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--orange">Apply Now</a>
+    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">View on Devpost</a>
   </div>
 </div>
 
@@ -40,7 +41,7 @@ Participants will work in teams, attend technical programming, and receive suppo
 Students from computing, physics, engineering, mathematics, and related fields are encouraged to participate.
 
 <div class="hackathon-video">
-  <iframe src="https://www.youtube.com/embed/4cKQfLDyx8w" title="SC Quantathon v3" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <iframe src="https://www.youtube-nocookie.com/embed/4cKQfLDyx8w" title="SC Quantathon v3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 </div>
@@ -56,11 +57,11 @@ Students from computing, physics, engineering, mathematics, and related fields a
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Location</div>
-    <div class="hackathon-spec-value">TBD</div>
+    <div class="hackathon-spec-value">Watt Family Innovation Center</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Team Size</div>
-    <div class="hackathon-spec-value">1-5 students</div>
+    <div class="hackathon-spec-value">3-5 students</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Eligibility</div>
@@ -72,7 +73,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Cost</div>
-    <div class="hackathon-spec-value">Free to attend. Meals and event materials will be provided.</div>
+    <div class="hackathon-spec-value">Free to attend with meals and event materials provided</div>
   </div>
 </div>
 
@@ -176,17 +177,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-prize">
     <h3>Track Winners</h3>
     <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>One prize per challenge track, awarded to the team with the strongest project in that track.</p>
-  </div>
-  <div class="hackathon-prize">
-    <h3>Grand Prize</h3>
-    <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>The top overall award &mdash; selected from among the track winners for the best project of the event.</p>
-  </div>
-  <div class="hackathon-prize">
-    <h3>Best Newcomer</h3>
-    <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>A recognition award for the strongest work from a team that is new to quantum computing.</p>
+    <p>Prizes for the top three teams in each challenge track.</p>
   </div>
 </div>
 
@@ -209,27 +200,27 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
-    <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" />
+    <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" loading="lazy" />
     <div class="hackathon-team-name">Nathan Jones</div>
     <div class="hackathon-team-role">Challenge Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" />
+    <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" loading="lazy" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Logistics Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/valentine-mohaugen.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" />
+    <img src="/images/valentine-mohaugen.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" loading="lazy" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
     <div class="hackathon-team-role">Technology Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/ashton-mcentarffer.jpg" alt="Ashton McEntarffer" class="hackathon-team-photo" />
-    <div class="hackathon-team-name">Ashton McEntarffer</div>
+    <img src="/images/jack-layton.jpg" alt="Jack Layton" class="hackathon-team-photo" loading="lazy" />
+    <div class="hackathon-team-name">Jack Layton</div>
     <div class="hackathon-team-role">Finance Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/varun-sethi.webp" alt="Varun Sethi" class="hackathon-team-photo" />
+    <img src="/images/varun-sethi.webp" alt="Varun Sethi" class="hackathon-team-photo" loading="lazy" />
     <div class="hackathon-team-name">Varun Sethi</div>
     <div class="hackathon-team-role">Communications Lead</div>
   </div>

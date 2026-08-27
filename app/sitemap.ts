@@ -35,10 +35,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     getAllPages(dir)
       // External entries have no internal page, so they don't belong here.
       .filter((page) => !page.isExternal)
-      .map((page) => `/${dir}/${page.slug}/`)
+      .map((page) => {
+        const parsed = page.date ? new Date(page.date) : null;
+        return {
+          url: `${BASE_URL}/${dir}/${page.slug}/`,
+          // Entry date doubles as lastModified; skip unparsable
+          // placeholders like "TBD".
+          ...(parsed && !Number.isNaN(parsed.getTime())
+            ? { lastModified: parsed }
+            : {}),
+        };
+      })
   );
 
-  return [...STATIC_ROUTES, ...contentRoutes].map((route) => ({
-    url: `${BASE_URL}${route}`,
-  }));
+  return [
+    ...STATIC_ROUTES.map((route) => ({ url: `${BASE_URL}${route}` })),
+    ...contentRoutes,
+  ];
 }

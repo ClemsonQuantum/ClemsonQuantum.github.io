@@ -5,14 +5,6 @@ node_modules/
 tsconfig.tsbuildinfo
 public/search.json
 
-# Jekyll
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-.bundle/
-vendor/
-
 # Misc
 .DS_Store
-*.claude
+.claude/

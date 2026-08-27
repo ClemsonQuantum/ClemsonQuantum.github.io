@@ -25,21 +25,26 @@ export default function PastBoardMembers() {
           <p>Previous student officers who helped build Clemson Quantum Club.</p>
         </div>
         <button
+          type="button"
           className="view-all-link"
           onClick={() => setExpanded((e) => !e)}
           aria-expanded={expanded}
+          aria-controls="past-board-list"
         >
           {expanded ? 'Hide archive' : 'View archive'}
         </button>
       </div>
       {expanded && (
-        <ul className="about-past-board__list">
+        <ul id="past-board-list" className="about-past-board__list">
           {members.map((m) => (
             <li key={`${m.name}-${m.years}`} className="about-past-board__item">
+              {/* Rendered as a fixed 52px circle regardless of source size. */}
               <SiteImage
                 className="about-past-board__avatar"
                 src={m.image || '/images/blank-profile.svg'}
                 alt={m.name}
+                width={52}
+                height={52}
               />
               <div>
                 <h3>{m.name}</h3>

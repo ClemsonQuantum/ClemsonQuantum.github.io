@@ -1,9 +1,5 @@
-import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug, makeExcerpt } from '@/lib/content';
-import ReactMarkdown from 'react-markdown';
-import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
 import type { ComponentPropsWithoutRef } from 'react';
+import { createSlugPage } from '@/lib/slugPage';
 import ModalFormButton, {
   type ModalFormField,
 } from '@/components/ModalFormButton';
@@ -48,7 +44,7 @@ function MarkdownLink({
         label={children}
         title="Get SC Quantathon v3 updates"
         subtitle="Drop your name and email and we’ll keep you posted on the event."
-        subject="SC Quantathon v3 — Participant updates sign-up"
+        subject="SC Quantathon v3: Participant updates sign-up"
         subjectTemplate="{name} has requested participant updates for SC Quantathon v3"
         successMessage="You’re on the list! We’ll email SC Quantathon v3 updates to you."
         submitLabel="Notify me"
@@ -62,7 +58,7 @@ function MarkdownLink({
         label={children}
         title="Sponsor SC Quantathon v3"
         subtitle="Tell us a bit about you and we’ll follow up with sponsorship details."
-        subject="SC Quantathon v3 — Sponsorship inquiry"
+        subject="SC Quantathon v3: Sponsorship inquiry"
         subjectTemplate="{name} from {organization} is interested in sponsoring SC Quantathon v3"
         successMessage="Thanks for your interest in sponsoring SC Quantathon v3! We’ll be in touch soon."
         submitLabel="Get in touch"
@@ -80,7 +76,9 @@ function MarkdownLink({
 // Render marker divs as interactive client components, dispatched on sentinel
 // classes so pages that don't opt in render exactly as before:
 //   .hackathon-hero--quantum  → animated qubit-particle canvas behind the hero
-//   .event-countdown          → live countdown (data-target / data-end)
+//   .event-countdown          → live countdown (data-target / data-end, plus
+//                               optional data-ended-message / data-live-message
+//                               for per-event wrap-up and live copy)
 function MarkdownDiv(props: ComponentPropsWithoutRef<'div'> & { node?: unknown }) {
   // Strip react-markdown's `node` prop so it is never spread onto the DOM.
   const { node, className, children, ...rest } = props;
@@ -99,12 +97,19 @@ function MarkdownDiv(props: ComponentPropsWithoutRef<'div'> & { node?: unknown }
     const target = data['data-target'] ?? data['dataTarget'];
     const end = data['data-end'] ?? data['dataEnd'];
     const srSummary = data['data-sr-summary'] ?? data['dataSrSummary'];
+    const endedMessage =
+      data['data-ended-message'] ?? data['dataEndedMessage'];
+    const liveMessage = data['data-live-message'] ?? data['dataLiveMessage'];
     if (typeof target !== 'string') return null;
     return (
       <EventCountdown
         target={target}
         end={typeof end === 'string' ? end : undefined}
         srSummary={typeof srSummary === 'string' ? srSummary : undefined}
+        endedMessage={
+          typeof endedMessage === 'string' ? endedMessage : undefined
+        }
+        liveMessage={typeof liveMessage === 'string' ? liveMessage : undefined}
       />
     );
   }
@@ -115,63 +120,10 @@ function MarkdownDiv(props: ComponentPropsWithoutRef<'div'> & { node?: unknown }
   );
 }
 
-interface Props {
-  params: Promise<{ slug: string }>;
-}
+const page = createSlugPage('events/hackathons', {
+  components: { a: MarkdownLink, div: MarkdownDiv },
+});
 
-export async function generateStaticParams() {
-  // Entries with an external destination link straight to the official event
-  // site from cards/nav/search — no internal detail page is generated for them.
-  return getAllPages('events/hackathons')
-    .filter((p) => !p.isExternal)
-    .map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const page = getPageBySlug('events/hackathons', slug);
-  if (!page || !page.data) {
-    return { title: String(slug) };
-  }
-  const title = String(page.data.title ?? slug);
-  const description =
-    (typeof page.data.summary === 'string' && page.data.summary) ||
-    makeExcerpt(page.content ?? '');
-  const image = typeof page.data.image === 'string' ? page.data.image : undefined;
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      url: `/events/hackathons/${slug}/`,
-      ...(image ? { images: [image] } : {}),
-    },
-  };
-}
-
-export default async function HackathonPage({ params }: Props) {
-  const { slug } = await params;
-  const page = getPageBySlug('events/hackathons', slug);
-  if (!page || !page.data) {
-    return (
-      <div className="page-content">
-        <h1>Not Found</h1>
-        <p>This page could not be found.</p>
-      </div>
-    );
-  }
-  const { content } = page;
-
-  return (
-    <div className="page-content">
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
-        components={{ a: MarkdownLink, div: MarkdownDiv }}
-      >
-        {content}
-      </ReactMarkdown>
-    </div>
-  );
-}
+export const generateStaticParams = page.generateStaticParams;
+export const generateMetadata = page.generateMetadata;
+export default page.Page;

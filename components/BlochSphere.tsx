@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Geometry: |psi> = cos(theta/2)|0> + e^{i phi} sin(theta/2)|1> maps to the
 // Bloch vector (x, y, z) = (sin theta cos phi, sin theta sin phi, cos theta).
@@ -26,17 +26,44 @@ function toDeg(rad: number): number {
   return Math.round((rad * 180) / Math.PI);
 }
 
+function project(theta: number, phi: number): { sx: number; sy: number } {
+  const x = Math.sin(theta) * Math.cos(phi);
+  const y = Math.sin(theta) * Math.sin(phi);
+  const z = Math.cos(theta);
+  return {
+    sx: CX + R * x,
+    sy: CY - R * (z * Math.cos(TILT) - y * Math.sin(TILT)),
+  };
+}
+
 // Interactive Bloch sphere for the learning-resources page. Idle behavior is
 // a slow phi precession (rAF gated on visibility + on-screen + reduced
 // motion, mirroring QuantumCanvas); dragging or arrow keys move the state
-// vector directly, and auto-rotation resumes ~5 s after the last interaction.
-// Initial angles are constants, so static-export hydration always matches.
+// vector directly, and auto-rotation resumes ~2 s after the last interaction.
+// Angles live in refs and every update writes the SVG/readout directly (like
+// ConstellationDivider) — per-frame React state would re-render the whole
+// figure at 60 fps. Initial angles are constants, so static-export hydration
+// always matches.
 export default function BlochSphere() {
-  const [theta, setTheta] = useState(INITIAL_THETA);
-  const [phi, setPhi] = useState(INITIAL_PHI);
   const stageRef = useRef<HTMLDivElement>(null);
+  const vectorRef = useRef<SVGLineElement>(null);
+  const tipRef = useRef<SVGCircleElement>(null);
+  const readoutRef = useRef<HTMLParagraphElement>(null);
+  const angles = useRef({ theta: INITIAL_THETA, phi: INITIAL_PHI });
   const lastInteraction = useRef(0);
   const dragFrom = useRef<{ x: number; y: number } | null>(null);
+
+  const render = () => {
+    const { theta, phi } = angles.current;
+    const { sx, sy } = project(theta, phi);
+    vectorRef.current?.setAttribute('x2', sx.toFixed(2));
+    vectorRef.current?.setAttribute('y2', sy.toFixed(2));
+    tipRef.current?.setAttribute('cx', sx.toFixed(2));
+    tipRef.current?.setAttribute('cy', sy.toFixed(2));
+    if (readoutRef.current) {
+      readoutRef.current.textContent = `θ = ${toDeg(theta)}° · φ = ${toDeg(phi)}°`;
+    }
+  };
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -52,7 +79,9 @@ export default function BlochSphere() {
       const dt = Math.min((time - lastTime) / 1000, 0.05);
       lastTime = time;
       if (time - lastInteraction.current > RESUME_MS && !dragFrom.current) {
-        setPhi((p) => (p + AUTO_RATE * dt) % (Math.PI * 2));
+        angles.current.phi =
+          (angles.current.phi + AUTO_RATE * dt) % (Math.PI * 2);
+        render();
       }
       schedule();
     }
@@ -93,6 +122,8 @@ export default function BlochSphere() {
       document.removeEventListener('visibilitychange', onVisibility);
       motionQuery.removeEventListener('change', updateRunning);
     };
+    // render/schedule are stable closures over refs; nothing reactive here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -108,8 +139,10 @@ export default function BlochSphere() {
     const dy = e.clientY - from.y;
     dragFrom.current = { x: e.clientX, y: e.clientY };
     lastInteraction.current = performance.now();
-    setPhi((p) => (p + dx * DRAG_RATE + Math.PI * 2) % (Math.PI * 2));
-    setTheta((t) => clampTheta(t + dy * DRAG_RATE));
+    angles.current.phi =
+      (angles.current.phi + dx * DRAG_RATE + Math.PI * 2) % (Math.PI * 2);
+    angles.current.theta = clampTheta(angles.current.theta + dy * DRAG_RATE);
+    render();
   };
 
   const onPointerUp = () => {
@@ -118,24 +151,22 @@ export default function BlochSphere() {
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const a = angles.current;
     let handled = true;
-    if (e.key === 'ArrowLeft') setPhi((p) => (p - KEY_STEP + Math.PI * 2) % (Math.PI * 2));
-    else if (e.key === 'ArrowRight') setPhi((p) => (p + KEY_STEP) % (Math.PI * 2));
-    else if (e.key === 'ArrowUp') setTheta((t) => clampTheta(t - KEY_STEP));
-    else if (e.key === 'ArrowDown') setTheta((t) => clampTheta(t + KEY_STEP));
+    if (e.key === 'ArrowLeft') a.phi = (a.phi - KEY_STEP + Math.PI * 2) % (Math.PI * 2);
+    else if (e.key === 'ArrowRight') a.phi = (a.phi + KEY_STEP) % (Math.PI * 2);
+    else if (e.key === 'ArrowUp') a.theta = clampTheta(a.theta - KEY_STEP);
+    else if (e.key === 'ArrowDown') a.theta = clampTheta(a.theta + KEY_STEP);
     else handled = false;
     if (handled) {
       lastInteraction.current = performance.now();
+      render();
       e.preventDefault();
     }
   };
 
-  // Bloch vector -> screen point.
-  const x = Math.sin(theta) * Math.cos(phi);
-  const y = Math.sin(theta) * Math.sin(phi);
-  const z = Math.cos(theta);
-  const sx = CX + R * x;
-  const sy = CY - R * (z * Math.cos(TILT) - y * Math.sin(TILT));
+  // Server-rendered position; identical on hydration since it's constants.
+  const { sx, sy } = project(INITIAL_THETA, INITIAL_PHI);
   const poleY = R * Math.cos(TILT);
 
   return (
@@ -144,7 +175,10 @@ export default function BlochSphere() {
         ref={stageRef}
         className="bloch-stage"
         tabIndex={0}
-        role="img"
+        // role="application" so assistive tech passes the arrow keys through
+        // to the handler instead of presenting this as a static image.
+        role="application"
+        aria-roledescription="interactive diagram"
         aria-label="Interactive Bloch sphere. The arrow shows a qubit state. Drag, or use the arrow keys, to rotate it."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
@@ -184,15 +218,17 @@ export default function BlochSphere() {
             |1&#x27E9;
           </text>
           {/* State vector */}
-          <line className="bloch-vector" x1={CX} y1={CY} x2={sx} y2={sy} />
-          <circle className="bloch-tip" cx={sx} cy={sy} r={5} />
+          <line ref={vectorRef} className="bloch-vector" x1={CX} y1={CY} x2={sx} y2={sy} />
+          <circle ref={tipRef} className="bloch-tip" cx={sx} cy={sy} r={5} />
         </svg>
       </div>
-      <p className="bloch-readout" aria-live="polite">
-        &theta; = {toDeg(theta)}&deg; &middot; &phi; = {toDeg(phi)}&deg;
+      {/* No aria-live: the idle precession changes this ~20x/s, which would
+          flood screen readers with a nonstop announcement queue. */}
+      <p ref={readoutRef} className="bloch-readout">
+        &theta; = {toDeg(INITIAL_THETA)}&deg; &middot; &phi; = {toDeg(INITIAL_PHI)}&deg;
       </p>
       <figcaption className="bloch-caption">
-        Every qubit state lives somewhere on this sphere &mdash; drag it.
+        Every qubit state lives somewhere on this sphere. Go ahead, drag it.
       </figcaption>
     </figure>
   );

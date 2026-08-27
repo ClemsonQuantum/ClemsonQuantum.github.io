@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import siteConfig from '@/data/site-config.json';
 import SiteImage from '@/components/SiteImage';
+import CopyrightYear from '@/components/CopyrightYear';
 import ConstellationDivider from '@/components/ConstellationDivider';
 import {
   DiscordIcon,
+  GroupMeIcon,
   LinkedInIcon,
   GitHubIcon,
   InstagramIcon,
@@ -12,6 +14,7 @@ import {
 
 const socialLinks = [
   { label: 'Discord', href: siteConfig.discordInvite, Icon: DiscordIcon },
+  { label: 'GroupMe', href: siteConfig.groupmeUrl, Icon: GroupMeIcon },
   { label: 'LinkedIn', href: siteConfig.linkedinUrl, Icon: LinkedInIcon },
   { label: 'GitHub', href: siteConfig.githubUrl, Icon: GitHubIcon },
   { label: 'TigerQuest', href: siteConfig.tigerquestUrl, Icon: TigerQuestIcon },
@@ -25,15 +28,20 @@ export default function Footer() {
         <div className="footer-brand">
           <Link href="/" className="footer-logo-link" aria-label="Clemson Quantum Club home">
             <picture>
-              {/* Same light/dark logo swap as the header. */}
+              {/* Same light/dark logo swap as the header; per-source
+                  dimensions because the two logos differ in aspect ratio. */}
               <source
                 srcSet="/images/logo-dark.png"
                 media="(prefers-color-scheme: dark)"
+                width={208}
+                height={176}
               />
               <SiteImage
                 src="/images/logo-light.png"
                 alt="Clemson Quantum Club"
                 className="footer-logo"
+                width={258}
+                height={176}
               />
             </picture>
           </Link>
@@ -69,7 +77,7 @@ export default function Footer() {
       <ConstellationDivider wide />
 
       <p className="footer-copy">
-        &copy; {new Date().getFullYear()} Clemson Quantum Club &middot;{' '}
+        &copy; <CopyrightYear /> Clemson Quantum Club &middot;{' '}
         <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
       </p>
     </footer>

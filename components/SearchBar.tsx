@@ -1,11 +1,42 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface SearchResult {
   title: string;
   url: string;
   excerpt: string;
+  /** Hidden searchable text: author/mentor names, outlet, type. */
+  meta?: string;
+}
+
+// Word-based AND matching: every query word must appear somewhere in the
+// entry (title, hidden meta, or excerpt), so "valentine mohaugen paper" finds
+// a paper authored by Valentine even when no field contains that exact
+// phrase. Title and author hits rank above body hits.
+function rankResults(index: SearchResult[], query: string): SearchResult[] {
+  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  if (tokens.length === 0) return [];
+  return index
+    .map((item) => {
+      const title = item.title.toLowerCase();
+      const meta = (item.meta ?? '').toLowerCase();
+      const excerpt = (item.excerpt ?? '').toLowerCase();
+      let score = 0;
+      for (const t of tokens) {
+        if (title.includes(t)) score += 3;
+        else if (meta.includes(t)) score += 2;
+        else if (excerpt.includes(t)) score += 1;
+        else return null; // AND semantics: every word must match somewhere
+      }
+      return { item, score };
+    })
+    .filter((r): r is { item: SearchResult; score: number } => r !== null)
+    .sort((a, b) => b.score - a.score)
+    .map((r) => r.item)
+    .slice(0, 8);
 }
 
 export default function SearchBar() {
@@ -15,12 +46,20 @@ export default function SearchBar() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
   const listboxId = 'search-listbox';
 
   useEffect(() => {
     fetch('/search.json')
-      .then((r) => r.json())
-      .then(setIndexData)
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((parsed) => {
+        // Guard the shape so a bad response can't make .filter() throw later.
+        if (Array.isArray(parsed)) setIndexData(parsed);
+        else console.warn('[search] Unexpected search index shape');
+      })
       .catch(() => {
         console.warn('[search] Failed to load search index');
       });
@@ -32,17 +71,8 @@ export default function SearchBar() {
       setActiveIndex(-1);
       return;
     }
-    const q = query.trim().toLowerCase();
     if (indexData) {
-      setResults(
-        indexData
-          .filter(
-            (i) =>
-              i.title?.toLowerCase().includes(q) ||
-              i.excerpt?.toLowerCase().includes(q)
-          )
-          .slice(0, 8)
-      );
+      setResults(rankResults(indexData, query.trim()));
       setActiveIndex(-1);
     }
   }, [query, indexData]);
@@ -63,6 +93,15 @@ export default function SearchBar() {
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
+      // Escape must work even with zero results, so the "No results" panel
+      // is dismissible from the keyboard.
+      if (e.key === 'Escape') {
+        setResults([]);
+        setQuery('');
+        setActiveIndex(-1);
+        inputRef.current?.blur();
+        return;
+      }
       if (results.length === 0) return;
 
       switch (e.key) {
@@ -76,19 +115,18 @@ export default function SearchBar() {
           break;
         case 'Enter':
           if (activeIndex >= 0 && results[activeIndex]) {
-            window.location.href = results[activeIndex].url;
+            const url = results[activeIndex].url;
             setResults([]);
             setQuery('');
+            // External results (news/attended events) leave the site; internal
+            // ones keep the SPA transition.
+            if (url.includes('://')) window.location.href = url;
+            else router.push(url);
           }
-          break;
-        case 'Escape':
-          setResults([]);
-          setActiveIndex(-1);
-          inputRef.current?.blur();
           break;
       }
     },
-    [results, activeIndex]
+    [results, activeIndex, router]
   );
 
   const hasMinQuery = query.trim().length >= 1;
@@ -122,33 +160,43 @@ export default function SearchBar() {
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={handleKeyDown}
         role="combobox"
-        aria-expanded={isOpen}
+        aria-expanded={isOpen && hasResults}
         aria-autocomplete="list"
-        aria-controls={listboxId}
+        // Only reference the listbox while it exists — the empty-state panel
+        // is a status region, not a listbox.
+        aria-controls={isOpen && hasResults ? listboxId : undefined}
         aria-activedescendant={activeIndex >= 0 ? `search-option-${activeIndex}` : undefined}
         aria-label="Search site content"
       />
       {isOpen && hasResults && (
         <div className="search-results-dropdown" role="listbox" id={listboxId}>
-          {results.map((r, i) => (
-            <a
-              key={`${r.url}-${r.title}`}
-              id={`search-option-${i}`}
-              href={r.url}
-              className={`search-item${i === activeIndex ? ' search-item--active' : ''}`}
-              role="option"
-              aria-selected={i === activeIndex}
-              onClick={() => {
+          {results.map((r, i) => {
+            const shared = {
+              id: `search-option-${i}`,
+              className: `search-item${i === activeIndex ? ' search-item--active' : ''}`,
+              role: 'option',
+              'aria-selected': i === activeIndex,
+              onClick: () => {
                 setResults([]);
                 setQuery('');
-              }}
-            >
-              <div className="search-item-title">{r.title}</div>
-            </a>
-          ))}
+              },
+            };
+            // Internal results keep the SPA transition via next/link;
+            // external ones (news, attended events) are plain anchors.
+            return r.url.includes('://') ? (
+              <a key={`${r.url}-${r.title}`} href={r.url} {...shared}>
+                <div className="search-item-title">{r.title}</div>
+              </a>
+            ) : (
+              <Link key={`${r.url}-${r.title}`} href={r.url} {...shared}>
+                <div className="search-item-title">{r.title}</div>
+              </Link>
+            );
+          })}
         </div>
       )}
-      {isOpen && !hasResults && (
+      {/* Only claim "no results" once the index has actually loaded. */}
+      {isOpen && !hasResults && indexData !== null && (
         <div className="search-results-dropdown search-results-dropdown--empty" role="status">
           <div className="search-empty">No results for &ldquo;{query.trim()}&rdquo;</div>
         </div>

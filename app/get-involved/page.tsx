@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import { pageOpenGraph } from '@/lib/og';
 import type { ComponentType } from 'react';
 import siteConfig from '@/data/site-config.json';
 import ContactForm from '@/components/ContactForm';
 import {
   DiscordIcon,
+  GroupMeIcon,
   LinkedInIcon,
   TigerQuestIcon,
   GitHubIcon,
@@ -13,11 +15,16 @@ import {
 export const metadata: Metadata = {
   title: 'Get Involved',
   description:
-    'Join the Clemson Quantum Club — meeting times, Discord, TigerQuest, and how to reach the team. Open to all majors and experience levels.',
+    'Join the Clemson Quantum Club: meeting times, Discord, GroupMe, TigerQuest, and how to reach the team. Open to all majors and experience levels.',
+  openGraph: pageOpenGraph({
+    title: 'Get Involved | Clemson Quantum Club',
+    description:
+      'Join the Clemson Quantum Club: meeting times, Discord, GroupMe, TigerQuest, and how to reach the team. Open to all majors and experience levels.',
+    url: '/get-involved/',
+  }),
 };
 
-const meetingDayDisplay =
-  siteConfig.meetingDay.charAt(0).toUpperCase() + siteConfig.meetingDay.slice(1);
+const meetingDayDisplay = siteConfig.meetingDay;
 
 const channels: {
   href: string;
@@ -25,6 +32,7 @@ const channels: {
   Icon: ComponentType<{ className?: string }>;
 }[] = [
   { href: siteConfig.discordInvite, label: 'Join the Discord community', Icon: DiscordIcon },
+  { href: siteConfig.groupmeUrl, label: 'Join the GroupMe chat', Icon: GroupMeIcon },
   { href: siteConfig.linkedinUrl, label: 'Follow us on LinkedIn', Icon: LinkedInIcon },
   { href: siteConfig.instagramUrl, label: 'Follow us on Instagram', Icon: InstagramIcon },
   { href: siteConfig.githubUrl, label: 'See our code on GitHub', Icon: GitHubIcon },
@@ -39,7 +47,7 @@ export default function GetInvolvedPage() {
           <h1>Get involved with Clemson Quantum Club</h1>
           <p className="about-page__tagline">
             No application, dues, or prior quantum background required. Drop into
-            a meeting, join our Discord, or send us a message — students from
+            a meeting, join our Discord or GroupMe, or send us an email. Students from
             every major and experience level are welcome.
           </p>
         </div>
@@ -67,8 +75,9 @@ export default function GetInvolvedPage() {
       <section className="about-page__section">
         <h2>Ways to join</h2>
         <p className="gi-channels-intro">
-          The club lives on Discord and meets in person every other week.
-          Pick whichever way is easiest to get started — there&apos;s no wrong
+          The club mainly uses Discord, with updates sent on GroupMe, and meets
+          in person every other week.
+          Pick whichever way is easiest to get started. There&apos;s no wrong
           door, and no commitment required to show up.
         </p>
         <div className="gi-channels">

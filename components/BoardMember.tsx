@@ -28,7 +28,15 @@ export default function BoardMember({
 
   return (
     <article className="board-member">
-      <SiteImage className="board-member__avatar" src={imageSrc} alt={name} />
+      {/* Source photos vary in size but render as a fixed 120px square
+          (object-fit: cover), so the square keeps layout stable pre-CSS. */}
+      <SiteImage
+        className="board-member__avatar"
+        src={imageSrc}
+        alt={name}
+        width={120}
+        height={120}
+      />
       <div className="board-member__body">
         <div className="board-member__head">
           <h3 className="board-member__name">

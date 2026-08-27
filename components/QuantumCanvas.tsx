@@ -90,7 +90,9 @@ export default function QuantumCanvas({
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (particles.length === 0) {
+      if (particles.length === 0 || prevWidth === 0 || prevHeight === 0) {
+        // Also reseed after a zero-size first measure — rescaling from a 0×0
+        // frame would strand every particle at the origin.
         seedParticles();
       } else if (prevWidth > 0 && prevHeight > 0) {
         // Rescale in place instead of reseeding so resizes don't "pop".

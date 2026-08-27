@@ -1,20 +1,24 @@
 import type { Metadata } from 'next';
 import { getAllPages, getPageBySlug, formatDate, makeExcerpt } from '@/lib/content';
+import type { Author } from '@/lib/types';
+import { capitalize as cap } from '@/lib/types';
+import { normalizeDate } from '@/lib/content-shared.mjs';
+import { pageOpenGraph } from '@/lib/og';
 import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
-
-type Author = { name: string; affiliation?: string };
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  return getAllPages('resources/student-work-and-projects').map((p) => ({
-    slug: p.slug,
-  }));
+  // Match lib/slugPage.tsx: external entries link out from cards and get no
+  // internal detail page.
+  return getAllPages('resources/student-work-and-projects')
+    .filter((p) => !p.isExternal)
+    .map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -29,16 +33,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    openGraph: {
+    openGraph: pageOpenGraph({
       title,
       description,
       url: `/resources/student-work-and-projects/${slug}/`,
-      ...(image ? { images: [image] } : {}),
-    },
+      image,
+    }),
   };
 }
 
-const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 const isPdf = (p: string) => /\.pdf($|\?)/i.test(p);
 const isImage = (p: string) => /\.(png|jpe?g|webp|gif|svg)($|\?)/i.test(p);
 const hostOf = (url: string) => {
@@ -65,7 +68,10 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   const { data, content } = page;
   const title = String(data.title ?? slug);
   const type = typeof data.type === 'string' ? data.type : null;
-  const date = typeof data.date === 'string' ? data.date : null;
+  // gray-matter parses unquoted YYYY-MM-DD frontmatter into Date objects, so
+  // a string check alone would drop every date (getAllPages normalizes the
+  // same way).
+  const date = normalizeDate(data.date);
   const authors: Author[] = Array.isArray(data.authors)
     ? (data.authors as Author[])
     : [];
@@ -78,11 +84,13 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   const localLink = link && !link.includes('://') ? link : null;
   const externalLink = link && link.includes('://') ? link : null;
 
-  // What to show in the media slot: an embedded PDF viewer takes precedence,
-  // otherwise a poster image; falls back to a placeholder until a file is added.
+  // Media slot: a poster image and an embedded PDF viewer can both render
+  // (image first) — e.g. a poster image with the associated paper below;
+  // falls back to a placeholder until a file is added.
   const pdfSrc = pdf ?? (localLink && isPdf(localLink) ? localLink : null);
   const imageSrc = image ?? (localLink && isImage(localLink) ? localLink : null);
-  const mediaLabel = type === 'paper' ? 'Paper' : 'Poster';
+  const mediaLabel =
+    type === 'paper' ? 'Paper' : type === 'conference' ? 'Talk' : 'Poster';
 
   return (
     <article className="sw-detail">
@@ -107,24 +115,37 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
         )}
       </header>
 
-      {pdfSrc ? (
-        <div className="sw-media">
-          <iframe
-            className="sw-media__pdf"
-            src={pdfSrc}
-            title={`${title} (PDF)`}
-          />
-        </div>
-      ) : imageSrc ? (
+      {imageSrc && (
         <a
           className="sw-media sw-media--image"
           href={imageSrc}
           target="_blank"
           rel="noopener noreferrer"
         >
-          <SiteImage src={imageSrc} alt={title} className="sw-media__image" />
+          {/* Intrinsic dimensions reserve layout space (both posters are
+              4:3); CSS width:100%/height:auto keeps them responsive. */}
+          <SiteImage
+            src={imageSrc}
+            alt={title}
+            className="sw-media__image"
+            width={1600}
+            height={1200}
+          />
         </a>
-      ) : (
+      )}
+      {pdfSrc && (
+        <div className="sw-media">
+          <iframe
+            className="sw-media__pdf"
+            loading="lazy"
+            src={pdfSrc}
+            title={`${title} (PDF)`}
+          />
+        </div>
+      )}
+      {/* Conference talks have no file to preview, so they skip the
+          placeholder instead of promising one. */}
+      {!imageSrc && !pdfSrc && type !== 'conference' && (
         <div className="sw-media sw-media--placeholder">
           <span>{mediaLabel} preview coming soon</span>
         </div>
@@ -132,14 +153,14 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
 
       {(pdfSrc || imageSrc || externalLink) && (
         <div className="sw-actions">
-          {pdfSrc && (
-            <a className="sw-action" href={pdfSrc} download>
-              ↓ Download PDF
-            </a>
-          )}
           {imageSrc && (
             <a className="sw-action" href={imageSrc} download>
               ↓ Download {mediaLabel.toLowerCase()}
+            </a>
+          )}
+          {pdfSrc && (
+            <a className="sw-action" href={pdfSrc} download>
+              ↓ Download PDF
             </a>
           )}
           {externalLink && (
