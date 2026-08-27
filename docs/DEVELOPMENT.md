@@ -6,10 +6,10 @@ Developer reference for the Clemson Quantum Club website.
 
 ## Tech stack
 
-- Next.js 15 (App Router), static export to GitHub Pages
+- Next.js 16 (App Router), static export to GitHub Pages
 - React 19
 - TypeScript
-- Markdown content pipeline: `gray-matter` (frontmatter) + `react-markdown` with `remark-gfm` and `rehype-raw`
+- Markdown content pipeline: `yaml` frontmatter (parsed in `lib/content-shared.mjs`) + `react-markdown` with `remark-gfm` and `rehype-raw`
 
 ## Getting started
 

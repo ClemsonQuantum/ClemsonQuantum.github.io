@@ -1,8 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import matter from 'gray-matter';
-import { WORK_TYPES } from '../lib/content-shared.mjs';
+import { WORK_TYPES, parseFrontmatter } from '../lib/content-shared.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
@@ -44,7 +43,7 @@ function validateFile(fullPath, problems) {
   let data;
   let content;
   try {
-    ({ data, content } = matter(raw));
+    ({ data, content } = parseFrontmatter(raw));
   } catch (err) {
     problems.push(`${relPath}: front matter failed to parse (${err.message})`);
     return;
@@ -54,9 +53,10 @@ function validateFile(fullPath, problems) {
     problems.push(`${relPath}: missing or empty "title"`);
   }
 
-  // Valid dates: a real Date (gray-matter parses unquoted YYYY-MM-DD), a
-  // YYYY-MM-DD string, or the documented "TBD" placeholder — which is legit
-  // only alongside a dateDisplay override (see ibm-fall-fest-2026.md).
+  // Valid dates: a YYYY-MM-DD string (the yaml package parses unquoted
+  // dates as plain strings), or the documented "TBD" placeholder — which is
+  // legit only alongside a dateDisplay override (see ibm-fall-fest-2026.md).
+  // The Date-instance branch stays as belt-and-braces for schema changes.
   const date = data.date;
   if (date instanceof Date) {
     if (Number.isNaN(date.getTime())) {

@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import matter from 'gray-matter';
 import type { PageMeta } from './types';
 import { isUpcoming } from './types';
 import {
   externalDestination,
   normalizeDate,
+  parseFrontmatter,
   plainText,
 } from './content-shared.mjs';
 
@@ -54,7 +54,7 @@ function readAllPages(contentSubdir: string): PageMeta[] {
   return files.map((filename) => {
     const slug = filename.replace(/\.md$/, '');
     const raw = fs.readFileSync(path.join(dir, filename), 'utf-8');
-    const { data, content } = matter(raw);
+    const { data, content } = parseFrontmatter(raw);
 
     // The external-destination rule is shared with generate-search-index.mjs
     // (see lib/content-shared.mjs) so search results and generated pages
@@ -114,5 +114,5 @@ export function getPageBySlug(
     return { data: null, content: null };
   }
   const raw = fs.readFileSync(filepath, 'utf-8');
-  return matter(raw) as { data: Record<string, unknown>; content: string };
+  return parseFrontmatter(raw) as { data: Record<string, unknown>; content: string };
 }

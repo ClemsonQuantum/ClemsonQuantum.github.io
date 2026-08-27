@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -41,7 +41,6 @@ function rankResults(index: SearchResult[], query: string): SearchResult[] {
 
 export default function SearchBar() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
   const [indexData, setIndexData] = useState<SearchResult[] | null>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -65,17 +64,13 @@ export default function SearchBar() {
       });
   }, []);
 
-  useEffect(() => {
-    if (query.trim().length < 1) {
-      setResults([]);
-      setActiveIndex(-1);
-      return;
-    }
-    if (indexData) {
-      setResults(rankResults(indexData, query.trim()));
-      setActiveIndex(-1);
-    }
-  }, [query, indexData]);
+  // Results are derived, not mirrored into state (activeIndex resets in the
+  // input's onChange instead).
+  const results = useMemo(
+    () =>
+      indexData && query.trim() ? rankResults(indexData, query.trim()) : [],
+    [indexData, query]
+  );
 
   useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -83,7 +78,6 @@ export default function SearchBar() {
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
       ) {
-        setResults([]);
         setQuery('');
       }
     }
@@ -96,7 +90,6 @@ export default function SearchBar() {
       // Escape must work even with zero results, so the "No results" panel
       // is dismissible from the keyboard.
       if (e.key === 'Escape') {
-        setResults([]);
         setQuery('');
         setActiveIndex(-1);
         inputRef.current?.blur();
@@ -116,7 +109,6 @@ export default function SearchBar() {
         case 'Enter':
           if (activeIndex >= 0 && results[activeIndex]) {
             const url = results[activeIndex].url;
-            setResults([]);
             setQuery('');
             // External results (news/attended events) leave the site; internal
             // ones keep the SPA transition.
@@ -157,7 +149,10 @@ export default function SearchBar() {
         type="search"
         placeholder="Search"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => {
+          setQuery(e.target.value);
+          setActiveIndex(-1);
+        }}
         onKeyDown={handleKeyDown}
         role="combobox"
         aria-expanded={isOpen && hasResults}
@@ -177,7 +172,6 @@ export default function SearchBar() {
               role: 'option',
               'aria-selected': i === activeIndex,
               onClick: () => {
-                setResults([]);
                 setQuery('');
               },
             };
