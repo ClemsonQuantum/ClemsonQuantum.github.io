@@ -1,6 +1,6 @@
 import SiteImage from './SiteImage';
 import type { PageMeta } from '@/lib/types';
-import { formatDate, isUpcoming } from '@/lib/types';
+import { formatDate } from '@/lib/types';
 
 interface PreviewCardProps {
   item: PageMeta;
@@ -25,12 +25,14 @@ function getSourceLabel(item: PageMeta): string | null {
     return item.cta_label.replace(/^Read on /, '');
   }
 
-  if (!item.external_url) {
+  // News entries go external via source_url; events via external_url.
+  const destination = item.external_url ?? item.source_url;
+  if (!destination) {
     return 'External';
   }
 
   try {
-    const host = new URL(item.external_url).hostname.replace(/^www\./, '');
+    const host = new URL(destination).hostname.replace(/^www\./, '');
     if (host === 'news.clemson.edu') return 'Clemson News';
     if (host === 'scquantum.org') return 'SC Quantum';
     return host
@@ -56,9 +58,10 @@ export default function PreviewCard({
   // while a real `date` is still used for sorting and the Upcoming badge.
   const dateText = item.dateDisplay ?? (item.date ? formatDate(item.date) : null);
   // Badge resolution is centralized here: an explicit `badge` overrides;
-  // otherwise event cards derive "Upcoming" from the entry's date.
+  // otherwise event cards use the build-time `isUpcoming` flag (resolved in
+  // getAllPages, so server HTML and client hydration always agree).
   const effectiveBadge =
-    badge ?? (kind === 'event' && isUpcoming(item) ? 'Upcoming' : null);
+    badge ?? (kind === 'event' && item.isUpcoming ? 'Upcoming' : null);
 
   return (
     <a
@@ -68,10 +71,12 @@ export default function PreviewCard({
     >
       {item.image && (
         <div className="preview-card__media">
+          {/* Decorative here — the adjacent h3 already announces the title,
+              so a non-empty alt would read it twice. */}
           <SiteImage
             className="preview-card__image"
             src={item.image}
-            alt={item.title}
+            alt=""
           />
         </div>
       )}

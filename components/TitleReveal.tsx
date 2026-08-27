@@ -3,11 +3,11 @@
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
-const STAGGER_MS = 69;
+const STAGGER_MS = 60;
 
 // One-time "wave-function settle" entrance for page titles: the first h1 in
 // <main> is split into per-word spans that either blur-settle or fade-rise
-// into place (variant picked at random per page view), staggered 69 ms apart.
+// into place (variant picked at random per page view), staggered 60 ms apart.
 // Headless, like ScrollReveal: mutates the already-hydrated static h1 (React
 // never re-renders these server-rendered titles), keyed on pathname so client
 // navigations animate too. The full title is preserved in aria-label and the

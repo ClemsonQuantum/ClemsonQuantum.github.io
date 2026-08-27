@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { getAllPages, getPageBySlug, makeExcerpt } from '@/lib/content';
-import ReactMarkdown from 'react-markdown';
+import { pageOpenGraph } from '@/lib/og';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
@@ -13,6 +14,9 @@ interface Props {
 interface Options {
   // Per-route not-found body; the two source pages rendered different fallbacks.
   notFound?: ReactNode;
+  // Per-route react-markdown renderers (e.g. the hackathon pages swap marker
+  // links/divs for modal forms and the live countdown).
+  components?: Components;
 }
 
 // Shared static-export page factory for the markdown-backed event slug routes.
@@ -45,12 +49,12 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
     return {
       title,
       description,
-      openGraph: {
+      openGraph: pageOpenGraph({
         title,
         description,
         url: `/${contentSubdir}/${slug}/`,
-        ...(image ? { images: [image] } : {}),
-      },
+        image,
+      }),
     };
   }
 
@@ -62,7 +66,11 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
 
     return (
       <div className="page-content">
-        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+          components={options.components}
+        >
           {content}
         </ReactMarkdown>
       </div>

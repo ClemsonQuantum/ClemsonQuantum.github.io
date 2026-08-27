@@ -44,14 +44,22 @@ export default function ContactForm() {
       }
     } catch {
       setStatus('error');
-      setErrorMsg('Network error — please try again or email us directly.');
+      setErrorMsg('Network error. Please try again or email us directly.');
     }
   }
 
   if (status === 'success') {
     return (
-      <p className="form-success" role="status">
-        Thanks for reaching out! Your message was sent — we&apos;ll get back to
+      // Replacing the form unmounts the focused submit button; parking focus
+      // here keeps keyboard users oriented and announces the result (same
+      // pattern as ModalFormButton).
+      <p
+        className="form-success"
+        role="status"
+        tabIndex={-1}
+        ref={(el) => el?.focus()}
+      >
+        Thanks for reaching out! Your message was sent. We&apos;ll get back to
         you within a few days.
       </p>
     );
@@ -105,7 +113,7 @@ export default function ContactForm() {
       <input
         type="checkbox"
         name="botcheck"
-        className="visually-hidden"
+        className="sr-only"
         style={{ display: 'none' }}
         tabIndex={-1}
         autoComplete="off"

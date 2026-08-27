@@ -2,27 +2,60 @@
 title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
 summary: "[One-line description of the hackathon]"
-image: /images/[PLACEHOLDER].jpg
+image: /images/[PLACEHOLDER].webp
 ---
 
 <div class="hackathon-page">
 
-<div class="hackathon-hero">
-  <p class="hackathon-hero-eyebrow">[MONTH DAY] – [DAY], [YEAR] &bull; [CITY, STATE]</p>
-  <h1>[EVENT NAME] [YEAR]</h1>
-  <p class="hackathon-hero-tagline">[Catchy tagline describing the event]</p>
-  <a href="#apply" class="hackathon-cta">Apply Now</a>
+<!-- hackathon-hero--quantum adds the animated particle canvas behind the
+     hero (injected by the slug page). Keep the hero-text wrapper — the hero
+     text colors are scoped to it. The hero-logo img is optional. -->
+<div class="hackathon-hero hackathon-hero--quantum">
+  <div class="hackathon-hero-inner">
+    <div class="hackathon-hero-text">
+      <p class="hackathon-hero-eyebrow">[MONTH DAY]-[DAY], [YEAR] &bull; [CITY, STATE]</p>
+      <h1>[EVENT NAME] [YEAR]</h1>
+      <p class="hackathon-hero-tagline">[Catchy tagline describing the event]</p>
+    </div>
+    <img src="/images/[EVENT-LOGO].svg" class="hackathon-hero-logo" alt="[EVENT NAME] logo" />
+  </div>
+</div>
+
+<!-- Optional live countdown (rendered by the slug page's EventCountdown):
+     data-target / data-end        — start/end, ISO 8601 with explicit UTC offset
+     data-sr-summary               — static date sentence for screen readers
+     data-ended-message            — wrap-up copy shown after data-end passes
+                                     (omit for the generic default)
+     data-live-message             — copy shown while the event is running
+                                     (omit for the generic default)
+     The CTA row uses the color variants: solid orange for the primary
+     action, violet outline for the secondary (e.g. Devpost). -->
+<div class="hackathon-hero-cta">
+  <div class="event-countdown" data-target="[YYYY-MM-DDTHH:MM:SS-04:00]" data-end="[YYYY-MM-DDTHH:MM:SS-04:00]" data-sr-summary="The event starts [MONTH DAY, YEAR]." data-ended-message="[EVENT NAME] has wrapped. Thanks for a great weekend!" data-live-message="Happening now: [EVENT NAME] is live"></div>
+  <div class="hackathon-cta-row">
+    <a href="[APPLICATION URL]" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--orange">Apply Now</a>
+    <a href="[DEVPOST OR INFO URL]" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">View on Devpost</a>
+  </div>
 </div>
 
 <div class="hackathon-section">
 
-## About
+<!-- A section-header pairs the heading with a right-aligned action link.
+     href="#participant-updates" and href="#sponsor" are magic markers: the
+     hackathon slug page swaps them for modal signup/inquiry forms. -->
+<div class="hackathon-section-header">
+  <h2>About</h2>
+  <a href="#participant-updates" class="view-all-link">Request participant updates</a>
+</div>
 
 **[EVENT NAME]** is [description of what the hackathon is, who hosts it, what makes it unique]. Over the course of [DURATION], teams of up to [N] will tackle real-world challenges using quantum computing platforms, compete for prizes, and learn from industry mentors.
 
 [Second paragraph about accessibility, workshops, mentorship, etc.]
 
-[Third paragraph — call to action, who should attend, etc.]
+<!-- Optional promo video (YouTube nocookie keeps the CSP happy): -->
+<div class="hackathon-video">
+  <iframe src="https://www.youtube-nocookie.com/embed/[VIDEO-ID]" title="[EVENT NAME]" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 
 </div>
 
@@ -197,9 +230,25 @@ image: /images/[PLACEHOLDER].jpg
   </div>
 </div>
 
+<!-- href="#sponsor" is a magic marker: the slug page swaps it for the
+     sponsorship-inquiry modal form. -->
 <div class="hackathon-sponsor-cta">
   <p>Interested in sponsoring [EVENT NAME]?</p>
-  <a href="mailto:[EMAIL]" class="hackathon-cta hackathon-cta-outline">Become a Sponsor</a>
+  <a href="#sponsor" class="hackathon-cta hackathon-cta-outline">Become a Sponsor</a>
+</div>
+
+</div>
+
+<div class="hackathon-section">
+
+## Hackathon Committee
+
+<div class="hackathon-team-grid">
+  <div class="hackathon-team-member">
+    <img src="/images/[NAME].jpg" alt="[Full Name]" class="hackathon-team-photo" loading="lazy" />
+    <div class="hackathon-team-name">[Full Name]</div>
+    <div class="hackathon-team-role">[Role, e.g. Challenge Lead]</div>
+  </div>
 </div>
 
 </div>

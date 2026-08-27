@@ -9,6 +9,10 @@ interface EventCountdownProps {
   end?: string;
   /** Static, human-readable start date announced to screen readers. */
   srSummary?: string;
+  /** Wrap-up copy shown once `end` has passed. */
+  endedMessage?: string;
+  /** Copy shown between `target` and `end`. */
+  liveMessage?: string;
 }
 
 const UNITS = ['Days', 'Hours', 'Minutes', 'Seconds'] as const;
@@ -29,6 +33,8 @@ export default function EventCountdown({
   target,
   end,
   srSummary,
+  endedMessage = 'This event has wrapped. Thanks for coming!',
+  liveMessage = 'Happening now',
 }: EventCountdownProps) {
   const [now, setNow] = useState<number | null>(null);
 
@@ -37,20 +43,21 @@ export default function EventCountdown({
   const ended = now !== null && now >= endMs;
 
   useEffect(() => {
-    if (ended) return;
+    // An unparsable target renders null below, but without this guard the
+    // interval would still tick setState forever ("ended" can never be true
+    // against NaN).
+    if (ended || Number.isNaN(targetMs)) return;
     setNow(Date.now());
     const id = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(id);
-  }, [ended]);
+  }, [ended, targetMs]);
 
   if (Number.isNaN(targetMs)) return null;
 
   if (ended) {
     return (
       <div className="event-countdown" role="timer" aria-live="off">
-        <span className="event-countdown-done">
-          SC Quantathon v3 has wrapped — thanks for a great weekend!
-        </span>
+        <span className="event-countdown-done">{endedMessage}</span>
       </div>
     );
   }
@@ -58,9 +65,7 @@ export default function EventCountdown({
   if (now !== null && now >= targetMs) {
     return (
       <div className="event-countdown" role="timer" aria-live="off">
-        <span className="event-countdown-live">
-          Happening now — SC Quantathon v3 is live
-        </span>
+        <span className="event-countdown-live">{liveMessage}</span>
       </div>
     );
   }
@@ -72,7 +77,7 @@ export default function EventCountdown({
       <span className="event-countdown-label" aria-hidden="true">
         Event starts in
       </span>
-      {srSummary ? <span className="event-countdown-sr">{srSummary}</span> : null}
+      {srSummary ? <span className="sr-only">{srSummary}</span> : null}
       <div className="event-countdown-units" aria-hidden="true">
         {UNITS.map((unit, i) => (
           <Fragment key={unit}>

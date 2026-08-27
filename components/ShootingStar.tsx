@@ -22,6 +22,7 @@ export default function ShootingStar() {
     const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     let timeoutId = 0;
+    const cleanupIds = new Set<number>();
 
     function spawn() {
       if (darkQuery.matches && !motionQuery.matches && !document.hidden && layer) {
@@ -32,8 +33,11 @@ export default function ShootingStar() {
         star.style.setProperty('--ss-angle', `${Math.round(Math.random() * 360)}deg`);
         layer.appendChild(star);
         // Timed removal instead of animationend: still cleans up if the
-        // animation never runs (scheme/motion flipped mid-cycle).
-        window.setTimeout(() => star.remove(), CLEANUP_MS);
+        // animation never runs (scheme/motion flipped mid-cycle). Tracked so
+        // unmount doesn't leave a dangling timer.
+        cleanupIds.add(
+          window.setTimeout(() => star.remove(), CLEANUP_MS)
+        );
       }
       timeoutId = window.setTimeout(
         spawn,
@@ -46,7 +50,10 @@ export default function ShootingStar() {
       MIN_DELAY_MS + Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS)
     );
 
-    return () => window.clearTimeout(timeoutId);
+    return () => {
+      window.clearTimeout(timeoutId);
+      for (const id of cleanupIds) window.clearTimeout(id);
+    };
   }, []);
 
   return <div ref={layerRef} className="shooting-star-layer" aria-hidden="true" />;

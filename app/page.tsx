@@ -23,18 +23,14 @@ export default function HomePage() {
     metaLabel: 'Meeting',
   }));
 
-  const allEvents = sortPages(
-    [...hackathons, ...workshops, ...meetings].map((entry) => entry.item)
-  )
+  // Sort the {item, metaLabel} pairs directly: recovering the label by slug
+  // afterwards would mislabel (and key-collide) if two directories ever held
+  // the same slug.
+  const allEvents = [...hackathons, ...workshops, ...meetings];
+  const sortedItems = sortPages(allEvents.map((entry) => entry.item));
+  const topEvents = sortedItems
     .slice(0, 3)
-    .map((item) => ({
-      item,
-      metaLabel:
-        hackathons.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
-        workshops.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
-        meetings.find((entry) => entry.item.slug === item.slug)?.metaLabel ??
-        'Event',
-    }));
+    .map((item) => allEvents.find((entry) => entry.item === item)!);
 
   return (
     <>
@@ -46,21 +42,30 @@ export default function HomePage() {
         <ConstellationDivider />
         <div className="home-hero__text">
           <p className="home-hero__subtitle">
-            We&apos;re Clemson&apos;s student-led quantum computing club. We
-            compete in hackathons, host workshops and seminars, and meet
-            biweekly to learn and build together.
+            Clemson Quantum Club is a student-led club at Clemson University
+            focused on giving students the opportunity to learn and interact
+            with quantum computing at any level. We offer the opportunity to
+            participate in hackathons, attend conferences, and tune into
+            seminars.
           </p>
           <p className="home-hero__subtitle">
-            No prior experience is required &mdash; students from every major
-            are welcome to pick up the fundamentals, join a hackathon team, and
-            see what quantum computing can do.
+            SC Quantathon is a yearly quantum hackathon hosted by Clemson
+            Quantum Club since 2024. It is open to all skill levels and
+            it&apos;s a great opportunity to explore quantum computing, become
+            familiar with ML and AI, learn new skills, and network with
+            professionals.
           </p>
         </div>
         <div className="home-hero__visual">
+          {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
           <SiteImage
-            src="/images/iquhack-2025-team.jpg"
+            src="/images/iquhack-2025-team.webp"
             alt="Clemson Quantum Club members at MIT iQuHack 2025"
             className="home-hero__image"
+            width={1047}
+            height={778}
+            loading="eager"
+            fetchPriority="high"
           />
         </div>
       </section>
@@ -91,9 +96,11 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="preview-grid">
-          {allEvents.map(({ item, metaLabel }) => (
+          {topEvents.map(({ item, metaLabel }) => (
             <PreviewCard
-              key={item.slug}
+              // href is unique across event types; slugs alone could collide
+              // between directories (e.g. cuhackit in two years/categories).
+              key={item.href}
               item={item}
               kind="event"
               metaLabel={metaLabel}
@@ -102,7 +109,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="home-section home-section--board">
+      <section id="board" className="home-section home-section--board">
         <div className="home-section__header">
           <div>
             <h2 className="home-section__title">Executive board</h2>

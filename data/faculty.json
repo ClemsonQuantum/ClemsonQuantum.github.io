@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Dr. Rong Ge",
+    "role": "Professor, School of Computing",
+    "description": "Faculty advisor for the Clemson Quantum Club. Teaches the Hands-on Quantum Computing Creative Inquiry (CPSC 3990), Introduction to Quantum Computing (CPSC 4750/6750), and Quantum Algorithms and Applications (CPSC 4760/6760). Research interests include high-performance computing, quantum computing education, and quantum workforce development.",
+    "image": "/images/rong-ge.jpg",
+    "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/",
+    "website": "https://people.computing.clemson.edu/~rge/index.html",
+    "email": "rge@clemson.edu"
+  },
+  {
+    "name": "Dr. Emily Tucker",
+    "role": "Assistant Professor, Industrial Engineering",
+    "description": "Teaches the Quantum Optimization for Resilient Systems Creative Inquiry (IE 4040). Research focuses on quantum optimization for resilient systems, with applications in disaster relief, logistics, and supply chain resilience using stochastic, discrete, and quantum optimization methods.",
+    "image": "/images/emily-tucker.jpg",
+    "linkedin": "https://www.linkedin.com/in/emilyltucker/",
+    "website": "https://sites.google.com/view/EmilyLTucker/",
+    "email": "etucke3@clemson.edu"
+  },
+  {
+    "name": "Dr. Ronnie Chowdhury",
+    "role": "Professor, Civil Engineering",
+    "description": "Eugene Douglas Mays Chair of Transportation and founding director of the USDOT Center for Connected Multimodal Mobility. His quantum work targets cybersecurity for transportation and smart-city / IoT infrastructure, integrating AI with quantum computing to detect and respond to cyber threats, including the SC Quantum Sentinel initiative. Named a 2024 Clemson University Researcher of the Year.",
+    "image": "/images/ronnie-chowdhury.jpg",
+    "linkedin": "https://www.linkedin.com/in/mashrur-ronnie-chowdhury-ba313260/",
+    "website": "",
+    "email": "mac@clemson.edu"
+  },
+  {
+    "name": "Dr. Sumanta Tewari",
+    "role": "Professor, Physics & Astronomy",
+    "description": "An American Physical Society Fellow whose research focuses on topological quantum computation, Majorana fermions, superconductivity, and condensed matter theory. Teaches Quantum Mechanics I/II (PHYS 4550/4560, 6550/6560, 9510/9520) and Quantum Field Theory (PHYS 9530). His work on semiconductor–superconductor heterostructures is one of the most widely studied platforms for fault-tolerant quantum computing.",
+    "image": "/images/sumanta-tewari.jpg",
+    "linkedin": "https://www.linkedin.com/in/sumanta-tewari-b2102270/",
+    "website": "",
+    "email": "stewari@clemson.edu"
+  }
+]
