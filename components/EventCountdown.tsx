@@ -47,6 +47,9 @@ export default function EventCountdown({
     // interval would still tick setState forever ("ended" can never be true
     // against NaN).
     if (ended || Number.isNaN(targetMs)) return;
+    // Intentional mount-only setState: the clock must start client-side so
+    // the SSR placeholder digits hydrate cleanly.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setNow(Date.now());
     const id = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(id);

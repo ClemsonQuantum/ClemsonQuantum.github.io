@@ -122,8 +122,6 @@ export default function BlochSphere() {
       document.removeEventListener('visibilitychange', onVisibility);
       motionQuery.removeEventListener('change', updateRunning);
     };
-    // render/schedule are stable closures over refs; nothing reactive here.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {

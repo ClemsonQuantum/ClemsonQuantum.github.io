@@ -68,9 +68,8 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   const { data, content } = page;
   const title = String(data.title ?? slug);
   const type = typeof data.type === 'string' ? data.type : null;
-  // gray-matter parses unquoted YYYY-MM-DD frontmatter into Date objects, so
-  // a string check alone would drop every date (getAllPages normalizes the
-  // same way).
+  // normalizeDate handles both string dates and Date objects, matching
+  // getAllPages.
   const date = normalizeDate(data.date);
   const authors: Author[] = Array.isArray(data.authors)
     ? (data.authors as Author[])

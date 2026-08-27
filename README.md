@@ -4,7 +4,7 @@ Website for the Clemson Quantum Club at Clemson University.
 
 **Live site:** https://clemsonquantum.com
 
-Built with Next.js 15, React 19, and TypeScript, statically exported and deployed to GitHub Pages via GitHub Actions. The site lists the club's events, hackathons, news, learning resources, and student work — most content is maintained by editing Markdown and JSON files, no code required.
+Built with Next.js 16, React 19, and TypeScript, statically exported and deployed to GitHub Pages via GitHub Actions. The site lists the club's events, hackathons, news, learning resources, and student work — most content is maintained by editing Markdown and JSON files, no code required.
 
 ## Editing content
 
