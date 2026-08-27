@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import matter from 'gray-matter';
 import {
   externalDestination,
   normalizeDate,
+  parseFrontmatter,
   plainText,
 } from '../lib/content-shared.mjs';
 
@@ -24,7 +24,7 @@ function walkDir(dir, results = []) {
       entry.name.toLowerCase() !== 'readme.md'
     ) {
       const raw = fs.readFileSync(fullPath, 'utf-8');
-      const { data, content } = matter(raw);
+      const { data, content } = parseFrontmatter(raw);
       const relDir = path.relative(CONTENT_ROOT, path.dirname(fullPath));
       const slug = entry.name.replace(/\.md$/, '');
       // The external-destination rule, markdown stripping, and date
