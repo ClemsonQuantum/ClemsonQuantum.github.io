@@ -31,6 +31,11 @@ export const metadata: Metadata = {
     'The Clemson Quantum Club (CQC) is a student-led organization making quantum computing accessible at Clemson University. Workshops, hackathons, research, and community.',
   metadataBase: new URL('https://clemsonquantum.com'),
   alternates: { canonical: './' },
+  verification: {
+    // Google Search Console ownership proof — must stay even after
+    // verification succeeds or the property gets unverified.
+    google: 'LezK32umlm6oHpQDVC1UaFQhP8baavYfFI1T9G2_qU0',
+  },
   openGraph: {
     title: 'Clemson Quantum Club',
     description:
