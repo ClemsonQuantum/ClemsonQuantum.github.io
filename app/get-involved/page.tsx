@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import { pageOpenGraph } from '@/lib/og';
 import type { ComponentType } from 'react';
 import siteConfig from '@/data/site-config.json';
+import meetingSchedule from '@/data/meeting-schedule.json';
 import ContactForm from '@/components/ContactForm';
+import SiteImage from '@/components/SiteImage';
 import {
   DiscordIcon,
   GroupMeIcon,
@@ -25,6 +27,25 @@ export const metadata: Metadata = {
 };
 
 const meetingDayDisplay = siteConfig.meetingDay;
+
+// Past/next markers resolve at build time (UTC date-string compare) — the same
+// doctrine as isUpcoming() in lib/types.ts. They refresh with each deploy;
+// never compare dates client-side here (hydration mismatch).
+type Meeting = { date: string; title: string; href?: string };
+
+const todayIso = new Date().toISOString().slice(0, 10);
+const meetings: (Meeting & { isPast: boolean })[] = meetingSchedule.meetings.map(
+  (m) => ({ ...m, isPast: m.date < todayIso }),
+);
+const nextIndex = meetings.findIndex((m) => !m.isPast);
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// String math, not Date/toLocaleString — deterministic across build machines.
+function shortDate(iso: string) {
+  const [, m, d] = iso.split('-').map(Number);
+  return `${MONTHS[m - 1]} ${d}`;
+}
 
 const channels: {
   href: string;
@@ -71,6 +92,58 @@ export default function GetInvolvedPage() {
           </dl>
         </aside>
       </header>
+
+      <section
+        className="about-page__section"
+        aria-labelledby="gi-schedule-heading"
+      >
+        <h2 id="gi-schedule-heading">{meetingSchedule.semester} schedule</h2>
+        <p className="gi-channels-intro">
+          {meetingDayDisplay} at {siteConfig.meetingTime},{' '}
+          {siteConfig.location}. Drop in for any of these; no prep or sign-up
+          needed.
+        </p>
+        <div className="gi-schedule-layout">
+          <ol className="gi-schedule">
+          {meetings.map((m, i) => (
+            <li
+              key={m.date}
+              className={`gi-schedule__item${
+                m.isPast ? ' gi-schedule__item--past' : ''
+              }${i === nextIndex ? ' gi-schedule__item--next' : ''}`}
+            >
+              <time className="gi-schedule__date" dateTime={m.date}>
+                {shortDate(m.date)}
+              </time>
+              <span className="gi-schedule__title">
+                {m.href ? <a href={m.href}>{m.title}</a> : m.title}
+                {m.isPast && <span className="sr-only"> (already held)</span>}
+                {i === nextIndex && (
+                  <span className="sr-only"> (next meeting)</span>
+                )}
+              </span>
+            </li>
+          ))}
+          </ol>
+          <div className="gi-schedule-aside">
+            {/* Logo spot — swap this image to feature event art instead. */}
+            <picture>
+              <source
+                srcSet="/images/logo-dark.png"
+                media="(prefers-color-scheme: dark)"
+                width={208}
+                height={176}
+              />
+              <SiteImage
+                src="/images/logo-light.png"
+                alt=""
+                width={258}
+                height={176}
+              />
+            </picture>
+          </div>
+        </div>
+      </section>
 
       <section className="about-page__section">
         <h2>Ways to join</h2>
