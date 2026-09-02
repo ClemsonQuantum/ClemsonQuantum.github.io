@@ -68,9 +68,9 @@ Controls meeting info, social links, and contact details used across the site (G
 
 | Field | Description |
 |-------|-------------|
-| `meetingDay` | Day of the week (e.g. "Thursdays") |
-| `meetingTime` | Time (e.g. "6:30 PM") |
-| `location` | Room and building |
+| `meetingDay` | Day of the week (e.g. "Biweekly Tuesdays") |
+| `meetingTime` | Time (e.g. "5pm") |
+| `location` | Building |
 | `discordInvite` | Full Discord invite URL |
 | `groupmeUrl` | GroupMe join URL |
 | `tigerquestUrl` | TigerQuest listing URL |
@@ -79,6 +79,22 @@ Controls meeting info, social links, and contact details used across the site (G
 | `githubUrl` | GitHub organization URL |
 | `contactEmail` | Club email address |
 | `web3formsKey` | Optional. A public [Web3Forms](https://web3forms.com) access key makes the Get Involved contact form email you submissions directly. When it is absent or left as the placeholder (`your-access-key`), the form falls back to opening the visitor's email app (pre-addressed to `contactEmail`). |
+
+---
+
+## meeting-schedule.json
+
+Controls the semester meeting list on the Get Involved page.
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `semester` | Yes | Heading label, e.g. "Fall 2026" |
+| `meetings` | Yes | Array of meetings, in date order |
+| `meetings[].date` | Yes | `YYYY-MM-DD`. Past meetings dim automatically on the next site rebuild |
+| `meetings[].title` | Yes | Meeting name |
+| `meetings[].href` | No | Optional link (e.g. an event page like `/events/workshops-and-seminars/qiskit-fall-fest-2026/`) |
+
+**Each semester:** update `semester` and replace the `meetings` array wholesale.
 
 ---
 

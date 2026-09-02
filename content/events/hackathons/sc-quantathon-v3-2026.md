@@ -3,7 +3,7 @@ title: SC Quantathon v3 2026
 date: 2026-09-25
 dateDisplay: "September 25-27, 2026"
 summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
-image: "/images/scq-v3-graphic.webp"
+image: "/images/scq-v3-banner.webp"
 ---
 
 <div class="hackathon-page">
@@ -81,7 +81,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 <div class="hackathon-section">
 
-## Tentative Schedule
+## Schedule
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
@@ -118,66 +118,25 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 <div class="hackathon-section">
 
-## Challenge Tracks
+## Challenges
 
 <div class="hackathon-tracks">
-  <div class="hackathon-track">
-    <span class="hackathon-track-num" aria-hidden="true">01</span>
+  <div class="hackathon-track hackathon-track--logo">
+    <img src="/images/srnl-logo.svg" alt="Savannah River National Laboratory" class="hackathon-track-logo" width="367" height="64" loading="lazy" />
     <div class="hackathon-track-body">
-      <h3>Quantum machine learning</h3>
-      <p>Projects in this track will explore hybrid quantum-classical approaches to classification, kernels, and related machine learning workflows.</p>
-    </div>
-    <div class="hackathon-track-slot">
-      <span class="hackathon-track-slot-label">Track sponsor</span>
-      <span class="hackathon-track-slot-box">Coming soon</span>
+      <h3>SRNL Challenge</h3>
+      <p>Challenge details to be announced.</p>
     </div>
   </div>
-  <div class="hackathon-track">
-    <span class="hackathon-track-num" aria-hidden="true">02</span>
+  <div class="hackathon-track hackathon-track--logo">
+    <picture>
+      <source srcset="/images/quantum-rings-logo-white.webp" media="(prefers-color-scheme: dark)" />
+      <img src="/images/quantum-rings-logo.webp" alt="Quantum Rings" class="hackathon-track-logo" width="800" height="105" loading="lazy" />
+    </picture>
     <div class="hackathon-track-body">
-      <h3>Quantum chemistry and simulation</h3>
-      <p>Teams will be encouraged to investigate simulation problems connected to molecular systems, materials, and other science-driven applications.</p>
+      <h3>Quantum Rings Challenge</h3>
+      <p>Challenge details to be announced.</p>
     </div>
-    <div class="hackathon-track-slot">
-      <span class="hackathon-track-slot-label">Track sponsor</span>
-      <span class="hackathon-track-slot-box">Coming soon</span>
-    </div>
-  </div>
-  <div class="hackathon-track">
-    <span class="hackathon-track-num" aria-hidden="true">03</span>
-    <div class="hackathon-track-body">
-      <h3>Quantum hardware and analysis</h3>
-      <p>Projects may focus on hardware-aware workflows, benchmarking, control software, error mitigation, or tools that improve access to current devices.</p>
-    </div>
-    <div class="hackathon-track-slot">
-      <span class="hackathon-track-slot-label">Track sponsor</span>
-      <span class="hackathon-track-slot-box">Coming soon</span>
-    </div>
-  </div>
-  <div class="hackathon-track">
-    <span class="hackathon-track-num" aria-hidden="true">04</span>
-    <div class="hackathon-track-body">
-      <h3>Open innovation</h3>
-      <p>This track supports original student ideas spanning education, software tooling, optimization, visualization, and experimental project concepts.</p>
-    </div>
-    <div class="hackathon-track-slot">
-      <span class="hackathon-track-slot-label">Track sponsor</span>
-      <span class="hackathon-track-slot-box">Coming soon</span>
-    </div>
-  </div>
-</div>
-
-</div>
-
-<div class="hackathon-section">
-
-## Prizes
-
-<div class="hackathon-prizes">
-  <div class="hackathon-prize">
-    <h3>Track Winners</h3>
-    <p class="hackathon-prize-value">Prize package details coming soon</p>
-    <p>Prizes for the top three teams in each challenge track.</p>
   </div>
 </div>
 
@@ -185,10 +144,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 <div class="hackathon-section" id="sponsors">
 
-<div class="hackathon-section-header">
-  <h2>Sponsors</h2>
-  <a href="#sponsor" class="view-all-link">Sponsor the event</a>
-</div>
+## Sponsors
 
 We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, Silver, and Bronze sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
 

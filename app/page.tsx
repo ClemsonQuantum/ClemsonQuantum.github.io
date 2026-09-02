@@ -56,17 +56,41 @@ export default function HomePage() {
             professionals.
           </p>
         </div>
-        <div className="home-hero__visual">
-          {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
-          <SiteImage
-            src="/images/iquhack-2025-team.webp"
-            alt="Clemson Quantum Club members at MIT iQuHack 2025"
-            className="home-hero__image"
-            width={1047}
-            height={778}
-            loading="eager"
-            fetchPriority="high"
-          />
+        {/* TEMPORARY: SCQv3 promo. After the event, restore the iQuHack team
+            photo (/images/iquhack-2025-team.webp, 1047x778, no --scqv3
+            modifier) and delete the CTA row below plus its CSS block. */}
+        <div className="home-hero__visual home-hero__visual--scqv3">
+          <Link
+            href="/events/hackathons/sc-quantathon-v3-2026/"
+            aria-label="SC Quantathon v3 event page"
+          >
+            {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
+            <SiteImage
+              src="/images/scq-v3-banner.webp"
+              alt="SC Quantathon v3 — September 25-27, 2026 at Clemson University"
+              className="home-hero__image"
+              width={1200}
+              height={675}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </Link>
+        </div>
+        <div className="home-hero__cta-row">
+          <Link
+            href="/events/hackathons/sc-quantathon-v3-2026/"
+            className="hackathon-cta hackathon-cta-outline hackathon-cta--violet hackathon-cta--rect"
+          >
+            See More
+          </Link>
+          <a
+            href="https://forms.gle/vWRNfTQMNQBrGFUh7"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hackathon-cta hackathon-cta--orange hackathon-cta--rect"
+          >
+            Apply Now
+          </a>
         </div>
       </section>
 

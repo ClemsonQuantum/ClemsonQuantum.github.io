@@ -2208,6 +2208,110 @@ footer {
 
 }
 
+/* Get Involved semester schedule: editorial ruled rows, no card chrome.
+   Past meetings dim behind a check; the next meeting reuses the glowing
+   node marker recipe from .about-page__activity-list li::before. Past/next
+   classes are computed at build time (UTC date compare), so they refresh
+   with each deploy. */
+/* Schedule split: meeting list on the left, logo/artwork spot on the
+   right (swap the image in page.tsx to feature something else). */
+.gi-schedule-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.5fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  margin-top: var(--space-lg);
+}
+
+.gi-schedule-aside {
+  display: flex;
+  justify-content: center;
+}
+
+.gi-schedule-aside img {
+  width: min(100%, 300px);
+  height: auto;
+}
+
+.gi-schedule {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gi-schedule__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: var(--space-md);
+  align-items: baseline;
+  padding: 0.9rem 0.15rem 0.9rem 1.7rem;
+}
+
+.gi-schedule__item + .gi-schedule__item {
+  border-top: 1px solid var(--color-border);
+}
+
+.gi-schedule__date {
+  color: var(--color-violet);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+.gi-schedule__title {
+  color: var(--color-text);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.gi-schedule__title a {
+  color: var(--color-link);
+}
+
+.gi-schedule__item--next::before {
+  content: '';
+  position: absolute;
+  top: 1.42rem;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(var(--color-violet-rgb), 0.45);
+}
+
+/* Past: dimmed with a small check in the marker slot — never strikethrough. */
+.gi-schedule__item--past {
+  opacity: 0.72;
+}
+
+.gi-schedule__item--past .gi-schedule__date,
+.gi-schedule__item--past .gi-schedule__title {
+  color: var(--color-text-secondary);
+}
+
+.gi-schedule__item--past::before {
+  content: '\2713';
+  position: absolute;
+  top: 0.82rem;
+  left: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 899px) {
+  .gi-schedule-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .gi-schedule-aside {
+    margin-top: var(--space-lg);
+  }
+}
+
 /* ===================================================================
    Dark Mode
    =================================================================== */
@@ -2636,7 +2740,6 @@ main:has(.hackathon-page) {
    the letterbox with a blurred, zoomed copy of the same image so the card still
    reads as full-bleed rather than having bars. Targeted per image via its src;
    all other cards keep `cover`. */
-.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"]),
 .preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"]),
 .preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"]),
 .preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"]),
@@ -2644,7 +2747,6 @@ main:has(.hackathon-page) {
   position: relative;
 }
 
-.preview-card__image[src$="scq-v3-graphic.webp"],
 .preview-card__image[src$="scq-v1-graphic.webp"],
 .preview-card__image[src$="scq-v2-graphic.webp"],
 .preview-card__image[src$="iquhack-2026.webp"],
@@ -2653,7 +2755,6 @@ main:has(.hackathon-page) {
   object-fit: contain;
 }
 
-.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"])::before,
 .preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before,
 .preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before,
 .preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before,
@@ -2668,9 +2769,6 @@ main:has(.hackathon-page) {
   background-repeat: no-repeat;
 }
 
-.preview-card__media:has(.preview-card__image[src$="scq-v3-graphic.webp"])::before {
-  background-image: url('/images/scq-v3-graphic.webp');
-}
 .preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before {
   background-image: url('/images/scq-v1-graphic.webp');
 }
@@ -3867,6 +3965,11 @@ main:has(.hackathon-page) {
   transition: background-color 0.3s;
 }
 
+/* Hairlines sit above each row and between rows only — the list ends open. */
+.hackathon-track:last-child {
+  border-bottom: 0;
+}
+
 /* Right-hand sponsor slot: a labeled dashed placeholder (same language as
    the sponsor-logo slots) that a partner logo/name will replace later. */
 .hackathon-track-slot {
@@ -3891,6 +3994,29 @@ main:has(.hackathon-page) {
   color: var(--color-text-secondary);
   font-size: 0.85rem;
   font-style: italic;
+}
+
+/* Logo variant: a confirmed sponsor's mark replaces the index numeral and
+   the dashed sponsor slot, so the row collapses to logo + body. */
+.hackathon-track--logo {
+  grid-template-columns: clamp(150px, 18vw, 220px) 1fr;
+}
+
+/* Lets the <picture> wrapper (dark-mode logo swap) participate in the grid
+   as if the inner <img> were the direct child. The <source> must be
+   explicitly boxless: once the picture is `contents`, it would otherwise
+   surface as a grid item of its own and shift the img a column over. */
+.hackathon-track--logo picture {
+  display: contents;
+}
+
+.hackathon-track--logo picture source {
+  display: none;
+}
+
+.hackathon-track-logo {
+  width: 100%;
+  height: auto;
 }
 
 /* Giant serif index numeral. The gradient runs vertically so both the orange
@@ -3975,6 +4101,16 @@ main:has(.hackathon-page) {
 
   .hackathon-track-num {
     font-size: 2rem;
+  }
+
+  /* Sponsor mark stacks above the challenge text at phone widths. */
+  .hackathon-track--logo {
+    grid-template-columns: 1fr;
+    row-gap: 0.9rem;
+  }
+
+  .hackathon-track-logo {
+    max-width: 200px;
   }
 
   /* Slot drops below the description, aligned with the body column. */
@@ -4565,6 +4701,285 @@ main:has(.hackathon-page) {
   .hackathon-hero-logo {
     filter: invert(1);
   }
+
+  /* SRNL's mark is a dark brand blue (#005288); brighten it so it stays
+     legible on the dark page. (Quantum Rings ships an official white
+     variant, swapped via <picture> in the content instead.) */
+  .hackathon-track-logo[src$="srnl-logo.svg"] {
+    filter: brightness(1.9);
+  }
+}
+
+/* ===================================================================
+   Qiskit Fall Fest page (.qff-page)
+   Structure reuses the hackathon-* system wholesale; this section only
+   re-skins it with IBM's official Fall Fest 2026 identity (colors sampled
+   from the organizer asset pack: badge pink #ff7eb6, sky #dae5fc, deep
+   pill purple #31135e, IBM purple-60 #8a3ffc) plus IBM Plex type. The
+   site tokens are re-mapped INSIDE the wrapper, so CTAs, spec labels,
+   hairlines — and both hero canvases, which resolve the *-rgb vars at
+   the canvas element — recolor without touching any structural rule.
+   =================================================================== */
+
+.qff-page {
+  /* Light theme: vivid magenta accents, deep magenta link ink (holds AA on
+     the cream bg the same way the site's orange link ink does), IBM
+     purple-70 in the violet slots. */
+  --color-accent: #ee5396;
+  --color-accent-rgb: 238, 83, 150;
+  --color-accent-hover: #d02670;
+  --color-accent-light: #fff0f7;
+  --color-link: #d02670;
+  --color-link-hover: #9f1853;
+  --color-violet: #6929c4;
+  --color-violet-rgb: 105, 41, 196;
+  --color-violet-light: #f6f2ff;
+}
+
+/* Periwinkle sky flowing into the galaxy backdrop (same fade-to-transparent
+   doctrine as the base .hackathon-page gradient it replaces). */
+.hackathon-page.qff-page {
+  background: linear-gradient(
+    180deg,
+    #dae5fc 0,
+    rgba(218, 229, 252, 0.62) 220px,
+    transparent 640px
+  );
+}
+
+/* IBM Plex carries the page; the serif stays out of Fall Fest branding.
+   The schedule/track h3 selectors outrank the load-bearing chip-reset rules
+   that re-state the serif at (0,2,1). */
+.qff-page,
+.qff-page h1,
+.qff-page h2,
+.qff-page h3,
+.qff-page .hackathon-schedule-day h3,
+.qff-page .hackathon-track-body h3 {
+  font-family: var(--font-plex-sans, var(--font-sans));
+}
+
+.qff-page h1,
+.qff-page h2 {
+  letter-spacing: -0.01em;
+}
+
+/* Mono for the "spec sheet" voice: eyebrow, dates, times, labels, numbers —
+   the same slots the badge art sets in IBM Plex Mono. */
+.qff-page .hackathon-hero-eyebrow,
+.qff-page .hackathon-schedule-date,
+.qff-page .hackathon-time,
+.qff-page .hackathon-spec-label,
+.qff-page .hackathon-track-num,
+.qff-page .hackathon-track-slot-label,
+.qff-page .qff-day-num,
+.qff-page .qff-day-meta,
+.qff-page .qff-day-toggle {
+  font-family: var(--font-plex-mono, ui-monospace, monospace);
+}
+
+/* The badge art is full-color (pink circle, black ink) — never invert it,
+   unlike the solid-black SCQ hero logo. Outranks the dark-mode invert. */
+.qff-page .hackathon-hero-logo {
+  filter: none;
+}
+
+/* Falling-leaves canvas: same full-bleed layering as .quantum-canvas — must
+   escape the hero's 920px direct-child cap. Sits above the particle field
+   (later sibling), below the hero text (z-index 1). */
+.falling-leaves {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* Sections opted out of the generic .hackathon-section + .hackathon-section
+   divider hairline (no rule above Key Details, Week at a Glance, or FAQ). */
+.qff-page .hackathon-section.qff-section--seamless {
+  border-top: 0;
+}
+
+/* With no hero CTA band on this page, About follows the hero directly —
+   drop its section top padding (the hero's own bottom padding keeps the
+   breathing room), mirroring the .hackathon-hero-cta + section rule. */
+.qff-page .hackathon-hero + .hackathon-section {
+  padding-top: 0;
+}
+
+/* Week at a Glance: one expandable row per day (native <details> accordion,
+   Day 1 on top). Each open body is the permanent home for that day's
+   write-up — talk title, speaker, links, and attached files get posted
+   there after sessions. Editorial hairline rows, no card chrome. */
+
+.qff-days {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.qff-day {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.qff-day-summary {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+  gap: clamp(0.9rem, 2.5vw, 1.75rem);
+  align-items: center;
+  padding: 1.1rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.qff-day-summary::-webkit-details-marker {
+  display: none;
+}
+
+.qff-day-summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.qff-day-num {
+  color: var(--color-violet);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.qff-day-meta {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--color-violet);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.qff-day-title {
+  display: block;
+  color: var(--color-text);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.qff-day-summary:hover .qff-day-title,
+.qff-day-summary:focus-visible .qff-day-title {
+  color: var(--color-link);
+}
+
+/* +/− affordance, mirrored by the details [open] state. */
+.qff-day-toggle::before {
+  content: '+';
+  color: var(--color-accent);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.qff-day[open] .qff-day-toggle::before {
+  content: '−';
+}
+
+/* Body aligns under the title column; soft rise on open (silenced by the
+   global prefers-reduced-motion kill switch at the end of this file). */
+.qff-day-body {
+  padding: 0.1rem 0.15rem 1.5rem calc(3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
+}
+
+.qff-day[open] .qff-day-body {
+  animation: qff-day-open 0.28s var(--ease-out-soft);
+}
+
+@keyframes qff-day-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.qff-day-body p {
+  max-width: 66ch;
+  margin: 0 0 1rem;
+}
+
+/* Resource chips: real links get solid hairlines; --pending spans are
+   dashed placeholders until the notebook/slides/recording lands. */
+.qff-day-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.qff-day-resource {
+  display: inline-block;
+  padding: 0.34rem 0.9rem;
+  border: 1px solid rgba(var(--color-violet-rgb), 0.4);
+  border-radius: var(--radius-full);
+  color: var(--color-violet);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a.qff-day-resource:hover,
+a.qff-day-resource:focus-visible {
+  background: var(--color-violet-light);
+}
+
+.qff-day-resource--pending {
+  border-style: dashed;
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 639px) {
+  .qff-day-summary {
+    grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  }
+
+  .qff-day-num {
+    font-size: 1.15rem;
+  }
+
+  .qff-day-body {
+    padding-left: 0.15rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .qff-page {
+    /* Dark theme: badge pink reads as the accent and link ink (the dark
+       --orange CTA rule already swaps its text to night ink), IBM
+       purple-40 in the violet slots. */
+    --color-accent: #ff7eb6;
+    --color-accent-rgb: 255, 126, 182;
+    --color-accent-hover: #ffa1c9;
+    --color-accent-light: rgba(255, 126, 182, 0.14);
+    --color-link: #ff7eb6;
+    --color-link-hover: #ffafd2;
+    --color-violet: #be95ff;
+    --color-violet-rgb: 190, 149, 255;
+    --color-violet-light: rgba(138, 63, 252, 0.22);
+  }
+
+  /* Deep Fall Fest purple over the starfield; keeps the fade-to-transparent
+     doctrine so the galaxy shows through below the banner. Outranks both the
+     light .qff-page gradient and the dark SCQ banner rule. */
+  .hackathon-page.qff-page {
+    background: linear-gradient(
+      180deg,
+      rgba(49, 19, 94, 0.8) 0,
+      rgba(49, 19, 94, 0.45) 240px,
+      transparent 680px
+    );
+  }
 }
 
 /* ===================================================================
@@ -4888,3 +5303,37 @@ body::after {
   }
 }
 
+
+/* ===================================================================
+   TEMPORARY: SCQv3 homepage promo. The hero photo is swapped for the
+   SC Quantathon v3 banner with a See More / Apply Now pair. Delete this
+   whole block (and the matching JSX in app/page.tsx) after the event.
+   =================================================================== */
+
+/* The banner art is 16:9; the default 4/3 (16/10 on mobile) frame would
+   crop its headline text. */
+.home-hero__visual--scqv3 {
+  aspect-ratio: 16 / 9;
+}
+
+/* The banner links to the event page; the anchor must fill the frame so
+   the whole visual is the hit target. */
+.home-hero__visual--scqv3 a {
+  display: block;
+  height: 100%;
+}
+
+.home-hero__cta-row {
+  position: relative; /* above the QuantumCanvas, like its hero siblings */
+  z-index: 1;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+/* Squared-off variant of the pill CTA, per the promo design. */
+.hackathon-cta--rect {
+  border-radius: var(--radius-sm);
+}
