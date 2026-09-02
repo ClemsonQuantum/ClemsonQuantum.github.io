@@ -67,8 +67,10 @@ components/
   StudentWorkList.tsx                # Student work listing
   EventArchive.tsx                   # Term-filtered archive for events + news
   EventCountdown.tsx                 # Countdown to an event date
+  MarkdownDiv.tsx                    # Sentinel-class div renderer shared by event slug routes
   SiteImage.tsx                      # Plain <img> wrapper
   QuantumCanvas.tsx                  # Entangled-qubit particle field canvas
+  FallingLeaves.tsx                  # Autumn-leaf drift canvas (Qiskit Fall Fest hero)
   BlochSphere.tsx                    # Interactive Bloch sphere
   ConstellationDivider.tsx           # Decorative section divider
   ScrollReveal.tsx                   # Reveal-on-scroll wrapper
@@ -96,6 +98,7 @@ data/                                # JSON data (see data/README.md)
   past-board-members.json
   faculty.json
   site-config.json
+  meeting-schedule.json
 scripts/
   validate-content.mjs               # Validates content/ front matter (pre dev/build)
   generate-search-index.mjs          # Builds public/search.json (pre dev/build)

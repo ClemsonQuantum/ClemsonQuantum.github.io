@@ -55,7 +55,11 @@ export default function QuantumCanvas({
     let reducedMotion = false;
 
     function readThemeColors() {
-      const styles = getComputedStyle(document.documentElement);
+      if (!canvas) return;
+      // Resolved at the canvas, not documentElement, so scoped token re-maps
+      // (e.g. the Qiskit Fall Fest page's .qff-page palette) reach the
+      // particles; everywhere else the inherited values are the root tokens.
+      const styles = getComputedStyle(canvas);
       const accent = styles.getPropertyValue('--color-accent-rgb').trim();
       const violet = styles.getPropertyValue('--color-violet-rgb').trim();
       if (accent) colors[0] = accent;

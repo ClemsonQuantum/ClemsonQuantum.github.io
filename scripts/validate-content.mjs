@@ -55,7 +55,7 @@ function validateFile(fullPath, problems) {
 
   // Valid dates: a YYYY-MM-DD string (the yaml package parses unquoted
   // dates as plain strings), or the documented "TBD" placeholder — which is
-  // legit only alongside a dateDisplay override (see ibm-fall-fest-2026.md).
+  // legit only alongside a dateDisplay override (see content/README.md).
   // The Date-instance branch stays as belt-and-braces for schema changes.
   const date = data.date;
   if (date instanceof Date) {

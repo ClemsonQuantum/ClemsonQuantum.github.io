@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from 'next';
-import { Playfair_Display, Source_Sans_3 } from 'next/font/google';
+import {
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  Playfair_Display,
+  Source_Sans_3,
+} from 'next/font/google';
 import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -20,6 +25,23 @@ const playfair = Playfair_Display({
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],
   variable: '--font-sans',
+});
+
+// IBM Plex: the Qiskit Fall Fest page's brand type. preload: false because
+// only .qff-page rules reference these variables — the @font-face registers
+// site-wide, but browsers fetch the files only on pages whose CSS uses them.
+const plexSans = IBM_Plex_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-plex-sans',
+  preload: false,
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-plex-mono',
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -121,7 +143,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={`${sourceSans.variable} ${playfair.variable}`}>
+      <body
+        className={`${sourceSans.variable} ${playfair.variable} ${plexSans.variable} ${plexMono.variable}`}
+      >
         <a href="#main" className="skip-link">Skip to main content</a>
         <Header navData={navData} />
         <main id="main">{children}</main>
