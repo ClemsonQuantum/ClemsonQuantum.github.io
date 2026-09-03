@@ -5342,9 +5342,9 @@ body::after {
   /* The orange/violet aura appears only with the hover lift. */
   box-shadow:
     0 28px 70px rgba(15, 23, 42, 0.14),
-    0 0 40px rgba(var(--color-accent-rgb), 0.42),
-    0 0 100px rgba(var(--color-violet-rgb), 0.48),
-    0 0 0 1px rgba(var(--color-violet-rgb), 0.12);
+    0 0 26px rgba(var(--color-accent-rgb), 0.24),
+    0 0 64px rgba(var(--color-violet-rgb), 0.28),
+    0 0 0 1px rgba(var(--color-violet-rgb), 0.08);
 }
 
 .home-hero__visual--scqv3:hover .home-hero__image,
