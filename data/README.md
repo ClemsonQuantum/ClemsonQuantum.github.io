@@ -70,7 +70,7 @@ Controls meeting info, social links, and contact details used across the site (G
 |-------|-------------|
 | `meetingDay` | Day of the week (e.g. "Biweekly Tuesdays") |
 | `meetingTime` | Time (e.g. "5pm") |
-| `location` | Building |
+| `location` | Meeting location (building and room, e.g. "McAdams 107") |
 | `discordInvite` | Full Discord invite URL |
 | `groupmeUrl` | GroupMe join URL |
 | `tigerquestUrl` | TigerQuest listing URL |
