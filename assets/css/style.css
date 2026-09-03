@@ -5323,6 +5323,35 @@ body::after {
   height: 100%;
 }
 
+/* Same hover language as the preview cards: lift, violet field halo, and a
+   gentle image drift clipped by the frame's overflow: hidden. Keyboard
+   focus on the inner link gets the identical treatment. */
+.home-hero__visual--scqv3 {
+  transition:
+    transform 0.25s var(--ease-out-soft),
+    box-shadow 0.25s var(--ease-out-soft);
+}
+
+.home-hero__visual--scqv3 .home-hero__image {
+  transition: transform 0.45s var(--ease-out-soft);
+}
+
+.home-hero__visual--scqv3:hover,
+.home-hero__visual--scqv3:has(a:focus-visible) {
+  transform: translateY(-4px);
+  /* The orange/violet aura appears only with the hover lift. */
+  box-shadow:
+    0 28px 70px rgba(15, 23, 42, 0.14),
+    0 0 40px rgba(var(--color-accent-rgb), 0.42),
+    0 0 100px rgba(var(--color-violet-rgb), 0.48),
+    0 0 0 1px rgba(var(--color-violet-rgb), 0.12);
+}
+
+.home-hero__visual--scqv3:hover .home-hero__image,
+.home-hero__visual--scqv3:has(a:focus-visible) .home-hero__image {
+  transform: scale(1.03);
+}
+
 .home-hero__cta-row {
   position: relative; /* above the QuantumCanvas, like its hero siblings */
   z-index: 1;
