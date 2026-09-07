@@ -1,8 +1,10 @@
 ---
 title: "Qiskit Fall Fest 2026"
 date: 2026-11-16
-dateDisplay: "November 16-20, 2026"
-summary: "Clemson Quantum Club hosts Qiskit Fall Fest 2026, a week of speaker sessions, hands-on Qiskit workshops, and challenges celebrating a decade of quantum on the cloud."
+dateDisplay: "November 16–20, 2026"
+end_date: 2026-11-20
+location: "Clemson University"
+summary: "Clemson Quantum Club hosts Qiskit Fall Fest 2026, a week of talks, Qiskit workshops, and challenges. This year marks ten years of quantum computing on the cloud."
 image: "/images/ibm-fall-fest-2026.webp"
 ---
 
@@ -11,9 +13,9 @@ image: "/images/ibm-fall-fest-2026.webp"
 <div class="hackathon-hero hackathon-hero--quantum qff-hero--leaves">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">November 16-20, 2026 • Clemson University • with IBM Quantum</p>
+      <p class="hackathon-hero-eyebrow">November 16–20, 2026 • Clemson University • with IBM Quantum</p>
       <h1>Qiskit Fall Fest 2026</h1>
-      <p class="hackathon-hero-tagline">One week, five days of quantum: three invited talks and two hands-on workshop days, woven together to celebrate ten years of quantum computing on the cloud.</p>
+      <p class="hackathon-hero-tagline">Five days in November: three invited talks and two hands-on workshop days, marking ten years of quantum computing on the cloud.</p>
     </div>
     <img src="/images/qff-2026-badge.webp" alt="Qiskit Fall Fest 2026 badge" class="hackathon-hero-logo" width="800" height="800" />
   </div>
@@ -23,9 +25,9 @@ image: "/images/ibm-fall-fest-2026.webp"
 
 ## About
 
-Qiskit Fall Fest is IBM Quantum's annual series of student-run quantum computing events, hosted every autumn on campuses around the world. In 2026 the Clemson Quantum Club brings the Fall Fest back to Clemson, and this year's edition is a milestone: the global theme celebrates ten years since the first quantum computer went on the cloud, and a decade of open tools that let anyone, anywhere program real quantum hardware.
+Qiskit Fall Fest is the annual series of student-run quantum computing events that IBM Quantum supports on campuses around the world every fall. Clemson Quantum Club brings the Fall Fest back to Clemson in 2026. This year’s theme marks ten years since IBM put the first quantum computer on the cloud, and ten years of open tools that let anyone run programs on real quantum hardware.
 
-Our Fall Fest runs a full week, alternating between talks and hands-on sessions: three invited speakers from research and industry, interleaved with two workshop days of guided Qiskit notebooks and challenge problems. Every session starts from zero: no quantum background is required for any of it.
+Our Fall Fest runs all week and alternates between talks and hands-on sessions: three invited speakers from research and industry, and two workshop days with guided Qiskit notebooks and challenge problems. Every session starts from the basics, so you do not need any quantum background. If you want a head start, the [Learning Resources](/resources/learning-resources/) page has beginner tutorials you can work through before the week.
 
 </div>
 
@@ -36,7 +38,7 @@ Our Fall Fest runs a full week, alternating between talks and hands-on sessions:
 <div class="hackathon-specs">
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Dates</div>
-    <div class="hackathon-spec-value">November 16-20, 2026</div>
+    <div class="hackathon-spec-value">November 16–20, 2026</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Location</div>
@@ -164,7 +166,7 @@ Every day stands on its own, so come for one session or all five. Open a day to 
 
 **Do I need quantum computing or Qiskit experience?**
 
-No. The speaker sessions assume no background, and the workshops start from your very first circuit. Curiosity is the only prerequisite.
+No. The talks assume no background, and the workshops start with your very first circuit.
 
 **Do I have to attend the whole week?**
 
@@ -182,27 +184,27 @@ A laptop for the workshop days. We will help you set up Qiskit and an IBM Quantu
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
-    <img src="/images/valentine-mohaugen.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/valentine-mohaugen.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
     <div class="hackathon-team-role">Lead Organizer</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/nathan-jones.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Nathan Jones</div>
     <div class="hackathon-team-role">Co-Organizer</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/jack-layton.jpg" alt="Jack Layton" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/jack-layton.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Jack Layton</div>
     <div class="hackathon-team-role">Co-Organizer</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/varun-sethi.webp" alt="Varun Sethi" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/varun-sethi.webp" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Varun Sethi</div>
     <div class="hackathon-team-role">Co-Organizer</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/caroline-cadena.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Co-Organizer</div>
   </div>

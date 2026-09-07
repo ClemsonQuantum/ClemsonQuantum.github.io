@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+// MAX_DPR caps the canvas backing-store scale (shared with FallingLeaves).
+import { MAX_DPR } from '@/lib/animation';
 
-const MAX_DPR = 2;
 const LINK_DIST = 110; // px — max distance for an "entanglement" line
 const MOUSE_DIST = 140; // px — cursor influence radius
 

@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-const MAX_DPR = 2;
+// MAX_DPR caps the canvas backing-store scale (shared with QuantumCanvas).
+import { MAX_DPR } from '@/lib/animation';
 
 interface Leaf {
   anchorX: number; // sway centerline (px)

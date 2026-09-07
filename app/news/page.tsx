@@ -7,11 +7,11 @@ import ConstellationDivider from '@/components/ConstellationDivider';
 export const metadata: Metadata = {
   title: 'News',
   description:
-    'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing milestones at Clemson University.',
+    'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing news from Clemson University.',
   openGraph: pageOpenGraph({
     title: 'News | Clemson Quantum Club',
     description:
-      'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing milestones at Clemson University.',
+      'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing news from Clemson University.',
     url: '/news/',
   }),
 };

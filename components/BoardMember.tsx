@@ -3,7 +3,7 @@ import EmailIcon from './icons/EmailIcon';
 import WebsiteIcon from './icons/WebsiteIcon';
 import { LinkedInIcon, GitHubIcon } from './icons/ChannelIcons';
 
-export interface BoardMemberData {
+interface BoardMemberData {
   name: string;
   role: string;
   description: string;
@@ -29,11 +29,13 @@ export default function BoardMember({
   return (
     <article className="board-member">
       {/* Source photos vary in size but render as a fixed 120px square
-          (object-fit: cover), so the square keeps layout stable pre-CSS. */}
+          (object-fit: cover), so the square keeps layout stable pre-CSS.
+          Decorative: the h3 right next to it already announces the name, so
+          a non-empty alt would read it twice. */}
       <SiteImage
         className="board-member__avatar"
         src={imageSrc}
-        alt={name}
+        alt=""
         width={120}
         height={120}
       />

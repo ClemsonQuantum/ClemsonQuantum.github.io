@@ -3,6 +3,11 @@ title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
 summary: "[One-line description of the hackathon]"
 image: /images/[PLACEHOLDER].webp
+# Optional. Set all of these to emit Event structured data (see content/README.md).
+# end_date: YYYY-MM-DD
+# location: "[VENUE NAME]"
+# street_address: "[STREET ADDRESS]"
+# registration_url: "https://[REGISTRATION LINK]"
 ---
 
 <div class="hackathon-page">
@@ -13,7 +18,7 @@ image: /images/[PLACEHOLDER].webp
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">[MONTH DAY]-[DAY], [YEAR] &bull; [CITY, STATE]</p>
+      <p class="hackathon-hero-eyebrow">[MONTH DAY]–[DAY], [YEAR] &bull; [CITY, STATE]</p>
       <h1>[EVENT NAME] [YEAR]</h1>
       <p class="hackathon-hero-tagline">[Catchy tagline describing the event]</p>
     </div>
@@ -41,8 +46,8 @@ image: /images/[PLACEHOLDER].webp
 <div class="hackathon-section">
 
 <!-- A section-header pairs the heading with a right-aligned action link.
-     href="#participant-updates" and href="#sponsor" are magic markers: the
-     hackathon slug page swaps them for modal signup/inquiry forms. -->
+     href="#participant-updates" is a magic marker: the hackathon slug page
+     swaps it for the modal sign-up form. -->
 <div class="hackathon-section-header">
   <h2>About</h2>
   <a href="#participant-updates" class="view-all-link">Request participant updates</a>
@@ -86,7 +91,7 @@ image: /images/[PLACEHOLDER].webp
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Cost</div>
-    <div class="hackathon-spec-value">[Free / $X — what's included]</div>
+    <div class="hackathon-spec-value">[Free / $X, what's included]</div>
   </div>
 </div>
 
@@ -200,7 +205,7 @@ image: /images/[PLACEHOLDER].webp
     <div class="hackathon-resource-title">[Resource Name]</div>
     <div class="hackathon-resource-desc">[Short description]</div>
   </a>
-  <a class="hackathon-resource-card" href="[URL]" target="_blank">
+  <a class="hackathon-resource-card" href="[URL]" target="_blank" rel="noopener noreferrer">
     <div class="hackathon-resource-icon">[EMOJI]</div>
     <div class="hackathon-resource-title">[Resource Name]</div>
     <div class="hackathon-resource-desc">[Short description]</div>
@@ -213,28 +218,30 @@ image: /images/[PLACEHOLDER].webp
 
 ## Sponsors
 
-[EVENT NAME] is made possible by the generous support of our sponsors.
-
-<div class="hackathon-sponsors">
+<!-- hackathon-sponsors--paired puts the first two tiers side by side; every
+     tier after them spans the full width. A confirmed partner replaces the
+     dashed placeholder with an <a class="hackathon-sponsor-logo" href="..."> wrapping
+     the logo <img> (add a <picture> dark-mode <source> if the mark needs one). -->
+<div class="hackathon-sponsors hackathon-sponsors--paired">
   <div class="hackathon-sponsor-tier">
-    <h3>Title Sponsors</h3>
+    <h3>Powered by</h3>
     <div class="hackathon-sponsor-logos">
       <div class="hackathon-sponsor-logo">[Sponsor Logo / Name]</div>
     </div>
   </div>
   <div class="hackathon-sponsor-tier">
-    <h3>Gold Sponsors</h3>
+    <h3>Hosted by</h3>
     <div class="hackathon-sponsor-logos">
+      <div class="hackathon-sponsor-logo">[Venue Logo / Name]</div>
+    </div>
+  </div>
+  <div class="hackathon-sponsor-tier">
+    <h3>Partners</h3>
+    <div class="hackathon-sponsor-logos">
+      <div class="hackathon-sponsor-logo">[Sponsor Logo / Name]</div>
       <div class="hackathon-sponsor-logo">[Sponsor Logo / Name]</div>
     </div>
   </div>
-</div>
-
-<!-- href="#sponsor" is a magic marker: the slug page swaps it for the
-     sponsorship-inquiry modal form. -->
-<div class="hackathon-sponsor-cta">
-  <p>Interested in sponsoring [EVENT NAME]?</p>
-  <a href="#sponsor" class="hackathon-cta hackathon-cta-outline">Become a Sponsor</a>
 </div>
 
 </div>

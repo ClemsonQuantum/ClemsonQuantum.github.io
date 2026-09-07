@@ -5,7 +5,6 @@ import { formatDate } from '@/lib/types';
 interface PreviewCardProps {
   item: PageMeta;
   kind: 'news' | 'event';
-  badge?: string | null;
   metaLabel?: string | null;
   showFooter?: boolean;
 }
@@ -48,7 +47,6 @@ function getSourceLabel(item: PageMeta): string | null {
 export default function PreviewCard({
   item,
   kind,
-  badge,
   metaLabel,
   showFooter = true,
 }: PreviewCardProps) {
@@ -57,15 +55,13 @@ export default function PreviewCard({
   // `dateDisplay` lets a card show custom text (e.g. "TBD") in the date slot
   // while a real `date` is still used for sorting and the Upcoming badge.
   const dateText = item.dateDisplay ?? (item.date ? formatDate(item.date) : null);
-  // Badge resolution is centralized here: an explicit `badge` overrides;
-  // otherwise event cards use the build-time `isUpcoming` flag (resolved in
-  // getAllPages, so server HTML and client hydration always agree).
-  const effectiveBadge =
-    badge ?? (kind === 'event' && item.isUpcoming ? 'Upcoming' : null);
+  // Event cards get the Upcoming badge from the build-time `isUpcoming` flag
+  // (resolved in getAllPages, so server HTML and client hydration always agree).
+  const badge = kind === 'event' && item.isUpcoming ? 'Upcoming' : null;
 
   return (
     <a
-      className={`preview-card preview-card--${kind}`}
+      className="preview-card"
       href={item.href}
       {...(item.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
@@ -85,8 +81,8 @@ export default function PreviewCard({
           {dateText && (
             <span className="preview-card__date">{dateText}</span>
           )}
-          {effectiveBadge && (
-            <span className="preview-card__badge">{effectiveBadge}</span>
+          {badge && (
+            <span className="preview-card__badge">{badge}</span>
           )}
         </div>
         <h3 className="preview-card__title">{item.title}</h3>

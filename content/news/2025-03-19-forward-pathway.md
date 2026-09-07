@@ -8,6 +8,4 @@ source_url: "https://www.forwardpathway.us/clemson-quantum-club-driving-educatio
 cta_label: "Read on Forward Pathway"
 ---
 
-Forward Pathway highlights the Clemson Quantum Club as a student-driven hub for quantum computing on campus, from creative meeting activities in McAdams Hall to competition wins at the inaugural SC Quantathon and MIT's iQuHack, plus faculty support and ambitions for dedicated quantum academic programs at Clemson.
-
-Read the full Forward Pathway article via the link below.
+Forward Pathway profiles the Clemson Quantum Club: creative meeting activities in McAdams Hall, competition wins at the first SC Quantathon and MIT’s iQuHack, faculty support, and the push for dedicated quantum courses and programs at Clemson.

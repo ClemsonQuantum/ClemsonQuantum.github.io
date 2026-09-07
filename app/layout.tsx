@@ -53,6 +53,8 @@ export const metadata: Metadata = {
     'The Clemson Quantum Club (CQC) is a student-led organization making quantum computing accessible at Clemson University. Workshops, hackathons, research, and community.',
   metadataBase: new URL('https://clemsonquantum.com'),
   alternates: { canonical: './' },
+  // app/manifest.ts; Next emits it as /manifest.webmanifest.
+  manifest: '/manifest.webmanifest',
   verification: {
     // Google Search Console ownership proof — must stay even after
     // verification succeeds or the property gets unverified.

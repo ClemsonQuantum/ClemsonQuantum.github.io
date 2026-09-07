@@ -99,7 +99,11 @@ The `---` block at the top of each file is called "front matter." Here are all t
 | `dateDisplay` | All | No | Human-readable date override shown on cards (e.g. a date range) |
 | `summary` | All | No | Short description for listing cards |
 | `image` | All | No | Thumbnail image path (`/images/...`) |
-| `external_url` | Events | No | External event link — the card links there and no internal page is generated |
+| `end_date` | Hosted events | No | Last day of a multi-day event, `YYYY-MM-DD`. With `location`, turns on Event structured data (Google rich results) for the page |
+| `location` | Hosted events | No | Venue name for the structured data (e.g. `Watt Family Innovation Center`) |
+| `street_address` | Hosted events | No | Venue street address for the structured data; city, state, and ZIP default to Clemson |
+| `registration_url` | Hosted events | No | Absolute registration link, emitted as the structured-data offer |
+| `external_url` | Events | Meetings: yes. Other events: no | External event link. The card links there and no internal page is generated. Required for meetings, which have no detail pages (the content validator enforces this) |
 | `source` | News | No | Outlet name shown on the card (defaults to "Clemson Quantum Club") |
 | `source_url` | News | Yes | Link to the original article — the card links there directly |
 | `cta_label` | News | No | Card footer label; a leading "Read on " prefix is stripped and the rest shown |

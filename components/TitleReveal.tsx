@@ -2,8 +2,8 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-
-const STAGGER_MS = 60;
+// STAGGER_MS is the per-word entrance delay (shared with ScrollReveal).
+import { STAGGER_MS } from '@/lib/animation';
 
 // One-time "wave-function settle" entrance for page titles: the first h1 in
 // <main> is split into per-word spans that either blur-settle or fade-rise

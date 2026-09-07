@@ -78,7 +78,7 @@ Controls meeting info, social links, and contact details used across the site (G
 | `instagramUrl` | Instagram profile URL |
 | `githubUrl` | GitHub organization URL |
 | `contactEmail` | Club email address |
-| `web3formsKey` | Optional. A public [Web3Forms](https://web3forms.com) access key makes the Get Involved contact form email you submissions directly. When it is absent or left as the placeholder (`your-access-key`), the form falls back to opening the visitor's email app (pre-addressed to `contactEmail`). |
+| `web3formsKey` | Optional. A public [Web3Forms](https://web3forms.com) access key makes the Get Involved contact form email you submissions directly. When it is absent or left as the placeholder (`your-access-key`), the Get Involved form falls back to opening the visitor’s email app (pre-addressed to `contactEmail`), and the pop-up forms on hosted event pages show a “not configured yet” message instead. |
 
 ---
 

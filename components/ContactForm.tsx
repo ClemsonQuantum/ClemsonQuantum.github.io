@@ -3,17 +3,14 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import siteConfig from '@/data/site-config.json';
-
-// With a configured Web3Forms access key, submit via AJAX to Web3Forms.
-// Without one, fall back to a mailto: submission.
-const web3formsReady =
-  Boolean(siteConfig.web3formsKey) &&
-  siteConfig.web3formsKey !== 'your-access-key';
+import { web3formsReady } from '@/lib/web3forms';
 
 const SUBJECT = 'New message from the Clemson Quantum Club website';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
+// With a configured Web3Forms access key, submit via AJAX to Web3Forms.
+// Without one, fall back to a mailto: submission.
 export default function ContactForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
@@ -59,7 +56,7 @@ export default function ContactForm() {
         tabIndex={-1}
         ref={(el) => el?.focus()}
       >
-        Thanks for reaching out! Your message was sent. We&apos;ll get back to
+        Thanks for reaching out! Your message was sent. We’ll get back to
         you within a few days.
       </p>
     );
@@ -116,7 +113,6 @@ export default function ContactForm() {
         className="sr-only"
         style={{ display: 'none' }}
         tabIndex={-1}
-        autoComplete="off"
         aria-hidden="true"
       />
 

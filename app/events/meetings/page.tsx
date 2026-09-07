@@ -21,7 +21,7 @@ export default function MeetingsPage() {
 
   return (
     <div className="archive-page">
-      <header className="archive-hero archive-hero--events">
+      <header className="archive-hero">
         <h1 className="archive-hero__title">Meetings</h1>
         <ConstellationDivider />
       </header>

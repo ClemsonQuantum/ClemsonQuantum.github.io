@@ -50,9 +50,8 @@ export default function ResourcesPage() {
           >
             <div className="hackathon-resource-title">Learning Resources</div>
             <div className="hackathon-resource-desc">
-              Curated bootcamps, lecture series, textbooks, and problem sets to
-              learn quantum computing at every level, from hackathon prep to
-              going deeper.
+              Bootcamps, lecture series, textbooks, and problem sets for every
+              level, from beginner to hackathon prep to professor.
             </div>
           </Link>
           <Link
@@ -64,7 +63,7 @@ export default function ResourcesPage() {
             </div>
             <div className="hackathon-resource-desc">
               Posters and papers from our students and collaborators, each with
-              authors, a short summary, and links to artifacts.
+              authors, a short summary, and links to the files.
             </div>
           </Link>
         </div>
@@ -77,8 +76,8 @@ export default function ResourcesPage() {
             <h3>CPSC</h3>
             <ul>
               <li>Creative Inquiry: Hands-on Quantum Computing (CPSC 3990)</li>
-              <li>Introduction to Quantum Computing (CPSC 4750; 6750)</li>
-              <li>Quantum Algorithms and Applications (CPSC 4760; 6760)</li>
+              <li>Introduction to Quantum Computing (CPSC 4750/6750)</li>
+              <li>Quantum Algorithms and Applications (CPSC 4760/6760)</li>
             </ul>
           </div>
           <div className="course-group">
@@ -113,9 +112,10 @@ export default function ResourcesPage() {
           {faculty.map((person) => (
             <article key={person.name} className="faculty-card">
               <div className="faculty-card__top">
+                {/* Decorative here: the h3 right below already announces the name. */}
                 <SiteImage
                   src={person.image}
-                  alt={person.name}
+                  alt=""
                   className="faculty-card__photo"
                 />
                 <div>

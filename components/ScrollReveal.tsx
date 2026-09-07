@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+// STAGGER_MS is the per-item entrance delay (shared with TitleReveal).
+import { STAGGER_MS } from '@/lib/animation';
 
 // Below-the-fold elements matching these component classes get a gentle
 // fade-and-rise entrance as they scroll into view. Only component classes —
@@ -25,7 +27,6 @@ const REVEAL_SELECTOR = [
   '.constellation-divider',
 ].join(', ');
 
-const STAGGER_MS = 60;
 const STAGGER_CAP_MS = 240;
 
 export default function ScrollReveal() {
