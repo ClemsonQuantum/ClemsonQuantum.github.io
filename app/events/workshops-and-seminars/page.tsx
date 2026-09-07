@@ -7,11 +7,11 @@ import ConstellationDivider from '@/components/ConstellationDivider';
 export const metadata: Metadata = {
   title: 'Workshops & Seminars',
   description:
-    'Workshops and seminars from the Clemson Quantum Club, including the IBM Qiskit Fall Fest series and hands-on quantum programming sessions.',
+    'Workshops and seminars from the Clemson Quantum Club, including the Qiskit Fall Fest series and hands-on quantum programming sessions.',
   openGraph: pageOpenGraph({
     title: 'Workshops & Seminars | Clemson Quantum Club',
     description:
-      'Workshops and seminars from the Clemson Quantum Club, including the IBM Qiskit Fall Fest series and hands-on quantum programming sessions.',
+      'Workshops and seminars from the Clemson Quantum Club, including the Qiskit Fall Fest series and hands-on quantum programming sessions.',
     url: '/events/workshops-and-seminars/',
   }),
 };
@@ -21,7 +21,7 @@ export default function WorkshopsPage() {
 
   return (
     <div className="archive-page">
-      <header className="archive-hero archive-hero--events">
+      <header className="archive-hero">
         <h1 className="archive-hero__title">Workshops &amp; Seminars</h1>
         <ConstellationDivider />
       </header>

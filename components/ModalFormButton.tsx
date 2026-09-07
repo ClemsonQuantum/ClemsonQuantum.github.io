@@ -3,13 +3,10 @@
 import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import siteConfig from '@/data/site-config.json';
+import { web3formsReady } from '@/lib/web3forms';
 
 // Button that opens an in-page modal form and submits via Web3Forms.
-// Shared by the participant-updates and sponsorship forms; copy/fields differ per use.
-const web3formsReady =
-  Boolean(siteConfig.web3formsKey) &&
-  siteConfig.web3formsKey !== 'your-access-key';
-
+// Generic modal form; the hackathon slug page configures copy and fields per use.
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export interface ModalFormField {
@@ -246,7 +243,6 @@ export default function ModalFormButton({
                     name="botcheck"
                     style={{ display: 'none' }}
                     tabIndex={-1}
-                    autoComplete="off"
                     aria-hidden="true"
                   />
 

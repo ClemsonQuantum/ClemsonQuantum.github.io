@@ -18,13 +18,15 @@ interface HeaderProps {
 
 const EVENTS_IN_DROPDOWN = 3;
 
-// On the hamburger nav (≤1024px), dropdowns/submenus open on tap, not hover.
+// On the hamburger nav (≤800px), dropdowns/submenus open on tap, not hover.
+// The breakpoint must match the drawer media query in assets/css/style.css
+// (max-width: 800px, desktop from 801px).
 // The MediaQueryList is created once and reused — handlers call this on every
 // hover/focus/click across the nav.
 let mobileNavQuery: MediaQueryList | null = null;
 const isMobileNav = () => {
   if (typeof window === 'undefined') return false;
-  mobileNavQuery ??= window.matchMedia('(max-width: 1024px)');
+  mobileNavQuery ??= window.matchMedia('(max-width: 800px)');
   return mobileNavQuery.matches;
 };
 
@@ -140,6 +142,21 @@ export default function Header({ navData }: HeaderProps) {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
+  // Escape closes whatever is open. Focus goes back to the toggle only when
+  // the drawer was open (it is what the user activated to get in); a desktop
+  // dropdown closed with Escape keeps focus where it is. The listener is
+  // re-attached whenever the open state changes, so it never reads stale values.
+  useEffect(() => {
+    if (!menuOpen && !openDropdown && !openSubmenu) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key !== 'Escape') return;
+      closeMenus();
+      if (menuOpen) document.getElementById('navToggle')?.focus();
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [menuOpen, openDropdown, openSubmenu]);
+
   useEffect(() => {
     function onScroll() {
       setScrolled(window.scrollY > 8);
@@ -180,9 +197,11 @@ export default function Header({ navData }: HeaderProps) {
   const visibleMeetings = navData.meetings.slice(0, EVENTS_IN_DROPDOWN);
   const meetingsTruncated = navData.meetings.length > EVENTS_IN_DROPDOWN;
 
+  // The bar is the page's banner landmark (<header>) with the labelled <nav>
+  // landmark inside it; .nav and .nav-inner are purely class-based styles.
   return (
-    <nav className={`nav${scrolled ? ' nav--scrolled' : ''}`} aria-label="Main navigation">
-      <div className="nav-inner">
+    <header className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
+      <nav className="nav-inner" aria-label="Main navigation">
         <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
           <picture>
             {/* Dark-theme logo (white on black) swapped in via prefers-color-scheme;
@@ -210,10 +229,12 @@ export default function Header({ navData }: HeaderProps) {
         </Link>
 
         <button
+          type="button"
           className={`nav-toggle${menuOpen ? ' nav-toggle--open' : ''}`}
           id="navToggle"
           aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
           aria-expanded={menuOpen}
+          aria-controls="navLinks"
           onClick={() => setMenuOpen((o) => !o)}
         >
           <span /><span /><span />
@@ -232,8 +253,9 @@ export default function Header({ navData }: HeaderProps) {
           >
             <Link
               href="/events/"
-              className="nav-link nav-dropdown-trigger"
+              className="nav-link"
               aria-expanded={openDropdown === 'events'}
+              aria-controls="events-panel"
               onClick={(e) => {
                 if (isMobileNav()) {
                   e.preventDefault();
@@ -247,7 +269,7 @@ export default function Header({ navData }: HeaderProps) {
                 <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
-            <div className="nav-dropdown-panel">
+            <div className="nav-dropdown-panel" id="events-panel">
               <EventsSubmenu
                 id="hackathons"
                 label="Hackathons"
@@ -294,8 +316,9 @@ export default function Header({ navData }: HeaderProps) {
           >
             <Link
               href="/resources/"
-              className="nav-link nav-dropdown-trigger"
+              className="nav-link"
               aria-expanded={openDropdown === 'resources'}
+              aria-controls="resources-panel"
               onClick={(e) => {
                 if (isMobileNav()) {
                   e.preventDefault();
@@ -309,7 +332,7 @@ export default function Header({ navData }: HeaderProps) {
                 <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Link>
-            <div className="nav-dropdown-panel">
+            <div className="nav-dropdown-panel" id="resources-panel">
               <div className="nav-dropdown-section">
                 <Link href="/resources/learning-resources/" className="nav-dropdown-link" onClick={closeMenus}>
                   Learning Resources
@@ -334,7 +357,7 @@ export default function Header({ navData }: HeaderProps) {
             <SearchBar />
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

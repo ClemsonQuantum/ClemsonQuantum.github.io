@@ -1,8 +1,12 @@
 ---
 title: SC Quantathon v3 2026
 date: 2026-09-25
-dateDisplay: "September 25-27, 2026"
-summary: Clemson's student-led quantum computing hackathon returns for a third edition focused on learning, collaboration, and team-based competition.
+dateDisplay: "September 25–27, 2026"
+end_date: 2026-09-27
+location: "Watt Family Innovation Center"
+street_address: "405 S Palmetto Blvd"
+registration_url: "https://forms.gle/vWRNfTQMNQBrGFUh7"
+summary: "SC Quantathon comes to Clemson for its third edition, hosted by Clemson Quantum Club: a weekend of hands-on learning and team competition."
 image: "/images/scq-v3-banner.webp"
 ---
 
@@ -11,11 +15,11 @@ image: "/images/scq-v3-banner.webp"
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">September 25-27, 2026 • Clemson, South Carolina</p>
+      <p class="hackathon-hero-eyebrow">September 25–27, 2026 • Clemson, South Carolina</p>
       <h1>SC Quantathon v3 2026</h1>
       <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University built around hands-on learning, team problem solving, and industry connection.</p>
     </div>
-    <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="SC Quantathon v3 logo" />
+    <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="SC Quantathon v3 logo" width="855" height="275" />
   </div>
 </div>
 
@@ -23,7 +27,10 @@ image: "/images/scq-v3-banner.webp"
   <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T15:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
     <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--orange">Apply Now</a>
-    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">View on Devpost</a>
+    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">Devpost</a>
+    <!-- PLACEHOLDER: swap this span for an <a href="..."> with the same
+         classes (minus hackathon-cta--soon) once the bootcamp link exists. -->
+    <span class="hackathon-cta hackathon-cta-outline hackathon-cta--violet hackathon-cta--soon" aria-disabled="true">Bootcamp</span>
   </div>
 </div>
 
@@ -34,14 +41,18 @@ image: "/images/scq-v3-banner.webp"
   <a href="#participant-updates" class="view-all-link">Request participant updates</a>
 </div>
 
-**SC Quantathon v3** carries forward the student-centered quantum computing event that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, the Clemson Quantum Club and Clemson University are now hosting the event, building a weekend that brings students together to learn, build, and collaborate on real quantum computing challenges.
+**SC Quantathon v3** carries forward the quantum hackathon that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, the Clemson Quantum Club and Clemson University are now hosting the event, building a weekend that brings students together to learn, build, and collaborate on real quantum computing challenges.
 
 Participants will work in teams, attend technical programming, and receive support from mentors and organizers throughout the event. The format is intended to be accessible to first-time participants while still giving experienced students room to build ambitious projects.
 
-Students from computing, physics, engineering, mathematics, and related fields are encouraged to participate.
+Students from computing, physics, engineering, mathematics, and related fields are all welcome.
+
+<p>Past editions: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1 (2024)</a> and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2 (2025)</a>.</p>
+
+<p>Recap from last year’s SC Quantathon v2 in Columbia:</p>
 
 <div class="hackathon-video">
-  <iframe src="https://www.youtube-nocookie.com/embed/4cKQfLDyx8w" title="SC Quantathon v3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  <iframe src="https://www.youtube-nocookie.com/embed/4cKQfLDyx8w" title="SC Quantathon v2 recap (2025)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 </div>
 
 </div>
@@ -53,7 +64,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 <div class="hackathon-specs">
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Dates</div>
-    <div class="hackathon-spec-value">September 25-27, 2026</div>
+    <div class="hackathon-spec-value">September 25–27, 2026</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Location</div>
@@ -61,7 +72,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Team Size</div>
-    <div class="hackathon-spec-value">3-5 students</div>
+    <div class="hackathon-spec-value">3–5 students</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Eligibility</div>
@@ -121,20 +132,33 @@ Students from computing, physics, engineering, mathematics, and related fields a
 ## Challenges
 
 <div class="hackathon-tracks">
-  <div class="hackathon-track hackathon-track--logo">
-    <img src="/images/srnl-logo.svg" alt="Savannah River National Laboratory" class="hackathon-track-logo" width="367" height="64" loading="lazy" />
+  <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--srnl">
+    <a class="hackathon-track-link" href="https://www.srnl.gov/" target="_blank" rel="noopener noreferrer">
+      <img src="/images/srnl-logo.svg" alt="Savannah River National Laboratory" class="hackathon-track-logo" width="367" height="64" loading="lazy" />
+    </a>
     <div class="hackathon-track-body">
       <h3>SRNL Challenge</h3>
       <p>Challenge details to be announced.</p>
     </div>
   </div>
-  <div class="hackathon-track hackathon-track--logo">
-    <picture>
-      <source srcset="/images/quantum-rings-logo-white.webp" media="(prefers-color-scheme: dark)" />
-      <img src="/images/quantum-rings-logo.webp" alt="Quantum Rings" class="hackathon-track-logo" width="800" height="105" loading="lazy" />
-    </picture>
+  <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--quantum-rings">
+    <a class="hackathon-track-link" href="https://www.quantumrings.com/" target="_blank" rel="noopener noreferrer">
+      <picture>
+        <source srcset="/images/quantum-rings-logo-white.webp" media="(prefers-color-scheme: dark)" />
+        <img src="/images/quantum-rings-logo.webp" alt="Quantum Rings" class="hackathon-track-logo" width="800" height="105" loading="lazy" />
+      </picture>
+    </a>
     <div class="hackathon-track-body">
       <h3>Quantum Rings Challenge</h3>
+      <p>Challenge details to be announced.</p>
+    </div>
+  </div>
+  <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--ionq">
+    <a class="hackathon-track-link" href="https://ionq.com/" target="_blank" rel="noopener noreferrer">
+      <img src="/images/ionq-logo.svg" alt="IonQ" class="hackathon-track-logo" width="100" height="35" loading="lazy" />
+    </a>
+    <div class="hackathon-track-body">
+      <h3>IonQ Challenge</h3>
       <p>Challenge details to be announced.</p>
     </div>
   </div>
@@ -146,7 +170,135 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 ## Sponsors
 
-We are currently building the partner roster for **SC Quantathon v3**. Platinum, Gold, Silver, and Bronze sponsorship opportunities are available, and confirmed partners will be added here as details are finalized.
+<div class="hackathon-sponsors hackathon-sponsors--paired">
+  <div class="hackathon-sponsor-tier">
+    <h3>Powered by</h3>
+    <div class="hackathon-sponsor-logos">
+      <a class="hackathon-sponsor-logo" href="https://www.qbraid.com/" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source srcset="/images/qbraid-logo-white.webp" media="(prefers-color-scheme: dark)" />
+          <img src="/images/qbraid-logo.webp" alt="qBraid" width="900" height="247" loading="lazy" />
+        </picture>
+      </a>
+    </div>
+  </div>
+  <div class="hackathon-sponsor-tier">
+    <h3>Hosted by</h3>
+    <div class="hackathon-sponsor-logos">
+      <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/centers-institutes/watt/" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source srcset="/images/watt-logo-white.webp" media="(prefers-color-scheme: dark)" />
+          <img src="/images/watt-logo.webp" alt="Watt Family Innovation Center, Clemson University" width="1000" height="339" loading="lazy" />
+        </picture>
+      </a>
+    </div>
+  </div>
+  <div class="hackathon-sponsor-tier">
+    <h3>Partners</h3>
+    <div class="hackathon-sponsor-logos">
+      <a class="hackathon-sponsor-logo" href="https://www.scquantum.org/" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source srcset="/images/scq-logo-white.webp" media="(prefers-color-scheme: dark)" />
+          <img src="/images/scq-logo.webp" alt="South Carolina Quantum" width="900" height="585" loading="lazy" />
+        </picture>
+      </a>
+      <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/cecas/" target="_blank" rel="noopener noreferrer">
+        <img src="/images/cecas-logo.webp" alt="Clemson University College of Engineering, Computing and Applied Sciences" width="1200" height="292" loading="lazy" />
+      </a>
+      <a class="hackathon-sponsor-logo hackathon-sponsor-logo--stacked" href="https://www.wcu.edu/learn/departments-schools-colleges/cet/" target="_blank" rel="noopener noreferrer">
+        <img src="/images/wcu-logo.svg" alt="Western Carolina University" width="894" height="370" loading="lazy" />
+        <span class="hackathon-sponsor-caption">College of Engineering and Technology</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div class="hackathon-section" id="stay">
+
+## Where to Stay
+
+Hotels near Clemson University. The distance is from the Watt Center to the hotel, and dollar signs are estimates for prices.
+
+<ul class="hackathon-hotels">
+  <li class="hackathon-hotel">
+    <div class="hackathon-hotel-main">
+      <span class="hackathon-hotel-tag">Group rate</span>
+      <a class="hackathon-hotel-name" href="https://comfortinnclemson.com/" target="_blank" rel="noopener noreferrer">Comfort Inn &amp; Suites Clemson</a>
+      <span class="hackathon-hotel-address">1305 Tiger Blvd, Clemson</span>
+      <p class="hackathon-hotel-note">Discounted rate for SC Quantathon participants until the rooms are full. Call the hotel at <a href="tel:+18646432226">(864) 643-2226</a> and say you are part of the event to book it.</p>
+    </div>
+    <span class="hackathon-hotel-distance">1.9 mi</span>
+    <span class="hackathon-hotel-price">$–$$</span>
+  </li>
+  <li class="hackathon-hotel">
+    <div class="hackathon-hotel-main">
+      <a class="hackathon-hotel-name" href="https://www.bestwestern.com/en_US/book/hotels-in-clemson/best-western-plus-clemson-hotel-conference-center/propertyCode.41101.html" target="_blank" rel="noopener noreferrer">Best Western Plus Clemson</a>
+      <span class="hackathon-hotel-address">1310 Tiger Blvd, Clemson</span>
+    </div>
+    <span class="hackathon-hotel-distance">1.9 mi</span>
+    <span class="hackathon-hotel-price">$$</span>
+  </li>
+  <li class="hackathon-hotel">
+    <div class="hackathon-hotel-main">
+      <a class="hackathon-hotel-name" href="https://www.hilton.com/en/hotels/ceuschx-hampton-clemson-university-area/" target="_blank" rel="noopener noreferrer">Hampton Inn Clemson</a>
+      <span class="hackathon-hotel-address">851 Tiger Blvd, Clemson</span>
+    </div>
+    <span class="hackathon-hotel-distance">2.1 mi</span>
+    <span class="hackathon-hotel-price">$$$</span>
+  </li>
+  <li class="hackathon-hotel">
+    <div class="hackathon-hotel-main">
+      <a class="hackathon-hotel-name" href="https://www.hilton.com/en/hotels/cltclru-tru-seneca-clemson/" target="_blank" rel="noopener noreferrer">Tru by Hilton Seneca Clemson</a>
+      <span class="hackathon-hotel-address">13050 Clemson Blvd, Seneca</span>
+    </div>
+    <span class="hackathon-hotel-distance">2.3 mi</span>
+    <span class="hackathon-hotel-price">$$$</span>
+  </li>
+  <li class="hackathon-hotel">
+    <div class="hackathon-hotel-main">
+      <a class="hackathon-hotel-name" href="https://www.ihg.com/holidayinnexpress/hotels/us/en/clemson/ceupd/hoteldetail" target="_blank" rel="noopener noreferrer">Holiday Inn Express &amp; Suites Clemson</a>
+      <span class="hackathon-hotel-address">1381 Tiger Blvd, Clemson</span>
+    </div>
+    <span class="hackathon-hotel-distance">2.5 mi</span>
+    <span class="hackathon-hotel-price">$$$</span>
+  </li>
+</ul>
+
+</div>
+
+<div class="hackathon-section" id="faq">
+
+## FAQ
+
+**Who can participate?**
+
+Undergraduate and graduate students from any major. Most participants come from computing, physics, engineering, and mathematics, but no particular degree is required.
+
+**Do I need quantum computing experience?**
+
+No. Mentors and organizers are on hand all weekend, and the challenges are written so first-time participants can get started right away. Experienced students will have room to build bigger projects.
+
+**How much does it cost?**
+
+Nothing. SC Quantathon v3 is free to attend, and meals and event materials are provided.
+
+**Do I need a team before I arrive?**
+
+No. Teams are 3 to 5 students. You can register on your own, and if you have not found a team by the event we will place you with teammates.
+
+**What should I bring?**
+
+A laptop and charger. That is all you need.
+
+**Where should I stay?**
+
+See the [Where to Stay](#stay) list above for a discounted group rate and other hotels close to the Watt Family Innovation Center.
+
+**How do I register?**
+
+<a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer">Apply here</a>. Registration stays open until spots fill.
 
 </div>
 
@@ -156,27 +308,27 @@ We are currently building the partner roster for **SC Quantathon v3**. Platinum,
 
 <div class="hackathon-team-grid">
   <div class="hackathon-team-member">
-    <img src="/images/nathan-jones.jpg" alt="Nathan Jones" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/nathan-jones.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Nathan Jones</div>
     <div class="hackathon-team-role">Challenge Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/caroline-cadena.jpg" alt="Caroline Cadena" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/caroline-cadena.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Logistics Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/valentine-mohaugen.jpg" alt="Valentine Mohaugen" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/valentine-mohaugen.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
     <div class="hackathon-team-role">Technology Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/jack-layton.jpg" alt="Jack Layton" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/jack-layton.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Jack Layton</div>
     <div class="hackathon-team-role">Finance Lead</div>
   </div>
   <div class="hackathon-team-member">
-    <img src="/images/varun-sethi.webp" alt="Varun Sethi" class="hackathon-team-photo" loading="lazy" />
+    <img src="/images/varun-sethi.webp" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Varun Sethi</div>
     <div class="hackathon-team-role">Communications Lead</div>
   </div>

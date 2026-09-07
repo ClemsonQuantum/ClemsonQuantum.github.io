@@ -2,13 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { WORK_TYPES, parseFrontmatter } from '../lib/content-shared.mjs';
+import { walkContentFiles } from './walk-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.join(__dirname, '..');
 const CONTENT_ROOT = path.join(REPO_ROOT, 'content');
 const PUBLIC_ROOT = path.join(REPO_ROOT, 'public');
 
-const URL_FIELDS = ['external_url', 'source_url', 'link'];
+const URL_FIELDS = ['external_url', 'source_url', 'link', 'registration_url'];
 
 // Frontmatter fields that must point at an existing file under public/.
 const ASSET_FIELDS = ['image', 'pdf'];
@@ -74,6 +75,32 @@ function validateFile(fullPath, problems) {
     problems.push(`${relPath}: missing "date"`);
   }
 
+  // Hosted event pages build schema.org Event data from `end_date` and
+  // `registration_url` (lib/slugPage.tsx): an end date must be a real calendar
+  // day on or after `date`, and the registration link must be an absolute URL
+  // (the generic URL_FIELDS check below also admits site-local paths, which
+  // structured data cannot use).
+  if (data.end_date !== undefined) {
+    const endDate = data.end_date;
+    const startDate =
+      date instanceof Date && !Number.isNaN(date.getTime())
+        ? date.toISOString().slice(0, 10)
+        : date;
+    if (typeof endDate !== 'string' || !isValidIsoDate(endDate)) {
+      problems.push(`${relPath}: "end_date" must be YYYY-MM-DD (got "${endDate}")`);
+    } else if (typeof startDate !== 'string' || !isValidIsoDate(startDate)) {
+      problems.push(`${relPath}: "end_date" requires "date" to be YYYY-MM-DD (got "${date}")`);
+    } else if (endDate < startDate) {
+      problems.push(`${relPath}: "end_date" (${endDate}) is before "date" (${startDate})`);
+    }
+  }
+  if (data.registration_url !== undefined) {
+    const value = data.registration_url;
+    if (typeof value !== 'string' || !value.includes('://')) {
+      problems.push(`${relPath}: "registration_url" must be an absolute URL (got "${value}")`);
+    }
+  }
+
   for (const field of ASSET_FIELDS) {
     const value = data[field];
     if (typeof value === 'string' && value.startsWith('/')) {
@@ -131,24 +158,6 @@ function validateFile(fullPath, problems) {
   }
 }
 
-function walkDir(dir, problems, count = { files: 0 }) {
-  if (!fs.existsSync(dir)) return count;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      walkDir(fullPath, problems, count);
-    } else if (
-      entry.name.endsWith('.md') &&
-      !entry.name.startsWith('_') &&
-      entry.name.toLowerCase() !== 'readme.md'
-    ) {
-      count.files += 1;
-      validateFile(fullPath, problems);
-    }
-  }
-  return count;
-}
-
 // data/*.json: every /images/ or /files/ string value must exist under public/.
 function validateDataJson(problems) {
   const dataDir = path.join(REPO_ROOT, 'data');
@@ -204,7 +213,9 @@ function validateCss(problems) {
 }
 
 const problems = [];
-const { files } = walkDir(CONTENT_ROOT, problems);
+const contentFiles = walkContentFiles(CONTENT_ROOT);
+for (const fullPath of contentFiles) validateFile(fullPath, problems);
+const files = contentFiles.length;
 const dataFiles = validateDataJson(problems);
 validateCss(problems);
 

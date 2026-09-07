@@ -1,7 +1,7 @@
 ---
 title: "[EVENT NAME] [YEAR]"
 date: YYYY-MM-DD
-summary: "[One-line description — e.g., Clemson Quantum Club competed at EVENT NAME in CITY]"
+summary: "[One-line description, e.g. Clemson Quantum Club competed at EVENT NAME in CITY]"
 image: /images/[PLACEHOLDER].webp
 # Attended events are card-only: `external_url` sends the card, nav item, and
 # search result straight to the official event site, and NO internal detail

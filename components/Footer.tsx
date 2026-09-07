@@ -12,6 +12,8 @@ import {
   TigerQuestIcon,
 } from '@/components/icons/ChannelIcons';
 
+// A blanked or placeholder URL in site-config drops that icon instead of
+// rendering a dead href="#" link (same rule as the Get Involved page).
 const socialLinks = [
   { label: 'Discord', href: siteConfig.discordInvite, Icon: DiscordIcon },
   { label: 'GroupMe', href: siteConfig.groupmeUrl, Icon: GroupMeIcon },
@@ -19,7 +21,7 @@ const socialLinks = [
   { label: 'GitHub', href: siteConfig.githubUrl, Icon: GitHubIcon },
   { label: 'TigerQuest', href: siteConfig.tigerquestUrl, Icon: TigerQuestIcon },
   { label: 'Instagram', href: siteConfig.instagramUrl, Icon: InstagramIcon },
-];
+].filter(({ href }) => href && href !== '#');
 
 export default function Footer() {
   return (
@@ -56,7 +58,7 @@ export default function Footer() {
           <Link href="/news/">News</Link>
           <Link href="/events/">Events</Link>
           <Link href="/resources/">Resources</Link>
-          <Link href="/get-involved/">Get involved</Link>
+          <Link href="/get-involved/">Get Involved</Link>
         </nav>
 
         <div className="footer-social">

@@ -29,13 +29,11 @@ function semesterRank(label: string): number {
 // behavior, so existing event pages need no changes.
 export default function EventArchive({
   items,
-  metaLabel,
   kind = 'event',
   showFooter = true,
   emptyText = 'No events yet. Check back soon.',
 }: {
   items: PageMeta[];
-  metaLabel?: string;
   kind?: 'news' | 'event';
   showFooter?: boolean;
   emptyText?: string;
@@ -102,7 +100,6 @@ export default function EventArchive({
               key={item.slug}
               item={item}
               kind={kind}
-              metaLabel={metaLabel}
               showFooter={showFooter}
             />
           ))}

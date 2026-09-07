@@ -9,7 +9,7 @@ import {
   plainText,
 } from './content-shared.mjs';
 
-export type { PageMeta, Author } from './types';
+export type { PageMeta } from './types';
 export { formatDate } from './types';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');

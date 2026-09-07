@@ -143,10 +143,15 @@ export default function SearchBar() {
           strokeLinejoin="round"
         />
       </svg>
+      {/* type="text", not "search": ARIA in HTML forbids role="combobox" on a
+          search input, so the combobox pattern needs a text input. enterKeyHint
+          still gives the mobile keyboard its Search key. */}
       <input
         ref={inputRef}
         className="search-input"
-        type="search"
+        type="text"
+        enterKeyHint="search"
+        autoComplete="off"
         placeholder="Search"
         value={query}
         onChange={(e) => {
@@ -191,7 +196,7 @@ export default function SearchBar() {
       )}
       {/* Only claim "no results" once the index has actually loaded. */}
       {isOpen && !hasResults && indexData !== null && (
-        <div className="search-results-dropdown search-results-dropdown--empty" role="status">
+        <div className="search-results-dropdown" role="status">
           <div className="search-empty">No results for &ldquo;{query.trim()}&rdquo;</div>
         </div>
       )}

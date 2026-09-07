@@ -179,7 +179,7 @@ export default function GetInvolvedPage() {
           <h2>Contact the team</h2>
           <p>
             Interested in joining, volunteering, sponsoring, or collaborating?
-            Send us a note and we&apos;ll get back to you within a few days. You
+            Send us a note and we’ll get back to you within a few days. You
             can also email{' '}
             <a href={`mailto:${siteConfig.contactEmail}`}>
               {siteConfig.contactEmail}

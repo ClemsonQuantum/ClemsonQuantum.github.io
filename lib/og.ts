@@ -17,7 +17,7 @@ export function pageOpenGraph(opts: {
     locale: 'en_US',
     type: 'website',
     images: opts.image
-      ? [opts.image]
+      ? [{ url: opts.image, alt: opts.title }]
       : [
           {
             url: '/images/og-card.png',
