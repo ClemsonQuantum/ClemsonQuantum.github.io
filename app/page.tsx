@@ -43,17 +43,17 @@ export default function HomePage() {
         <div className="home-hero__text">
           <p className="home-hero__subtitle">
             Clemson Quantum Club is a student-led club at Clemson University
-            focused on giving students the opportunity to learn and interact
-            with quantum computing at any level. We offer the opportunity to
-            participate in hackathons, attend conferences, and tune into
-            seminars.
+            that helps students learn and work with quantum computing at any
+            level. Members compete in hackathons, attend conferences, and tune
+            into seminars.
           </p>
           <p className="home-hero__subtitle">
-            SC Quantathon is a yearly quantum hackathon hosted by Clemson
-            Quantum Club since 2024. It is open to all skill levels and
-            it&apos;s a great opportunity to explore quantum computing, become
-            familiar with ML and AI, learn new skills, and network with
-            professionals.
+            SC Quantathon is South Carolina’s student quantum hackathon,
+            founded by SC Quantum in 2024. Clemson teams have competed every
+            year, and in 2026 Clemson Quantum Club hosts the third edition on
+            campus. It is open to all skill levels and a great way to explore
+            quantum computing, get familiar with ML and AI, learn new skills,
+            and meet professionals.
           </p>
         </div>
         {/* TEMPORARY: SCQv3 promo. After the event, restore the iQuHack team
@@ -67,7 +67,7 @@ export default function HomePage() {
             {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
             <SiteImage
               src="/images/scq-v3-banner.webp"
-              alt="SC Quantathon v3 — September 25-27, 2026 at Clemson University"
+              alt="SC Quantathon v3 — September 25–27, 2026 at Clemson University"
               className="home-hero__image"
               width={1200}
               height={675}

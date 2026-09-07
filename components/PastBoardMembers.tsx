@@ -38,11 +38,12 @@ export default function PastBoardMembers() {
         <ul id="past-board-list" className="about-past-board__list">
           {members.map((m) => (
             <li key={`${m.name}-${m.years}`} className="about-past-board__item">
-              {/* Rendered as a fixed 52px circle regardless of source size. */}
+              {/* Rendered as a fixed 52px circle regardless of source size.
+                  Decorative: the h3 beside it already announces the name. */}
               <SiteImage
                 className="about-past-board__avatar"
                 src={m.image || '/images/blank-profile.svg'}
-                alt={m.name}
+                alt=""
                 width={52}
                 height={52}
               />

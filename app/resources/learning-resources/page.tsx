@@ -41,19 +41,19 @@ const LEVELS: Level[] = [
     label: 'Beginner',
     title: 'Start from zero',
     blurb:
-      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits. Interactive, hands-on, and zero setup.',
+      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits. Interactive, hands-on, and nothing to install.',
     resources: [
       {
         type: 'Course',
         title: 'IBM Quantum Learning',
         desc: 'Interactive lessons for any level, with a detailed 4-part fundamentals course.',
-        href: 'https://learning.quantum.ibm.com/',
+        href: 'https://quantum.cloud.ibm.com/learning/en',
       },
       {
         type: 'Tool',
         title: 'IBM Quantum Composer',
         desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate. The fastest way to see quantum operations.',
-        href: 'https://quantum.ibm.com/composer',
+        href: 'https://quantum.cloud.ibm.com/composer',
       },
       {
         type: 'Practice',
@@ -75,13 +75,13 @@ const LEVELS: Level[] = [
     label: 'Intermediate',
     title: 'Build & compete',
     blurb:
-      'Comfortable with the basics? Put them to work by writing real circuits, branching into a second framework, and sharpening up for hackathons.',
+      'Comfortable with the basics? Write real circuits, try a second framework, and get ready for hackathons.',
     resources: [
       {
         type: 'Course',
         title: 'PennyLane QML Tutorials',
-        desc: "PennyLane's hands-on quantum machine learning tutorials, with runnable demos from variational circuits to quantum neural networks.",
-        href: 'https://pennylane.ai/qml',
+        desc: 'PennyLane’s hands-on quantum machine learning tutorials, with runnable demos from variational circuits to quantum neural networks.',
+        href: 'https://pennylane.ai/learn',
       },
       {
         type: 'Course',
@@ -98,7 +98,7 @@ const LEVELS: Level[] = [
       {
         type: 'Video',
         title: 'Google Quantum AI on YouTube',
-        desc: "Talks, demos, and deep dives from Google's quantum team, from error correction milestones to algorithm walkthroughs.",
+        desc: 'Talks and demos from Google’s quantum team, from error correction results to algorithm walkthroughs.',
         href: 'https://www.youtube.com/@GoogleQuantumAI/videos',
       },
     ],
@@ -109,7 +109,7 @@ const LEVELS: Level[] = [
     label: 'Advanced',
     title: 'Go deep',
     blurb:
-      'Get ready for the theory. Rigorous coursework, the canonical textbooks, and the math behind the algorithms await.',
+      'Now for the theory: rigorous coursework, the standard textbooks, and the math behind the algorithms.',
     resources: [
       {
         type: 'Course',
@@ -125,7 +125,7 @@ const LEVELS: Level[] = [
         type: 'Book',
         title: 'Nielsen & Chuang',
         desc: '“Quantum Computation and Quantum Information”, the field’s standard reference.',
-        href: 'https://ia802805.us.archive.org/22/items/QuantumInformation/QC10th_quantum_Computing.pdf',
+        href: 'https://doi.org/10.1017/CBO9780511976667',
       },
       {
         type: 'Book',
@@ -178,8 +178,8 @@ export default function LearningResourcesPage() {
         <ConstellationDivider />
       </header>
       <p className="lr-intro">
-        A curated path through quantum computing, from your very first qubit to
-        winning hackathons. Feel free to explore each level!
+        A path through quantum computing, from your first qubit to your first
+        hackathon. Start at whichever level fits you.
       </p>
 
       {LEVELS.map((level) => (

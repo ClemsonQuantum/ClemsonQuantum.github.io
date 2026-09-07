@@ -120,12 +120,14 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           href={imageSrc}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Open full-size poster"
         >
           {/* Intrinsic dimensions reserve layout space (both posters are
               4:3); CSS width:100%/height:auto keeps them responsive. */}
+          {/* alt="" because the page h1 already carries the title; the link is labelled instead. */}
           <SiteImage
             src={imageSrc}
-            alt={title}
+            alt=""
             className="sw-media__image"
             width={1600}
             height={1200}
@@ -164,7 +166,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           )}
           {externalLink && (
             <a
-              className="sw-action sw-action--ghost"
+              className="sw-action"
               href={externalLink}
               target="_blank"
               rel="noopener noreferrer"

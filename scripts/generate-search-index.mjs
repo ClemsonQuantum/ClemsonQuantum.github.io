@@ -7,58 +7,50 @@ import {
   parseFrontmatter,
   plainText,
 } from '../lib/content-shared.mjs';
+import { walkContentFiles } from './walk-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CONTENT_ROOT = path.join(__dirname, '..', 'content');
 const OUTPUT = path.join(__dirname, '..', 'public', 'search.json');
 
-function walkDir(dir, results = []) {
-  if (!fs.existsSync(dir)) return results;
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      walkDir(fullPath, results);
-    } else if (
-      entry.name.endsWith('.md') &&
-      !entry.name.startsWith('_') &&
-      entry.name.toLowerCase() !== 'readme.md'
-    ) {
-      const raw = fs.readFileSync(fullPath, 'utf-8');
-      const { data, content } = parseFrontmatter(raw);
-      const relDir = path.relative(CONTENT_ROOT, path.dirname(fullPath));
-      const slug = entry.name.replace(/\.md$/, '');
-      // The external-destination rule, markdown stripping, and date
-      // normalization are shared with lib/content.ts via lib/content-shared.mjs
-      // so search results can't link to pages the site never generates.
-      const url =
-        externalDestination(data) ?? `/${relDir}/${slug}/`.replace(/\\/g, '/');
-      // Summary first: for external entries the body is a stub while the
-      // summary is the hand-written one-liner (matches PreviewCard).
-      const excerpt = plainText(data.summary || content.trim() || '').slice(0, 300);
-      const date = normalizeDate(data.date);
-      // Searchable-but-hidden text: author/mentor names, outlet, and type, so
-      // a query like "valentine mohaugen" surfaces the papers they wrote even
-      // when no name appears in the summary.
-      const meta = [
-        ...(Array.isArray(data.authors)
-          ? data.authors.map((a) => a?.name ?? a)
-          : []),
-        ...(Array.isArray(data.mentors) ? data.mentors : []),
-        data.source,
-        data.type,
-      ]
-        .filter((v) => typeof v === 'string')
-        .join(' ');
-      results.push({
-        title: data.title ?? slug,
-        url,
-        excerpt,
-        meta,
-        date,
-      });
-    }
-  }
-  return results;
+// One search entry per markdown content file (same file set as
+// validate-content.mjs, via walkContentFiles).
+function contentEntries() {
+  return walkContentFiles(CONTENT_ROOT).map((fullPath) => {
+    const raw = fs.readFileSync(fullPath, 'utf-8');
+    const { data, content } = parseFrontmatter(raw);
+    const relDir = path.relative(CONTENT_ROOT, path.dirname(fullPath));
+    const slug = path.basename(fullPath, '.md');
+    // The external-destination rule, markdown stripping, and date
+    // normalization are shared with lib/content.ts via lib/content-shared.mjs
+    // so search results can't link to pages the site never generates.
+    const url =
+      externalDestination(data) ?? `/${relDir}/${slug}/`.replace(/\\/g, '/');
+    // Summary first: for external entries the body is a stub while the
+    // summary is the hand-written one-liner (matches PreviewCard).
+    const excerpt = plainText(data.summary || content.trim() || '').slice(0, 300);
+    const date = normalizeDate(data.date);
+    // Searchable-but-hidden text: author/mentor names, outlet, and type, so
+    // a query like "valentine mohaugen" surfaces the papers they wrote even
+    // when no name appears in the summary.
+    const meta = [
+      ...(Array.isArray(data.authors)
+        ? data.authors.map((a) => a?.name ?? a)
+        : []),
+      ...(Array.isArray(data.mentors) ? data.mentors : []),
+      data.source,
+      data.type,
+    ]
+      .filter((v) => typeof v === 'string')
+      .join(' ');
+    return {
+      title: data.title ?? slug,
+      url,
+      excerpt,
+      meta,
+      date,
+    };
+  });
 }
 
 // People are searchable too: board members and faculty link to the sections
@@ -97,6 +89,6 @@ function peopleEntries() {
   return entries;
 }
 
-const index = [...walkDir(CONTENT_ROOT), ...peopleEntries()];
+const index = [...contentEntries(), ...peopleEntries()];
 fs.writeFileSync(OUTPUT, JSON.stringify(index, null, 2));
 console.log(`Search index: ${index.length} entries → public/search.json`);

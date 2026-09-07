@@ -114,7 +114,7 @@ export default function AboutPage() {
         </div>
         <div className="about-page__link-panel">
           <Link href="/events/">Browse events</Link>
-          <Link href="/events/workshops-and-seminars/">Workshops &amp; seminars</Link>
+          <Link href="/events/workshops-and-seminars/">Workshops &amp; Seminars</Link>
           <Link href="/resources/learning-resources/">Learning resources</Link>
           <Link href="/resources/student-work-and-projects/">
             Student work &amp; projects

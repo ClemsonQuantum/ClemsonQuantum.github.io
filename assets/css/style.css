@@ -206,7 +206,7 @@ img {
   height: 14px;
 }
 
-/* Hover-reveal is DESKTOP-ONLY. On the ≤1024 hamburger overlay the panel is
+/* Hover-reveal is DESKTOP-ONLY. On the ≤800px hamburger drawer the panel is
    static and dropdowns open on tap (.nav-dropdown--open); leaving these
    ungated let `:hover` (specificity 0,3,0) beat the mobile `transform:none`
    reset and slide the open panel off-screen via translateX(-50%). */
@@ -347,7 +347,7 @@ img {
 }
 
 /* ===================================================================
-   Mobile (< 768px)
+   Mobile (≤ 800px, hamburger drawer)
    =================================================================== */
 
 @media (max-width: 800px) {
@@ -477,6 +477,14 @@ img {
   .nav-search-slot .search {
     width: 100%;
   }
+
+  /* 16px stops iOS Safari from zooming the viewport when the field is
+     focused. Scoped to the slot (0,2,0) so it beats the base .search-input
+     0.85rem (0,1,0), which is declared later in the file; desktop keeps
+     0.85rem. */
+  .nav-search-slot .search-input {
+    font-size: 1rem;
+  }
 }
 
 /* ===================================================================
@@ -485,7 +493,7 @@ img {
 
 .search-input::placeholder {
   color: var(--color-text-secondary);
-  opacity: 0.7;
+  opacity: 1;
 }
 
 /* Override the global :focus-visible 2px accent outline for the search
@@ -814,7 +822,6 @@ footer {
 .footer-copy {
   margin: 0;
   color: var(--color-text-secondary);
-  opacity: 0.75;
   font-size: 0.8rem;
   max-width: var(--max-width);
   margin-left: auto;
@@ -845,9 +852,11 @@ footer {
   }
 }
 
-/* Focus visible for accessibility */
+/* Focus visible for accessibility. Link ink rather than the accent: the
+   accent orange is 2.8:1 on cream (below the 3:1 non-text minimum); the link
+   ink is 5.1:1 and resolves to the same orange in dark mode. */
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 2px;
 }
 
@@ -996,6 +1005,12 @@ footer {
   border-color: rgba(var(--color-violet-rgb), 0.4);
 }
 
+.hackathon-cta.hackathon-cta--soon {
+  opacity: 0.55;
+  cursor: default;
+  pointer-events: none;
+}
+
 .hackathon-cta-outline.hackathon-cta--violet:hover {
   background: var(--color-violet-light);
   color: var(--color-violet);
@@ -1048,6 +1063,123 @@ footer {
   text-decoration: underline;
 }
 
+/* Where to Stay: one row per hotel, set like the Challenges rows (flat
+   dividers, serif name, no card). The .hackathon-section prefix outranks the
+   generic .page-content ul / .hackathon-section li a rules that would
+   otherwise box the list and colour the names as links. */
+.hackathon-section .hackathon-hotels {
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.hackathon-section .hackathon-hotel {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  column-gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+  margin: 0;
+  padding: clamp(1.3rem, 2.5vw, 1.9rem) 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* No rule above the first row, so it sits closer to the intro sentence. */
+.hackathon-section .hackathon-hotel:first-child {
+  padding-top: 0.35rem;
+}
+
+.hackathon-hotel-tag {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.hackathon-section .hackathon-hotel-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.hackathon-section .hackathon-hotel-name:hover,
+.hackathon-section .hackathon-hotel-name:focus-visible {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.hackathon-hotel-address {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.92rem;
+  color: var(--color-text-secondary);
+}
+
+.hackathon-section .hackathon-hotel-note {
+  max-width: 52ch;
+  margin: 0.55rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-text);
+}
+
+/* Right-hand stats echo the Key Details label/value pairs. */
+.hackathon-hotel-distance,
+.hackathon-hotel-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 4.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--color-text);
+}
+
+.hackathon-hotel-distance::before,
+.hackathon-hotel-price::before {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.hackathon-hotel-distance::before {
+  content: "Drive";
+}
+
+.hackathon-hotel-price::before {
+  content: "Price";
+}
+
+.hackathon-hotel-price {
+  letter-spacing: 0.06em;
+}
+
+@media (max-width: 800px) {
+  .hackathon-section .hackathon-hotel {
+    grid-template-columns: 1fr;
+    row-gap: 0.7rem;
+  }
+
+  .hackathon-hotel-distance,
+  .hackathon-hotel-price {
+    flex-direction: row;
+    justify-content: space-between;
+    min-width: 0;
+  }
+}
+
 /* Sponsors */
 .hackathon-sponsors {
   display: flex;
@@ -1056,11 +1188,29 @@ footer {
   margin-top: var(--space-xl);
 }
 
+/* Paired variant: the first two tiers ("Powered by" / "Hosted by") share a
+   row; any tier after them spans the full width. */
+.hackathon-sponsors--paired {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2xl) var(--space-lg);
+}
+
+.hackathon-sponsors--paired .hackathon-sponsor-tier:nth-child(n + 3) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 800px) {
+  .hackathon-sponsors--paired {
+    grid-template-columns: 1fr;
+  }
+}
+
 .hackathon-sponsor-tier h3 {
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: var(--color-text-secondary);
   text-align: center;
   margin-bottom: var(--space-md);
@@ -1068,6 +1218,7 @@ footer {
   padding: 0;
   border-radius: 0;
   border: none;
+  box-shadow: none;
 }
 
 .hackathon-sponsor-logos {
@@ -1097,15 +1248,50 @@ footer {
   border-color: var(--color-accent);
 }
 
-/* Confirmed sponsor: solid hairline and upright type, vs. the dashed
-   italic "coming soon" placeholder slots. */
-.hackathon-sponsor-logo--confirmed {
-  border: 1px solid var(--color-border);
-  background: transparent;
-  color: var(--color-text);
-  font-size: 1.02rem;
+/* Confirmed sponsor: the dashed placeholder box gives way to the mark itself. */
+.hackathon-sponsor-logo:has(img) {
+  border-color: transparent;
+  background: none;
   font-style: normal;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.hackathon-sponsor-logo:has(img):hover {
+  border-color: transparent;
+  opacity: 0.8;
+}
+
+.hackathon-sponsor-logo picture {
+  display: contents;
+}
+
+.hackathon-sponsor-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-height: 84px;
+  max-width: min(100%, 340px);
+}
+
+/* Near-square marks (SC Quantum) read too small at the wordmark height cap. */
+.hackathon-sponsor-logo img[src*="scq-logo"] {
+  max-height: 110px;
+}
+
+/* Logo plus a unit name beneath it (WCU's college signature is not public;
+   the university wordmark carries the college name as a caption). */
+.hackathon-sponsor-logo--stacked {
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hackathon-sponsor-caption {
+  font-size: 0.78rem;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
 }
 
 /* Hackathon Team Grid */
@@ -1281,7 +1467,9 @@ footer {
 .sw-media__pdf {
   display: block;
   width: 100%;
+  /* dvh tracks the mobile URL bar; the vh line is the fallback. */
   height: 80vh;
+  height: 80dvh;
   min-height: 480px;
   border: 0;
 }
@@ -2285,7 +2473,8 @@ footer {
 
 /* Past: dimmed with a small check in the marker slot — never strikethrough. */
 .gi-schedule__item--past {
-  opacity: 0.72;
+  /* 0.92 keeps the secondary ink at 4.6:1 on cream; 0.85 fell to 4.3:1. */
+  opacity: 0.92;
 }
 
 .gi-schedule__item--past .gi-schedule__date,
@@ -3055,8 +3244,9 @@ main:has(.hackathon-page) {
 }
 
 /* Card ladder: 3-up on desktop (base rule), 2-up on tablet, 1-up on phones.
-   The tablet range ends at 1024 to match the nav's hamburger breakpoint, so
-   the desktop layout and desktop nav arrive together. */
+   This seam is independent of the nav's: the nav switches to its desktop
+   row at 801px, while this ladder keeps the cards 2-up through 1024px purely
+   for card width — so the two breakpoints are intentionally different. */
 @media (min-width: 768px) and (max-width: 1024px) {
   .preview-grid > .preview-card {
     flex-basis: calc((100% - var(--space-lg)) / 2);
@@ -3499,8 +3689,10 @@ main:has(.hackathon-page) {
 }
 
 /* --- Learning Resources: leveled guide (Beginner / Intermediate / Advanced) --- */
+/* 4.9:1 on the cream background; the brighter teal (2.35:1) failed AA on the
+   11-12px labels. Dark mode restores the bright teal (see the dark block). */
 .lr-section--beginner {
-  --lr-accent: #2bb3a3;
+  --lr-accent: #0f766e;
 }
 .lr-section--intermediate {
   --lr-accent: var(--color-violet);
@@ -4019,6 +4211,24 @@ main:has(.hackathon-page) {
   height: auto;
 }
 
+/* Sponsor mark wrapped in a link: the anchor occupies the logo column and the
+   image fills it, so the grid sees the same box as a bare <img>. */
+.hackathon-track-link {
+  display: block;
+  line-height: 0;
+  border-radius: var(--radius-md);
+  transition: opacity 0.2s;
+}
+
+.hackathon-track-link:hover {
+  opacity: 0.8;
+}
+
+.hackathon-track-link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
 /* Giant serif index numeral. The gradient runs vertically so both the orange
    and the violet read clearly within the glyph height. */
 .hackathon-track-num {
@@ -4066,6 +4276,42 @@ main:has(.hackathon-page) {
 
   .hackathon-track:hover::after {
     transform: scaleY(1);
+  }
+}
+
+/* Branded rows: the hover bar and tint take the sponsor's own colour instead
+   of the site accent gradient. --track-rgb is sampled from each logo file. */
+.hackathon-track--srnl {
+  --track-rgb: 0, 82, 136; /* SRNL blue #005288 */
+}
+
+.hackathon-track--quantum-rings {
+  --track-rgb: 79, 188, 131; /* Quantum Rings green #4FBC83 */
+}
+
+.hackathon-track--ionq {
+  --track-rgb: 237, 124, 55; /* IonQ orange #ED7C37 */
+}
+
+.hackathon-track--brand::after {
+  background: rgb(var(--track-rgb));
+}
+
+@media (hover: hover) {
+  .hackathon-track--brand:hover {
+    background: linear-gradient(
+      90deg,
+      rgba(var(--track-rgb), 0.09),
+      rgba(var(--track-rgb), 0.035) 55%,
+      transparent
+    );
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  /* SRNL's brand blue is too dark to read as a highlight on the night page. */
+  .hackathon-track--srnl {
+    --track-rgb: 77, 163, 224;
   }
 }
 
@@ -4293,22 +4539,6 @@ main:has(.hackathon-page) {
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.68;
-}
-
-.hackathon-sponsor-cta {
-  text-align: center;
-  margin-top: 1.4rem;
-  padding: 1.6rem;
-  border: 1px solid rgba(22, 32, 51, 0.08);
-  border-radius: 1.2rem;
-  background: linear-gradient(135deg, rgba(255, 245, 235, 0.75), rgba(239, 231, 255, 0.5));
-}
-
-.hackathon-sponsor-cta p {
-  font-size: 1.15rem;
-  margin-bottom: 1rem;
-  color: var(--color-text);
-  font-weight: 600;
 }
 
 .hackathon-team-grid {
@@ -4664,10 +4894,10 @@ main:has(.hackathon-page) {
     border-color: rgba(229, 226, 235, 0.14);
   }
 
-  /* Cream gradient + near-black border glare on the navy backdrop. */
-  .hackathon-sponsor-cta {
-    background: rgba(20, 27, 49, 0.9);
-    border-color: rgba(229, 226, 235, 0.12);
+  /* The bright teal is fine on the navy background (7.3:1); the light theme
+     darkens it to #0f766e for AA on the small labels. */
+  .lr-section--beginner {
+    --lr-accent: #2bb3a3;
   }
 }
 
@@ -4707,6 +4937,11 @@ main:has(.hackathon-page) {
      variant, swapped via <picture> in the content instead.) */
   .hackathon-track-logo[src$="srnl-logo.svg"] {
     filter: brightness(1.9);
+  }
+
+  /* WCU's wordmark is a deep purple (#592C88); lift it on the dark page. */
+  .hackathon-sponsor-logo img[src$="wcu-logo.svg"] {
+    filter: brightness(1.7);
   }
 }
 

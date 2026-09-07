@@ -62,7 +62,7 @@ components/
   PreviewCard.tsx                    # News / event preview card
   SearchBar.tsx                      # Site-wide search
   ContactForm.tsx                    # Web3Forms contact form
-  ModalFormButton.tsx                # Generic Web3Forms modal (sign-ups, sponsor inquiries)
+  ModalFormButton.tsx                # Generic Web3Forms modal (participant sign-ups)
   CopyrightYear.tsx                  # Client-corrected footer year
   StudentWorkList.tsx                # Student work listing
   EventArchive.tsx                   # Term-filtered archive for events + news
@@ -73,9 +73,9 @@ components/
   FallingLeaves.tsx                  # Autumn-leaf drift canvas (Qiskit Fall Fest hero)
   BlochSphere.tsx                    # Interactive Bloch sphere
   ConstellationDivider.tsx           # Decorative section divider
-  ScrollReveal.tsx                   # Reveal-on-scroll wrapper
+  ScrollReveal.tsx                   # Headless reveal-on-scroll effect (adds classes to allow-listed elements, renders nothing)
   ShootingStar.tsx                   # Comet animation
-  TitleReveal.tsx                    # Animated page title
+  TitleReveal.tsx                    # Headless per-word entrance for the page h1 (mutates the existing heading)
   NotFoundJoke.tsx                   # 404 page easter egg
   icons/EmailIcon.tsx
   icons/WebsiteIcon.tsx
