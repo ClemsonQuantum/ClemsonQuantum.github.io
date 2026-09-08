@@ -32,7 +32,7 @@ const sourceSans = Source_Sans_3({
 // site-wide, but browsers fetch the files only on pages whose CSS uses them.
 const plexSans = IBM_Plex_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-plex-sans',
   preload: false,
 });
@@ -81,7 +81,8 @@ export const metadata: Metadata = {
     ],
   },
   icons: {
-    // Full CQC logo (atom + letters + wordmark) on a square canvas. The .ico
+    // Qiskit Fall Fest 2026 badge for the Fall Fest season (was the full CQC
+    // logo; restore from git history after the event). The .ico
     // frames are exact downscales of favicon-512.png so every size shows the
     // mark at the same relative scale. favicon.ico at the site root is what
     // Google/crawlers prefer; the PNG provides a high-res variant.
@@ -132,12 +133,12 @@ export default function RootLayout({
             dev server needs eval for hot-reload, so a strict CSP would break it.
             GitHub Pages can't send HTTP headers, so a <meta> tag is used.
             Allows: self for everything, Web3Forms for form submits (connect-src),
-            and YouTube for the embedded video (frame-src). 'unsafe-inline' is
+            YouTube for the embedded video, and Apple Maps embeds (frame-src). 'unsafe-inline' is
             required for Next's inline hydration scripts and inline styles. */}
         {process.env.NODE_ENV === 'production' && (
           <meta
             httpEquiv="Content-Security-Policy"
-            content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; form-action 'self' mailto:"
+            content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://embed.apple-mapkit.com; form-action 'self' mailto:"
           />
         )}
         <script
