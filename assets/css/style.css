@@ -1347,8 +1347,10 @@ footer {
   max-width: min(100%, 340px);
 }
 
-/* Near-square marks (SC Quantum) read too small at the wordmark height cap. */
-.hackathon-sponsor-logo img[src*="scq-logo"] {
+/* Near-square marks (SC Quantum, GVL Limo) read too small at the wordmark
+   height cap. */
+.hackathon-sponsor-logo img[src*="scq-logo"],
+.hackathon-sponsor-logo img[src*="gvl-limo-logo"] {
   max-height: 110px;
 }
 
