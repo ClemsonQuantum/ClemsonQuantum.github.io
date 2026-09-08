@@ -1033,6 +1033,64 @@ footer {
   }
 }
 
+/* SCQv3 hero trio (2026-09-08): three distinct, muted solids instead of a
+   vivid orange plus two matching violet outlines. Clay for the primary
+   action, plum for Devpost, slate for the bootcamp. White ink on each is
+   ≥ 5:1. Dark mode lifts the fills and switches to night ink. */
+.hackathon-cta.hackathon-cta--clay {
+  background: #a3502a;
+  border-color: #a3502a;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(163, 80, 42, 0.22);
+}
+
+.hackathon-cta.hackathon-cta--clay:hover {
+  background: #8a4222;
+  border-color: #8a4222;
+  color: #fff;
+}
+
+.hackathon-cta.hackathon-cta--plum {
+  background: #5e4b8b;
+  border-color: #5e4b8b;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(94, 75, 139, 0.22);
+}
+
+.hackathon-cta.hackathon-cta--plum:hover {
+  background: #4d3d74;
+  border-color: #4d3d74;
+  color: #fff;
+}
+
+.hackathon-cta.hackathon-cta--slate {
+  background: #2e4057;
+  border-color: #2e4057;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(46, 64, 87, 0.22);
+}
+
+.hackathon-cta.hackathon-cta--slate:hover {
+  background: #243347;
+  border-color: #243347;
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .hackathon-cta.hackathon-cta--clay { background: #d99a72; border-color: #d99a72; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--clay:hover { background: #e6b08e; border-color: #e6b08e; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--plum { background: #b3a3dc; border-color: #b3a3dc; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--plum:hover { background: #c4b7e6; border-color: #c4b7e6; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--slate { background: #9db0cc; border-color: #9db0cc; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--slate:hover { background: #b0c0d8; border-color: #b0c0d8; color: #0b1020; }
+}
+
+/* A hero followed directly by a section (no CTA band, e.g. the bootcamp
+   page): drop the section's top padding so the title sits close to About. */
+.hackathon-page .hackathon-hero + .hackathon-section {
+  padding-top: 0;
+}
+
 /* Sections — padded content areas between full-bleed blocks */
 
 /* Key Details spec sheet, Schedule timeline, Tracks rows, and Prizes podium
@@ -4940,6 +4998,33 @@ main:has(.qff-page) {
   }
 }
 
+/* "Request participant updates" modal trigger inside the About prose:
+   render exactly like the inline links around it, not like the section
+   header's view-all label. */
+.hackathon-section p .view-all-link {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  color: var(--color-link);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.hackathon-section p .view-all-link::after {
+  content: none;
+}
+
+.hackathon-section p .view-all-link:hover,
+.hackathon-section p .view-all-link:focus-visible {
+  color: var(--color-link-hover);
+  text-decoration: underline;
+}
+
 /* ===================================================================
    SC Quantathon v3 additions (2026-09-07): venue block with an embedded
    map slot beside the spec sheet, and a native <details> FAQ.
@@ -5437,14 +5522,6 @@ a.qff-btn:hover {
   color: var(--qff-ink);
 }
 
-.qff-btn--soon {
-  background: transparent;
-  border-style: dashed;
-  border-color: rgba(22, 22, 22, 0.35);
-  color: var(--color-text-secondary);
-  cursor: default;
-}
-
 /* Tiles: the cover-slide 2x2 grid (slate / sky / pink / gray). */
 .qff-tiles {
   display: grid;
@@ -5506,9 +5583,9 @@ a.qff-btn:hover {
   background: var(--qff-rule-grad);
 }
 
-/* Hosted-with strip: label + the IBM Quantum logotype alone on its row.
-   The mark is scaled uniformly (height only) and gets clear space from the
-   gap; nothing else sits beside it, so there is no lock-up. */
+/* Hosted-with strip: label + three marks in one row (Clemson Quantum Club
+   logo, IBM Quantum logotype, Fall Fest badge). Each mark is scaled
+   uniformly (height only) and the single flex gap keeps the spacing equal. */
 .qff-hosted {
   display: flex;
   flex-wrap: wrap;
@@ -6056,12 +6133,6 @@ a.qff-day-resource:focus-visible {
     background: transparent;
     border-color: rgba(190, 149, 255, 0.55);
     color: var(--qff-lav);
-  }
-
-  .qff-btn--soon {
-    background: transparent;
-    border-color: rgba(244, 244, 244, 0.3);
-    color: var(--color-text-secondary);
   }
 
   .qff-day-toggle::before,

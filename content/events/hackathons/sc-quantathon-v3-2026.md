@@ -24,11 +24,11 @@ image: "/images/scq-v3-banner.webp"
 </div>
 
 <div class="hackathon-hero-cta">
-  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T15:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
+  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T18:30:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
-    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--orange">Apply Now</a>
-    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">Devpost</a>
-    <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta-outline hackathon-cta--violet">Bootcamp</a>
+    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--clay">Apply Now</a>
+    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--plum">Devpost</a>
+    <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta--slate">Bootcamp</a>
   </div>
 </div>
 
@@ -84,11 +84,8 @@ Students from computing, physics, engineering, mathematics, and related fields a
 </div>
 
 <div class="hackathon-venue">
-  <div class="hackathon-venue-map hackathon-venue-map--pending">
-    <!-- PLACEHOLDER: replace this box with the Apple Maps Web Embed snippet generated at
-         https://developer.apple.com/maps/create-a-map/ (Watt Family Innovation Center Place ID + Maps token).
-         The CSP in app/layout.tsx already allows https://embed.apple-mapkit.com frames. -->
-    <span class="hackathon-venue-map-note">Map</span>
+  <div class="hackathon-venue-map">
+    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-82.84139%2C34.67269%2C-82.83239%2C34.67944&amp;layer=mapnik&amp;marker=34.67607%2C-82.83689" title="Map of the Watt Family Innovation Center at Clemson University" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
   <div class="hackathon-venue-text">
     <div class="hackathon-spec-label">Venue</div>
@@ -109,38 +106,33 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-schedule-day">
     <h3>Day 1 <span class="hackathon-schedule-date">Friday, September 25</span></h3>
     <div class="hackathon-schedule-items">
-      <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Doors open, check-in at the atrium north door</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony: sponsor introductions and keynote (Watt Auditorium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner (atrium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens: teams rank their preferred challenges</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">8:45 PM</span><span class="hackathon-schedule-event">Shuttles to hotels</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Doors open and check-in</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Challenge assignments and team rooms posted on Discord</span></div>
     </div>
   </div>
   <div class="hackathon-schedule-day">
     <h3>Day 2 <span class="hackathon-schedule-date">Saturday, September 26</span></h3>
     <div class="hackathon-schedule-items">
-      <div class="hackathon-schedule-item"><span class="hackathon-time">8:00 AM</span><span class="hackathon-schedule-event">Doors open; shuttles from hotels</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast (terrace)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony and challenge kickoff (terrace)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Hacking begins in the classrooms and project rooms</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch (terrace)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">3:30 PM</span><span class="hackathon-schedule-event">Sponsor tabling (atrium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Dinner (terrace)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Sponsor firesides: one-on-one sessions (atrium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">11:30 PM</span><span class="hackathon-schedule-event">Shuttles to hotels</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">8:00 AM</span><span class="hackathon-schedule-event">Doors open</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Challenge kickoff and hacking begins</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Sponsor firesides</span></div>
     </div>
   </div>
   <div class="hackathon-schedule-day">
     <h3>Day 3 <span class="hackathon-schedule-date">Sunday, September 27</span></h3>
     <div class="hackathon-schedule-items">
-      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack (atrium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast (atrium); shuttles from hotels</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Submissions due (soft deadline)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">11:00 AM</span><span class="hackathon-schedule-event">Hacking ends (hard deadline)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations (classrooms)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony (Watt Auditorium)</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">7:45 PM</span><span class="hackathon-schedule-event">Shuttles to hotels</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">11:00 AM</span><span class="hackathon-schedule-event">Submissions due</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony</span></div>
     </div>
   </div>
 </div>
@@ -241,7 +233,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 ## Where to Stay
 
-Hotels near Clemson University. The distance is from the Watt Center to the hotel, and dollar signs are estimates for prices. Shuttles run between these hotels and the Watt Center each morning and evening of the event; times are in the schedule.
+Hotels near Clemson University. The distance is from the Watt Center to the hotel, and dollar signs are estimates for prices. Shuttles run between these hotels and the Watt Center each morning and evening of the event.
 
 <ul class="hackathon-hotels">
   <li class="hackathon-hotel">
@@ -320,12 +312,24 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
     <p>See the <a href="#stay">Where to Stay</a> list above for a discounted group rate and other hotels close to the Watt Family Innovation Center.</p>
   </details>
   <details class="hackathon-faq-item">
+    <summary>How should I prepare?</summary>
+    <p>Work through the prerecorded <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 25. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
+  </details>
+  <details class="hackathon-faq-item">
+    <summary>How and when do we submit?</summary>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 11:00 AM; nothing submitted after that is judged. Judging presentations begin at noon and awards are at 6:00 PM.</p>
+  </details>
+  <details class="hackathon-faq-item">
+    <summary>Is travel reimbursed?</summary>
+    <p>No. The event is free and meals are provided, but we cannot reimburse travel or lodging. Shuttles run between the hotels listed above and the Watt Family Innovation Center each morning and evening of the event.</p>
+  </details>
+  <details class="hackathon-faq-item">
     <summary>How do I register?</summary>
     <p><a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer">Apply here</a>. Registration stays open until spots fill.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is there a code of conduct?</summary>
-    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club code of conduct</a>. Organizers are available all weekend if anything needs to be reported.</p>
+    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club code of conduct</a>. Organizers are available all weekend if anything needs to be addressed.</p>
   </details>
 </div>
 

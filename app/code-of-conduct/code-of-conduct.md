@@ -6,7 +6,7 @@ This code of conduct covers everything Clemson Quantum Club does: meetings, work
 
 We pledge to make our community welcoming, safe, and equitable for all.
 
-We are committed to fostering an environment that respects and promotes the dignity, rights, and contributions of all individuals, regardless of characteristics including race, ethnicity, caste, color, age, physical characteristics, neurodiversity, disability, sex or gender, gender identity or expression, sexual orientation, language, philosophy or religion, national or social origin, socio-economic position, level of education, or other status. The same privileges of participation are extended to everyone who participates in good faith and in accordance with this Covenant.
+We are committed to fostering an environment that respects and promotes the dignity, rights, and contributions of all individuals, regardless of characteristics including race, ethnicity, caste, color, age, physical characteristics, neurodiversity, disability, sex or gender, gender identity or expression, sexual orientation, language, philosophy or religion, national or social origin, socio-economic position, level of education, or other status. The same privileges of participation are extended to everyone who participates in good faith and in accordance with this Code.
 
 ## Encouraged Behaviors
 
@@ -38,8 +38,8 @@ We agree to restrict the following behaviors in our community. Instances, threat
 ### Other Restrictions
 
 1. **Misleading identity.** Impersonating someone else for any reason, or pretending to be someone else to evade enforcement actions.
-2. **Failing to credit sources.** Not properly crediting the sources of content you contribute.
-3. **Promotional materials**. Sharing marketing or other commercial content in a way that is outside the norms of the community.
+2. **Failing to credit sources.** Presenting other people’s work, code, or ideas as your own, whether in a hackathon submission, a talk, or a shared notebook.
+3. **Unwanted promotion.** Using club channels or events to advertise, recruit, or sell in ways the organizers have not approved.
 4. **Irresponsible communication.** Failing to responsibly present content which includes, links or describes any other restricted behaviors.
 
 
@@ -54,7 +54,7 @@ Organizers take reports of violations seriously and will make every effort to re
 
 ## Addressing and Repairing Harm
 
-**Organizers will review all reports and respond within 24 hours. Violations may result in a verbal warning, removal from the event or space, or a ban from future Clemson Quantum Club events, at the discretion of the organizing team.**
+**Organizers will review all reports and respond within 24 hours during an event and within 48 hours at any other time. Violations may result in a verbal warning, removal from the event or space, or a ban from future Clemson Quantum Club events, at the discretion of the organizing team.**
 
 1) Warning
    1) Event: A violation involving a single incident or series of incidents.
