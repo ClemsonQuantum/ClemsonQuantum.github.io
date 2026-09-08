@@ -223,6 +223,15 @@ Students from computing, physics, engineering, mathematics, and related fields a
           <img src="/images/wcu-coe-logo.svg" alt="Western Carolina University College of Engineering and Technology" width="719" height="413" loading="lazy" />
         </picture>
       </a>
+      <a class="hackathon-sponsor-logo" href="https://gvllimo.com/" target="_blank" rel="noopener noreferrer">
+        <img src="/images/gvl-limo-logo.webp" alt="GVL Limo, Greenville Executive Limo Service" width="512" height="512" loading="lazy" />
+      </a>
+      <a class="hackathon-sponsor-logo" href="https://www.robinsonbradshaw.com/" target="_blank" rel="noopener noreferrer">
+        <picture>
+          <source srcset="/images/robinson-bradshaw-logo-white.svg" media="(prefers-color-scheme: dark)" />
+          <img src="/images/robinson-bradshaw-logo.svg" alt="Robinson Bradshaw" width="642" height="214" loading="lazy" />
+        </picture>
+      </a>
     </div>
   </div>
 </div>
