@@ -239,12 +239,12 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">
       <span class="hackathon-hotel-tag">Group rate</span>
-      <a class="hackathon-hotel-name" href="https://comfortinnclemson.com/" target="_blank" rel="noopener noreferrer">Comfort Inn &amp; Suites Clemson</a>
+      <a class="hackathon-hotel-name" href="https://www.choicehotels.com/sc086" target="_blank" rel="noopener noreferrer">Comfort Inn &amp; Suites Clemson</a>
       <span class="hackathon-hotel-address">1305 Tiger Blvd, Clemson</span>
-      <p class="hackathon-hotel-note">Discounted rate for SC Quantathon participants until the rooms are full. Call the hotel at <a href="tel:+18646432226">(864) 643-2226</a> and say you are part of the event to book it.</p>
+      <p class="hackathon-hotel-note"><span class="hackathon-hotel-note-lead">Group rate for SC Quantathon participants with deluxe hot breakfast included:</span><br>Standard room: $89/night<br>Junior king mini suite: $104/night<br><a href="https://www.choicehotels.com/reservations/groups/BR68X7" target="_blank" rel="noopener noreferrer">Book online</a> under the “SC Quantathon V3 Conference Group” block,<br>or call the hotel at <a href="tel:+18646533600">(864) 653-3600</a>.</p>
     </div>
     <span class="hackathon-hotel-distance">1.9 mi</span>
-    <span class="hackathon-hotel-price">$–$$</span>
+    <span class="hackathon-hotel-price">$</span>
   </li>
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">

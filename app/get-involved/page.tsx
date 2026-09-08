@@ -150,7 +150,7 @@ export default function GetInvolvedPage() {
         <p className="gi-channels-intro">
           The club mainly uses Discord, with updates sent on GroupMe, and meets
           in person every other week.
-          Pick whichever way is easiest to get started. There&apos;s no wrong
+          Pick whichever way is easiest to get started. There’s no wrong
           door, and no commitment required to show up.
         </p>
         <div className="gi-channels">

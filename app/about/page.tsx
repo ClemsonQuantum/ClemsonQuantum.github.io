@@ -108,8 +108,8 @@ export default function AboutPage() {
           <h2>Events and pathways</h2>
           <p>
             Members participate in workshops, student projects, and hackathons,
-            from MIT iQuHack to SC Quantathon, the student-focused quantum
-            hackathon series we help run at Clemson.
+            from MIT iQuHack to SC Quantathon, the student quantum hackathon
+            founded by SC Quantum and now run by Clemson Quantum Club.
           </p>
         </div>
         <div className="about-page__link-panel">

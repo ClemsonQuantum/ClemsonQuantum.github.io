@@ -1189,11 +1189,19 @@ footer {
 }
 
 .hackathon-section .hackathon-hotel-note {
-  max-width: 52ch;
+  max-width: 78ch;
   margin: 0.55rem 0 0;
   font-size: 0.95rem;
   line-height: 1.55;
   color: var(--color-text);
+}
+
+/* The rate-block lead sentence stays on one line where the column is wide
+   enough; on phones it wraps like any other prose. */
+@media (min-width: 801px) {
+  .hackathon-hotel-note-lead {
+    white-space: nowrap;
+  }
 }
 
 /* Right-hand stats echo the Key Details label/value pairs. */

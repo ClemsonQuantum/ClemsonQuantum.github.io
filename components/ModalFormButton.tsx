@@ -2,6 +2,7 @@
 
 import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import siteConfig from '@/data/site-config.json';
 import { web3formsReady } from '@/lib/web3forms';
 
@@ -170,7 +171,8 @@ export default function ModalFormButton({
         {label}
       </button>
 
-      {open && (
+      {open &&
+        createPortal(
         <div
           className="modal-overlay"
           onMouseDown={(e) => {
@@ -267,8 +269,9 @@ export default function ModalFormButton({
               </>
             )}
           </div>
-        </div>
-      )}
+        </div>,
+        document.body,
+        )}
     </>
   );
 }
