@@ -143,6 +143,7 @@ Every day pairs a seminar with a notebook lab. Every lab uses a simulator for th
     <div class="qff-day-body">
       <p>Seminar by the organizers: how IBM’s superconducting processors work, what T1, T2, and readout error mean, and why circuits are transpiled before they run. Along the way we take the mathematics one step further, with multi-qubit states as tensor products and gates as unitary matrices. Then the ladder from error suppression to mitigation, detection, and correction, including quantum teleportation with mid-circuit measurement and feed-forward, the trick behind long-range entanglement on today’s chips. Everything runs on both a simulator and real hardware, so you can compare ideal statistics with what a noisy processor returns.</p>
       <div class="qff-day-resources">
+        <span class="qff-day-resource qff-day-resource--pending">Seminar link</span>
         <span class="qff-day-resource qff-day-resource--pending">Notebook</span>
         <span class="qff-day-resource qff-day-resource--pending">Slides</span>
         <span class="qff-day-resource qff-day-resource--pending">Notes</span>
@@ -180,6 +181,7 @@ Every day pairs a seminar with a notebook lab. Every lab uses a simulator for th
     <div class="qff-day-body">
       <p>Seminar by the organizers on where high-performance computing meets quantum: simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then quantum machine learning: encoding data into qubits, quantum kernels and variational classifiers, and an honest look at where these methods stand today.</p>
       <div class="qff-day-resources">
+        <span class="qff-day-resource qff-day-resource--pending">Seminar link</span>
         <span class="qff-day-resource qff-day-resource--pending">Notebook</span>
         <span class="qff-day-resource qff-day-resource--pending">Slides</span>
         <span class="qff-day-resource qff-day-resource--pending">Notes</span>
@@ -237,6 +239,22 @@ Every day pairs a seminar with a notebook lab. Every lab uses a simulator for th
   <details class="qff-faq-item">
     <summary>Can I run the notebooks without installing anything?</summary>
     <p>Yes. Each notebook will open in Google Colab from the link on this page once it is posted.</p>
+  </details>
+  <details class="qff-faq-item">
+    <summary>Is it free?</summary>
+    <p>Yes. Qiskit Fall Fest at Clemson is free to attend. Registration is only so we know how many people to expect.</p>
+  </details>
+  <details class="qff-faq-item">
+    <summary>Who can attend?</summary>
+    <p>Anyone curious about quantum computing. Clemson undergraduate and graduate students from any major are the main audience, and you do not need to be a member of Clemson Quantum Club.</p>
+  </details>
+  <details class="qff-faq-item">
+    <summary>Is it in person or online?</summary>
+    <p>In person at Clemson University, November 16–20. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. The seminars are also livestreamed, and the recordings are posted on this page afterward along with the notebooks, slides, and notes.</p>
+  </details>
+  <details class="qff-faq-item">
+    <summary>Are there prizes or certificates?</summary>
+    <p>No. This is a week of learning, not a competition, so there is no judging and nothing to win. What you leave with is a set of notebooks you have run on real quantum hardware.</p>
   </details>
   <details class="qff-faq-item">
     <summary>How do I register?</summary>
