@@ -24,6 +24,10 @@ const REVEAL_SELECTOR = [
   '.hackathon-team-member',
   '.hackathon-video',
   '.hackathon-schedule-day',
+  '.qff-ledger-row',
+  '.qff-day',
+  '.qff-faq-item',
+  '.qff-team-member',
   '.constellation-divider',
 ].join(', ');
 

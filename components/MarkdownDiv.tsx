@@ -1,14 +1,14 @@
 import type { ComponentPropsWithoutRef } from 'react';
+import CloudSky from './CloudSky';
 import EventCountdown from './EventCountdown';
-import FallingLeaves from './FallingLeaves';
 import QuantumCanvas from './QuantumCanvas';
 
 // Render marker divs as interactive client components, dispatched on sentinel
 // classes so pages that don't opt in render exactly as before. Shared by the
 // event slug routes (hackathons and workshops-and-seminars):
 //   .hackathon-hero--quantum  → animated qubit-particle canvas behind the hero
-//   .qff-hero--leaves         → on that same hero, also layers the drifting
-//                               autumn-leaves canvas (Qiskit Fall Fest pages)
+//   .qff-hero--sky            → drifting-clouds canvas behind the Qiskit Fall
+//                               Fest hero (CloudSky; birds layer off)
 //   .event-countdown          → live countdown (data-target / data-end, plus
 //                               optional data-ended-message / data-live-message
 //                               for per-event wrap-up and live copy)
@@ -19,11 +19,18 @@ export default function MarkdownDiv(
   const { node, className, children, ...rest } = props;
   void node;
   const classes = className?.split(/\s+/) ?? [];
+  if (classes.includes('qff-hero--sky')) {
+    return (
+      <div className={className} {...rest}>
+        <CloudSky />
+        {children}
+      </div>
+    );
+  }
   if (classes.includes('hackathon-hero--quantum')) {
     return (
       <div className={className} {...rest}>
         <QuantumCanvas />
-        {classes.includes('qff-hero--leaves') && <FallingLeaves />}
         {children}
       </div>
     );
