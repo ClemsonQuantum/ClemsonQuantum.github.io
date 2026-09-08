@@ -70,7 +70,7 @@ components/
   MarkdownDiv.tsx                    # Sentinel-class div renderer shared by event slug routes
   SiteImage.tsx                      # Plain <img> wrapper
   QuantumCanvas.tsx                  # Entangled-qubit particle field canvas
-  FallingLeaves.tsx                  # Autumn-leaf drift canvas (Qiskit Fall Fest hero)
+  CloudSky.tsx                       # Drifting-clouds canvas (Qiskit Fall Fest hero)
   BlochSphere.tsx                    # Interactive Bloch sphere
   ConstellationDivider.tsx           # Decorative section divider
   ScrollReveal.tsx                   # Headless reveal-on-scroll effect (adds classes to allow-listed elements, renders nothing)

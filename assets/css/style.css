@@ -650,6 +650,13 @@ section p {
   margin-top: 0.5rem;
 }
 
+/* Nested ordered lists (the code of conduct enforcement ladder) indent
+   under their parent item instead of running flush. */
+.page-content ol ol {
+  margin: 0.35rem 0 0.5rem;
+  padding-left: 1.5rem;
+}
+
 .page-content li {
   margin: 0.375rem 0;
   color: var(--color-text-secondary);
@@ -1279,19 +1286,10 @@ footer {
   max-height: 110px;
 }
 
-/* Logo plus a unit name beneath it (WCU's college signature is not public;
-   the university wordmark carries the college name as a caption). */
-.hackathon-sponsor-logo--stacked {
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.hackathon-sponsor-caption {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
+/* WCU's vertical College of Engineering and Technology signature carries a
+   text line under the monogram; give it height so that line stays legible. */
+.hackathon-sponsor-logo img[src*="wcu-coe-logo"] {
+  max-height: 120px;
 }
 
 /* Hackathon Team Grid */
@@ -2812,7 +2810,8 @@ main {
    small gap — keeps the title close to the sticky header. */
 main:has(.archive-page),
 main:has(.home-hero),
-main:has(.hackathon-page) {
+main:has(.hackathon-page),
+main:has(.qff-page) {
   padding-top: 0;
 }
 
@@ -3431,7 +3430,8 @@ main:has(.hackathon-page) {
   }
 }
 
-.page-content:has(.hackathon-page) {
+.page-content:has(.hackathon-page),
+.page-content:has(.qff-page) {
   max-width: none;
   padding: 0;
 }
@@ -4938,91 +4938,415 @@ main:has(.hackathon-page) {
   .hackathon-track-logo[src$="srnl-logo.svg"] {
     filter: brightness(1.9);
   }
+}
 
-  /* WCU's wordmark is a deep purple (#592C88); lift it on the dark page. */
-  .hackathon-sponsor-logo img[src$="wcu-logo.svg"] {
-    filter: brightness(1.7);
+/* ===================================================================
+   SC Quantathon v3 additions (2026-09-07): venue block with an embedded
+   map slot beside the spec sheet, and a native <details> FAQ.
+   =================================================================== */
+
+/* Venue: map on the left, address and entry notes on the right. Sits under
+   the Key Details spec grid inside the same section. */
+.hackathon-venue {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.hackathon-venue-map {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.hackathon-venue-map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Until the Apple Maps embed snippet is pasted in: a dashed slot. */
+.hackathon-venue-map--pending {
+  display: grid;
+  place-items: center;
+  border: 2px dashed var(--color-border);
+  background: transparent;
+}
+
+.hackathon-venue-map-note {
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hackathon-section .hackathon-venue-text p {
+  margin: 0 0 0.6rem;
+}
+
+.hackathon-section .hackathon-venue-name {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--color-text);
+}
+
+.hackathon-section .hackathon-venue-address {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.hackathon-venue-links a {
+  font-weight: 600;
+}
+
+/* FAQ as native <details> rows (mirrors the Fall Fest page behaviour with
+   the hackathon page's own type). */
+.hackathon-faq {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.hackathon-faq-item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.hackathon-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.hackathon-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.hackathon-faq-item summary::after {
+  content: '+';
+  color: var(--color-accent);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.hackathon-faq-item[open] summary::after {
+  content: '−';
+}
+
+.hackathon-faq-item summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.hackathon-section .hackathon-faq-item p {
+  max-width: 66ch;
+  margin: 0 0.15rem 1.2rem;
+}
+
+@media (max-width: 767px) {
+  .hackathon-venue {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Two-column schedule (bootcamp): the two week columns sit an equal
+   distance from each other and from the section edges. */
+.hackathon-schedule--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(2rem, 8vw, 6rem);
+  padding: 0 clamp(2rem, 8vw, 6rem);
+}
+
+/* Daily content list: compact <details> rows reusing the FAQ row styling. */
+.hackathon-days .hackathon-day summary {
+  gap: 1rem;
+  justify-content: flex-start;
+  padding: 0.75rem 0.15rem;
+}
+
+.hackathon-day-num {
+  flex: 0 0 4.5rem;
+  color: var(--color-violet);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hackathon-day-title {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+
+.hackathon-day-date {
+  flex: 0 0 auto;
+  margin-right: 0.75rem;
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.hackathon-section .hackathon-day p {
+  margin: 0 0.15rem 0.75rem;
+}
+
+.hackathon-section .hackathon-day .hackathon-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.hackathon-resource {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border: 1px solid rgba(var(--color-violet-rgb), 0.4);
+  border-radius: var(--radius-full);
+  color: var(--color-violet);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hackathon-resource--pending {
+  border-style: dashed;
+  border-color: var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 767px) {
+  .hackathon-schedule--two {
+    grid-template-columns: 1fr;
+    padding: 0;
   }
 }
 
 /* ===================================================================
-   Qiskit Fall Fest page (.qff-page)
-   Structure reuses the hackathon-* system wholesale; this section only
-   re-skins it with IBM's official Fall Fest 2026 identity (colors sampled
-   from the organizer asset pack: badge pink #ff7eb6, sky #dae5fc, deep
-   pill purple #31135e, IBM purple-60 #8a3ffc) plus IBM Plex type. The
-   site tokens are re-mapped INSIDE the wrapper, so CTAs, spec labels,
-   hairlines — and both hero canvases, which resolve the *-rgb vars at
-   the canvas element — recolor without touching any structural rule.
+   Code of Conduct page (.coc-page): editorial document layout. Overrides
+   the generic markdown chrome (boxed <ul>, small h1) with a title block,
+   hairline-separated sections, and plain numbered lists so the enforcement
+   ladder reads as a ladder.
    =================================================================== */
-
-.qff-page {
-  /* Light theme: vivid magenta accents, deep magenta link ink (holds AA on
-     the cream bg the same way the site's orange link ink does), IBM
-     purple-70 in the violet slots. */
-  --color-accent: #ee5396;
-  --color-accent-rgb: 238, 83, 150;
-  --color-accent-hover: #d02670;
-  --color-accent-light: #fff0f7;
-  --color-link: #d02670;
-  --color-link-hover: #9f1853;
-  --color-violet: #6929c4;
-  --color-violet-rgb: 105, 41, 196;
-  --color-violet-light: #f6f2ff;
+.coc-page {
+  max-width: 760px;
+  padding-top: var(--space-xl);
 }
 
-/* Periwinkle sky flowing into the galaxy backdrop (same fade-to-transparent
-   doctrine as the base .hackathon-page gradient it replaces). */
-.hackathon-page.qff-page {
+.coc-page h1 {
+  margin-bottom: 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+/* The lead paragraph right after the title. */
+.coc-page h1 + p {
+  max-width: 62ch;
+  margin-bottom: 2.25rem;
+  color: var(--color-text);
+  font-size: 1.15rem;
+  line-height: 1.65;
+}
+
+.coc-page h2 {
+  margin-top: 2.5rem;
+  padding: 1.25rem 0 0.5rem;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 0;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+}
+
+.coc-page h3 {
+  margin-top: 1.5rem;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+}
+
+.coc-page p {
+  max-width: 66ch;
+  margin: 0 0 1rem;
+  font-size: 1.02rem;
+  line-height: 1.72;
+}
+
+.coc-page ul,
+.coc-page ol {
+  max-width: 66ch;
+  margin: 0.75rem 0 1.25rem;
+  padding: 0 0 0 1.5rem;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.coc-page li {
+  margin: 0.45rem 0;
+  line-height: 1.6;
+}
+
+.coc-page li::marker {
+  color: var(--color-violet);
+  font-weight: 600;
+}
+
+/* Enforcement ladder: each step is a small block with its sub-steps
+   indented and labelled by the nested list. */
+.coc-page ol ol {
+  margin: 0.4rem 0 0.75rem;
+  padding-left: 1.4rem;
+}
+
+.coc-page ol ol li {
+  margin: 0.3rem 0;
+  color: var(--color-text-secondary);
+}
+
+.coc-page strong {
+  color: var(--color-text);
+}
+
+/* ===================================================================
+   Qiskit Fall Fest page (.qff-page) — "Decade on the Cloud"
+   Its own system, deliberately unlike the SCQv3 hackathon-* spec sheet:
+   the IBM Quantum deck look. IBM Plex Sans Light titles, Plex Mono
+   eyebrows, Carbon sharp corners (no radius anywhere), 1px hairlines,
+   pink→lavender gradient phrases, a slate band, and the 2026 kit palette
+   (sky #dae5fc, pink #ff7eb6, lavender #be95ff, indigo #31135e, blue
+   #0f62fe). Only approved marks appear: the Qiskit pictogram and the
+   IBM Quantum logotype, both unmodified, plus the kit badge.
+   The hero canvas (CloudSky) reads the --qff-cloud-* tokens AT THE
+   CANVAS, so the light/dark swap below recolors the sky for free.
+   =================================================================== */
+
+/* The whole page in IBM Plex, site chrome included: the nav, footer, and every
+   serif heading resolve the site type tokens at body, so re-pointing the
+   tokens here switches all of it on Fall Fest pages without touching a single
+   chrome rule. (The Plex vars are set on body by next/font, so they resolve.) */
+body:has(.qff-page) {
+  --font-sans: var(--font-plex-sans);
+  --font-serif: var(--font-plex-sans);
+}
+
+.qff-page {
+  --qff-ink: #161616;
+  --qff-slate: #21272a;
+  --qff-sky: #dae5fc;
+  --qff-pink: #ff7eb6;
+  --qff-lav: #be95ff;
+  --qff-indigo: #31135e;
+  --qff-blue: #0f62fe;
+  --qff-line: rgba(22, 22, 22, 0.14);
+  --qff-label: #6929c4;
+  --qff-label-alt: #9f1853;
+  --qff-grad: linear-gradient(90deg, #ff7eb6, #be95ff);
+  --qff-rule-grad: linear-gradient(90deg, #0f62fe, #be95ff, #ff7eb6);
+  --qff-band-bg: #21272a;
+  --qff-band-ink: #f4f4f4;
+  --qff-band-muted: #c6c6c6;
+  --qff-tile-sky: #dae5fc;
+  --qff-tile-gray: #e0e0e0;
+  --qff-tile-pink: #ff7eb6;
+  --qff-tile-cloud: rgba(255, 255, 255, 0.92);
+  --qff-btn-bg: #161616;
+  --qff-btn-ink: #ffffff;
+  --qff-cloud-rgb: 255, 255, 255;
+  --qff-cloud-alpha: 0.55;
+  --qff-bird-rgb: 49, 19, 94;
+  --qff-bird-alpha: 0.5;
+  /* Site tokens re-mapped so inline links and focus rings take kit ink.
+     Link ink is Magenta 70 (~6.9:1 on the sky). */
+  --color-accent: #d02670;
+  --color-accent-rgb: 208, 38, 112;
+  --color-accent-hover: #9f1853;
+  --color-accent-light: #fff0f7;
+  --color-link: #9f1853;
+  --color-link-hover: #740937;
+  --color-violet: #8a3ffc;
+  --color-violet-rgb: 138, 63, 252;
+  --color-violet-light: #f6f2ff;
+
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--font-plex-sans, var(--font-sans));
+  /* Periwinkle sky fading to transparent so the body galaxy shows below
+     (same doctrine as .hackathon-page). */
   background: linear-gradient(
     180deg,
     #dae5fc 0,
-    rgba(218, 229, 252, 0.62) 220px,
-    transparent 640px
+    rgba(218, 229, 252, 0.55) 260px,
+    transparent 720px
   );
 }
 
-/* IBM Plex carries the page; the serif stays out of Fall Fest branding.
-   The schedule/track h3 selectors outrank the load-bearing chip-reset rules
-   that re-state the serif at (0,2,1). */
-.qff-page,
+/* Type: Plex throughout; light-weight display like the IBM decks. */
 .qff-page h1,
 .qff-page h2,
-.qff-page h3,
-.qff-page .hackathon-schedule-day h3,
-.qff-page .hackathon-track-body h3 {
+.qff-page h3 {
   font-family: var(--font-plex-sans, var(--font-sans));
-}
-
-.qff-page h1,
-.qff-page h2 {
+  font-weight: 300;
   letter-spacing: -0.01em;
 }
 
-/* Mono for the "spec sheet" voice: eyebrow, dates, times, labels, numbers —
-   the same slots the badge art sets in IBM Plex Mono. */
-.qff-page .hackathon-hero-eyebrow,
-.qff-page .hackathon-schedule-date,
-.qff-page .hackathon-time,
-.qff-page .hackathon-spec-label,
-.qff-page .hackathon-track-num,
-.qff-page .hackathon-track-slot-label,
-.qff-page .qff-day-num,
-.qff-page .qff-day-meta,
-.qff-page .qff-day-toggle {
+.qff-eyebrow,
+.qff-hosted-label,
+.qff-ledger dt,
+.qff-day-num,
+.qff-day-meta,
+.qff-day-toggle,
+.qff-faq-item summary::after,
+.qff-team-role {
   font-family: var(--font-plex-mono, ui-monospace, monospace);
 }
 
-/* The badge art is full-color (pink circle, black ink) — never invert it,
-   unlike the solid-black SCQ hero logo. Outranks the dark-mode invert. */
-.qff-page .hackathon-hero-logo {
-  filter: none;
+.qff-eyebrow {
+  margin: 0 0 1rem;
+  color: var(--qff-label);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
-/* Falling-leaves canvas: same full-bleed layering as .quantum-canvas — must
-   escape the hero's 920px direct-child cap. Sits above the particle field
-   (later sibling), below the hero text (z-index 1). */
-.falling-leaves {
+.qff-gradient-text {
+  /* Light mode: Magenta 70 → Purple 70 so the phrase stays ≥ 4.5:1 on the
+     sky and cream (the kit's pink→lavender is 1.9:1 there); dark mode and
+     the slate band swap the kit gradient back in below. */
+  background: linear-gradient(90deg, #9f1853, #6929c4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero: the deck's cover slide. Copy left, four square tiles right. */
+.qff-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 8vw, 5.5rem) var(--space-xl) clamp(2.5rem, 6vw, 4rem);
+}
+
+/* Cloud canvas: full-bleed behind the hero, fading out toward the bottom
+   so the sky hands off to the page gradient. */
+.cloud-sky {
   position: absolute;
   inset: 0;
   z-index: 0;
@@ -5031,33 +5355,405 @@ main:has(.hackathon-page) {
   max-width: none;
   margin: 0;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent);
+  mask-image: linear-gradient(#000 70%, transparent);
 }
 
-/* Sections opted out of the generic .hackathon-section + .hackathon-section
-   divider hairline (no rule above Key Details, Week at a Glance, or FAQ). */
-.qff-page .hackathon-section.qff-section--seamless {
-  border-top: 0;
+.qff-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
-/* With no hero CTA band on this page, About follows the hero directly —
-   drop its section top padding (the hero's own bottom padding keeps the
-   breathing room), mirroring the .hackathon-hero-cta + section rule. */
-.qff-page .hackathon-hero + .hackathon-section {
-  padding-top: 0;
+/* Hero eyebrow stays on one line on desktop: mono text sized to the column,
+   no wrapping. Phones (single-column hero) may wrap. */
+@media (min-width: 1100px) {
+  .qff-hero .qff-eyebrow {
+    white-space: nowrap;
+    font-size: clamp(0.62rem, 0.95vw, 0.82rem);
+  }
 }
 
-/* Week at a Glance: one expandable row per day (native <details> accordion,
-   Day 1 on top). Each open body is the permanent home for that day's
-   write-up — talk title, speaker, links, and attached files get posted
-   there after sessions. Editorial hairline rows, no card chrome. */
+.qff-page .qff-hero h1 {
+  margin: 0;
+  padding: 0;
+  color: var(--qff-ink);
+  font-size: clamp(2.8rem, 6.5vw, 4.6rem);
+  line-height: 1.02;
+  text-align: left;
+}
 
+.qff-page .qff-tagline {
+  max-width: 54ch;
+  margin: 1.4rem 0 0;
+  color: var(--color-text);
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+
+.qff-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* Buttons: Carbon-flat, sharp. */
+.qff-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--qff-btn-bg);
+  border-radius: 0;
+  background: var(--qff-btn-bg);
+  color: var(--qff-btn-ink);
+  font-family: var(--font-plex-sans, var(--font-sans));
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+a.qff-btn:hover {
+  background: var(--qff-indigo);
+  border-color: var(--qff-indigo);
+  color: #fff;
+}
+
+.qff-btn:focus-visible {
+  outline: 2px solid var(--qff-blue);
+  outline-offset: 2px;
+}
+
+.qff-btn--ghost {
+  background: transparent;
+  border-color: rgba(22, 22, 22, 0.6); /* ≥ 3:1 boundary contrast on the sky */
+  color: var(--qff-ink);
+}
+
+.qff-btn--soon {
+  background: transparent;
+  border-style: dashed;
+  border-color: rgba(22, 22, 22, 0.35);
+  color: var(--color-text-secondary);
+  cursor: default;
+}
+
+/* Tiles: the cover-slide 2x2 grid (slate / sky / pink / gray). */
+.qff-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 460px;
+  margin-left: auto;
+}
+
+.qff-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.qff-tile img {
+  width: 46%;
+  height: auto;
+  filter: none; /* the badge art is full-color; never invert */
+}
+
+.qff-tile--slate {
+  background: var(--qff-slate);
+}
+
+.qff-tile--sky {
+  background: var(--qff-tile-sky);
+}
+
+.qff-tile--pink {
+  background: var(--qff-tile-pink);
+}
+
+.qff-tile--gray {
+  background: var(--qff-tile-gray);
+}
+
+/* Sky tile: two soft CSS clouds built from radial-gradient puffs. */
+.qff-tile--clouds {
+  background-image:
+    radial-gradient(ellipse 13% 12% at 30% 34%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 12% 14% at 42% 30%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 26% 10% at 37% 41%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 10% 9% at 68% 66%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 20% 8% at 66% 73%, var(--qff-tile-cloud) 97%, transparent 100%);
+}
+
+/* Pink tile: an original quantum-circuit drawing (H, CNOTs, measurements). */
+.qff-tile--circuit img {
+  width: 78%;
+}
+
+/* Gradient hairline between bands. */
+.qff-rule {
+  height: 1px;
+  background: var(--qff-rule-grad);
+}
+
+/* Hosted-with strip: label + the IBM Quantum logotype alone on its row.
+   The mark is scaled uniformly (height only) and gets clear space from the
+   gap; nothing else sits beside it, so there is no lock-up. */
+.qff-hosted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2.25rem; /* same gap as between the marks */
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.1rem var(--space-xl);
+}
+
+/* Logo row: Fall Fest badge, IBM Quantum logotype, club logo. Each mark is
+   its own element with clear space between them (no lock-up). */
+.qff-hosted-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2.25rem; /* one fixed gap between every mark */
+}
+
+.qff-hosted-badge-link {
+  display: inline-flex;
+}
+
+.qff-hosted-badge {
+  width: 44px;
+  height: 44px;
+  filter: none; /* full-color kit badge; never invert */
+}
+
+/* Tagline link: keep the gradient sentence clean; underline only on hover. */
+.qff-page .qff-tagline a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--color-violet-rgb), 0.45);
+  text-underline-offset: 0.15em;
+}
+
+.qff-page .qff-tagline a:hover {
+  color: var(--color-link);
+}
+
+.qff-hosted-cqc {
+  display: inline-flex;
+}
+
+.qff-hosted-cqc picture {
+  display: contents; /* the <a> is the flex item; keeps the gap math intact */
+}
+
+.qff-hosted-cqc img {
+  display: block;
+  width: auto;
+  height: 40px;
+  filter: none;
+}
+
+.qff-hosted-label {
+  color: var(--qff-label);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.qff-hosted-logo {
+  display: inline-flex;
+  padding: 0; /* no extra padding, so the flex gap is the only spacing */
+}
+
+.qff-hosted-logo picture {
+  display: contents;
+}
+
+.qff-hosted-logo img {
+  display: block;
+  width: auto;
+  height: 26px;
+  filter: none;
+}
+
+/* Sections: hairline top, mono eyebrow, light h2. */
+.qff-section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 3.5rem) var(--space-xl);
+}
+
+.qff-section + .qff-section {
+  border-top: 1px solid var(--qff-line);
+}
+
+/* Reset the generic .page-content heading chrome (h2 underline, h3 card). */
+.qff-page .qff-section h2,
+.qff-page .qff-intro-col h2 {
+  margin: 0 0 1.2rem;
+  padding: 0;
+  border: 0;
+  color: var(--qff-ink);
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.qff-page .qff-section h3 {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.qff-page .qff-section p {
+  max-width: 62ch;
+  font-size: 1.02rem;
+  line-height: 1.74;
+}
+
+/* About beside Key Details. */
+.qff-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.qff-ledger {
+  margin: 0;
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-ledger-row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--qff-line);
+}
+
+.qff-ledger dt {
+  padding-top: 0.2em;
+  color: var(--qff-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.qff-ledger dd {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+/* Slate band: the deck's dark slide with a gradient phrase. */
+.qff-band {
+  padding: clamp(3rem, 6vw, 4.5rem) var(--space-xl);
+  background: var(--qff-band-bg);
+  color: var(--qff-band-ink);
+}
+
+.qff-band-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+/* Original line illustration of a dilution-refrigerator "chandelier"; two
+   files because the band flips slate → lavender in dark mode. */
+.qff-band-art {
+  display: block;
+  justify-self: end;
+}
+
+.qff-band-art img {
+  display: block;
+  width: clamp(150px, 18vw, 230px);
+  height: auto;
+  filter: none;
+}
+
+.qff-page .qff-band .qff-eyebrow {
+  color: var(--qff-band-muted);
+}
+
+.qff-page .qff-band .qff-gradient-text {
+  background: var(--qff-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.qff-page .qff-band p.qff-band-lead {
+  margin: 0;
+  color: var(--qff-band-ink);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.qff-page .qff-band p {
+  max-width: 62ch;
+  margin: 1.2rem 0 0;
+  color: var(--qff-band-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* Ghost button re-inked for the band (light ink on slate; dark ink on the
+   lavender dark-mode band). */
+.qff-page .qff-band .qff-band-cta {
+  margin-top: 1.6rem;
+}
+
+.qff-page .qff-band .qff-btn--ghost {
+  border-color: rgba(244, 244, 244, 0.55);
+  color: var(--qff-band-ink);
+}
+
+.qff-page .qff-band .qff-btn--ghost:focus-visible {
+  outline-color: var(--qff-band-ink); /* blue fails 3:1 on slate and on the lavender band */
+}
+
+.qff-page .qff-band a.qff-btn--ghost:hover {
+  background: var(--qff-band-ink);
+  border-color: var(--qff-band-ink);
+  color: var(--qff-band-bg);
+}
+
+/* Week at a Glance: one expandable row per day (native <details>). Each
+   open body is the permanent home for that day's write-up and links. */
 .qff-days {
   margin-top: 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--qff-line);
 }
 
 .qff-day {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--qff-line);
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s, padding-left 0.2s var(--ease-out-soft);
+}
+
+.qff-day[open] {
+  border-left-color: var(--qff-pink);
+  padding-left: 0.9rem;
 }
 
 .qff-day-summary {
@@ -5075,32 +5771,35 @@ main:has(.hackathon-page) {
 }
 
 .qff-day-summary:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--qff-blue);
   outline-offset: 3px;
-  border-radius: var(--radius-sm);
 }
 
 .qff-day-num {
-  color: var(--color-violet);
-  font-size: 1.5rem;
+  color: var(--qff-label);
+  font-size: 1.4rem;
   font-weight: 600;
 }
 
 .qff-day-meta {
   display: block;
   margin-bottom: 0.25rem;
-  color: var(--color-violet);
+  color: var(--qff-label);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
+.qff-day--workshop .qff-day-meta {
+  color: var(--qff-label-alt);
+}
+
 .qff-day-title {
   display: block;
   color: var(--color-text);
   font-size: 1.08rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
 }
 
@@ -5109,10 +5808,9 @@ main:has(.hackathon-page) {
   color: var(--color-link);
 }
 
-/* +/− affordance, mirrored by the details [open] state. */
 .qff-day-toggle::before {
   content: '+';
-  color: var(--color-accent);
+  color: var(--qff-blue);
   font-size: 1.45rem;
   font-weight: 600;
   line-height: 1;
@@ -5122,8 +5820,6 @@ main:has(.hackathon-page) {
   content: '−';
 }
 
-/* Body aligns under the title column; soft rise on open (silenced by the
-   global prefers-reduced-motion kill switch at the end of this file). */
 .qff-day-body {
   padding: 0.1rem 0.15rem 1.5rem calc(3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
 }
@@ -5139,13 +5835,12 @@ main:has(.hackathon-page) {
   }
 }
 
-.qff-day-body p {
+.qff-page .qff-day-body p {
   max-width: 66ch;
   margin: 0 0 1rem;
 }
 
-/* Resource chips: real links get solid hairlines; --pending spans are
-   dashed placeholders until the notebook/slides/recording lands. */
+/* Resource chips: sharp hairline tags; --pending are dashed placeholders. */
 .qff-day-resources {
   display: flex;
   flex-wrap: wrap;
@@ -5155,8 +5850,8 @@ main:has(.hackathon-page) {
 .qff-day-resource {
   display: inline-block;
   padding: 0.34rem 0.9rem;
-  border: 1px solid rgba(var(--color-violet-rgb), 0.4);
-  border-radius: var(--radius-full);
+  border: 1px solid rgba(138, 63, 252, 0.45);
+  border-radius: 0;
   color: var(--color-violet);
   font-size: 0.85rem;
   font-weight: 600;
@@ -5170,11 +5865,133 @@ a.qff-day-resource:focus-visible {
 
 .qff-day-resource--pending {
   border-style: dashed;
-  border-color: var(--color-border);
+  border-color: var(--qff-line);
   color: var(--color-text-secondary);
 }
 
+/* FAQ: hairline rows, native <details>. */
+.qff-faq {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-faq-item {
+  border-bottom: 1px solid var(--qff-line);
+}
+
+.qff-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.qff-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.qff-faq-item summary::after {
+  content: '+';
+  color: var(--qff-blue);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.qff-faq-item[open] summary::after {
+  content: '−';
+}
+
+.qff-faq-item summary:focus-visible {
+  outline: 2px solid var(--qff-blue);
+  outline-offset: 3px;
+}
+
+.qff-page .qff-faq-item p {
+  max-width: 66ch;
+  margin: 0 0.15rem 1.2rem;
+}
+
+/* Organizers: square photos, mono roles. */
+.qff-team {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1.5rem 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.qff-team-member {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.qff-team-photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+.qff-team-name {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.qff-team-role {
+  color: var(--qff-label);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 899px) {
+  .qff-hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .qff-tiles {
+    max-width: 380px;
+    margin-left: 0;
+  }
+
+  .qff-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .qff-band-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .qff-band-art {
+    justify-self: center;
+  }
+}
+
 @media (max-width: 639px) {
+  .qff-hero,
+  .qff-hosted,
+  .qff-section,
+  .qff-band {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .qff-cta-row .qff-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .qff-ledger-row {
+    grid-template-columns: 7rem minmax(0, 1fr);
+  }
+
   .qff-day-summary {
     grid-template-columns: 2.4rem minmax(0, 1fr) auto;
   }
@@ -5186,13 +6003,31 @@ a.qff-day-resource:focus-visible {
   .qff-day-body {
     padding-left: 0.15rem;
   }
+
+  .qff-band-art {
+    justify-self: center;
+    max-width: 200px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   .qff-page {
-    /* Dark theme: badge pink reads as the accent and link ink (the dark
-       --orange CTA rule already swaps its text to night ink), IBM
-       purple-40 in the violet slots. */
+    --qff-ink: #f4f4f4;
+    --qff-line: rgba(244, 244, 244, 0.16);
+    --qff-label: #be95ff;
+    --qff-label-alt: #ff7eb6;
+    --qff-band-bg: #be95ff; /* the deck's lavender slides */
+    --qff-band-ink: #161616;
+    --qff-band-muted: #31135e;
+    --qff-tile-sky: #31135e;
+    --qff-tile-gray: #393939;
+    --qff-tile-cloud: rgba(190, 149, 255, 0.3);
+    --qff-btn-bg: #ff7eb6;
+    --qff-btn-ink: #0b1020;
+    --qff-cloud-rgb: 190, 149, 255;
+    --qff-cloud-alpha: 0.1;
+    --qff-bird-rgb: 190, 149, 255;
+    --qff-bird-alpha: 0;
     --color-accent: #ff7eb6;
     --color-accent-rgb: 255, 126, 182;
     --color-accent-hover: #ffa1c9;
@@ -5202,18 +6037,59 @@ a.qff-day-resource:focus-visible {
     --color-violet: #be95ff;
     --color-violet-rgb: 190, 149, 255;
     --color-violet-light: rgba(138, 63, 252, 0.22);
-  }
-
-  /* Deep Fall Fest purple over the starfield; keeps the fade-to-transparent
-     doctrine so the galaxy shows through below the banner. Outranks both the
-     light .qff-page gradient and the dark SCQ banner rule. */
-  .hackathon-page.qff-page {
+    /* Deep indigo over the starfield; still fades to transparent. */
     background: linear-gradient(
       180deg,
       rgba(49, 19, 94, 0.8) 0,
-      rgba(49, 19, 94, 0.45) 240px,
-      transparent 680px
+      rgba(49, 19, 94, 0.45) 260px,
+      transparent 720px
     );
+  }
+
+  a.qff-btn:hover {
+    background: #ffa1c9;
+    border-color: #ffa1c9;
+    color: #0b1020;
+  }
+
+  .qff-btn--ghost {
+    background: transparent;
+    border-color: rgba(190, 149, 255, 0.55);
+    color: var(--qff-lav);
+  }
+
+  .qff-btn--soon {
+    background: transparent;
+    border-color: rgba(244, 244, 244, 0.3);
+    color: var(--color-text-secondary);
+  }
+
+  .qff-day-toggle::before,
+  .qff-faq-item summary::after {
+    color: var(--qff-lav);
+  }
+
+  .qff-gradient-text {
+    background: var(--qff-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .qff-page .qff-band .qff-btn--ghost {
+    border-color: rgba(22, 22, 22, 0.45);
+  }
+
+  /* On the lavender band the pink→lavender phrase would vanish; use the
+     deck's indigo→magenta instead. Three classes to outrank the light-mode
+     band rule. */
+  .qff-page .qff-band .qff-gradient-text {
+    background: linear-gradient(90deg, #31135e, #9f1853);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .qff-day-resource {
+    border-color: rgba(190, 149, 255, 0.45);
   }
 }
 

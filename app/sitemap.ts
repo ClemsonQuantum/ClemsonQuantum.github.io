@@ -10,6 +10,7 @@ export const dynamic = 'force-static';
 const STATIC_ROUTES = [
   '/',
   '/about/',
+  '/code-of-conduct/',
   '/news/',
   '/events/',
   '/events/hackathons/',

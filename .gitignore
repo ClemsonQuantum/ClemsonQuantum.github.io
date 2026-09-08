@@ -8,3 +8,13 @@ public/search.json
 # Misc
 .DS_Store
 .claude/
+
+# Curriculum build artifacts (sources live in curriculum/, served copies in public/files)
+curriculum/.venv/
+curriculum/**/*.aux
+curriculum/**/*.log
+curriculum/**/*.out
+curriculum/**/*.fls
+curriculum/**/*.fdb_latexmk
+curriculum/**/*.synctex.gz
+curriculum/**/.ipynb_checkpoints/
