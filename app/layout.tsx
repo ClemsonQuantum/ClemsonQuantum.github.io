@@ -133,12 +133,12 @@ export default function RootLayout({
             dev server needs eval for hot-reload, so a strict CSP would break it.
             GitHub Pages can't send HTTP headers, so a <meta> tag is used.
             Allows: self for everything, Web3Forms for form submits (connect-src),
-            YouTube for the embedded video, and Apple Maps embeds (frame-src). 'unsafe-inline' is
+            YouTube for the embedded video, Apple Maps and OpenStreetMap embeds (frame-src). 'unsafe-inline' is
             required for Next's inline hydration scripts and inline styles. */}
         {process.env.NODE_ENV === 'production' && (
           <meta
             httpEquiv="Content-Security-Policy"
-            content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://embed.apple-mapkit.com; form-action 'self' mailto:"
+            content="default-src 'self'; base-uri 'self'; object-src 'none'; img-src 'self' data: https:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self' https://api.web3forms.com; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://embed.apple-mapkit.com https://www.openstreetmap.org; form-action 'self' mailto:"
           />
         )}
         <script
