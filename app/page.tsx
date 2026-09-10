@@ -40,14 +40,15 @@ export default function HomePage() {
         <QuantumCanvas pxPerParticle={34} maxCount={48} />
         <h1 className="home-hero__title">Clemson Quantum Club</h1>
         <ConstellationDivider />
-        <div className="home-hero__text">
-          <p className="home-hero__subtitle">
+        <div className="home-hero__intro">
+          <p>
             Clemson Quantum Club is a student-led club at Clemson University
             that helps students learn and work with quantum computing at any
             level. Members compete in hackathons, attend conferences, and tune
-            into seminars.
+            into seminars. Anyone can drop into a meeting, with no application,
+            no dues, and no prior quantum background.
           </p>
-          <p className="home-hero__subtitle">
+          <p>
             SC Quantathon is South Carolina’s student quantum hackathon,
             founded by SC Quantum in 2024. Clemson teams have competed every
             year, and in 2026 Clemson Quantum Club hosts the third edition on
@@ -56,41 +57,69 @@ export default function HomePage() {
             and meet professionals.
           </p>
         </div>
-        {/* TEMPORARY: SCQv3 promo. After the event, restore the iQuHack team
-            photo (/images/iquhack-2025-team.webp, 1047x778, no --scqv3
-            modifier) and delete the CTA row below plus its CSS block. */}
-        <div className="home-hero__visual home-hero__visual--scqv3">
+      </section>
+
+      {/* TEMPORARY: SCQv3 featured-event band. After the event, delete this
+          whole <section> and the .home-featured* CSS block. Nothing needs
+          restoring — the hero above is self-contained and carries no image. */}
+      <section className="home-featured" aria-labelledby="featured-event">
+        <div className="home-featured__inner">
           <Link
             href="/events/hackathons/sc-quantathon-v3-2026/"
+            className="home-featured__art"
             aria-label="SC Quantathon v3 event page"
           >
             {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
             <SiteImage
               src="/images/scq-v3-banner.webp"
-              alt="SC Quantathon v3 — September 25–27, 2026 at Clemson University"
-              className="home-hero__image"
+              alt="SC Quantathon v3, September 25–27, 2026 at Clemson University"
+              className="home-featured__image"
               width={1200}
               height={675}
               loading="eager"
               fetchPriority="high"
             />
           </Link>
-        </div>
-        <div className="home-hero__cta-row">
-          <Link
-            href="/events/hackathons/sc-quantathon-v3-2026/"
-            className="hackathon-cta hackathon-cta-outline hackathon-cta--violet hackathon-cta--rect"
-          >
-            See More
-          </Link>
-          <a
-            href="https://forms.gle/vWRNfTQMNQBrGFUh7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hackathon-cta hackathon-cta--orange hackathon-cta--rect"
-          >
-            Apply Now
-          </a>
+          <div className="home-featured__body">
+            <p className="home-featured__label">Featured event</p>
+            <h2 id="featured-event" className="home-featured__title">
+              SC Quantathon v3
+            </h2>
+            <dl className="home-featured__facts">
+              <div className="home-featured__fact">
+                <dt>Dates</dt>
+                <dd>September 25–27, 2026</dd>
+              </div>
+              <div className="home-featured__fact">
+                <dt>Venue</dt>
+                <dd>Watt Family Innovation Center</dd>
+              </div>
+              <div className="home-featured__fact">
+                <dt>Teams</dt>
+                <dd>3–5 students</dd>
+              </div>
+              <div className="home-featured__fact">
+                <dt>Cost</dt>
+                <dd>Free, meals provided</dd>
+              </div>
+            </dl>
+            <div className="home-featured__cta-row">
+              <Link
+                href="/events/hackathons/sc-quantathon-v3-2026/"
+                className="hackathon-cta hackathon-cta-outline hackathon-cta--violet hackathon-cta--rect"
+              >
+                See More
+              </Link>
+              <a
+                href="https://forms.gle/vWRNfTQMNQBrGFUh7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hackathon-cta hackathon-cta--orange hackathon-cta--rect"
+              >
+                Apply Now
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

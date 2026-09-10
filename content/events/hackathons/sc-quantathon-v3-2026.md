@@ -26,9 +26,9 @@ image: "/images/scq-v3-banner.webp"
 <div class="hackathon-hero-cta">
   <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T18:30:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
-    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--clay">Apply Now</a>
-    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--plum">Devpost</a>
-    <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta--slate">Bootcamp</a>
+    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--primary">Apply Now</a>
+    <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta--ghost">Bootcamp</a>
+    <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--secondary">Devpost</a>
   </div>
 </div>
 
