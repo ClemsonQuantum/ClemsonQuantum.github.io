@@ -6,7 +6,7 @@ end_date: 2026-11-20
 location: "Clemson University"
 summary: "Clemson Quantum Club hosts Qiskit Fall Fest 2026, a Fall Fest PLUS event: a week of seminars and hands-on Qiskit labs on real quantum hardware, marking a decade of quantum computing on the cloud."
 image: "/images/ibm-fall-fest-2026.webp"
-registration_url: "https://docs.google.com/forms/d/e/1FAIpQLSeQCj_aRX5uNkn9QCCYyE3kMUOUVrye1IkdurmFdaTUMwwRBw/viewform"
+registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
 ---
 
 <div class="qff-page">
@@ -18,7 +18,7 @@ registration_url: "https://docs.google.com/forms/d/e/1FAIpQLSeQCj_aRX5uNkn9QCCYy
       <h1>Qiskit Fall Fest 2026</h1>
       <p class="qff-tagline"><a href="https://www.ibm.com/quantum/blog/qiskit-fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. Clemson Quantum Club brings it to campus this November with guest seminars, guided Qiskit labs on real quantum hardware, and a celebration of <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
       <div class="qff-cta-row">
-        <a class="qff-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeQCj_aRX5uNkn9QCCYyE3kMUOUVrye1IkdurmFdaTUMwwRBw/viewform" target="_blank" rel="noopener noreferrer">Register</a>
+        <a class="qff-btn" href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">Register</a>
         <a class="qff-btn qff-btn--ghost" href="#week">See the week</a>
       </div>
     </div>
@@ -258,7 +258,7 @@ Every day pairs a seminar with a notebook lab. Every lab uses a simulator for th
   </details>
   <details class="qff-faq-item">
     <summary>How do I register?</summary>
-    <p>Use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQCj_aRX5uNkn9QCCYyE3kMUOUVrye1IkdurmFdaTUMwwRBw/viewform" target="_blank" rel="noopener noreferrer">registration form</a>, also linked at the top of this page. Registration is free.</p>
+    <p>Use the <a href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">registration form</a>, also linked at the top of this page. Registration is free.</p>
   </details>
 </div>
 

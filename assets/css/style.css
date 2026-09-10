@@ -359,9 +359,10 @@ img {
     display: flex;
   }
 
-  /* Mobile menu = full-screen opaque drawer below the bar. Fills the viewport
-     so no page content bleeds through, and submenus expand inline onto the same
-     solid, scrollable surface. */
+  /* Mobile menu = a sheet that hangs from the bar and stops at its content.
+     It used to be pinned to the full viewport height, which left roughly two
+     thirds of the panel as empty white for a five-item nav. max-height still
+     caps it so a long submenu scrolls instead of running off screen. */
   .nav-links {
     display: none;
     position: fixed;
@@ -371,15 +372,18 @@ img {
     /* vh/dvh are viewport-relative regardless of the containing block (.nav's
        backdrop-filter would otherwise trap a fixed `bottom:0`). dvh tracks the
        mobile URL bar; the vh line is the fallback. */
-    height: calc(100vh - 64px);
-    height: calc(100dvh - 64px);
+    max-height: calc(100vh - 64px);
+    max-height: calc(100dvh - 64px);
     flex-direction: column;
     align-items: stretch;
+    gap: 0;
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    padding: var(--space-sm) var(--space-md) var(--space-xl);
+    border-radius: 0 0 1rem 1rem;
+    box-shadow: 0 20px 44px rgba(15, 23, 42, 0.16);
+    padding: 0.5rem 0 0.75rem;
     overflow-y: auto;
+    overscroll-behavior: contain;
     animation: navPanelOpen 0.25s var(--ease-out-soft);
   }
 
@@ -484,6 +488,76 @@ img {
      0.85rem. */
   .nav-search-slot .search-input {
     font-size: 1rem;
+  }
+
+  /* --- Drawer rows -------------------------------------------------------
+     Full-bleed rows with hairline separators, the pattern every large site
+     uses for a mobile nav sheet, instead of small rounded pills floating in
+     white. 52px clears the 44px touch-target minimum with room to spare. */
+  .nav-links .nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 var(--space-md);
+    border-radius: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    white-space: normal;
+  }
+
+  .nav-links > .nav-link,
+  .nav-links > .nav-dropdown {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-links > .nav-dropdown:last-of-type {
+    border-bottom: 0;
+  }
+
+  /* Chevron sits at the far edge and flips when the section is open, so the
+     row reads as a disclosure rather than a link with a decoration. */
+  .nav-links .nav-chevron {
+    margin-left: auto;
+    width: 12px;
+    height: 8px;
+  }
+
+  .nav-dropdown--open > .nav-link .nav-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Expanded section: indented, quieter, still comfortably tappable. */
+  .nav-links .nav-dropdown-panel {
+    padding: 0 0 var(--space-sm);
+    background: var(--color-bg);
+  }
+
+  .nav-links .nav-dropdown-link {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0 var(--space-md) 0 calc(var(--space-md) * 2);
+    border-radius: 0;
+    font-size: 0.97rem;
+  }
+
+  .nav-links .dropdown-submenu-content {
+    padding-left: 0;
+  }
+
+  .nav-links .dropdown-submenu-content .nav-dropdown-link {
+    padding-left: calc(var(--space-md) * 3);
+    font-size: 0.93rem;
+  }
+
+  /* Search is a utility, so it belongs at the top of the sheet rather than
+     stranded under the last link with empty space beneath it. */
+  .nav-search-slot {
+    order: -1;
+    margin: 0 0 0.5rem;
+    padding: 0 var(--space-md) 0.75rem;
+    border-bottom: 1px solid var(--color-border);
   }
 }
 
@@ -950,6 +1024,9 @@ footer {
 /* CTA Buttons */
 .hackathon-cta {
   display: inline-block;
+  /* Harmless while the button shrinks to fit; it matters on narrow screens
+     where these stretch to full width and the label would sit hard left. */
+  text-align: center;
   font-family: var(--font-sans);
   font-weight: 700;
   border-radius: var(--radius-full);
@@ -1033,56 +1110,105 @@ footer {
   }
 }
 
-/* SCQv3 hero trio (2026-09-08): three distinct, muted solids instead of a
-   vivid orange plus two matching violet outlines. Clay for the primary
-   action, plum for Devpost, slate for the bootcamp. White ink on each is
-   ≥ 5:1. Dark mode lifts the fills and switches to night ink. */
-.hackathon-cta.hackathon-cta--clay {
-  background: #a3502a;
-  border-color: #a3502a;
-  color: #fff;
-  box-shadow: 0 12px 28px rgba(163, 80, 42, 0.22);
+/* SCQv3 hero actions. History, so this stops cycling: it was orange + two
+   violet outlines, became three muted solids on 2026-09-08, and came back to
+   orange + two violet outlines on 2026-09-09 (three solids read as arbitrary,
+   neutral-grey outlines read as unfinished). Hierarchy comes from fill vs
+   outline; the palette stays the site's orange/violet pair.
+   Apply is the conversion (orange fill), Devpost is where work is submitted
+   (violet fill), Bootcamp is a reference (violet outline): Apply is the conversion, and
+   Devpost and Bootcamp are references. Squared to match the resource panels
+   and the homepage featured band, with no lift and no coloured drop shadow.
+   White on #b04700 is 5.6:1. */
+.hackathon-cta.hackathon-cta--primary,
+.hackathon-cta.hackathon-cta--secondary,
+.hackathon-cta.hackathon-cta--ghost {
+  padding: 0.85rem 1.6rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  box-shadow: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.hackathon-cta.hackathon-cta--clay:hover {
-  background: #8a4222;
-  border-color: #8a4222;
+.hackathon-cta.hackathon-cta--primary:hover,
+.hackathon-cta.hackathon-cta--secondary:hover,
+.hackathon-cta.hackathon-cta--ghost:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.hackathon-cta.hackathon-cta--primary {
+  background: var(--color-link);
+  border-color: var(--color-link);
   color: #fff;
 }
 
-.hackathon-cta.hackathon-cta--plum {
-  background: #5e4b8b;
-  border-color: #5e4b8b;
-  color: #fff;
-  box-shadow: 0 12px 28px rgba(94, 75, 139, 0.22);
-}
-
-.hackathon-cta.hackathon-cta--plum:hover {
-  background: #4d3d74;
-  border-color: #4d3d74;
+.hackathon-cta.hackathon-cta--primary:hover {
+  background: var(--color-link-hover);
+  border-color: var(--color-link-hover);
   color: #fff;
 }
 
-.hackathon-cta.hackathon-cta--slate {
-  background: #2e4057;
-  border-color: #2e4057;
+.hackathon-cta.hackathon-cta--secondary {
+  background: var(--color-violet);
+  border-color: var(--color-violet);
   color: #fff;
-  box-shadow: 0 12px 28px rgba(46, 64, 87, 0.22);
 }
 
-.hackathon-cta.hackathon-cta--slate:hover {
-  background: #243347;
-  border-color: #243347;
+.hackathon-cta.hackathon-cta--secondary:hover {
+  background: #5b21b6;
+  border-color: #5b21b6;
   color: #fff;
+}
+
+.hackathon-cta.hackathon-cta--ghost {
+  background: transparent;
+  border-color: rgba(var(--color-violet-rgb), 0.45);
+  color: var(--color-violet);
+}
+
+.hackathon-cta.hackathon-cta--ghost:hover {
+  background: var(--color-violet-light);
+  border-color: rgba(var(--color-violet-rgb), 0.7);
+  color: var(--color-violet);
 }
 
 @media (prefers-color-scheme: dark) {
-  .hackathon-cta.hackathon-cta--clay { background: #d99a72; border-color: #d99a72; color: #0b1020; }
-  .hackathon-cta.hackathon-cta--clay:hover { background: #e6b08e; border-color: #e6b08e; color: #0b1020; }
-  .hackathon-cta.hackathon-cta--plum { background: #b3a3dc; border-color: #b3a3dc; color: #0b1020; }
-  .hackathon-cta.hackathon-cta--plum:hover { background: #c4b7e6; border-color: #c4b7e6; color: #0b1020; }
-  .hackathon-cta.hackathon-cta--slate { background: #9db0cc; border-color: #9db0cc; color: #0b1020; }
-  .hackathon-cta.hackathon-cta--slate:hover { background: #b0c0d8; border-color: #b0c0d8; color: #0b1020; }
+  .hackathon-cta.hackathon-cta--primary {
+    background: #fb923c;
+    border-color: #fb923c;
+    color: #0b1020;
+  }
+
+  .hackathon-cta.hackathon-cta--primary:hover {
+    background: #fdba74;
+    border-color: #fdba74;
+    color: #0b1020;
+  }
+
+  .hackathon-cta.hackathon-cta--secondary {
+    background: var(--color-violet);
+    border-color: var(--color-violet);
+    color: #0b1020;
+  }
+
+  .hackathon-cta.hackathon-cta--secondary:hover {
+    background: #d6cbff;
+    border-color: #d6cbff;
+    color: #0b1020;
+  }
+
+  .hackathon-cta.hackathon-cta--ghost {
+    border-color: rgba(var(--color-violet-rgb), 0.5);
+    color: var(--color-violet);
+  }
+
+  .hackathon-cta.hackathon-cta--ghost:hover {
+    background: var(--color-violet-light);
+    border-color: rgba(var(--color-violet-rgb), 0.75);
+    color: var(--color-violet);
+  }
 }
 
 /* A hero followed directly by a section (no CTA band, e.g. the bootcamp
@@ -1646,11 +1772,6 @@ footer {
    clipping would cut off the visual's 70px box-shadow. */
 .home-hero {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-  column-gap: clamp(2rem, 4vw, 4rem);
-  row-gap: clamp(1.25rem, 2.5vw, 2rem);
-  align-items: start;
   max-width: var(--max-width);
   margin: 0 auto;
   padding: var(--space-lg) var(--space-xl) clamp(2rem, 4vw, 3.5rem);
@@ -1660,7 +1781,6 @@ footer {
   font-family: var(--font-serif);
   font-weight: 700;
   letter-spacing: -0.025em;
-  grid-column: 1 / -1;
   /* A touch of air above and below so the headline doesn't crowd the header
      or the divider. */
   margin: 0.5rem 0 0.75rem;
@@ -1671,55 +1791,35 @@ footer {
   text-align: center;
 }
 
-/* Center the intro copy against the photo so the first paragraph sits toward
-   the middle of the image instead of hanging off its top edge. */
-.home-hero__text {
-  align-self: center;
+/* The two intro paragraphs, set side by side under the divider. Capped well
+   short of the hero's own max-width so each column lands near 48ch rather
+   than the ~60ch two full-width halves would give. */
+.home-hero__intro {
+  margin: 0 auto;
+  max-width: 66rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: start;
+  text-align: left;
 }
 
-.home-hero__subtitle {
-  text-align: left;
+.home-hero__intro p {
   margin: 0;
   color: var(--color-text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.75;
-  max-width: 58ch;
-}
-
-.home-hero__visual {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 1.6rem;
-  background: #ece7df;
-  /* Base drop shadow plus a whisper of violet "field" around the photo. */
-  box-shadow:
-    0 28px 70px rgba(15, 23, 42, 0.14),
-    0 0 34px rgba(var(--color-violet-rgb), 0.08);
-}
-
-.home-hero__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 @media (max-width: 767px) {
-  .home-hero {
-    gap: var(--space-xl);
-  }
-
-  .home-hero__title,
-  .home-hero__subtitle {
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+  .home-hero__intro {
+    grid-template-columns: 1fr;
+    row-gap: 1.3rem;
   }
 }
 
 .home-hero__title,
-.home-hero__text,
-.home-hero__visual {
+.home-hero__intro {
   position: relative;
   z-index: 1;
 }
@@ -2002,21 +2102,64 @@ footer {
   gap: var(--space-lg);
   margin-top: var(--space-lg);
 }
-.resource-cards .hackathon-resource-title {
-  text-align: center;
-  font-size: 1.2rem;
-}
-/* Match the news/event preview-card interaction: lift + accent border + shadow.
-   Scoped to .resource-cards so it overrides the shared card's `transform: none`
-   hover without affecting the same class elsewhere. */
+
+/* The two "Start here" panels are navigation, not preview cards, so they drop
+   the rounded/​shadowed card language they used to share with the news grid.
+   Everything is left-aligned, the per-panel colour moves out of the title text
+   and into a top rule, and an arrow makes the link affordance explicit.
+   Scoped to .resource-cards: the bare .hackathon-resource-card class is still
+   used by the hosted-hackathon page template. */
 .resource-cards .hackathon-resource-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  --rc-accent: var(--color-accent);
+  --rc-tint: var(--color-accent-light);
+  padding: 1.4rem 1.5rem 1.5rem;
+  border: 1px solid var(--color-border);
+  border-top: 2px solid var(--rc-accent);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  box-shadow: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
+
+.resource-cards .hackathon-resource-card--violet {
+  --rc-accent: var(--color-violet);
+  --rc-tint: var(--color-violet-light);
+}
+
+.resource-cards .hackathon-resource-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  margin-bottom: 0.55rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.resource-cards .hackathon-resource-title::after {
+  content: "\2192";
+  display: inline-block;
+  color: var(--rc-accent);
+  font-weight: 400;
+  transition: transform 0.2s ease;
+}
+
 .resource-cards .hackathon-resource-card:hover,
 .resource-cards .hackathon-resource-card:focus-visible {
-  transform: translateY(-3px);
-  border-color: rgba(var(--color-accent-rgb), 0.22);
-  box-shadow: var(--shadow-md);
+  background: var(--rc-tint);
+  border-color: var(--rc-accent);
+}
+
+.resource-cards .hackathon-resource-card:hover .hackathon-resource-title::after,
+.resource-cards .hackathon-resource-card:focus-visible .hackathon-resource-title::after {
+  transform: translateX(4px);
+}
+
+.resource-cards .hackathon-resource-card:focus-visible {
+  outline: 2px solid var(--rc-accent);
+  outline-offset: 3px;
 }
 
 /* Quantum faculty — distinct 2-column people layout (role eyebrow + headshot +
@@ -3132,11 +3275,6 @@ main:has(.qff-page) {
   text-transform: uppercase;
 }
 
-/* Space between the two stacked hero paragraphs */
-.home-hero__text > p + p {
-  margin-top: 1.3rem;
-}
-
 .home-section {
   padding-top: var(--space-xl);
   padding-bottom: var(--space-2xl);
@@ -3430,13 +3568,7 @@ main:has(.qff-page) {
   }
 
   .home-hero {
-    grid-template-columns: 1fr;
     padding: 1rem var(--space-md) 2rem;
-  }
-
-  .home-hero__visual {
-    order: -1;
-    aspect-ratio: 16 / 10;
   }
 
   .home-section__title {
@@ -3495,6 +3627,9 @@ main:has(.qff-page) {
 
   .board-member__links {
     margin-top: 0;
+    /* Stacked, the icon row spans the whole card, so left-aligned icons
+       drift away from the centred name above them. */
+    justify-content: center;
   }
 }
 
@@ -3590,6 +3725,9 @@ main:has(.qff-page) {
 
   .hackathon-hero-logo {
     width: clamp(150px, 48vw, 230px);
+    /* The hero stacks into a flex column at this width; without this the
+       logo hugs the left edge under the centred title block. */
+    align-self: center;
   }
 }
 
@@ -4518,35 +4656,6 @@ main:has(.qff-page) {
   box-shadow: var(--shadow-md);
 }
 
-/* Resources "Start here" color variants: Learning Resources in Clemson
-   orange, Student Work in nebula violet. Double-class selectors outrank the
-   dark-mode border/background overrides; the tokens swap shades per theme. */
-.hackathon-resource-card.hackathon-resource-card--orange {
-  border-color: rgba(var(--color-accent-rgb), 0.45);
-}
-
-.hackathon-resource-card.hackathon-resource-card--orange .hackathon-resource-title {
-  color: var(--color-link);
-}
-
-.hackathon-resource-card.hackathon-resource-card--orange:hover {
-  border-color: var(--color-accent);
-  background: var(--color-accent-light);
-}
-
-.hackathon-resource-card.hackathon-resource-card--violet {
-  border-color: rgba(var(--color-violet-rgb), 0.45);
-}
-
-.hackathon-resource-card.hackathon-resource-card--violet .hackathon-resource-title {
-  color: var(--color-violet);
-}
-
-.hackathon-resource-card.hackathon-resource-card--violet:hover {
-  border-color: var(--color-violet);
-  background: var(--color-violet-light);
-}
-
 /* Quantum Courses at Clemson (resources page): department columns. */
 .course-groups {
   display: grid;
@@ -4892,14 +5001,12 @@ main:has(.qff-page) {
   }
 
   .preview-card__media,
-  .home-hero__visual,
   .board-member__avatar {
     background: #1a2140;
   }
 
   /* Club photos: swap the slate drop shadow for a nebula-like violet glow
      with a faint orange counterpoint — reads as a lit object in the dark. */
-  .home-hero__visual,
   .about-page__photo {
     box-shadow:
       0 24px 60px rgba(0, 0, 0, 0.45),
@@ -5156,6 +5263,16 @@ main:has(.qff-page) {
 @media (max-width: 767px) {
   .hackathon-venue {
     grid-template-columns: 1fr;
+  }
+
+  /* Stacked, the address and directions are what someone actually reads
+     first, so the map follows them instead of pushing them below the fold. */
+  .hackathon-venue-text {
+    order: 1;
+  }
+
+  .hackathon-venue-map {
+    order: 2;
   }
 }
 
@@ -5483,6 +5600,12 @@ body:has(.qff-page) {
   text-align: left;
 }
 
+@media (max-width: 767px) {
+  .qff-page .qff-hero h1 {
+    text-align: center;
+  }
+}
+
 .qff-page .qff-tagline {
   max-width: 54ch;
   margin: 1.4rem 0 0;
@@ -5613,6 +5736,42 @@ a.qff-btn:hover {
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem 2.25rem; /* one fixed gap between every mark */
+}
+
+/* Narrow screens: the two round marks (club logo, Fall Fest badge) sit side
+   by side and the wide IBM Quantum logotype takes its own row underneath,
+   rather than all three squeezing onto one line. */
+@media (max-width: 640px) {
+  /* .qff-hosted is a wrapping flex row of [label, logos]. Once it wraps, the
+     logo row sizes to its content and lands off-centre, so give it the whole
+     line and centre the parent's items. */
+  .qff-hosted {
+    justify-content: center;
+  }
+
+  .qff-hosted-logos {
+    flex: 1 1 100%;
+    justify-content: center;
+    row-gap: 1.25rem;
+  }
+
+  .qff-hosted-cqc {
+    order: 1;
+  }
+
+  .qff-hosted-badge-link {
+    order: 2;
+  }
+
+  .qff-hosted-logo {
+    order: 3;
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+
+  .qff-hosted-label {
+    text-align: center;
+  }
 }
 
 .qff-hosted-badge-link {
@@ -6497,61 +6656,130 @@ body::after {
 
 
 /* ===================================================================
-   TEMPORARY: SCQv3 homepage promo. The hero photo is swapped for the
-   SC Quantathon v3 banner with a See More / Apply Now pair. Delete this
-   whole block (and the matching JSX in app/page.tsx) after the event.
+   TEMPORARY: SCQv3 homepage promo, as a featured-event band sitting between
+   the hero and the News section. After the event, delete this whole block
+   and the matching <section class="home-featured"> in app/page.tsx. Nothing
+   needs restoring: the hero above is self-contained and carries no image.
    =================================================================== */
 
-/* The banner art is 16:9; the default 4/3 (16/10 on mobile) frame would
-   crop its headline text. */
-.home-hero__visual--scqv3 {
-  aspect-ratio: 16 / 9;
+/* Full-bleed band under the hero. The tint and the top/bottom hairlines are
+   what make this read as its own region rather than another element floating
+   in the hero, which is how the old banner card read. */
+.home-featured {
+  /* The generic `section { max-width: 1000px; padding: var(--space-xl) }` rule
+     at the top of this file would box the band in and stop it bleeding, the
+     same way it centres h2 inside it. Both are overridden explicitly. */
+  max-width: none;
+  padding: 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(
+    90deg,
+    rgba(var(--color-violet-rgb), 0.08),
+    rgba(var(--color-accent-rgb), 0.05)
+  );
 }
 
-/* The banner links to the event page; the anchor must fill the frame so
-   the whole visual is the hit target. */
-.home-hero__visual--scqv3 a {
+.home-featured__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3vw, 1.75rem) var(--space-xl);
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 1.5rem clamp(1.5rem, 4vw, 2.75rem);
+  align-items: center;
+}
+
+/* Deliberately square, flush and unshadowed: the art belongs to the strip.
+   No hover lift or image scale here, so it does not borrow the PreviewCard
+   language and read as a card that drifted up out of the grid below. */
+/* Spans the band at the banner's native 16:9, so nothing in the artwork is
+   cropped: the wordmark at the top and the presenter logos at the bottom both
+   sit close to the edges and a letterbox crop would clip them. */
+/* Sits in the left column at the banner's own 16:9, so the whole artwork
+   shows: the wordmark at the top and the presenter logos at the bottom both
+   run close to the edges and any crop clips one of them. Deliberately square
+   and unshadowed, with no hover lift, so it belongs to the strip rather than
+   borrowing the PreviewCard language of the grid below. */
+.home-featured__art {
   display: block;
+  aspect-ratio: 1200 / 675;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  background: #ece7df;
+}
+
+.home-featured__image {
+  width: 100%;
   height: 100%;
+  /* The frame matches the file's own ratio, so cover crops nothing. */
+  object-fit: cover;
+  display: block;
 }
 
-/* Same hover language as the preview cards: lift, violet field halo, and a
-   gentle image drift clipped by the frame's overflow: hidden. Keyboard
-   focus on the inner link gets the identical treatment. */
-.home-hero__visual--scqv3 {
-  transition:
-    transform 0.25s var(--ease-out-soft),
-    box-shadow 0.25s var(--ease-out-soft);
+.home-featured__art:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
-.home-hero__visual--scqv3 .home-hero__image {
-  transition: transform 0.45s var(--ease-out-soft);
+.home-featured__label {
+  margin: 0 0 0.5rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
 }
 
-.home-hero__visual--scqv3:hover,
-.home-hero__visual--scqv3:has(a:focus-visible) {
-  transform: translateY(-4px);
-  /* The orange/violet aura appears only with the hover lift. */
-  box-shadow:
-    0 28px 70px rgba(15, 23, 42, 0.14),
-    0 0 26px rgba(var(--color-accent-rgb), 0.24),
-    0 0 64px rgba(var(--color-violet-rgb), 0.28),
-    0 0 0 1px rgba(var(--color-violet-rgb), 0.08);
+.home-featured__title {
+  /* Overrides the global `section h2 { text-align: center }`, which would
+     otherwise centre this against the left-aligned label and facts. */
+  text-align: left;
+  margin: 0 0 1.1rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 
-.home-hero__visual--scqv3:hover .home-hero__image,
-.home-hero__visual--scqv3:has(a:focus-visible) .home-hero__image {
-  transform: scale(1.03);
+.home-featured__facts {
+  margin: 0 0 1.35rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.9rem 1.5rem;
 }
 
-.home-hero__cta-row {
-  position: relative; /* above the QuantumCanvas, like its hero siblings */
-  z-index: 1;
-  grid-column: 1 / -1;
+.home-featured__fact dt {
+  margin-bottom: 0.15rem;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.home-featured__fact dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.97rem;
+  line-height: 1.35;
+}
+
+.home-featured__cta-row {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.9rem;
+  gap: 0.65rem;
+}
+
+@media (max-width: 767px) {
+  .home-featured__inner {
+    grid-template-columns: 1fr;
+    padding: 1.25rem var(--space-md) 1.5rem;
+  }
 }
 
 /* Squared-off variant of the pill CTA, per the promo design. */
