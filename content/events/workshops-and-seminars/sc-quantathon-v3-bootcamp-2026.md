@@ -64,7 +64,7 @@ Open a day for its video, notes, and notebook. Entries appear as they are posted
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Video</span><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 6</span><span class="hackathon-day-title">Variational Circuits: VQE, QUBO, and QAOA</span><span class="hackathon-day-date">Mon, Sep 21</span></summary>
+    <summary><span class="hackathon-day-num">Day 6</span><span class="hackathon-day-title">Variational Circuits: VQE and QAOA</span><span class="hackathon-day-date">Mon, Sep 21</span></summary>
     <p>Content TBD.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Video</span><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
