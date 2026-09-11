@@ -2238,6 +2238,15 @@ footer {
   line-height: 1.6;
 }
 
+@media (min-width: 768px) {
+  /* Center a lone card left over in the last row of the 2-column grid. */
+  .faculty-grid > .faculty-card:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+    max-width: calc(50% - var(--space-2xl) / 2);
+    margin-inline: auto;
+  }
+}
+
 @media (max-width: 767px) {
   .faculty-grid {
     grid-template-columns: 1fr;

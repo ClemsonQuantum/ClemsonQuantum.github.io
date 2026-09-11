@@ -88,6 +88,7 @@ export default function ResourcesPage() {
                 9510/9520)
               </li>
               <li>Quantum Field Theory (PHYS 9530)</li>
+              <li>Open Quantum Systems (PHYS 8750)</li>
             </ul>
           </div>
           <div className="course-group">
