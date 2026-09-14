@@ -107,7 +107,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-schedule-day">
     <h3>Day 1 <span class="hackathon-schedule-date">Friday, September 25</span></h3>
     <div class="hackathon-schedule-items">
-      <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Doors open and check-in</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Check-in</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens</span></div>
@@ -119,7 +119,6 @@ Students from computing, physics, engineering, mathematics, and related fields a
   <div class="hackathon-schedule-day">
     <h3>Day 2 <span class="hackathon-schedule-date">Saturday, September 26</span></h3>
     <div class="hackathon-schedule-items">
-      <div class="hackathon-schedule-item"><span class="hackathon-time">8:00 AM</span><span class="hackathon-schedule-event">Doors open</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Challenge kickoff and hacking begins</span></div>
@@ -136,7 +135,6 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Submissions due on Devpost</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Doors open for awards</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony</span></div>
     </div>
   </div>
@@ -342,7 +340,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 10:00 AM ET; nothing submitted after that is judged. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How does judging work?</summary>
