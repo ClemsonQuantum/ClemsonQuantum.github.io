@@ -8,6 +8,7 @@ street_address: "405 S Palmetto Blvd"
 registration_url: "https://forms.gle/vWRNfTQMNQBrGFUh7"
 summary: "SC Quantathon comes to Clemson for its third edition, hosted by Clemson Quantum Club: a weekend of hands-on learning and team competition."
 image: "/images/scq-v3-banner.webp"
+favicon: cqc
 ---
 
 <div class="hackathon-page">
@@ -110,7 +111,9 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Challenge ranking due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Challenge assignments and team rooms posted on Discord</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Watt closes for the night</span></div>
     </div>
   </div>
   <div class="hackathon-schedule-day">
@@ -121,6 +124,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Challenge kickoff and hacking begins</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">3:30 PM</span><span class="hackathon-schedule-event">Sponsor tabling</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Sponsor firesides</span></div>
     </div>
@@ -130,8 +134,9 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">11:00 AM</span><span class="hackathon-schedule-event">Submissions due</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Submissions due on Devpost</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Doors open for awards</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony</span></div>
     </div>
   </div>
@@ -217,6 +222,9 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/cecas/" target="_blank" rel="noopener noreferrer">
         <img src="/images/cecas-logo.webp" alt="Clemson University College of Engineering, Computing and Applied Sciences" width="1200" height="292" loading="lazy" />
       </a>
+      <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/cecas/tracr/" target="_blank" rel="noopener noreferrer">
+        <img src="/images/tracr-logo.webp" alt="TraCR, National Center for Transportation Cybersecurity and Resiliency" width="905" height="905" loading="lazy" />
+      </a>
       <a class="hackathon-sponsor-logo" href="https://www.wcu.edu/learn/departments-schools-colleges/cet/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/wcu-coe-logo-white.svg" media="(prefers-color-scheme: dark)" />
@@ -298,7 +306,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
 <div class="hackathon-faq">
   <details class="hackathon-faq-item">
     <summary>Who can participate?</summary>
-    <p>Undergraduate and graduate students from any major. Most participants come from computing, physics, engineering, and mathematics, but no particular degree is required.</p>
+    <p>Undergraduate and graduate students from any major who are 18 or older. Most participants come from computing, physics, engineering, and mathematics, but no particular degree is required.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Do I need quantum computing experience?</summary>
@@ -314,19 +322,31 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop and charger. That is all you need.</p>
+    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts created before Friday. If your team is assigned the IonQ or Quantum Rings challenge, you will set up that account on Saturday.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where should I stay?</summary>
     <p>See the <a href="#stay">Where to Stay</a> list above for a discounted group rate and other hotels close to the Watt Family Innovation Center.</p>
   </details>
   <details class="hackathon-faq-item">
+    <summary>How do I get to Clemson?</summary>
+    <p>If you are flying, use Greenville–Spartanburg International Airport (GSP), about 45 minutes from campus by car or rideshare. Shuttles run between the hotels listed above and the Watt Family Innovation Center: Friday they leave the hotels at 4:45 PM and leave Watt at 8:45 PM; Saturday they leave the hotels at 8:15 AM and leave Watt at 11:30 PM; Sunday they leave the hotels at 8:15 AM and leave Watt at 7:45 PM. Do not park on campus without a pass, since Clemson Parking tows. If you are driving, tell us on the lodging and parking form sent to accepted participants and we will arrange a daily pass. Otherwise, visitor passes can be bought online and metered parking is available near Watt.</p>
+  </details>
+  <details class="hackathon-faq-item">
+    <summary>Where in the building will things happen?</summary>
+    <p>Check in at the north door into the Atrium, which also hosts Friday dinner, Saturday sponsor tabling and firesides, and Sunday meals. The welcome and awards ceremonies are in the Auditorium, and Saturday meals and the opening ceremony are on the Terrace. Team rooms are on the second and third floors and are posted Friday at 10:00 PM. Mentors are in Watt 323, and judging is in Watt 310, 313, and 316. Watt closes Friday at 10:00 PM, so there is no overnight stay that night; it stays open overnight on Saturday for hacking.</p>
+  </details>
+  <details class="hackathon-faq-item">
     <summary>How should I prepare?</summary>
-    <p>Work through the prerecorded <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 25. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
+    <p>Work through the self-paced <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 25. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 11:00 AM; nothing submitted after that is judged. Judging presentations begin at noon and awards are at 6:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 10:00 AM ET; nothing submitted after that is judged. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM.</p>
+  </details>
+  <details class="hackathon-faq-item">
+    <summary>How does judging work?</summary>
+    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each challenge, plus one Grand Prize across all challenges. The rubric is announced at the opening ceremony.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is travel reimbursed?</summary>

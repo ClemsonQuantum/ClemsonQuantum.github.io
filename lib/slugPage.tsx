@@ -15,6 +15,20 @@ function urlTransform(url: string): string {
   return /^tel:[+\d()\-. ]+$/i.test(url) ? url : defaultUrlTransform(url);
 }
 
+// Named favicon sets a content page can opt into with `favicon: <name>` in its
+// frontmatter. The site-wide icon (app/layout.tsx) is swapped for seasonal
+// events, so pages for a different event pin their own mark here rather than
+// inherit that season's badge. Each entry mirrors the layout `icons` shape.
+const FAVICON_PRESETS: Record<string, Metadata['icons']> = {
+  cqc: {
+    icon: [
+      { url: '/favicon-cqc.ico', sizes: 'any' },
+      { url: '/favicon-cqc-512.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: '/apple-icon-cqc.png',
+  },
+};
+
 // Next 15 PageProps: params is a Promise.
 interface Props {
   params: Promise<{ slug: string }>;
@@ -122,6 +136,8 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
       (typeof page.data.summary === 'string' && page.data.summary) ||
       makeExcerpt(page.content ?? '');
     const image = typeof page.data.image === 'string' ? page.data.image : undefined;
+    const icons =
+      typeof page.data.favicon === 'string' ? FAVICON_PRESETS[page.data.favicon] : undefined;
     return {
       title,
       description,
@@ -131,6 +147,7 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
         url: `/${contentSubdir}/${slug}/`,
         image,
       }),
+      ...(icons ? { icons } : {}),
     };
   }
 
