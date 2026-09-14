@@ -82,7 +82,9 @@ export const metadata: Metadata = {
   },
   icons: {
     // Qiskit Fall Fest 2026 badge for the Fall Fest season (was the full CQC
-    // logo; restore from git history after the event). The .ico
+    // logo; restore from git history after the event). Pages for other
+    // events keep the CQC mark via `favicon: cqc` in their frontmatter, served
+    // from the -cqc icon files (see lib/slugPage.tsx). The .ico
     // frames are exact downscales of favicon-512.png so every size shows the
     // mark at the same relative scale. favicon.ico at the site root is what
     // Google/crawlers prefer; the PNG provides a high-res variant.

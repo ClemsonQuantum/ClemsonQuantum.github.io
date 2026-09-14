@@ -103,6 +103,7 @@ The `---` block at the top of each file is called "front matter." Here are all t
 | `location` | Hosted events | No | Venue name for the structured data (e.g. `Watt Family Innovation Center`) |
 | `street_address` | Hosted events | No | Venue street address for the structured data; city, state, and ZIP default to Clemson |
 | `registration_url` | Hosted events | No | Absolute registration link, emitted as the structured-data offer |
+| `favicon` | Events | No | Named browser-tab icon set for this page, overriding the site-wide icon. Currently `cqc` (the club mark); use it on event pages that should not inherit a seasonal site icon |
 | `external_url` | Events | Meetings: yes. Other events: no | External event link. The card links there and no internal page is generated. Required for meetings, which have no detail pages (the content validator enforces this) |
 | `source` | News | No | Outlet name shown on the card (defaults to "Clemson Quantum Club") |
 | `source_url` | News | Yes | Link to the original article — the card links there directly |
