@@ -27,7 +27,7 @@ favicon: cqc
 
 The bootcamp is the run-up to <a href="/events/hackathons/sc-quantathon-v3-2026/">SC Quantathon v3</a>, one entry per weekday from Monday, September 14 through Friday, September 25, the two weeks leading into the hackathon. It is entirely self-paced: each day has written notes and a notebook you can run, so you can work through it whenever suits you and come back to anything you want to see again. Nothing is live and nothing is graded.
 
-The ten days build from the basics up. The first week gets you set up on qBraid, covers the math behind a qubit, and works through single-qubit and multi-qubit gates and measurement. The second week runs circuits on real hardware, introduces variational algorithms, and closes with a day from each challenge sponsor, so that when the briefs are released at the opening ceremony on Saturday morning you already recognize the pieces.
+The ten days build from the basics up. The first week covers the math behind a qubit, gets you set up on qBraid, and works through single-qubit and multi-qubit gates and measurement. The second week runs circuits on real hardware, introduces variational algorithms, and closes with a day from each challenge sponsor, so that when the briefs are released at the opening ceremony on Saturday morning you already recognize the pieces.
 
 It is built for people who have never written a quantum circuit before, and it is open to everyone. You do not need to be registered for the hackathon, or attending it at all, to work through it. Each day below fills in as its notes and notebook are posted, and the same files are mirrored in the <a href="https://github.com/ClemsonQuantum/SC-Quantathon-v3" target="_blank" rel="noopener noreferrer">SC Quantathon v3 GitHub repository</a>.
 
@@ -46,15 +46,15 @@ Open a day for its notes and notebook. Entries appear as they are posted.
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 2</span><span class="hackathon-day-title">qBraid Platform Demo: Lab, Credits, and Submitting to a QPU</span><span class="hackathon-day-date">Tue, Sep 15</span></summary>
+    <summary><span class="hackathon-day-num">Day 2</span><span class="hackathon-day-title">The Math Behind a Qubit</span><span class="hackathon-day-date">Tue, Sep 15</span></summary>
+    <p>Content TBD.</p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
+  </details>
+  <details class="hackathon-faq-item hackathon-day">
+    <summary><span class="hackathon-day-num">Day 3</span><span class="hackathon-day-title">qBraid Platform Demo: Lab, Credits, and Submitting to a QPU</span><span class="hackathon-day-date">Wed, Sep 16</span></summary>
     <p>A recorded demo presented by Alex Van Bussum, qBraid. Create a free account at <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">account.qbraid.com</a> with the email you registered with and open <a href="https://lab.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid Lab</a> before you start; accepted participants are added to the SC Quantathon v3 organization on qBraid.</p>
     <p>Content TBD.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Video</span><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
-  </details>
-  <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 3</span><span class="hackathon-day-title">The Math Behind a Qubit</span><span class="hackathon-day-date">Wed, Sep 16</span></summary>
-    <p>Content TBD.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 4</span><span class="hackathon-day-title">Single-Qubit Gates and Measurement</span><span class="hackathon-day-date">Thu, Sep 17</span></summary>
