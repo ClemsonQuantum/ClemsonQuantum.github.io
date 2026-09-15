@@ -52,7 +52,7 @@ Open a day for its notes and notebook. Entries appear as they are posted.
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 3</span><span class="hackathon-day-title">qBraid Platform Demo: Lab, Credits, and Submitting to a QPU</span><span class="hackathon-day-date">Wed, Sep 16</span></summary>
-    <p>A recorded demo presented by Alex Van Bussum, qBraid. Create a free account at <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">account.qbraid.com</a> with the email you registered with and open <a href="https://lab.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid Lab</a> before you start; accepted participants are added to the SC Quantathon v3 organization on qBraid.</p>
+    <p>A recorded demo presented by Alex Van Bussum, qBraid. Create a free account at <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">account.qbraid.com</a> with the email you registered with, then launch Lab from the account dashboard before you start; accepted participants are added to the SC Quantathon v3 organization on qBraid.</p>
     <p>Content TBD.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Video</span><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
