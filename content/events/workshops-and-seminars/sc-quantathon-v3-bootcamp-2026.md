@@ -58,37 +58,37 @@ Open a day for its notes and notebook. Entries appear as they are posted.
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 4</span><span class="hackathon-day-title">Gates, Measurement, and Entanglement</span><span class="hackathon-day-date">Thu, Sep 17</span></summary>
-    <p>Content TBD.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
+    <p>Pauli gates as half-turns, rotations, gate order, measurement and shots, expectation values with the Estimator, tensor products and bit ordering, product versus entangled states, CNOT, CZ, and SWAP, the Bell state and its correlations in three bases, GHZ states and the cost of simulation, and the Bell state on a real processor.</p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 5</span><span class="hackathon-day-title">Real Hardware: Transpilation, Noise, and Error Mitigation</span><span class="hackathon-day-date">Fri, Sep 18</span></summary>
-    <p>Content TBD.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
+    <p>A snapshot of a real processor that runs offline, coupling maps and calibration data, transpilation to native gates, decoherence, gate error, and readout error, the noisy simulator against a real run, readout error mitigation, zero-noise extrapolation, and the same circuit on the live machine.</p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 6</span><span class="hackathon-day-title">Variational Algorithms: VQE and QAOA</span><span class="hackathon-day-date">Mon, Sep 21</span></summary>
-    <p>Content TBD.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
+    <p>Parameterized circuits, Hamiltonians and the variational principle, VQE on the hydrogen molecule, the parameter-shift rule and three optimizers, VQE under shot and gate noise with readout mitigation, ansatz design and the dissociation curve, QAOA for MaxCut, and an energy on the live machine.</p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 7</span><span class="hackathon-day-title">Quantum Machine Learning</span><span class="hackathon-day-date">Tue, Sep 22</span></summary>
-    <p>Content TBD.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
+    <p>Encoding classical data into qubits, quantum kernels with a support vector machine, a variational quantum classifier, gradients and training, barren plateaus, what transfers to the hackathon, and a kernel entry on the live machine.</p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 8</span><span class="hackathon-day-title">SRNL: Mapping Applied Research to Qubits</span><span class="hackathon-day-date">Wed, Sep 23</span></summary>
-    <p>Content TBD.</p>
+    <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, on how a problem from its applied research becomes something a quantum computer can work on. Written by the challenge sponsor.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 9</span><span class="hackathon-day-title">Quantum Rings: Simulating Beyond Statevector</span><span class="hackathon-day-date">Thu, Sep 24</span></summary>
-    <p>Content TBD.</p>
+    <p>Quantum Rings on simulating circuits past the point where an ordinary statevector simulator runs out of memory, which is where Day 4 left the question open. Written by the challenge sponsor.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 10</span><span class="hackathon-day-title">IonQ: Trapped Ions and Native Gates</span><span class="hackathon-day-date">Fri, Sep 25</span></summary>
-    <p>Content TBD.</p>
+    <p>IonQ on trapped-ion hardware and the native gates it runs, and how both differ from the superconducting machines the earlier days used. Written by the challenge sponsor.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span></p>
   </details>
 </div>
