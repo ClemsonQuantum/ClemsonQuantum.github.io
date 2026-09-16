@@ -5329,6 +5329,10 @@ main:has(.qff-page) {
   margin: 0 0.15rem 0.75rem;
 }
 
+.hackathon-day .hackathon-video {
+  margin-bottom: 1rem;
+}
+
 .hackathon-section .hackathon-day .hackathon-resources {
   display: flex;
   flex-wrap: wrap;
