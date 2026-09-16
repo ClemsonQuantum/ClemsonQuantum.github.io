@@ -79,17 +79,17 @@ Open a day for its notes and notebook. Entries appear as they are posted.
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 8</span><span class="hackathon-day-title">SRNL: Mapping Applied Research to Qubits</span><span class="hackathon-day-date">Wed, Sep 23</span></summary>
     <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, on how a problem from its applied research becomes something a quantum computer can work on. Written by the challenge sponsor.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 9</span><span class="hackathon-day-title">Quantum Rings: Simulating Beyond Statevector</span><span class="hackathon-day-date">Thu, Sep 24</span></summary>
     <p>Quantum Rings on simulating circuits past the point where an ordinary statevector simulator runs out of memory, which is where Day 4 left the question open. Written by the challenge sponsor.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 10</span><span class="hackathon-day-title">IonQ: Trapped Ions and Native Gates</span><span class="hackathon-day-date">Fri, Sep 25</span></summary>
     <p>IonQ on trapped-ion hardware and the native gates it runs, and how both differ from the superconducting machines the earlier days used. Written by the challenge sponsor.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
+    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
 </div>
 
