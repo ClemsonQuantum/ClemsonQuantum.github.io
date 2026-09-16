@@ -78,17 +78,17 @@ Open a day for its notes and notebook. Entries appear as they are posted.
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 8</span><span class="hackathon-day-title">SRNL: Mapping Applied Research to Qubits</span><span class="hackathon-day-date">Wed, Sep 23</span></summary>
-    <p>How a problem from applied research becomes something a quantum computer can work on, built around the kind of work Savannah River National Laboratory does at the Department of Energy lab in Aiken, South Carolina. Like the other two sponsor days, it is challenge practice written by the organizers around challenges SRNL has set at past hackathons, not the brief you are given on Saturday.</p>
+    <p>How a problem from applied research becomes something a quantum computer can work on, built around the kind of work Savannah River National Laboratory does at the Department of Energy lab in Aiken, South Carolina. It is challenge practice written by the organizers around challenges SRNL has set at past hackathons.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 9</span><span class="hackathon-day-title">Quantum Rings: Simulating Beyond Statevector</span><span class="hackathon-day-date">Thu, Sep 24</span></summary>
-    <p>Simulating circuits past the point where an ordinary statevector simulator runs out of memory, which is where Day 4 leaves the question open, built around the kind of simulator Quantum Rings makes. Like the other two sponsor days, it is challenge practice written by the organizers around challenges Quantum Rings has set at past hackathons, not the brief you are given on Saturday.</p>
+    <p>Simulating circuits past the point where an ordinary statevector simulator runs out of memory, which is where Day 4 leaves the question open, built around the kind of simulator Quantum Rings makes. It is challenge practice written by the organizers around challenges Quantum Rings has set at past hackathons.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 10</span><span class="hackathon-day-title">IonQ: Trapped Ions and Native Gates</span><span class="hackathon-day-date">Fri, Sep 25</span></summary>
-    <p>Trapped-ion hardware and the native gates it runs, and how both differ from the superconducting machines the earlier days used, built around IonQ's systems. Like the other two sponsor days, it is challenge practice written by the organizers around challenges IonQ has set at past hackathons, not the brief you are given on Saturday.</p>
+    <p>Trapped-ion hardware and the native gates it runs, and how both differ from the superconducting machines the earlier days used, built around IonQ's systems. It is challenge practice written by the organizers around challenges IonQ has set at past hackathons.</p>
     <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
 </div>
