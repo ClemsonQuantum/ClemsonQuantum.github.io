@@ -3752,7 +3752,8 @@ main:has(.qff-page) {
   box-shadow: var(--shadow-sm);
 }
 
-.hackathon-video iframe {
+.hackathon-video iframe,
+.hackathon-video video {
   display: block;
   width: 100%;
   height: 100%;
