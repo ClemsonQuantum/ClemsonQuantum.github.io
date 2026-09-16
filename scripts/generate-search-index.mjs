@@ -32,7 +32,10 @@ function contentEntries() {
     const date = normalizeDate(data.date);
     // Searchable-but-hidden text: author/mentor names, outlet, and type, so
     // a query like "valentine mohaugen" surfaces the papers they wrote even
-    // when no name appears in the summary.
+    // when no name appears in the summary. The whole page body goes in too,
+    // with markup stripped, so a page is findable by anything it actually
+    // says and not just by its 300-character summary: "VQE" and "Bloch
+    // sphere" reach the bootcamp even though neither word is in its summary.
     const meta = [
       ...(Array.isArray(data.authors)
         ? data.authors.map((a) => a?.name ?? a)
@@ -40,6 +43,7 @@ function contentEntries() {
       ...(Array.isArray(data.mentors) ? data.mentors : []),
       data.source,
       data.type,
+      plainText(content),
     ]
       .filter((v) => typeof v === 'string')
       .join(' ');
