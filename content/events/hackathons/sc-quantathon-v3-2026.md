@@ -111,6 +111,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Social Media Challenge submissions open</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Challenge ranking due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Challenge assignments and team rooms posted on Discord</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Watt closes for the night</span></div>
@@ -133,8 +134,9 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Submissions due on Devpost</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Technical project submissions due on Devpost</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">2:00 PM</span><span class="hackathon-schedule-event">Social Media Challenge submissions due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony</span></div>
     </div>
   </div>
@@ -166,6 +168,18 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <div class="hackathon-track-body">
       <h3>Quantum Rings Challenge</h3>
       <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge centers on simulating circuits beyond the reach of ordinary statevector methods. The full brief is released at the opening ceremony.</p>
+    </div>
+  </div>
+  <div class="hackathon-track hackathon-track--logo" id="social-media-challenge">
+    <a class="hackathon-track-link" href="https://www.instagram.com/clemsonquantum/" target="_blank" rel="noopener noreferrer">
+      <picture>
+        <source srcset="/images/logo-dark.png" media="(prefers-color-scheme: dark)" width="208" height="176" />
+        <img src="/images/logo-light.png" alt="Clemson Quantum Club" class="hackathon-track-logo hackathon-track-logo--cqc" width="258" height="176" loading="lazy" />
+      </picture>
+    </a>
+    <div class="hackathon-track-body">
+      <h3>Social Media Challenge</h3>
+      <p>Create Instagram posts about the hackathon with your team and tag <a href="https://www.instagram.com/clemsonquantum/" target="_blank" rel="noopener noreferrer">@clemsonquantum</a>. Posts can be funny, informative, or creative, but must be appropriate. One team wins, based on views, likes, and organizer opinion. You may submit as many posts as you like.</p>
     </div>
   </div>
 </div>
@@ -315,11 +329,11 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Technical project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM. Social Media Challenge entries use a <a href="https://forms.gle/cnc7MHwe9obUE3Sa8" target="_blank" rel="noopener noreferrer">separate Google Form</a> and are due Sunday at 2:00 PM.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How does judging work?</summary>
-    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each challenge, plus one Grand Prize across all challenges. The rubric is announced at the opening ceremony.</p>
+    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each technical challenge, plus one Grand Prize across both technical challenges. The rubric is announced at the opening ceremony.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is travel reimbursed?</summary>

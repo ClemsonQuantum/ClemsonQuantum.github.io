@@ -4428,6 +4428,13 @@ main:has(.qff-page) {
   height: auto;
 }
 
+/* Both CQC assets are 176px tall, but the light logo has a wider canvas.
+   Keep its display box in both themes without stretching the darker mark. */
+.hackathon-track-logo--cqc {
+  aspect-ratio: 258 / 176;
+  object-fit: contain;
+}
+
 /* Sponsor mark wrapped in a link: the anchor occupies the logo column and the
    image fills it, so the grid sees the same box as a bare <img>. */
 .hackathon-track-link {
