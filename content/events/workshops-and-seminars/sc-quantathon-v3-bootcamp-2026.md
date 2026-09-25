@@ -25,9 +25,9 @@ favicon: cqc
 
 ## About
 
-The bootcamp is the run-up to <a href="/events/hackathons/sc-quantathon-v3-2026/">SC Quantathon v3</a>, one entry per weekday from Monday, September 14 through Friday, September 25, the two weeks leading into the hackathon. It is entirely self-paced: each day has written notes and a notebook you can run (Day 3 is a recorded demo), so you can work through it whenever suits you and come back to anything you want to see again. Nothing is graded.
+The bootcamp is the run-up to <a href="/events/hackathons/sc-quantathon-v3-2026/">SC Quantathon v3</a>, one entry for seven days from Monday, September 14 through Tuesday, September 22, in the two weeks leading into the hackathon. It is entirely self-paced: each day has written notes and a notebook you can run (Day 3 is a recorded demo), so you can work through it whenever suits you and come back to anything you want to see again. Nothing is graded.
 
-The ten days build from the basics up. The first week covers the math behind a qubit, gets you set up on qBraid, works through gates, measurement, and entanglement, and ends by running circuits on real hardware. The second week covers variational algorithms, spends a full day on quantum machine learning, and closes with a day on each challenge sponsor's area of work, so that when the briefs are released at the opening ceremony on Saturday morning you already recognize the pieces.
+The seven days build from the basics up. The first week covers the math behind a qubit, gets you set up on qBraid, works through gates, measurement, and entanglement, and ends by running circuits on real hardware. The second week covers variational algorithms, and closes with a full day on quantum machine learning.
 
 It is built for people who have never written a quantum circuit before, and it is open to everyone. You do not need to be registered for the hackathon, or attending it at all, to work through it. Each day below fills in as its notes and notebook are posted, and the same files are mirrored in the <a href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026" target="_blank" rel="noopener noreferrer">SC Quantathon v3 GitHub repository</a>.
 
@@ -75,21 +75,6 @@ Open a day for its notes and notebook. Entries appear as they are posted.
     <summary><span class="hackathon-day-num">Day 7</span><span class="hackathon-day-title">Quantum Machine Learning</span><span class="hackathon-day-date">Tue, Sep 22</span></summary>
     <p>Encoding classical data into qubits, quantum kernels with a support vector machine, a variational quantum classifier, gradients and training, barren plateaus, what transfers to the hackathon, and a kernel entry on the live machine.</p>
     <p class="hackathon-resources"><a class="hackathon-resource" href="/files/scqv3-bootcamp/scqv3-day-7-notes.pdf" target="_blank" rel="noopener noreferrer">Notes</a><a class="hackathon-resource" href="/files/scqv3-bootcamp/scqv3-day-7-notebook.ipynb" download="7, notebook - Quantum Machine Learning.ipynb">Notebook</a><a class="hackathon-resource" href="/files/scqv3-bootcamp/scqv3-day-7-solutions.ipynb" download="7, solutions - Quantum Machine Learning.ipynb">Solutions</a><a class="hackathon-resource" href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026/tree/main/bootcamp/day-7" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-  </details>
-  <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 8</span><span class="hackathon-day-title">SRNL: Mapping Applied Research to Qubits</span><span class="hackathon-day-date">Wed, Sep 23</span></summary>
-    <p>How a problem from applied research becomes something a quantum computer can work on, built around the kind of work Savannah River National Laboratory does at the Department of Energy lab in Aiken, South Carolina. It is challenge practice written by the organizers around challenges SRNL has set at past hackathons.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
-  </details>
-  <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 9</span><span class="hackathon-day-title">Quantum Rings: Simulating Beyond Statevector</span><span class="hackathon-day-date">Thu, Sep 24</span></summary>
-    <p>Simulating circuits past the point where an ordinary statevector simulator runs out of memory, which is where Day 4 leaves the question open, built around the kind of simulator Quantum Rings makes. It is challenge practice written by the organizers around challenges Quantum Rings has set at past hackathons.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
-  </details>
-  <details class="hackathon-faq-item hackathon-day">
-    <summary><span class="hackathon-day-num">Day 10</span><span class="hackathon-day-title">IonQ: Trapped Ions and Native Gates</span><span class="hackathon-day-date">Fri, Sep 25</span></summary>
-    <p>Trapped-ion hardware and the native gates it runs, and how both differ from the superconducting machines the earlier days used, built around IonQ's systems. It is challenge practice written by the organizers around challenges IonQ has set at past hackathons.</p>
-    <p class="hackathon-resources"><span class="hackathon-resource hackathon-resource--pending">Notes</span><span class="hackathon-resource hackathon-resource--pending">Notebook</span><span class="hackathon-resource hackathon-resource--pending">Solutions</span><span class="hackathon-resource hackathon-resource--pending">GitHub</span></p>
   </details>
 </div>
 
