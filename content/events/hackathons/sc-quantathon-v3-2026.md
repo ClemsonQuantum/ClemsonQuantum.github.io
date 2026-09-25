@@ -254,26 +254,10 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </li>
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">
-      <a class="hackathon-hotel-name" href="https://www.bestwestern.com/en_US/book/hotels-in-clemson/best-western-plus-clemson-hotel-conference-center/propertyCode.41101.html" target="_blank" rel="noopener noreferrer">Best Western Plus Clemson</a>
-      <span class="hackathon-hotel-address">1310 Tiger Blvd, Clemson</span>
-    </div>
-    <span class="hackathon-hotel-distance">1.9 mi</span>
-    <span class="hackathon-hotel-price">$$</span>
-  </li>
-  <li class="hackathon-hotel">
-    <div class="hackathon-hotel-main">
       <a class="hackathon-hotel-name" href="https://www.hilton.com/en/hotels/ceuschx-hampton-clemson-university-area/" target="_blank" rel="noopener noreferrer">Hampton Inn Clemson</a>
       <span class="hackathon-hotel-address">851 Tiger Blvd, Clemson</span>
     </div>
     <span class="hackathon-hotel-distance">2.1 mi</span>
-    <span class="hackathon-hotel-price">$$$</span>
-  </li>
-  <li class="hackathon-hotel">
-    <div class="hackathon-hotel-main">
-      <a class="hackathon-hotel-name" href="https://www.hilton.com/en/hotels/cltclru-tru-seneca-clemson/" target="_blank" rel="noopener noreferrer">Tru by Hilton Seneca Clemson</a>
-      <span class="hackathon-hotel-address">13050 Clemson Blvd, Seneca</span>
-    </div>
-    <span class="hackathon-hotel-distance">2.3 mi</span>
     <span class="hackathon-hotel-price">$$$</span>
   </li>
   <li class="hackathon-hotel">
