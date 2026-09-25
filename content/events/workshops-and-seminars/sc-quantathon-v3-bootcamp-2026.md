@@ -4,7 +4,7 @@ date: 2026-09-14
 end_date: 2026-09-25
 dateDisplay: "September 14–25, 2026"
 location: "Clemson University"
-summary: "A two-week, self-paced bootcamp of notes and notebooks that takes you from your first qubit to hackathon ready. Open to everyone. Content is posted one day at a time."
+summary: "A self-paced, week-and-a-half-long bootcamp that takes you from your first qubit to hackathon-ready through notes and notebooks.Open to everyone. Content is posted one day at a time."
 image: "/images/scq-v3-banner.webp"
 favicon: cqc
 ---
@@ -14,7 +14,7 @@ favicon: cqc
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">Self-paced · September 14–25, 2026 · Ten days</p>
+      <p class="hackathon-hero-eyebrow">Self-paced · September 14–22, 2026 · Seven days</p>
       <h1>SC Quantathon v3 Bootcamp</h1>
     </div>
     <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="SC Quantathon v3 logo" width="855" height="275" />
