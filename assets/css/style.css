@@ -4506,10 +4506,6 @@ main:has(.qff-page) {
   --track-rgb: 79, 188, 131; /* Quantum Rings green #4FBC83 */
 }
 
-.hackathon-track--ionq {
-  --track-rgb: 237, 124, 55; /* IonQ orange #ED7C37 */
-}
-
 .hackathon-track--brand::after {
   background: rgb(var(--track-rgb));
 }
