@@ -168,15 +168,6 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge centers on simulating circuits beyond the reach of ordinary statevector methods. The full brief is released at the opening ceremony.</p>
     </div>
   </div>
-  <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--ionq">
-    <a class="hackathon-track-link" href="https://ionq.com/" target="_blank" rel="noopener noreferrer">
-      <img src="/images/ionq-logo.svg" alt="IonQ" class="hackathon-track-logo" width="100" height="35" loading="lazy" />
-    </a>
-    <div class="hackathon-track-body">
-      <h3>IonQ Challenge</h3>
-      <p>IonQ builds trapped-ion quantum computers. Its challenge involves running on IonQ hardware or its simulators. The full brief is released at the opening ceremony.</p>
-    </div>
-  </div>
 </div>
 
 </div>
@@ -320,7 +311,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts created before Friday. If your team is assigned the IonQ or Quantum Rings challenge, you will set up that account on Saturday.</p>
+    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts created before Friday. If your team is assigned the Quantum Rings challenge, you will set up that account on Saturday.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where should I stay?</summary>
@@ -336,7 +327,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>How should I prepare?</summary>
-    <p>Work through the self-paced <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 25. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
+    <p>Work through the self-paced <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 22. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
@@ -370,7 +361,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   <div class="hackathon-team-member">
     <img src="/images/nathan-jones.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Nathan Jones</div>
-    <div class="hackathon-team-role">Challenge Lead</div>
+    <div class="hackathon-team-role">Quantathon Director</div>
   </div>
   <div class="hackathon-team-member">
     <img src="/images/caroline-cadena.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
