@@ -1,30 +1,22 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
-import { getAllPages, sortPages } from '@/lib/content';
+import { pageMetadata } from '@/lib/og';
+import { getSortedPages } from '@/lib/content';
 import EventArchive from '@/components/EventArchive';
-import ConstellationDivider from '@/components/ConstellationDivider';
+import ArchiveHeader from '@/components/ArchiveHeader';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Hackathons',
   description:
-    'Quantum hackathons the Clemson Quantum Club hosts and competes in, including SC Quantathon, MIT iQuHack, and YQuantum.',
-  openGraph: pageOpenGraph({
-    title: 'Hackathons | Clemson Quantum Club',
-    description:
-      'Quantum hackathons the Clemson Quantum Club hosts and competes in, including SC Quantathon, MIT iQuHack, and YQuantum.',
-    url: '/events/hackathons/',
-  }),
-};
+    'Quantum hackathons Clemson Quantum Club hosts and competes in, including SC Quantathon, MIT’s iQuHack, and YQuantum.',
+  path: '/events/hackathons/',
+});
 
 export default function HackathonsPage() {
-  const hackathons = sortPages(getAllPages('events/hackathons'));
+  const hackathons = getSortedPages('events/hackathons');
 
   return (
     <div className="archive-page">
-      <header className="archive-hero">
-        <h1 className="archive-hero__title">Hackathons</h1>
-        <ConstellationDivider />
-      </header>
+      <ArchiveHeader title="Hackathons" />
       {/* Card titles are h3s; this hidden h2 keeps the heading
           hierarchy contiguous for assistive tech. */}
       <h2 className="sr-only">All hackathons</h2>

@@ -1,0 +1,663 @@
+/* SC Quantathon v4 scroll stage, shelved 2026-10-12: styles used only by the
+   archived page (content/events/hackathons/_ARCHIVE-sc-quantathon-v4-2027-
+   scroll-stage.md). Loaded by components/scq4/ScrollStage.tsx and
+   ConstellationSky.tsx, so no live page pays for them. */
+
+/* The v4 hero's real sky fades out before the hero ends, so the stars never
+   meet the next section's edge. */
+.scq4-sky {
+  -webkit-mask-image: linear-gradient(#000 72%, transparent);
+  mask-image: linear-gradient(#000 72%, transparent);
+}
+
+/* --- Scroll stage (components/scq4/ScrollStage.tsx) ----------------------
+   A fixed full-viewport canvas behind the page where the hydrogen electron
+   cloud travels between invisible .scq4-slot boxes. Painting order: body
+   starfield (z -1) < hero particle canvas (z 0, earlier in the tree) < stage
+   (z 0) < page content (z 1). The hero keeps z-index auto on purpose, so its
+   particles stay behind the atom and its text (hero-inner, z 1) in front. */
+.scq4-page .hackathon-hero-cta,
+.scq4-page .hackathon-section {
+  position: relative;
+  z-index: 1;
+}
+
+.scq4-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  /* Read by the stage at the canvas (getComputedStyle), so a scoped re-map
+     recolors the cloud: violet ink on paper here, lavender glow in dark. */
+  --scq4-cloud-rgb: var(--color-violet-rgb);
+  --scq4-cloud-alpha: 0.16;
+  --scq4-cloud-blend: over;
+  /* Soft halo behind the atom. */
+  --scq4-halo-rgb: var(--color-violet-rgb);
+  --scq4-halo-alpha: 0.09;
+  /* Hairline ink for the orrery, orbits, node rings, braid and Bloch spheres
+     (the text color as an RGB triple), and the page color the braid draws
+     under a nearer strand to cut the one behind it. */
+  --scq4-ink-rgb: 22, 32, 51;
+  --scq4-bg-rgb: 246, 243, 238;
+  /* The entangled qubits' arrows: the site's two accents. */
+  --scq4-qubit-a-rgb: var(--color-accent-rgb);
+  --scq4-qubit-b-rgb: var(--color-violet-rgb);
+  /* The committee's sun: core and limb of the limb-darkened disk, its glow
+     (which also tints the atom's dots as they become its corona), and the
+     night side of the orbiting bodies. On paper the sun is drawn in warm
+     ink; in the dark theme it takes blackbody colors (5772 K core, about
+     4000 K limb). */
+  --scq4-sun-core-rgb: 255, 200, 120;
+  --scq4-sun-limb-rgb: 214, 96, 14;
+  --scq4-sun-glow-rgb: 236, 120, 30;
+  --scq4-sun-glow-alpha: 0.22;
+  --scq4-shade-rgb: 22, 32, 51;
+  /* The black hole far behind the committee shows in the dark theme only
+     (`show`); light mode has no backdrop. Its exposure keeps it dimmer than
+     the sun. */
+  --scq4-hole-backdrop: none;
+  --scq4-hole-patch-rgb: 11, 16, 32;
+  --scq4-hole-patch-alpha: 1;
+  --scq4-hole-exposure: 0.5;
+}
+
+.scq4-stage-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Nucleus and state caption ride along as DOM, so they stay crisp. */
+.scq4-nucleus,
+.scq4-psi {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.scq4-nucleus {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.scq4-psi {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+/* Slots: invisible boxes marking where an object sits while their section is
+   centered. In the hero, the event logo sits on the right (as on v3) with
+   the atom's slot under it; the bottom padding leaves room for the state
+   caption beneath the atom. */
+.scq4-slot {
+  pointer-events: none;
+}
+
+.scq4-page .scq4-hero-art {
+  display: flex;
+  flex: 0 0 min(30vw, 400px);
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  padding-bottom: 1.4rem;
+}
+
+.scq4-page .scq4-hero-art > .hackathon-hero-logo {
+  width: clamp(150px, 18vw, 240px);
+}
+
+.scq4-page .scq4-hero-art > .scq4-slot {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+/* Yielding sections (1024px and up): the text takes ~56% on one side and
+   the atom's slot rides in the free side, so the cloud never sits under
+   copy. */
+@media (min-width: 1024px) {
+  .scq4-page .hackathon-section.scq4-yield-left > *,
+    .scq4-page .hackathon-section.scq4-yield-right > * {
+      max-width: min(56%, 660px);
+    }
+  
+  .scq4-page .hackathon-section.scq4-yield-left > * {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  
+  .scq4-page .hackathon-section.scq4-yield-right > * {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  
+  /* Three spec columns are too tight in a yielded column. */
+  
+  .scq4-page .scq4-yield-left .hackathon-specs,
+    .scq4-page .scq4-yield-right .hackathon-specs {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  
+  /* Challenges beside the braid: the sponsor box moves under the text, so
+       the yielded column keeps a readable measure. */
+  
+  .scq4-page .scq4-yield-left .hackathon-track,
+    .scq4-page .scq4-yield-right .hackathon-track {
+      grid-template-columns: clamp(72px, 8vw, 112px) minmax(0, 1fr);
+      align-items: start;
+    }
+  
+  .scq4-page .scq4-yield-left .hackathon-track-slot,
+    .scq4-page .scq4-yield-right .hackathon-track-slot {
+      grid-column: 2;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.9rem;
+      text-align: left;
+    }
+  
+  .scq4-page .scq4-yield-left .hackathon-track-slot-box,
+    .scq4-page .scq4-yield-right .hackathon-track-slot-box {
+      padding: 0.55rem 1rem;
+    }
+  
+  .scq4-page .hackathon-section > .scq4-slot {
+      position: absolute;
+      top: 50%;
+      width: min(34vw, 440px);
+      max-width: none;
+      aspect-ratio: 1;
+      margin: 0;
+      transform: translateY(-50%);
+    }
+  
+  .scq4-page .hackathon-section > .scq4-slot--left {
+      left: var(--space-xl);
+    }
+  
+  .scq4-page .hackathon-section > .scq4-slot--right {
+      right: var(--space-xl);
+    }
+  
+  /* A short section (Where to Stay) still fits its slot. */
+  
+  .scq4-page .hackathon-section:has(> .scq4-slot) {
+      min-height: calc(min(34vw, 440px) + 2 * clamp(2.2rem, 5vw, 3.4rem));
+    }
+}
+
+/* Below 1024px sections don't yield; their slots hide and the stage keeps
+   the atom as a faint companion behind the text instead. */
+@media (max-width: 1023px) {
+  .scq4-page .hackathon-section > .scq4-slot {
+      display: none;
+    }
+}
+
+/* Phones: the hero stacks (text, then logo, then the atom's square). */
+@media (max-width: 767px) {
+  .scq4-page .scq4-hero-art {
+      flex: 0 0 auto;
+      width: 100%;
+    }
+  
+  .scq4-page .scq4-hero-art > .hackathon-hero-logo {
+      width: clamp(150px, 48vw, 230px);
+    }
+  
+  .scq4-page .scq4-hero-art > .scq4-slot {
+      width: min(64vw, 300px);
+    }
+  
+  /* The caption would land on the CTA under the stacked hero, and over body
+       text once the atom is a faint companion; phones skip them. */
+  
+  .scq4-psi {
+      display: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+  .scq4-stage {
+      --scq4-cloud-alpha: 0.14;
+      --scq4-cloud-blend: add;
+      --scq4-halo-alpha: 0.13;
+      --scq4-ink-rgb: 232, 234, 246;
+      --scq4-bg-rgb: 11, 16, 32;
+      --scq4-sun-core-rgb: 255, 241, 234;
+      --scq4-sun-limb-rgb: 205, 150, 95;
+      --scq4-sun-glow-rgb: 255, 212, 165;
+      --scq4-sun-glow-alpha: 0.3;
+      --scq4-shade-rgb: 0, 0, 0;
+      --scq4-hole-backdrop: show;
+      --scq4-hole-patch-alpha: 0;
+      --scq4-hole-exposure: 0.6;
+    }
+}
+
+/* Forced colors (high contrast): canvas pixels ignore the user's palette,
+   so the stage and the hero's sky step aside entirely. */
+@media (forced-colors: active) {
+  .scq4-stage,
+    .scq4-sky {
+      display: none;
+    }
+}
+
+/* --- Committee solar system ----------------------------------------------
+   From 768px the atom collapses into a sun at .scq4-slot--sun. The member
+   marked .scq4-director rides the sun (photo in its disk, name and role
+   beneath); every other organizer orbits it. components/scq4/committee-
+   System.ts builds aria-hidden copies of the list's photos, names and roles
+   and moves them on the stage, then marks the block .scq4-system--live. The
+   list itself stays in the page for screen readers (and shows as usual
+   without JavaScript, on phones, and in forced colors). The live block is the
+   scroll runway: the system holds still for the slot's data-stage-hold
+   around the sun slot, then rides up with the page and rests above its end.
+   Inside the stage: the far-off black hole (back canvas, -1) < bodies behind
+   the sun (0) < the canvas (1) < the Director's sun (2) < bodies in front (3)
+   < the nucleus and captions (4). */
+.scq4-page .scq4-system {
+  position: relative;
+}
+
+.scq4-page .scq4-slot--sun {
+  display: none;
+}
+
+.scq4-stage-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.scq4-stage-canvas {
+  z-index: 1;
+}
+
+.scq4-nucleus,
+.scq4-psi {
+  z-index: 4;
+}
+
+/* The Director: their photo fills the sun's disk under a multiply layer of
+   the photosphere's limb darkening (set inline from the same law the canvas
+   disk uses), name and role beneath. Without a photo the canvas disk shows
+   on its own. */
+.scq4-sun-body {
+  --scq4-sun-r: 36px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.scq4-sun-photo {
+  position: absolute;
+  top: calc(var(--scq4-sun-r) * -1);
+  left: calc(var(--scq4-sun-r) * -1);
+  width: calc(var(--scq4-sun-r) * 2);
+  height: calc(var(--scq4-sun-r) * 2);
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.scq4-sun-photo img,
+.scq4-sun-limb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scq4-sun-photo img {
+  object-fit: cover;
+}
+
+.scq4-sun-limb {
+  mix-blend-mode: multiply;
+}
+
+.scq4-sun-name,
+.scq4-sun-role {
+  position: absolute;
+  left: 0;
+  translate: -50% 0;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.scq4-sun-name {
+  top: calc(var(--scq4-sun-r) + 0.65rem);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.scq4-sun-role {
+  top: calc(var(--scq4-sun-r) + 2rem);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* Turning the view: an elliptical, focusable hit area that ScrollStage
+   moves over the drawn system. It takes the pointer only while the system is
+   pinned (.is-live); touch keeps vertical swipes for scrolling. */
+.scq4-system-hit {
+  display: none;
+}
+
+.scq4-system-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.scq4-body {
+  --scq4-body-size: clamp(52px, 5vw, 72px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform-origin: 0 0;
+  will-change: transform, opacity;
+}
+
+.scq4-body-disc {
+  position: absolute;
+  top: calc(var(--scq4-body-size) / -2);
+  left: calc(var(--scq4-body-size) / -2);
+  width: var(--scq4-body-size);
+  height: var(--scq4-body-size);
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--scq4-body-fill, var(--color-surface));
+  box-shadow: 0 0 0 1px var(--color-border);
+}
+
+/* On navy, a placeholder body needs a faint light fill for its lit side to
+   read against its night side. */
+@media (prefers-color-scheme: dark) {
+  .scq4-body-disc {
+      --scq4-body-fill: rgba(232, 234, 246, 0.16);
+    }
+}
+
+.scq4-body-disc img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scq4-body-disc--pending {
+  box-shadow: none;
+  outline: 1.5px dashed var(--color-border);
+  outline-offset: -1.5px;
+}
+
+.scq4-body-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.scq4-body-name,
+.scq4-body-role {
+  position: absolute;
+  left: 0;
+  translate: -50% 0;
+  line-height: 1.3;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.scq4-body-name {
+  top: calc(var(--scq4-body-size) / 2 + 0.55rem);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.scq4-body-role {
+  top: calc(var(--scq4-body-size) / 2 + 1.85rem);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .scq4-page .scq4-system > .scq4-slot--sun {
+      display: block;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      width: min(20vw, 200px);
+      aspect-ratio: 1;
+      translate: -50% -50%;
+    }
+  
+  /* The top margin lets the heading scroll clear before the sun forms. */
+  
+  .scq4-page .scq4-system--live {
+      height: calc(min(86vh, 820px) + 70vh);
+      margin-top: 25vh;
+    }
+  
+  .scq4-page .scq4-system-hit.is-active {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      border-radius: 50%;
+      touch-action: pan-y;
+      pointer-events: none;
+      will-change: transform;
+    }
+  
+  .scq4-page .scq4-system-hit.is-live {
+      pointer-events: auto;
+      cursor: grab;
+    }
+  
+  .scq4-page .scq4-system-hit.is-dragging {
+      cursor: grabbing;
+    }
+  
+  .scq4-page .scq4-system-hit:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 6px;
+    }
+  
+  .scq4-page .scq4-system--live > .hackathon-team-grid {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+      border: 0;
+    }
+}
+
+@media (forced-colors: active) {
+  .scq4-page .scq4-system--live {
+      height: auto;
+      margin-top: 0;
+    }
+  
+  .scq4-page .scq4-system-hit.is-active {
+      display: none;
+    }
+  
+  .scq4-page .scq4-system--live > .hackathon-team-grid {
+      position: static;
+      width: auto;
+      height: auto;
+      margin: 1.5rem 0 0;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+}
+
+/* The site footer lives outside .scq4-page; lift it above the fixed stage so
+   the orrery's last frame can never draw over its links. */
+body:has(.scq4-page) footer {
+  position: relative;
+  z-index: 1;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+  /* --- SC Quantathon v4: where a section yields one side to the traveling
+         atom or black hole (1024px and up), its title slides in from its own
+         side, away from the object, still revealing in reading order. */
+  @media (min-width: 1024px) {
+  .scq4-page .scq4-yield-left > h2 {
+          --sm-from-x: -64px;
+        }
+  
+  .scq4-page .scq4-yield-right > h2 {
+          --sm-from-x: 64px;
+        }
+  }
+  
+  /* Running text rises with no blur and no exit fade, so it reads at full
+         contrast whenever it is on screen. */
+  
+  .scq4-page .hackathon-section > p {
+        animation: sm-rise var(--ease-out-soft) both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 160px;
+      }
+  
+  .scq4-page .hackathon-section > p + p {
+        --sm-rise: 60px;
+      }
+  
+  .scq4-page .hackathon-sponsor-logo {
+        animation: sm-focus var(--ease-out-soft) both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 25%;
+      }
+  
+  .scq4-page .hackathon-team-photo--pending {
+        animation: sm-spin-in var(--ease-out-soft) both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 30%;
+      }
+  
+  /* The hero CTA sits in the first screen: no entrance, and it leaves
+         with the hero copy. */
+  
+  .scq4-page .hackathon-hero-cta {
+        animation: sm-hero-out linear both;
+        animation-timeline: view();
+        animation-range: exit 0% exit 100%;
+      }
+  }
+}
+
+/* v4 hero scroll cue: a hairline with a dot drifting down it, so the page
+   reads as something that responds to scrolling. Decorative (aria-hidden);
+   the dot parks mid-line when motion is reduced. */
+.scq4-scroll-cue {
+  position: relative;
+  width: 1px;
+  height: 56px;
+  margin: 0.25rem auto 0;
+  background: linear-gradient(to bottom, transparent, rgba(var(--color-violet-rgb), 0.45), transparent);
+}
+
+.scq4-scroll-cue::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.8;
+  translate: 0 25px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scq4-scroll-cue::after {
+      animation: scq4-cue 2.6s var(--ease-out-soft) infinite;
+    }
+  
+  @keyframes scq4-cue {
+      0% {
+        translate: 0 -4px;
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.9;
+      }
+      75% {
+        opacity: 0.9;
+      }
+      100% {
+        translate: 0 54px;
+        opacity: 0;
+      }
+    }
+}
+
+/* Challenge-row pieces only the archived scroll-stage markup uses (moved
+   from style.css when the hosted template was rebuilt from v3). */
+.hackathon-track-slot-label {
+  color: var(--color-violet);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Giant serif index numeral. The gradient runs vertically so both the orange
+   and the violet read clearly within the glyph height. */
+.hackathon-track-num {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 0.9;
+  background: linear-gradient(180deg, var(--color-accent), var(--color-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+@media (hover: hover) {
+  .hackathon-track:hover .hackathon-track-num {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 639px) {
+  .hackathon-track-num {
+    font-size: 2rem;
+  }
+}

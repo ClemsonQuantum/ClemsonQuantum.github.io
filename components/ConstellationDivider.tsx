@@ -7,10 +7,12 @@ interface ConstellationDividerProps {
   wide?: boolean;
 }
 
-// Projection geometry, shared with BlochSphere.tsx: the Bloch vector
-// (x, y, z) = (sin theta cos phi, sin theta sin phi, cos theta) is drawn with an
-// orthographic camera tilted TILT rad above the equator —
+// Projection: the Bloch vector (x, y, z) = (sin theta cos phi,
+// sin theta sin phi, cos theta), drawn orthographically as
 //   sx = CX + R x,  sy = CY - R (z cos TILT - y sin TILT).
+// Same orthographic form as BlochSphere.tsx's older camera (y term negated);
+// the divider's random wander hides handedness, so it keeps its own TILT and
+// sign.
 const CX = 130;
 const CY = 18;
 const R = 12.3; // vector length in the 260x36 viewBox (sphere outline r=13)
@@ -39,8 +41,7 @@ const randInterval = () =>
 
 // Decorative "mini Bloch sphere" constellation divider: hairline wires run in
 // from both sides through small constellation dots to a central sphere with an
-// equator and a state-vector arrow. Replaces the old radial-gradient
-// entangled-pair flourish. Strokes/fills use the theme tokens, so light/dark
+// equator and a state-vector arrow. Strokes/fills use the theme tokens, so light/dark
 // recolor automatically. Draw-in: every path carries pathLength={1} so the
 // stroke-dash CSS (see "Constellation divider" section in style.css) can
 // animate dashoffset 1 -> 0 when ScrollReveal flips reveal-init to reveal-in;
@@ -51,6 +52,8 @@ const randInterval = () =>
 // `d` and tip via refs (no per-frame React state, like ShootingStar). The rAF
 // loop is gated like QuantumCanvas (on-screen + tab-visible + no reduced-motion);
 // under reduced motion it never starts, leaving the byte-identical SSR position.
+// The same gate sets data-live on the svg, which the CSS wave-dot animation
+// needs, so off-screen dividers don't animate either.
 export default function ConstellationDivider({
   wide = false,
 }: ConstellationDividerProps) {
@@ -152,6 +155,7 @@ export default function ConstellationDivider({
 
     function updateRunning() {
       const running = intersecting && !document.hidden && !reducedMotion;
+      svg?.toggleAttribute('data-live', running);
       if (!running && rafId !== 0) {
         cancelAnimationFrame(rafId);
         rafId = 0;
@@ -180,10 +184,7 @@ export default function ConstellationDivider({
     motionQuery.addEventListener('change', onMotionChange);
     document.addEventListener('visibilitychange', onVisibilityChange);
 
-    if (!reducedMotion) {
-      lastTime = performance.now();
-      rafId = requestAnimationFrame(frame);
-    }
+    updateRunning();
 
     return () => {
       if (rafId !== 0) cancelAnimationFrame(rafId);

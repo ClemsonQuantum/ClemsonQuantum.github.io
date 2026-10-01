@@ -18,3 +18,9 @@ curriculum/**/*.fls
 curriculum/**/*.fdb_latexmk
 curriculum/**/*.synctex.gz
 curriculum/**/.ipynb_checkpoints/
+
+# Raw star catalog downloads for scripts/build-sky-data.mjs
+scripts/.sky-cache/
+
+# Local design notes and specs, never published
+docs/superpowers/

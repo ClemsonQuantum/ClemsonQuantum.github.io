@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { getAllPages, sortPages } from '@/lib/content';
+import { getAllPages, getSortedPages, sortPages } from '@/lib/content';
+import { getFeaturedEvent, isAfterFeatured } from '@/lib/featured';
 import SiteImage from '@/components/SiteImage';
 import BoardMember from '@/components/BoardMember';
 import PreviewCard from '@/components/PreviewCard';
@@ -8,29 +9,29 @@ import ConstellationDivider from '@/components/ConstellationDivider';
 import boardMembers from '@/data/board-members.json';
 
 export default function HomePage() {
-  const newsItems = sortPages(getAllPages('news'));
+  const featured = getFeaturedEvent();
+  const newsItems = getSortedPages('news');
   const recentNews = newsItems.slice(0, 3);
   const hackathons = getAllPages('events/hackathons').map((item) => ({
-    item,
+    ...item,
     metaLabel: 'Hackathon',
   }));
   const workshops = getAllPages('events/workshops-and-seminars').map((item) => ({
-    item,
+    ...item,
     metaLabel: 'Workshop',
   }));
   const meetings = getAllPages('events/meetings').map((item) => ({
-    item,
+    ...item,
     metaLabel: 'Meeting',
   }));
 
-  // Sort the {item, metaLabel} pairs directly: recovering the label by slug
-  // afterwards would mislabel (and key-collide) if two directories ever held
-  // the same slug.
-  const allEvents = [...hackathons, ...workshops, ...meetings];
-  const sortedItems = sortPages(allEvents.map((entry) => entry.item));
-  const topEvents = sortedItems
-    .slice(0, 3)
-    .map((item) => allEvents.find((entry) => entry.item === item)!);
+  // Each page carries its own label, so sorting can't separate the types.
+  // Nothing dated after the featured event: the band below the hero is the
+  // next thing coming up (lib/featured.ts).
+  const allEvents = [...hackathons, ...workshops, ...meetings].filter(
+    (item) => !isAfterFeatured(item, featured),
+  );
+  const topEvents = sortPages(allEvents).slice(0, 3);
 
   return (
     <>
@@ -42,92 +43,93 @@ export default function HomePage() {
         <ConstellationDivider />
         <div className="home-hero__intro">
           <p>
-            Clemson Quantum Club is a student-led club at Clemson University
+            Clemson Quantum Club is a student-led group at Clemson University
             that helps students learn and work with quantum computing at any
-            level. Members compete in hackathons, attend conferences, and tune
-            into seminars. Anyone can drop into a meeting, with no application,
-            no dues, and no prior quantum background.
+            level. Since the club started in 2024, members have competed in
+            quantum hackathons around the country, attended conferences, tuned
+            in to seminars, and presented posters and papers. Members can also
+            join Clemson’s two quantum computing Creative Inquiry research
+            teams. Any student is welcome at club meetings.
           </p>
           <p>
-            SC Quantathon is South Carolina’s student quantum hackathon,
-            founded by SC Quantum in 2024. Clemson teams have competed every
-            year, and in 2026 Clemson Quantum Club hosts the third edition on
-            campus. It is open to all skill levels and a great way to explore
-            quantum computing, get familiar with ML and AI, learn new skills,
-            and meet professionals.
+            Each fall the club runs seminars and workshops on campus and hosts
+            a student quantum hackathon, open to every skill level. The next
+            one, SC Quantathon v4, is October 22–24, 2027. Teams spend a
+            weekend working on challenges written by companies and
+            national labs, learn new tools, and meet professionals from
+            industry and research along the way.
           </p>
         </div>
       </section>
 
-      {/* TEMPORARY: SCQv3 featured-event band. After the event, delete this
-          whole <section> and the .home-featured* CSS block. Nothing needs
-          restoring — the hero above is self-contained and carries no image. */}
-      <section className="home-featured" aria-labelledby="featured-event">
-        <div className="home-featured__inner">
-          <Link
-            href="/events/hackathons/sc-quantathon-v3-2026/"
-            className="home-featured__art"
-            aria-label="SC Quantathon v3 event page"
-          >
-            {/* Above-the-fold LCP candidate — override SiteImage's lazy default. */}
-            <SiteImage
-              src="/images/scq-v3-banner.webp"
-              alt="SC Quantathon v3, September 25–27, 2026 at Clemson University"
-              className="home-featured__image"
-              width={1200}
-              height={675}
-              loading="eager"
-              fetchPriority="high"
-            />
-          </Link>
-          <div className="home-featured__body">
-            <p className="home-featured__label">Featured event</p>
-            <h2 id="featured-event" className="home-featured__title">
-              SC Quantathon v3
-            </h2>
-            <dl className="home-featured__facts">
-              <div className="home-featured__fact">
-                <dt>Dates</dt>
-                <dd>September 25–27, 2026</dd>
-              </div>
-              <div className="home-featured__fact">
-                <dt>Venue</dt>
-                <dd>Watt Family Innovation Center</dd>
-              </div>
-              <div className="home-featured__fact">
-                <dt>Teams</dt>
-                <dd>3–5 students</dd>
-              </div>
-              <div className="home-featured__fact">
-                <dt>Cost</dt>
-                <dd>Free, meals provided</dd>
-              </div>
-            </dl>
-            <div className="home-featured__cta-row">
+      {/* Featured-event band. Which event it shows, and the extra facts beside
+          its dates, are set by FEATURED_EVENT in lib/featured.ts; the title,
+          dates, image (16:9, 1200×675), and Register link come from that
+          event's frontmatter. It disappears on its own once the event ends. */}
+      {featured && (
+        <section className="home-featured" aria-labelledby="featured-event">
+          <div className="home-featured__inner">
+            {featured.image && (
               <Link
-                href="/events/hackathons/sc-quantathon-v3-2026/"
-                className="hackathon-cta hackathon-cta-outline hackathon-cta--violet hackathon-cta--rect"
+                href={featured.href}
+                className="home-featured__art"
+                aria-label={`${featured.title} event page`}
               >
-                See More
+                {/* Above-the-fold LCP candidate: override SiteImage's lazy default. */}
+                <SiteImage
+                  src={featured.image}
+                  alt={`${featured.title}, ${featured.dateText}`}
+                  className="home-featured__image"
+                  width={1200}
+                  height={675}
+                  loading="eager"
+                  fetchPriority="high"
+                />
               </Link>
-              <a
-                href="https://forms.gle/vWRNfTQMNQBrGFUh7"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hackathon-cta hackathon-cta--orange hackathon-cta--rect"
-              >
-                Apply Now
-              </a>
+            )}
+            <div>
+              <p className="home-featured__label">Featured event</p>
+              <h2 id="featured-event" className="home-featured__title">
+                {featured.title}
+              </h2>
+              <dl className="home-featured__facts">
+                <div className="home-featured__fact">
+                  <dt>Dates</dt>
+                  <dd>{featured.dateText}</dd>
+                </div>
+                {featured.facts.map(({ label, value }) => (
+                  <div className="home-featured__fact" key={label}>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <div className="home-featured__cta-row">
+                <Link
+                  href={featured.href}
+                  className="hackathon-cta hackathon-cta--ghost"
+                >
+                  Event details
+                </Link>
+                {featured.registrationUrl && (
+                  <a
+                    href={featured.registrationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hackathon-cta hackathon-cta--primary"
+                  >
+                    Register
+                  </a>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="home-section">
         <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">News</h2>
-          </div>
+          <h2 className="home-section__title">News</h2>
           <Link href="/news/" className="view-all-link">
             View all news
           </Link>
@@ -141,22 +143,20 @@ export default function HomePage() {
 
       <section className="home-section">
         <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">Events</h2>
-          </div>
+          <h2 className="home-section__title">Events</h2>
           <Link href="/events/" className="view-all-link">
             View all events
           </Link>
         </div>
         <div className="preview-grid">
-          {topEvents.map(({ item, metaLabel }) => (
+          {topEvents.map((item) => (
             <PreviewCard
               // href is unique across event types; slugs alone could collide
               // between directories (e.g. cuhackit in two years/categories).
               key={item.href}
               item={item}
               kind="event"
-              metaLabel={metaLabel}
+              metaLabel={item.metaLabel}
             />
           ))}
         </div>
@@ -164,9 +164,7 @@ export default function HomePage() {
 
       <section id="board" className="home-section home-section--board">
         <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">Executive board</h2>
-          </div>
+          <h2 className="home-section__title">Executive board</h2>
         </div>
         <div className="board-members-list">
           {boardMembers.map((m) => (

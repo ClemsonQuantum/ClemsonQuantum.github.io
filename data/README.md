@@ -16,6 +16,8 @@ Each person is an object with these fields:
 |-------|----------|-------------|
 | `name` | Yes | Full name |
 | `role` | Yes | Title (President, Vice President, etc.) |
+| `start` | Yes | Month they started this role, `YYYY-MM` (e.g. `2026-10`). Not shown on the site |
+| `profile` | Yes | Reference notes on the person (role history, background). Not shown on the site, but this repo is public, so keep it to public facts |
 | `description` | Yes | Short bio — major, research area, etc. |
 | `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg` |
 | `email` | No | Clemson email address |
@@ -36,8 +38,10 @@ Controls the collapsible **Past board members** archive on the About page. Entri
 | Field | Required | Description |
 |-------|----------|-------------|
 | `name` | Yes | Full name |
-| `role` | Yes | Title(s) held, e.g. "Co-Founder and Treasurer" |
-| `years` | Yes | Term served, e.g. "Fall 2024 – Fall 2025" |
+| `role` | Yes | Title(s) held, joined with "&", e.g. "Co-Founder & Treasurer" |
+| `start` | Yes | First month in the role, `YYYY-MM` (e.g. `2024-08`) |
+| `end` | Yes | Last month in the role, `YYYY-MM`. The archive shows the pair as "Aug 2024 – Oct 2026"; a malformed month or an end before the start fails the build |
+| `profile` | Yes | Reference notes on the person, as in `board-members.json`. Not shown on the site |
 | `image` | No | Path to their photo (reuse the one in `public/images/`) |
 
 ---
@@ -69,7 +73,7 @@ Controls meeting info, social links, and contact details used across the site (G
 | Field | Description |
 |-------|-------------|
 | `meetingDay` | Day of the week (e.g. "Biweekly Tuesdays") |
-| `meetingTime` | Time (e.g. "5pm") |
+| `meetingTime` | Time (e.g. "5:00 PM", matching the event pages) |
 | `location` | Meeting location (building and room, e.g. "McAdams 107") |
 | `discordInvite` | Full Discord invite URL |
 | `groupmeUrl` | GroupMe join URL |

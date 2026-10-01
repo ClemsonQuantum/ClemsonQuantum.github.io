@@ -1,7 +1,5 @@
+import PersonLinks from './PersonLinks';
 import SiteImage from './SiteImage';
-import EmailIcon from './icons/EmailIcon';
-import WebsiteIcon from './icons/WebsiteIcon';
-import { LinkedInIcon, GitHubIcon } from './icons/ChannelIcons';
 
 interface BoardMemberData {
   name: string;
@@ -24,8 +22,6 @@ export default function BoardMember({
   github,
   website,
 }: BoardMemberData) {
-  const lines = description.split('\n');
-
   return (
     <article className="board-member">
       {/* Source photos vary in size but render as a fixed 120px square
@@ -43,59 +39,24 @@ export default function BoardMember({
         <div className="board-member__head">
           <h3 className="board-member__name">
             {name}
-            <span className="board-member__role"> | {role}</span>
+            {/* Screen readers hear "Name, Role" instead of "vertical line". */}
+            <span className="board-member__role">
+              <span aria-hidden="true"> | </span>
+              <span className="sr-only">, </span>
+              {role}
+            </span>
           </h3>
         </div>
-        <p className="board-member__description">
-          {lines.map((line, i) => (
-            <span key={i}>
-              {line}
-              {i < lines.length - 1 && <br />}
-            </span>
-          ))}
-        </p>
-        {(email || linkedin || github || website) && (
-          <div className="board-member__links">
-            {email && (
-              <a
-                href={`mailto:${email}`}
-                aria-label={`Email ${name}`}
-              >
-                <EmailIcon className="board-member__link-icon" />
-              </a>
-            )}
-            {linkedin && (
-              <a
-                href={linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${name} on LinkedIn`}
-              >
-                <LinkedInIcon className="board-member__link-icon link-icon--brand" />
-              </a>
-            )}
-            {github && (
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${name} on GitHub`}
-              >
-                <GitHubIcon className="board-member__link-icon link-icon--brand" />
-              </a>
-            )}
-            {website && (
-              <a
-                href={website}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${name} website`}
-              >
-                <WebsiteIcon className="board-member__link-icon" />
-              </a>
-            )}
-          </div>
-        )}
+        {/* Line breaks in the data show as written (white-space: pre-line). */}
+        <p className="board-member__description">{description}</p>
+        <PersonLinks
+          name={name}
+          email={email}
+          linkedin={linkedin}
+          github={github}
+          website={website}
+          classPrefix="board-member"
+        />
       </div>
     </article>
   );

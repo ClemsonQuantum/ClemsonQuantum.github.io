@@ -1,14 +1,12 @@
 ---
-title: SC Quantathon v3 2026
+title: SC Quantathon v3
 date: 2026-09-25
 dateDisplay: "September 25–27, 2026"
 end_date: 2026-09-27
 location: "Watt Family Innovation Center"
 street_address: "405 S Palmetto Blvd"
-registration_url: "https://forms.gle/vWRNfTQMNQBrGFUh7"
-summary: "SC Quantathon comes to Clemson for its third edition, hosted by Clemson Quantum Club: a weekend of hands-on learning and team competition."
+summary: "The third SC Quantathon, hosted by Clemson Quantum Club at the Watt Family Innovation Center, with challenges from Savannah River National Laboratory and Quantum Rings."
 image: "/images/scq-v3-banner.webp"
-favicon: cqc
 ---
 
 <div class="hackathon-page">
@@ -17,17 +15,16 @@ favicon: cqc
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
       <p class="hackathon-hero-eyebrow">September 25–27, 2026 • Clemson, South Carolina</p>
-      <h1>SC Quantathon v3 2026</h1>
-      <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University built around hands-on learning, team problem solving, and industry connections.</p>
+      <h1>SC Quantathon v3</h1>
+      <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University, with challenges set by Savannah River National Laboratory and Quantum Rings.</p>
     </div>
     <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="SC Quantathon v3 logo" width="855" height="275" />
   </div>
 </div>
 
 <div class="hackathon-hero-cta">
-  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T18:30:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has wrapped. Thanks for a great weekend!" data-live-message="Happening now: SC Quantathon v3 is live"></div>
+  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T20:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has ended. Thanks to everyone who took part." data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
-    <a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--primary">Apply Now</a>
     <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta--ghost">Bootcamp</a>
     <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--secondary">Devpost</a>
   </div>
@@ -37,15 +34,13 @@ favicon: cqc
 
 ## About
 
-**SC Quantathon v3** carries forward the quantum hackathon that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, the Clemson Quantum Club and Clemson University are now hosting the event, building a weekend that brings students together to learn, build, and collaborate on real quantum computing challenges.
+**SC Quantathon v3** carries forward the quantum hackathon that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, Clemson Quantum Club and Clemson University hosted it at the Watt Family Innovation Center.
 
-Participants will work in teams, attend technical programming, and receive support from mentors and organizers throughout the event. If you want news before the weekend, you can <a href="#participant-updates">request participant updates</a>. The format is intended to be accessible to first-time participants while still giving experienced students room to build ambitious projects.
-
-Students from computing, physics, engineering, mathematics, and related fields are all welcome.
+Teams worked through the weekend with mentors and organizers on hand, and sponsors held firesides on Saturday.
 
 <p>Past editions: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1 (2024)</a> and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2 (2025)</a>.</p>
 
-<p>Recap from last year’s SC Quantathon v2 in Columbia:</p>
+<p>Recap of SC Quantathon v2 (2025) in Columbia:</p>
 
 <div class="hackathon-video">
   <iframe src="https://www.youtube-nocookie.com/embed/4cKQfLDyx8w" title="SC Quantathon v2 recap (2025)" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -68,7 +63,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Eligibility</div>
-    <div class="hackathon-spec-value">Undergraduate and graduate students</div>
+    <div class="hackathon-spec-value">Undergraduate and graduate students, 18 or older</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Format</div>
@@ -80,19 +75,20 @@ Students from computing, physics, engineering, mathematics, and related fields a
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Prizes</div>
-    <div class="hackathon-spec-value">Prizes and the judging rubric are announced at the opening ceremony</div>
+    <div class="hackathon-spec-value">Prizes and the judging rubric were announced at the opening ceremony</div>
   </div>
 </div>
 
 <div class="hackathon-venue">
-  <div class="hackathon-venue-map">
-    <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-82.84139%2C34.67269%2C-82.83239%2C34.67944&amp;layer=mapnik&amp;marker=34.67607%2C-82.83689" title="Map of the Watt Family Innovation Center at Clemson University" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-  </div>
+  <figure class="hackathon-venue-photo">
+    <img src="/images/watt-center.webp" alt="The Watt Family Innovation Center at dusk" width="800" height="477" loading="lazy" />
+    <figcaption>Photo: Ken Scar, Clemson University</figcaption>
+  </figure>
   <div class="hackathon-venue-text">
     <div class="hackathon-spec-label">Venue</div>
     <p class="hackathon-venue-name">Watt Family Innovation Center</p>
     <p class="hackathon-venue-address">405 S Palmetto Blvd, Clemson, SC 29634</p>
-    <p>Enter at the north door into the atrium for check-in. Hotel shuttles drop off at the traffic circle outside.</p>
+    <p>Check-in was at the north door into the Atrium, and hotel shuttles dropped off at the traffic circle outside.</p>
     <p class="hackathon-venue-links"><a href="https://maps.apple.com/?q=Watt+Family+Innovation+Center&amp;address=405+S+Palmetto+Blvd,+Clemson,+SC+29634" target="_blank" rel="noopener noreferrer">Open in Apple Maps</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=Watt+Family+Innovation+Center+405+S+Palmetto+Blvd+Clemson+SC" target="_blank" rel="noopener noreferrer">Google Maps</a></p>
   </div>
 </div>
@@ -110,11 +106,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Check-in</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Challenge ranking opens</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">6:30 PM</span><span class="hackathon-schedule-event">Social Media Challenge submissions open</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">9:00 PM</span><span class="hackathon-schedule-event">Challenge ranking due</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Challenge assignments and team rooms posted on Discord</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Watt closes for the night</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 PM</span><span class="hackathon-schedule-event">Challenges and teams are assigned</span></div>
     </div>
   </div>
   <div class="hackathon-schedule-day">
@@ -122,7 +114,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Challenge kickoff and hacking begins</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Hacking begins</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">3:30 PM</span><span class="hackathon-schedule-event">Sponsor tabling</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Dinner</span></div>
@@ -134,9 +126,8 @@ Students from computing, physics, engineering, mathematics, and related fields a
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Technical project submissions due on Devpost</span></div>
+      <div class="hackathon-schedule-item"><span class="hackathon-time">10:00 AM</span><span class="hackathon-schedule-event">Project submissions due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 PM</span><span class="hackathon-schedule-event">Lunch and judging presentations</span></div>
-      <div class="hackathon-schedule-item"><span class="hackathon-time">2:00 PM</span><span class="hackathon-schedule-event">Social Media Challenge submissions due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">6:00 PM</span><span class="hackathon-schedule-event">Awards ceremony</span></div>
     </div>
   </div>
@@ -155,7 +146,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
     </a>
     <div class="hackathon-track-body">
       <h3>SRNL Challenge</h3>
-      <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, sets a challenge drawn from its applied research. The full brief is released at the opening ceremony.</p>
+      <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, set a challenge drawn from its applied research. The full brief was released at the opening ceremony.</p>
     </div>
   </div>
   <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--quantum-rings">
@@ -167,19 +158,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
     </a>
     <div class="hackathon-track-body">
       <h3>Quantum Rings Challenge</h3>
-      <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge centers on simulating circuits beyond the reach of ordinary statevector methods. The full brief is released at the opening ceremony.</p>
-    </div>
-  </div>
-  <div class="hackathon-track hackathon-track--logo" id="social-media-challenge">
-    <a class="hackathon-track-link" href="https://www.instagram.com/clemsonquantum/" target="_blank" rel="noopener noreferrer">
-      <picture>
-        <source srcset="/images/logo-dark.png" media="(prefers-color-scheme: dark)" width="208" height="176" />
-        <img src="/images/logo-light.png" alt="Clemson Quantum Club" class="hackathon-track-logo hackathon-track-logo--cqc" width="258" height="176" loading="lazy" />
-      </picture>
-    </a>
-    <div class="hackathon-track-body">
-      <h3>Social Media Challenge</h3>
-      <p>Create Instagram posts about the hackathon with your team and tag <a href="https://www.instagram.com/clemsonquantum/" target="_blank" rel="noopener noreferrer">@clemsonquantum</a>. Posts can be funny, informative, or creative, but must be appropriate. One team wins, based on views, likes, and organizer opinion. You may submit as many posts as you like.</p>
+      <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge had teams analyze QASM files and build machine learning models that predict how long a circuit takes to run on the Quantum Rings simulator. The full brief was released at the opening ceremony.</p>
     </div>
   </div>
 </div>
@@ -197,7 +176,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <a class="hackathon-sponsor-logo" href="https://www.qbraid.com/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/qbraid-logo-white.webp" media="(prefers-color-scheme: dark)" />
-          <img src="/images/qbraid-logo.webp" alt="qBraid" width="900" height="247" loading="lazy" />
+          <img src="/images/qbraid-logo.webp" alt="qBraid" width="612" height="168" loading="lazy" />
         </picture>
       </a>
     </div>
@@ -208,7 +187,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/centers-institutes/watt/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/watt-logo-white.webp" media="(prefers-color-scheme: dark)" />
-          <img src="/images/watt-logo.webp" alt="Watt Family Innovation Center, Clemson University" width="1000" height="339" loading="lazy" />
+          <img src="/images/watt-logo.webp" alt="Watt Family Innovation Center, Clemson University" width="500" height="170" loading="lazy" />
         </picture>
       </a>
     </div>
@@ -219,23 +198,23 @@ Students from computing, physics, engineering, mathematics, and related fields a
       <a class="hackathon-sponsor-logo" href="https://www.scquantum.org/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/scq-logo-white.webp" media="(prefers-color-scheme: dark)" />
-          <img src="/images/scq-logo.webp" alt="South Carolina Quantum" width="900" height="585" loading="lazy" />
+          <img src="/images/scq-logo.webp" alt="South Carolina Quantum" width="340" height="221" loading="lazy" />
         </picture>
       </a>
       <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/cecas/" target="_blank" rel="noopener noreferrer">
-        <img src="/images/cecas-logo.webp" alt="Clemson University College of Engineering, Computing and Applied Sciences" width="1200" height="292" loading="lazy" />
+        <img src="/images/cecas-logo.webp" alt="Clemson University College of Engineering, Computing and Applied Sciences" width="680" height="166" loading="lazy" />
       </a>
       <a class="hackathon-sponsor-logo" href="https://www.clemson.edu/cecas/tracr/" target="_blank" rel="noopener noreferrer">
-        <img src="/images/tracr-logo.webp" alt="TraCR, National Center for Transportation Cybersecurity and Resiliency" width="905" height="905" loading="lazy" />
+        <img src="/images/tracr-logo.webp" alt="TraCR, National Center for Transportation Cybersecurity and Resiliency" width="220" height="220" loading="lazy" />
       </a>
       <a class="hackathon-sponsor-logo" href="https://www.wcu.edu/learn/departments-schools-colleges/cet/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/wcu-coe-logo-white.svg" media="(prefers-color-scheme: dark)" />
-          <img src="/images/wcu-coe-logo.svg" alt="Western Carolina University College of Engineering and Technology" width="719" height="413" loading="lazy" />
+          <img src="/images/wcu-coe-logo.svg" alt="Western Carolina University College of Engineering" width="719" height="413" loading="lazy" />
         </picture>
       </a>
       <a class="hackathon-sponsor-logo" href="https://gvllimo.com/" target="_blank" rel="noopener noreferrer">
-        <img src="/images/gvl-limo-logo.webp" alt="GVL Limo, Greenville Executive Limo Service" width="512" height="512" loading="lazy" />
+        <img src="/images/gvl-limo-logo.webp" alt="GVL Limo, Greenville Executive Limo Service" width="220" height="220" loading="lazy" />
       </a>
       <a class="hackathon-sponsor-logo" href="https://www.robinsonbradshaw.com/" target="_blank" rel="noopener noreferrer">
         <picture>
@@ -253,7 +232,7 @@ Students from computing, physics, engineering, mathematics, and related fields a
 
 ## Where to Stay
 
-Hotels near Clemson University. The distance is from the Watt Center to the hotel, and dollar signs are estimates for prices. Shuttles run between these hotels and the Watt Center each morning and evening of the event.
+Hotels near Clemson University. Dollar signs are estimates for prices. Shuttles ran between these hotels and the Watt Center each morning and evening of the event.
 
 <ul class="hackathon-hotels">
   <li class="hackathon-hotel">
@@ -261,7 +240,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
       <span class="hackathon-hotel-tag">Group rate</span>
       <a class="hackathon-hotel-name" href="https://www.choicehotels.com/sc086" target="_blank" rel="noopener noreferrer">Comfort Inn &amp; Suites Clemson</a>
       <span class="hackathon-hotel-address">1305 Tiger Blvd, Clemson</span>
-      <p class="hackathon-hotel-note"><span class="hackathon-hotel-note-lead">Group rate for SC Quantathon participants with deluxe hot breakfast included:</span><br>Standard room: $89/night<br>Junior king mini suite: $104/night<br><a href="https://www.choicehotels.com/reservations/groups/BR68X7" target="_blank" rel="noopener noreferrer">Book online</a> under the “SC Quantathon V3 Conference Group” block,<br>or call the hotel at <a href="tel:+18646533600">(864) 653-3600</a>.</p>
+      <p class="hackathon-hotel-note"><span class="hackathon-hotel-note-lead">The event’s group rate, with deluxe hot breakfast included:</span><br>Standard room: $89/night<br>Junior king mini suite: $104/night</p>
     </div>
     <span class="hackathon-hotel-distance">1.9 mi</span>
     <span class="hackathon-hotel-price">$</span>
@@ -290,14 +269,16 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
 
 ## FAQ
 
+These were the answers for the September 2026 event.
+
 <div class="hackathon-faq">
   <details class="hackathon-faq-item">
     <summary>Who can participate?</summary>
-    <p>Undergraduate and graduate students from any major who are 18 or older. Most participants come from computing, physics, engineering, and mathematics, but no particular degree is required.</p>
+    <p>Undergraduate and graduate students from any major who are 18 or older. Most participants come from computing, physics, engineering, and mathematics.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Do I need quantum computing experience?</summary>
-    <p>No. Mentors and organizers are on hand all weekend, and the challenges are written so first-time participants can get started right away. Experienced students will have room to build bigger projects.</p>
+    <p>No. Mentors and organizers are on hand all weekend, and the challenges are written so first-time participants can get started right away. Experienced students have room to build bigger projects.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How much does it cost?</summary>
@@ -309,7 +290,7 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts created before Friday. If your team is assigned the Quantum Rings challenge, you will set up that account on Saturday.</p>
+    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts, set up before you arrive. If your team is assigned the Quantum Rings challenge, you will set up that account on Saturday.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where should I stay?</summary>
@@ -317,11 +298,11 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>How do I get to Clemson?</summary>
-    <p>If you are flying, use Greenville–Spartanburg International Airport (GSP), about 45 minutes from campus by car or rideshare. Shuttles run between the hotels listed above and the Watt Family Innovation Center: Friday they leave the hotels at 4:45 PM and leave Watt at 8:45 PM; Saturday they leave the hotels at 8:15 AM and leave Watt at 11:30 PM; Sunday they leave the hotels at 8:15 AM and leave Watt at 7:45 PM. Do not park on campus without a pass, since Clemson Parking tows. If you are driving, tell us on the lodging and parking form sent to accepted participants and we will arrange a daily pass. Otherwise, visitor passes can be bought online and metered parking is available near Watt.</p>
+    <p>If you are flying, use Greenville-Spartanburg International Airport (GSP), about 45 minutes from campus by car or rideshare. Shuttles run between the hotels listed above and the Watt Family Innovation Center: Friday they leave the hotels at 4:45 PM and leave Watt at 8:45 PM; Saturday they leave the hotels at 8:15 AM and leave Watt at 11:30 PM; Sunday they leave the hotels at 8:15 AM and leave Watt at 7:45 PM. Do not park on campus without a pass, since Clemson Parking tows. If you are driving, tell us on the lodging and parking form sent to accepted participants and we will arrange a daily pass. Otherwise, visitor passes can be bought online and metered parking is available near Watt.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where in the building will things happen?</summary>
-    <p>Check in at the north door into the Atrium, which also hosts Friday dinner, Saturday sponsor tabling and firesides, and Sunday meals. The welcome and awards ceremonies are in the Auditorium, and Saturday meals and the opening ceremony are on the Terrace. Team rooms are on the second and third floors and are posted Friday at 10:00 PM. Mentors are in Watt 323, and judging is in Watt 310, 313, and 316. Watt closes Friday at 10:00 PM, so there is no overnight stay that night; it stays open overnight on Saturday for hacking.</p>
+    <p>Check in at the north door into the Atrium, which also hosts Friday dinner, Saturday sponsor tabling and firesides, and Sunday meals. The welcome and awards ceremonies are in the Auditorium, and Saturday meals and the opening ceremony are on the Terrace. Team rooms are on the second and third floors. Mentors are in Watt 323, and judging is in Watt 310, 313, and 316. Watt stays open overnight on Saturday for hacking.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How should I prepare?</summary>
@@ -329,19 +310,19 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Technical project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at noon and awards are at 6:00 PM. Social Media Challenge entries use a <a href="https://forms.gle/cnc7MHwe9obUE3Sa8" target="_blank" rel="noopener noreferrer">separate Google Form</a> and are due Sunday at 2:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at 12:00 PM and awards are at 6:00 PM.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How does judging work?</summary>
-    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each technical challenge, plus one Grand Prize across both technical challenges. The rubric is announced at the opening ceremony.</p>
+    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each challenge, plus one Grand Prize across both challenges.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is travel reimbursed?</summary>
-    <p>No. The event is free and meals are provided, but we cannot reimburse travel or lodging. Shuttles run between the hotels listed above and the Watt Family Innovation Center each morning and evening of the event.</p>
+    <p>No. The event is free and meals are provided, but we cannot reimburse travel or lodging.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How do I register?</summary>
-    <p><a href="https://forms.gle/vWRNfTQMNQBrGFUh7" target="_blank" rel="noopener noreferrer">Apply here</a>. Registration stays open until spots fill.</p>
+    <p>Registration for SC Quantathon v3 has closed.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is there a code of conduct?</summary>
@@ -353,33 +334,44 @@ Hotels near Clemson University. The distance is from the Watt Center to the hote
 
 <div class="hackathon-section">
 
-## Hackathon Committee
+## Quantathon Committee
 
 <div class="hackathon-team-grid">
-  <div class="hackathon-team-member">
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Club President at the time (Aug 2024 – Oct 2026); full profile in data/past-board-members.json. -->
     <img src="/images/nathan-jones.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Nathan Jones</div>
     <div class="hackathon-team-role">Quantathon Director</div>
   </div>
-  <div class="hackathon-team-member">
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Logistics Lead for SC Quantathon v3 (Aug 2025 – Sep 2026); not on the exec board. -->
     <img src="/images/caroline-cadena.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Caroline Cadena</div>
     <div class="hackathon-team-role">Logistics Lead</div>
   </div>
-  <div class="hackathon-team-member">
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Club Vice President at the time; full profile in data/board-members.json. -->
     <img src="/images/valentine-mohaugen.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Valentine Mohaugen</div>
     <div class="hackathon-team-role">Technology Lead</div>
   </div>
-  <div class="hackathon-team-member">
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Became club Treasurer in May 2026, during this term; full profile in data/board-members.json. -->
     <img src="/images/jack-layton.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Jack Layton</div>
     <div class="hackathon-team-role">Finance Lead</div>
   </div>
-  <div class="hackathon-team-member">
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Communications Lead for SC Quantathon v3 (Aug 2025 – Sep 2026); not on the exec board. -->
     <img src="/images/varun-sethi.webp" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
     <div class="hackathon-team-name">Varun Sethi</div>
     <div class="hackathon-team-role">Communications Lead</div>
+  </div>
+  <div class="hackathon-team-member" data-start="2025-08" data-end="2026-09">
+    <!-- profile: Club Faculty Advisor since Aug 2024; full profile in data/board-members.json. -->
+    <img src="/images/rong-ge.jpg" alt="" class="hackathon-team-photo" width="92" height="92" loading="lazy" />
+    <div class="hackathon-team-name">Rong Ge</div>
+    <div class="hackathon-team-role">Faculty Advisor</div>
   </div>
 </div>
 

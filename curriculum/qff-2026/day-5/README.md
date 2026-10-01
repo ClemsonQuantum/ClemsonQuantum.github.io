@@ -1,29 +1,34 @@
-# Day 5: Frontier research on today’s hardware
+# Day 5 (Wed Nov 18): HPC and quantum machine learning
 
-Status: **placeholder.** Files to produce here: `notebook.ipynb`, `slides.md` (Marp), `notes.tex`.
-Served copies go to `public/files/qff-2026/day-5/qff-day5-frontier-research.ipynb`, `qff-day5-slides.pdf`, `qff-day5-notes.pdf`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.
+Status: **placeholder.** Files to produce here: `notebook.ipynb` (the lecture notes are its markdown cells), `slides.md` (Marp), `challenge/`.
+Served copies go to `public/files/qff-2026/day-5/qff-day5-hpc-qml.ipynb`, `qff-day5-slides.pdf`, `qff-day5-challenge.ipynb`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.
 
-The hardest day and the most recent science (2025 papers). Two halves, both reduced to Open Plan scale.
+Added 2026-09-07 (it was Day 4 in the one-week draft). No adapted source picked yet; candidates below.
 
-## Sources
-- Half A: `~/Desktop/Academia/QC Resources/QDC 25/qdc-challenges-2025/challenges/Track_A/Z2-LGT/Z2-LGT_qdc25_kingston.ipynb` trimmed to one plaquette (~11 qubits). Real-time dynamics of a (2+1)-D Z2 lattice gauge theory on heavy-hex, after arXiv:2507.08088 (Cobos, Fraxanet). Apache 2.0. Needs `lattice_utils.py`.
-- Half B: `~/Desktop/Academia/QC Resources/QDC 25/qdc-challenges-2025/challenges/Track_A/skqd/skqd_challenge.ipynb` Part 1 (12-qubit perturbed TFIM, Krylov circuits from `PauliEvolutionGate` + `LieTrotter`, `solve_qubit`), after arXiv:2501.09702. Apache 2.0. Needs `skqd_helpers.py` (imports `qiskit_addon_sqd`, `ffsim`). Alternative with no extra dependencies: IBM’s own "Sample, Then Diagonalize" notebook (QFF26/Challenges), TFIM n=8, GHZ+RY guess circuit, subspace diagonalization.
+## HPC half: candidates
+- Classical simulation at scale: Qiskit Aer `matrix_product_state` method (used in QDC wstate-scattering and hadron-Schwinger for L=15–34 references), `AerSimulator(device="GPU")` where available, statevector memory wall (2^n).
+- Quantum-centric supercomputing framing: Robledo Moreno SQD deck; QDC SKQD Part 2 narrative (Serverless, 120 GiB) as a slide-only example; Kandala, Utility Era.
+- Clemson angle: run the same Aer MPS job on Clemson’s **Palmetto 2** cluster (SLURM, `python -u`, one conda env) vs a laptop; time it. TODO: confirm Palmetto 2 access for attendees and which partition/GPU.
+- Reference numbers: QDC tutorials cite 25 M samples processed in ~4 min with vectorized NumPy vs ~40 min naive (QMOO post-processing) as an HPC-mindset example.
 
-## Seminar (guest, 45 min)
-Where the field is now: utility-scale simulation, Trotterized dynamics of gauge theories, why ground states concentrate on few configurations, sample-based (Krylov) diagonalization and configuration recovery, quantum-centric supercomputing. Slide sources: Robledo Moreno, SQD deep dive; Ferris pp. 32–41; Kandala, Utility Era; one Rall roadmap slide to close.
+## QML half: candidates
+- IBM Quantum Learning course "Quantum machine learning" (new in 2026) for structure: data encoding (angle/amplitude), quantum kernels, variational classifiers, barren plateaus.
+- Implementation on the current stack: build the kernel with `StatevectorSampler`/fidelity from `qiskit.quantum_info.Statevector` and feed scikit-learn `SVC(kernel="precomputed")`; avoid the legacy `qiskit-machine-learning` package unless it is confirmed on Qiskit 2.5.
+- Hardware step: evaluate the kernel matrix for a tiny dataset (2–4 features, ~20 points) with SamplerV2 on a real device and compare accuracy to the simulator kernel.
+- Optional: QGSS 2026 Lab 4b/4c framing of "three pathways to quantum advantage" (Apache 2.0 repo; do not reuse graded solutions).
 
-## Notebook plan
-1. Half A: build the Z2-Higgs Hamiltonian on one plaquette, hand-scheduled CX layers vs the `PauliEvolutionGate` shortcut, 6–8 Trotter steps, raw EstimatorV2 on hardware, compare to an Aer statevector run.
-2. Half B: TFIM as `SparsePauliOp` (asserted Pauli list), Krylov circuits, sample on Aer and then on hardware (r≈5 circuits, 12 qubits), `solve_qubit`, compare to `eigvalsh`. Or the IBM SQD notebook with a hardware sampling step.
-3. Informal closing discussion: everyone shares what they learned over the week (no presentations, no judging).
+## Seminar (organizers, 45 min)
+High-performance computing for quantum: why simulation is hard (2^n), simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Palmetto 2. Then quantum machine learning: encoding data into qubits, quantum kernels and variational classifiers, and an honest status report (trainability, data loading, where classical ML still wins).
 
-## Trims and edits
-- Z2: REWRITE the credential cell (source has a plaintext token); drop ZNE, twirling, the Gauss-law bonus, and the 2x2 benchmark file.
-- SKQD: keep Part 1 only (Part 2 needs Qiskit Serverless); remove `qc_grader`; the existing assert cells stay.
-- If the `ffsim`/`qiskit_addon_sqd` install is a problem in the room, use IBM’s SQD notebook for Half B (pure Qiskit).
+## Challenge: Quantum kernel classifier
+Reach the highest accuracy on a held-out test set. Builds on the QML half.
+- Raw result: test-set accuracy.
+- TODO: the data set and the train/test split (normalize with training statistics only), whether the kernel must be evaluated on hardware, and the 0–100 mapping.
 
 ## Hardware and budget
-Two small jobs, ~1–2 min QPU total. Cache both results.
+One small kernel-matrix job, under 1 min, plus challenge runs. Cache results.
 
 ## Open decisions (TODO)
-- SKQD Part 1 vs IBM’s SQD notebook for Half B.
+- Palmetto 2 access for attendees (accounts, partition, GPU).
+- Kernel method vs variational classifier for the QML half.
+- Dependencies: scikit-learn; confirm whether any QML package is used at all.

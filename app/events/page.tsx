@@ -1,84 +1,52 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
+import { pageMetadata } from '@/lib/og';
 import Link from 'next/link';
-import { getAllPages, sortPages } from '@/lib/content';
+import { getSortedPages } from '@/lib/content';
 import PreviewCard from '@/components/PreviewCard';
-import ConstellationDivider from '@/components/ConstellationDivider';
+import ArchiveHeader from '@/components/ArchiveHeader';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Events',
   description:
-    'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by the Clemson Quantum Club.',
-  openGraph: pageOpenGraph({
-    title: 'Events | Clemson Quantum Club',
-    description:
-      'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by the Clemson Quantum Club.',
-    url: '/events/',
-  }),
-};
+    'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by Clemson Quantum Club.',
+  path: '/events/',
+});
+
+// Cards each category shows before its "View all" link.
+const CARDS_PER_SECTION = 3;
+
+const SECTIONS = [
+  { dir: 'events/hackathons', title: 'Hackathons', viewAll: 'View all hackathons' },
+  {
+    dir: 'events/workshops-and-seminars',
+    title: 'Workshops & Seminars',
+    viewAll: 'View all workshops & seminars',
+  },
+  { dir: 'events/meetings', title: 'Meetings', viewAll: 'View all meetings' },
+];
 
 export default function EventsPage() {
-  const hackathons = sortPages(getAllPages('events/hackathons'));
-  const workshops = sortPages(getAllPages('events/workshops-and-seminars'));
-  const meetings = sortPages(getAllPages('events/meetings'));
-
   return (
     <div className="archive-page">
-      <header className="archive-hero">
-        <h1 className="archive-hero__title">Events</h1>
-        <ConstellationDivider />
-      </header>
+      <ArchiveHeader title="Events" />
 
-      <section className="archive-section">
-        <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">Hackathons</h2>
+      {SECTIONS.map(({ dir, title, viewAll }) => (
+        <section key={dir} className="archive-section">
+          <div className="home-section__header">
+            <h2 className="home-section__title">{title}</h2>
+            <Link href={`/${dir}/`} className="view-all-link">
+              {viewAll}
+            </Link>
           </div>
-          <Link href="/events/hackathons/" className="view-all-link">
-            View all hackathons
-          </Link>
-        </div>
-        <div className="preview-grid">
-          {hackathons.slice(0, 3).map((item) => (
-            <PreviewCard key={item.slug} item={item} kind="event" />
-          ))}
-        </div>
-      </section>
-
-      <section className="archive-section">
-        <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">Workshops &amp; Seminars</h2>
+          <div className="preview-grid">
+            {getSortedPages(dir)
+              .slice(0, CARDS_PER_SECTION)
+              .map((item) => (
+                <PreviewCard key={item.slug} item={item} kind="event" />
+              ))}
           </div>
-          <Link
-            href="/events/workshops-and-seminars/"
-            className="view-all-link"
-          >
-            View all workshops &amp; seminars
-          </Link>
-        </div>
-        <div className="preview-grid">
-          {workshops.slice(0, 3).map((item) => (
-            <PreviewCard key={item.slug} item={item} kind="event" />
-          ))}
-        </div>
-      </section>
-
-      <section className="archive-section">
-        <div className="home-section__header">
-          <div>
-            <h2 className="home-section__title">Meetings</h2>
-          </div>
-          <Link href="/events/meetings/" className="view-all-link">
-            View all meetings
-          </Link>
-        </div>
-        <div className="preview-grid">
-          {meetings.slice(0, 3).map((item) => (
-            <PreviewCard key={item.slug} item={item} kind="event" />
-          ))}
-        </div>
-      </section>
+        </section>
+      ))}
     </div>
   );
 }

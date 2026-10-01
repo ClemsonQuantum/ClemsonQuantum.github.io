@@ -1,22 +1,30 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { usePathname } from 'next/navigation';
-// STAGGER_MS is the per-word entrance delay (shared with ScrollReveal).
 import { STAGGER_MS } from '@/lib/animation';
 
 // One-time "wave-function settle" entrance for page titles: the first h1 in
 // <main> is split into per-word spans that either blur-settle or fade-rise
-// into place (variant picked at random per page view), staggered 60 ms apart.
+// into place (variant picked at random per page view), staggered by STAGGER_MS.
 // Headless, like ScrollReveal: mutates the already-hydrated static h1 (React
 // never re-renders these server-rendered titles), keyed on pathname so client
 // navigations animate too. The full title is preserved in aria-label and the
 // SSR HTML stays plain text, so SEO and screen readers see the real heading.
 // Bails on reduced motion and on titles that contain markup.
+//
+// The first page's h1 has already painted from the static HTML by the time
+// any effect runs, so splitting it would blank it and fade it back in. It is
+// left whole (data-title-reveal="static") and the CSS fades it in with the
+// first paint instead. Client navigations split before paint (layout effect).
+let firstLoad = true;
+
 export default function TitleReveal() {
   const pathname = usePathname();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const first = firstLoad;
+    firstLoad = false;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const h1 = document.querySelector<HTMLHeadingElement>('main h1');
@@ -24,6 +32,10 @@ export default function TitleReveal() {
     if (!h1 || h1.dataset.titleReveal || h1.childElementCount > 0) return;
     const text = h1.textContent ?? '';
     if (!text.trim()) return;
+    if (first) {
+      h1.dataset.titleReveal = 'static';
+      return;
+    }
 
     h1.dataset.titleReveal = 'done';
     h1.setAttribute('aria-label', text);

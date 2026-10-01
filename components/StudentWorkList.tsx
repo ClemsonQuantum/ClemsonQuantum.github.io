@@ -2,16 +2,15 @@
 
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-// Import from lib/types (not lib/content) — content.ts pulls in Node's `fs`,
-// which can't be bundled into a client component.
-import { capitalize, formatDate } from '@/lib/types';
-import { WORK_TYPES } from '@/lib/content-shared.mjs';
+// Not lib/content: content.ts pulls in Node's `fs`, which can't be bundled
+// into a client component.
+import { formatDate } from '@/lib/dates.mjs';
+import { capitalize } from '@/lib/types';
 import type { PageMeta } from '@/lib/types';
+import { WORK_TYPES } from '@/lib/work-types.mjs';
+import FilterButtons from './FilterButtons';
 
 const ALL = 'all';
-// Categories always offered, even with no entries of that type. Other types
-// found in the data are appended.
-const KNOWN_TYPES = WORK_TYPES;
 
 function pluralLabel(type: string): string {
   const label = capitalize(type);
@@ -25,8 +24,10 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
     for (const w of works) {
       if (w.type) tally.set(w.type, (tally.get(w.type) ?? 0) + 1);
     }
+    // Every known type gets a tab, even with no entries yet; other types
+    // found in the data are appended.
     return {
-      types: Array.from(new Set([...KNOWN_TYPES, ...tally.keys()])),
+      types: Array.from(new Set([...WORK_TYPES, ...tally.keys()])),
       counts: tally,
     };
   }, [works]);
@@ -36,32 +37,15 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
 
   return (
     <>
-      {/* Toggle-button group, not tabs — there are no tabpanels and no
-          arrow-key semantics; aria-pressed reflects the active filter. */}
-      <div className="sw-filter" role="group" aria-label="Filter by type">
-        <button
-          type="button"
-          aria-pressed={filter === ALL}
-          className={`sw-filter__btn${filter === ALL ? ' is-active' : ''}`}
-          onClick={() => setFilter(ALL)}
-        >
-          All <span className="sw-filter__count">{works.length}</span>
-        </button>
-        {types.map((t) => {
-          const count = counts.get(t) ?? 0;
-          return (
-            <button
-              key={t}
-              type="button"
-              aria-pressed={filter === t}
-              className={`sw-filter__btn${filter === t ? ' is-active' : ''}`}
-              onClick={() => setFilter(t)}
-            >
-              {pluralLabel(t)} <span className="sw-filter__count">{count}</span>
-            </button>
-          );
-        })}
-      </div>
+      <FilterButtons
+        label="Filter by type"
+        options={[
+          { value: ALL, text: 'All', count: works.length },
+          ...types.map((t) => ({ value: t, text: pluralLabel(t), count: counts.get(t) ?? 0 })),
+        ]}
+        value={filter}
+        onChange={setFilter}
+      />
 
       {visible.length === 0 ? (
         <p className="sw-empty">
@@ -85,13 +69,7 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
               <p className="sw-meta">
                 {p.date && <span>{formatDate(p.date)}</span>}
                 {p.date && p.authors && <span> · </span>}
-                {p.authors &&
-                  p.authors.map((a, i) => (
-                    <span key={i}>
-                      {a.name}
-                      {i < p.authors!.length - 1 ? ', ' : ''}
-                    </span>
-                  ))}
+                {p.authors?.map((a) => a.name).join(', ')}
               </p>
               {(p.summary || p.excerpt) && (
                 <p className="sw-summary">{p.summary ?? p.excerpt}</p>

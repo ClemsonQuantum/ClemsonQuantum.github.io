@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-// MAX_DPR caps the canvas backing-store scale (shared with CloudSky).
 import { MAX_DPR } from '@/lib/animation';
 
 const LINK_DIST = 110; // px — max distance for an "entanglement" line
@@ -24,7 +23,8 @@ interface QuantumCanvasProps {
   maxCount?: number;
 }
 
-// Decorative "entangled qubits" backdrop (SC Quantathon v3 hero, homepage hero):
+// Decorative "entangled qubits" backdrop (the homepage and 404 heroes, and
+// every .hackathon-hero--quantum hero through MarkdownDiv):
 // drifting particles joined by proximity lines, gently repelled by the cursor.
 // Colors come from the CSS tokens (--color-accent-rgb / --color-violet-rgb),
 // re-read when the OS color scheme flips, since dark mode on this site is a
@@ -99,7 +99,7 @@ export default function QuantumCanvas({
         // Also reseed after a zero-size first measure — rescaling from a 0×0
         // frame would strand every particle at the origin.
         seedParticles();
-      } else if (prevWidth > 0 && prevHeight > 0) {
+      } else {
         // Rescale in place instead of reseeding so resizes don't "pop".
         for (const p of particles) {
           p.x *= width / prevWidth;
@@ -155,6 +155,8 @@ export default function QuantumCanvas({
         ctx.arc(p.x, p.y, p.r * pulse, 0, Math.PI * 2);
         ctx.fill();
       }
+      // The CSS fades the canvas in once it has something on it.
+      if (canvas && canvas.dataset.ready === undefined) canvas.dataset.ready = '';
     }
 
     function step(dt: number) {

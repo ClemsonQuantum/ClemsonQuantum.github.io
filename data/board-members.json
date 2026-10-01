@@ -1,16 +1,9 @@
 [
   {
-    "name": "Nathan Jones",
-    "role": "President & Co-Founder",
-    "description": "Computer Science Ph.D. Candidate and Clemson Alumnus\nResearch in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing",
-    "image": "/images/nathan-jones.jpg",
-    "email": "najones@clemson.edu",
-    "linkedin": "https://www.linkedin.com/in/njonescomputing/",
-    "github": "https://github.com/njones93531/"
-  },
-  {
     "name": "Valentine Mohaugen",
-    "role": "Vice President & Co-Founder",
+    "role": "Co-Founder & President",
+    "start": "2026-10",
+    "profile": "Co-founded the club in Aug 2024 and served as Vice President from Aug 2024 to Oct 2026, signing the original Constitution (Apr 29, 2025) and Revision 1 (Oct 30, 2025). President since Oct 2026, taking over from Nathan Jones; the presidency carries the Quantathon Committee directorship (Bylaws Art. III §3). SC Quantathon: Technology Lead on the v3 committee (Aug 2025 – Sep 2026), Quantathon Director for v4 since Oct 2026.",
     "description": "Civil Engineering Ph.D. Student and Clemson Alumnus\nResearch in Quantum Machine Learning, Cybersecurity, and Cyber-Physical Systems",
     "image": "/images/valentine-mohaugen.jpg",
     "email": "valentm@clemson.edu",
@@ -21,7 +14,9 @@
   {
     "name": "Jack Layton",
     "role": "Treasurer",
-    "description": "Industrial Engineering Ph.D. Student and Clemson Alumnus\nResearch in Quantum Optimization, Variational Quantum Algorithms, and Operations Research",
+    "start": "2026-05",
+    "profile": "Treasurer since May 2026, taking over from Ashton McEntarffer (Interim Treasurer Oct 2025 – May 2026). SC Quantathon: Finance Lead on the v3 committee (Aug 2025 – Sep 2026) and on the v4 committee since Oct 2026.",
+    "description": "Industrial Engineering Ph.D. Student and Clemson Alumnus\nResearch in Quantum Optimization, Operations Research, and Variational Quantum Algorithms",
     "image": "/images/jack-layton.jpg",
     "email": "jslayto@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/jack-layton-668231b0/",
@@ -29,10 +24,13 @@
   },
   {
     "name": "Rong Ge",
-    "role": "Advisor",
-    "description": "Professor in the School of Computing\nResearch in High Performance Computing, Parallel and Distributed Systems, and Performance and Power Analysis and Modeling",
+    "role": "Faculty Advisor",
+    "start": "2024-08",
+    "profile": "Faculty Advisor since the club started in Aug 2024. Under Constitution Art. V the Advisor approves all club expenditures and is the liaison between the club and the supporting department.",
+    "description": "Professor in the School of Computing\nResearch in High Performance Computing, Parallel and Distributed Systems, and Quantum Computing Education",
     "image": "/images/rong-ge.jpg",
     "email": "rge@clemson.edu",
-    "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/"
+    "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/",
+    "website": "https://rge.people.clemson.edu/"
   }
 ]
