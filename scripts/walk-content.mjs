@@ -7,7 +7,7 @@ import path from 'path';
  * (names starting with `_`) and README.md in any case. Shared by
  * validate-content.mjs and generate-search-index.mjs so the two scripts can
  * never disagree about which files count as content. Returns [] when `dir`
- * does not exist. Order follows readdirSync, as the original walkers did.
+ * does not exist.
  *
  * @param {string} dir absolute directory to walk
  * @param {string[]} [results] accumulator used by the recursion

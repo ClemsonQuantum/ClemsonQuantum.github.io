@@ -5,7 +5,6 @@ summary: "The Quantum Insider covers a $650,000 initiative backing Clemson’s S
 image: "/images/scalab-quantum-initiative.webp"
 source: "The Quantum Insider"
 source_url: "https://thequantuminsider.com/2026/05/18/clemson-university-advances-quantum-software-research-through-650000-initiative-focused-on-real-world-hardware-performance/"
-cta_label: "Read on The Quantum Insider"
 ---
 
 The Quantum Insider reports on a $650,000 initiative expanding South Carolina’s quantum computing capabilities through Clemson’s Scalable High-Performance and Quantum Computing Systems Lab (ScaLab), directed by Dr. Rong Ge. The funding targets how quantum software performs on real hardware and includes $250,000 for graduate and undergraduate research, $150,000 for multi-year Quantathon events, and $250,000 for a statewide student quantum club network, building on the state’s 2023 commitment of $15 million to quantum information science and technology.

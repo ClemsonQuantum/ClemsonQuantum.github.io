@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 // lib/types only — lib/content uses Node fs and cannot enter a client bundle.
 import type { PageMeta } from '@/lib/types';
+import FilterButtons from './FilterButtons';
 import PreviewCard from './PreviewCard';
 
 const ALL = 'all';
@@ -26,7 +27,7 @@ function semesterRank(label: string): number {
 // Term-filtered archive grid. Shared by the event archive pages and the News
 // page — the semester tabs derive purely from each item's `date`, so it works
 // for any dated content. `kind`/`showFooter`/`emptyText` default to the event
-// behavior, so existing event pages need no changes.
+// behavior.
 export default function EventArchive({
   items,
   kind = 'event',
@@ -62,33 +63,16 @@ export default function EventArchive({
 
   return (
     <>
-      {/* Toggle-button group, not tabs — there are no tabpanels and no
-          arrow-key semantics; aria-pressed reflects the active filter. */}
       {semesters.length > 0 && (
-        <div className="sw-filter" role="group" aria-label="Filter by semester">
-          <button
-            type="button"
-            aria-pressed={filter === ALL}
-            className={`sw-filter__btn${filter === ALL ? ' is-active' : ''}`}
-            onClick={() => setFilter(ALL)}
-          >
-            All <span className="sw-filter__count">{items.length}</span>
-          </button>
-          {semesters.map((s) => {
-            const count = counts.get(s) ?? 0;
-            return (
-              <button
-                key={s}
-                type="button"
-                aria-pressed={filter === s}
-                className={`sw-filter__btn${filter === s ? ' is-active' : ''}`}
-                onClick={() => setFilter(s)}
-              >
-                {s} <span className="sw-filter__count">{count}</span>
-              </button>
-            );
-          })}
-        </div>
+        <FilterButtons
+          label="Filter by semester"
+          options={[
+            { value: ALL, text: 'All', count: items.length },
+            ...semesters.map((s) => ({ value: s, text: s, count: counts.get(s) ?? 0 })),
+          ]}
+          value={filter}
+          onChange={setFilter}
+        />
       )}
 
       {visible.length === 0 ? (

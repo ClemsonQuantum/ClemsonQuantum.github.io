@@ -4,19 +4,18 @@ import { useState, useEffect } from 'react';
 import type {
   Dispatch,
   FocusEvent as ReactFocusEvent,
+  KeyboardEvent as ReactKeyboardEvent,
   SetStateAction,
 } from 'react';
 import Link from 'next/link';
-import type { NavData } from '@/lib/navData';
-import type { PageMeta } from '@/lib/content';
-import SiteImage from './SiteImage';
+import { usePathname } from 'next/navigation';
+import type { NavData, NavItem } from '@/lib/navData';
+import ClubLogo from './ClubLogo';
 import SearchBar from './SearchBar';
 
 interface HeaderProps {
   navData: NavData;
 }
-
-const EVENTS_IN_DROPDOWN = 3;
 
 // On the hamburger nav (≤800px), dropdowns/submenus open on tap, not hover.
 // The breakpoint must match the drawer media query in assets/css/style.css
@@ -33,11 +32,38 @@ const isMobileNav = () => {
 type DropdownId = 'events' | 'resources' | null;
 type EventsSubmenuId = 'hackathons' | 'workshops' | 'meetings' | null;
 
+// The Events panel's submenus, in order; each lists navData[id].
+const SUBMENUS: {
+  id: Exclude<EventsSubmenuId, null>;
+  label: string;
+  href: string;
+  viewAllLabel: string;
+}[] = [
+  { id: 'hackathons', label: 'Hackathons', href: '/events/hackathons/', viewAllLabel: 'View all hackathons' },
+  {
+    id: 'workshops',
+    label: 'Workshops & Seminars',
+    href: '/events/workshops-and-seminars/',
+    viewAllLabel: 'View all workshops & seminars',
+  },
+  { id: 'meetings', label: 'Meetings', href: '/events/meetings/', viewAllLabel: 'View all meetings' },
+];
+
+// "page" on the link to the page being shown, "true" on the top-level item
+// whose section holds it (Events while on a hackathon page). The site uses
+// trailing slashes; the pathname may arrive without one.
+type NavCurrent = 'page' | 'true' | undefined;
+function navCurrent(pathname: string, href: string): NavCurrent {
+  const here = pathname.endsWith('/') ? pathname : `${pathname}/`;
+  if (here === href) return 'page';
+  return here.startsWith(href) ? 'true' : undefined;
+}
+
 interface EventsSubmenuProps {
   id: Exclude<EventsSubmenuId, null>;
   label: string;
   href: string;
-  items: PageMeta[];
+  items: NavItem[];
   openSubmenu: EventsSubmenuId;
   setOpenSubmenu: Dispatch<SetStateAction<EventsSubmenuId>>;
   closeMenus: () => void;
@@ -69,6 +95,7 @@ function EventsSubmenu({
     >
       <Link
         href={href}
+        prefetch={false}
         className="nav-dropdown-link nav-dropdown-link--parent"
         aria-expanded={isOpen}
         onClick={(e) => {
@@ -88,8 +115,9 @@ function EventsSubmenu({
       <div className="dropdown-submenu-content">
         {items.map((item) => (
           <Link
-            key={item.slug}
-            href={item.isExternal ? item.href : `${href}${item.slug}/`}
+            key={item.href}
+            href={item.href}
+            prefetch={false}
             className="nav-dropdown-link"
             onClick={closeMenus}
             {...(item.isExternal
@@ -102,6 +130,7 @@ function EventsSubmenu({
         {viewAllLabel && (
           <Link
             href={href}
+            prefetch={false}
             className="nav-dropdown-link nav-dropdown-link--view-all"
             onClick={closeMenus}
           >
@@ -113,16 +142,103 @@ function EventsSubmenu({
   );
 }
 
+interface DropdownTriggerProps {
+  id: Exclude<DropdownId, null>;
+  href: string;
+  label: string;
+  open: boolean;
+  current: NavCurrent;
+  setOpenDropdown: Dispatch<SetStateAction<DropdownId>>;
+  setOpenSubmenu: Dispatch<SetStateAction<EventsSubmenuId>>;
+  setDismissed: Dispatch<SetStateAction<DropdownId>>;
+}
+
+// A top-level item that is both a link to its section and the disclosure
+// button for its dropdown panel (`${id}-panel`).
+function DropdownTrigger({
+  id,
+  href,
+  label,
+  open,
+  current,
+  setOpenDropdown,
+  setOpenSubmenu,
+  setDismissed,
+}: DropdownTriggerProps) {
+  // Desktop keyboard: focus alone doesn't open the panel, so Tab moves along
+  // the bar. Enter or Space opens a closed panel (Enter on an open one
+  // follows the link, Space closes it); ArrowDown opens it and moves to its
+  // first link. On the drawer, Enter fires the tap toggle in onClick.
+  function onKeyDown(e: ReactKeyboardEvent<HTMLAnchorElement>) {
+    if (isMobileNav()) return;
+    const space = e.key === ' ';
+    if (e.key === 'Enter' && open) return;
+    if (!space && e.key !== 'Enter' && e.key !== 'ArrowDown') return;
+    e.preventDefault();
+    if (space && open) {
+      // Dismissed, like Escape: the pointer may still be over the panel.
+      setDismissed(id);
+      setOpenDropdown(null);
+      setOpenSubmenu(null);
+      return;
+    }
+    setDismissed(null);
+    setOpenDropdown(id);
+    if (e.key === 'ArrowDown') {
+      // After the re-render shows the panel; hidden links can't take focus.
+      setTimeout(() => {
+        document.getElementById(`${id}-panel`)?.querySelector<HTMLElement>('a[href]')?.focus();
+      }, 0);
+    }
+  }
+
+  return (
+    <Link
+      href={href}
+      className="nav-link"
+      aria-expanded={open}
+      aria-controls={`${id}-panel`}
+      aria-current={current}
+      onClick={(e) => {
+        if (isMobileNav()) {
+          e.preventDefault();
+          setOpenSubmenu(null);
+          setOpenDropdown((cur) => (cur === id ? null : id));
+        }
+      }}
+      onKeyDown={onKeyDown}
+    >
+      {label}
+      <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+        <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </Link>
+  );
+}
+
 export default function Header({ navData }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<DropdownId>(null);
   const [openSubmenu, setOpenSubmenu] = useState<EventsSubmenuId>(null);
+  // A desktop dropdown closed from the keyboard (Escape, or Space on its
+  // trigger) stays closed (its CSS hover reveal is suppressed and its links
+  // leave the tab order) until focus leaves it or the pointer re-enters.
+  const [dismissed, setDismissed] = useState<DropdownId>(null);
 
   function closeMenus() {
     setMenuOpen(false);
     setOpenDropdown(null);
     setOpenSubmenu(null);
+  }
+
+  // Any navigation closes the menus, including ones the drawer's links don't
+  // see: a search result, Enter in the search box, browser back and forward.
+  const pathname = usePathname();
+  const [path, setPath] = useState(pathname);
+  if (pathname !== path) {
+    setPath(pathname);
+    closeMenus();
   }
 
   useEffect(() => {
@@ -142,16 +258,27 @@ export default function Header({ navData }: HeaderProps) {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
-  // Escape closes whatever is open. Focus goes back to the toggle only when
-  // the drawer was open (it is what the user activated to get in); a desktop
-  // dropdown closed with Escape keeps focus where it is. The listener is
-  // re-attached whenever the open state changes, so it never reads stale values.
+  // Escape closes whatever is open. Focus goes back to what opened it: the
+  // drawer's toggle, or a desktop dropdown's trigger link (APG disclosure
+  // navigation). The listener is re-attached whenever the open state
+  // changes, so it never reads stale values.
   useEffect(() => {
     if (!menuOpen && !openDropdown && !openSubmenu) return;
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key !== 'Escape') return;
+      const dropdown = !isMobileNav() ? openDropdown : null;
+      if (dropdown) setDismissed(dropdown);
       closeMenus();
       if (menuOpen) document.getElementById('navToggle')?.focus();
+      else if (dropdown) {
+        // Only when focus was in that dropdown: a panel opened by hover
+        // while the user types elsewhere (the search box) must not steal it.
+        const trigger = document.querySelector<HTMLElement>(`[aria-controls="${dropdown}-panel"]`);
+        if (!trigger?.closest('.nav-dropdown')?.contains(document.activeElement)) return;
+        // Now, before the re-render hides the dismissed panel: focus still
+        // on one of its links would otherwise drop to the page body.
+        trigger.focus();
+      }
     }
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
@@ -168,7 +295,9 @@ export default function Header({ navData }: HeaderProps) {
 
   const dropdownHandlers = (id: Exclude<DropdownId, null>) => ({
     onMouseEnter: () => {
-      if (!isMobileNav()) setOpenDropdown(id);
+      if (isMobileNav()) return;
+      setDismissed((cur) => (cur === id ? null : cur));
+      setOpenDropdown(id);
     },
     onMouseLeave: () => {
       if (isMobileNav()) return;
@@ -177,11 +306,9 @@ export default function Header({ navData }: HeaderProps) {
         setOpenSubmenu(null);
       }
     },
-    onFocus: () => {
-      if (!isMobileNav()) setOpenDropdown(id);
-    },
     onBlur: (e: ReactFocusEvent<HTMLDivElement>) => {
       if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+        setDismissed((cur) => (cur === id ? null : cur));
         setOpenDropdown((cur) => (cur === id ? null : cur));
         if (id === 'events') {
           setOpenSubmenu(null);
@@ -190,49 +317,20 @@ export default function Header({ navData }: HeaderProps) {
     },
   });
 
-  const visibleHackathons = navData.hackathons.slice(0, EVENTS_IN_DROPDOWN);
-  const hackathonsTruncated = navData.hackathons.length > EVENTS_IN_DROPDOWN;
-  const visibleWorkshops = navData.workshops.slice(0, EVENTS_IN_DROPDOWN);
-  const workshopsTruncated = navData.workshops.length > EVENTS_IN_DROPDOWN;
-  const visibleMeetings = navData.meetings.slice(0, EVENTS_IN_DROPDOWN);
-  const meetingsTruncated = navData.meetings.length > EVENTS_IN_DROPDOWN;
-
   // The bar is the page's banner landmark (<header>) with the labelled <nav>
   // landmark inside it; .nav and .nav-inner are purely class-based styles.
   return (
     <header className={`nav${scrolled ? ' nav--scrolled' : ''}`}>
-      <nav className="nav-inner" aria-label="Main navigation">
-        <Link href="/" className="nav-brand" aria-label="Clemson Quantum Club home">
-          <picture>
-            {/* Dark-theme logo (white on black) swapped in via prefers-color-scheme;
-                light-theme logo (black on white) is the default <img>. */}
-            {/* The two logos have different aspect ratios, so the <source>
-                carries its own dimensions — otherwise dark mode reserves the
-                light logo's (wider) box and shifts layout. */}
-            <source
-              srcSet="/images/logo-dark.png"
-              media="(prefers-color-scheme: dark)"
-              width={208}
-              height={176}
-            />
-            {/* Above the fold on every page: load eagerly, and give intrinsic
-                dimensions so the header doesn't reflow as the logo arrives. */}
-            <SiteImage
-              src="/images/logo-light.png"
-              alt="Clemson Quantum Club"
-              className="nav-logo"
-              width={258}
-              height={176}
-              loading="eager"
-            />
-          </picture>
+      <nav className="nav-inner" aria-label="Main">
+        <Link href="/" prefetch={false} className="nav-brand" aria-label="Clemson Quantum Club home">
+          <ClubLogo className="nav-logo" eager />
         </Link>
 
         <button
           type="button"
           className={`nav-toggle${menuOpen ? ' nav-toggle--open' : ''}`}
           id="navToggle"
-          aria-label={menuOpen ? 'Close navigation' : 'Open navigation'}
+          aria-label="Menu"
           aria-expanded={menuOpen}
           aria-controls="navLinks"
           onClick={() => setMenuOpen((o) => !o)}
@@ -244,114 +342,83 @@ export default function Header({ navData }: HeaderProps) {
           className={`nav-links${menuOpen ? ' nav-links--open' : ''}`}
           id="navLinks"
         >
-          <Link href="/about/" className="nav-link" onClick={closeMenus}>About</Link>
-          <Link href="/news/" className="nav-link" onClick={closeMenus}>News</Link>
+          <Link href="/about/" className="nav-link" aria-current={navCurrent(path, '/about/')} onClick={closeMenus}>About</Link>
+          <Link href="/news/" className="nav-link" aria-current={navCurrent(path, '/news/')} onClick={closeMenus}>News</Link>
 
           <div
-            className={`nav-dropdown${openDropdown === 'events' ? ' nav-dropdown--open' : ''}`}
+            className={`nav-dropdown${openDropdown === 'events' ? ' nav-dropdown--open' : ''}${dismissed === 'events' ? ' nav-dropdown--dismissed' : ''}`}
             {...dropdownHandlers('events')}
           >
-            <Link
+            <DropdownTrigger
+              id="events"
               href="/events/"
-              className="nav-link"
-              aria-expanded={openDropdown === 'events'}
-              aria-controls="events-panel"
-              onClick={(e) => {
-                if (isMobileNav()) {
-                  e.preventDefault();
-                  setOpenSubmenu(null);
-                  setOpenDropdown((cur) => (cur === 'events' ? null : 'events'));
-                }
-              }}
-            >
-              Events
-              <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
+              label="Events"
+              open={openDropdown === 'events'}
+              current={navCurrent(path, '/events/')}
+              setOpenDropdown={setOpenDropdown}
+              setOpenSubmenu={setOpenSubmenu}
+              setDismissed={setDismissed}
+            />
             <div className="nav-dropdown-panel" id="events-panel">
-              <EventsSubmenu
-                id="hackathons"
-                label="Hackathons"
-                href="/events/hackathons/"
-                items={visibleHackathons}
-                openSubmenu={openSubmenu}
-                setOpenSubmenu={setOpenSubmenu}
-                closeMenus={closeMenus}
-                viewAllLabel={hackathonsTruncated ? 'View all hackathons' : undefined}
-              />
-              <EventsSubmenu
-                id="workshops"
-                label="Workshops & Seminars"
-                href="/events/workshops-and-seminars/"
-                items={visibleWorkshops}
-                openSubmenu={openSubmenu}
-                setOpenSubmenu={setOpenSubmenu}
-                closeMenus={closeMenus}
-                viewAllLabel={workshopsTruncated ? 'View all workshops & seminars' : undefined}
-              />
-              <EventsSubmenu
-                id="meetings"
-                label="Meetings"
-                href="/events/meetings/"
-                items={visibleMeetings}
-                openSubmenu={openSubmenu}
-                setOpenSubmenu={setOpenSubmenu}
-                closeMenus={closeMenus}
-                viewAllLabel={meetingsTruncated ? 'View all meetings' : undefined}
-              />
+              {SUBMENUS.map(({ id, label, href, viewAllLabel }) => (
+                <EventsSubmenu
+                  key={id}
+                  id={id}
+                  label={label}
+                  href={href}
+                  items={navData[id].items}
+                  openSubmenu={openSubmenu}
+                  setOpenSubmenu={setOpenSubmenu}
+                  closeMenus={closeMenus}
+                  viewAllLabel={navData[id].hasMore ? viewAllLabel : undefined}
+                />
+              ))}
               <Link
                 href="/events/"
-                className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
+                prefetch={false}
+                className="nav-dropdown-link nav-dropdown-link--view-all"
                 onClick={closeMenus}
               >
-                All Events <span aria-hidden="true">&rarr;</span>
+                All events <span aria-hidden="true">&rarr;</span>
               </Link>
             </div>
           </div>
 
           <div
-            className={`nav-dropdown${openDropdown === 'resources' ? ' nav-dropdown--open' : ''}`}
+            className={`nav-dropdown${openDropdown === 'resources' ? ' nav-dropdown--open' : ''}${dismissed === 'resources' ? ' nav-dropdown--dismissed' : ''}`}
             {...dropdownHandlers('resources')}
           >
-            <Link
+            <DropdownTrigger
+              id="resources"
               href="/resources/"
-              className="nav-link"
-              aria-expanded={openDropdown === 'resources'}
-              aria-controls="resources-panel"
-              onClick={(e) => {
-                if (isMobileNav()) {
-                  e.preventDefault();
-                  setOpenSubmenu(null);
-                  setOpenDropdown((cur) => (cur === 'resources' ? null : 'resources'));
-                }
-              }}
-            >
-              Resources
-              <svg className="nav-chevron" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-                <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </Link>
+              label="Resources"
+              open={openDropdown === 'resources'}
+              current={navCurrent(path, '/resources/')}
+              setOpenDropdown={setOpenDropdown}
+              setOpenSubmenu={setOpenSubmenu}
+              setDismissed={setDismissed}
+            />
             <div className="nav-dropdown-panel" id="resources-panel">
               <div className="nav-dropdown-section">
-                <Link href="/resources/learning-resources/" className="nav-dropdown-link" onClick={closeMenus}>
+                <Link href="/resources/learning-resources/" prefetch={false} className="nav-dropdown-link" onClick={closeMenus}>
                   Learning Resources
                 </Link>
-                <Link href="/resources/student-work-and-projects/" className="nav-dropdown-link" onClick={closeMenus}>
+                <Link href="/resources/student-work-and-projects/" prefetch={false} className="nav-dropdown-link" onClick={closeMenus}>
                   Student Work &amp; Projects
                 </Link>
                 <Link
                   href="/resources/"
-                  className="nav-dropdown-link nav-dropdown-link--view-all nav-dropdown-link--all"
+                  prefetch={false}
+                  className="nav-dropdown-link nav-dropdown-link--view-all"
                   onClick={closeMenus}
                 >
-                  All Resources <span aria-hidden="true">&rarr;</span>
+                  All resources <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
             </div>
           </div>
 
-          <Link href="/get-involved/" className="nav-link" onClick={closeMenus}>Get Involved</Link>
+          <Link href="/get-involved/" className="nav-link" aria-current={navCurrent(path, '/get-involved/')} onClick={closeMenus}>Get Involved</Link>
 
           <div className="nav-search-slot">
             <SearchBar />

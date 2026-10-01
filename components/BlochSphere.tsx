@@ -1,22 +1,35 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { BLOCH_SPHERE_TILT, blochSphereCamera } from '@/lib/blochSphere.mjs';
 
 // Geometry: |psi> = cos(theta/2)|0> + e^{i phi} sin(theta/2)|1> maps to the
 // Bloch vector (x, y, z) = (sin theta cos phi, sin theta sin phi, cos theta).
-// The SVG uses an orthographic projection with the camera tilted TILT rad
-// above the equator:  sx = R x,  sy = -R (z cos TILT - y sin TILT).
+// The SVG uses an orthographic projection with the camera on the -y side,
+// tilted TILT rad above the equator:  sx = R x,  sy = -R (z cos TILT + y sin TILT).
+// That camera is right-handed (screen right = +x, up = (0, sin, cos), toward
+// the viewer = (0, -cos, sin); lib/blochSphere.mjs, checked by
+// scripts/verify-bloch-sphere.mjs), so phi increases counterclockwise seen
+// from +z, as it should. The dashed far half of the equator is the
+// front/back cue; without it the sphere reads as its mirror image.
 const R = 88; // sphere radius, px in the 240x240 viewBox
 const CX = 120;
 const CY = 122;
-const TILT = 0.35; // rad (~20 deg)
+const TILT = BLOCH_SPHERE_TILT; // rad (~20 deg)
+const CAMERA = blochSphereCamera(TILT);
 const AUTO_RATE = 0.35; // rad/s of idle phi precession
 const RESUME_MS = 2000; // idle time before auto-rotation resumes
 const KEY_STEP = (5 * Math.PI) / 180;
+// Keyboard moves are announced once the keys settle, not on every repeat.
+const ANNOUNCE_DELAY_MS = 300;
 const DRAG_RATE = 0.012; // rad per dragged px
 
 const INITIAL_THETA = (60 * Math.PI) / 180;
 const INITIAL_PHI = (35 * Math.PI) / 180;
+// The drawn meridian's longitude: at 90 deg - TILT its projection is as wide
+// as the equator is tall.
+const MERIDIAN_PHI = Math.PI / 2 - TILT;
+const MERIDIAN_SEGMENTS = 72;
 
 function clampTheta(theta: number): number {
   return Math.min(Math.PI - 0.02, Math.max(0.02, theta));
@@ -26,15 +39,42 @@ function toDeg(rad: number): number {
   return Math.round((rad * 180) / Math.PI);
 }
 
-function project(theta: number, phi: number): { sx: number; sy: number } {
-  const x = Math.sin(theta) * Math.cos(phi);
-  const y = Math.sin(theta) * Math.sin(phi);
-  const z = Math.cos(theta);
+function projectPoint(x: number, y: number, z: number): { sx: number; sy: number } {
+  const { u, v } = CAMERA;
   return {
-    sx: CX + R * x,
-    sy: CY - R * (z * Math.cos(TILT) - y * Math.sin(TILT)),
+    sx: CX + R * (x * u[0] + y * u[1] + z * u[2]),
+    sy: CY - R * (x * v[0] + y * v[1] + z * v[2]),
   };
 }
+
+function project(theta: number, phi: number): { sx: number; sy: number } {
+  return projectPoint(
+    Math.sin(theta) * Math.cos(phi),
+    Math.sin(theta) * Math.sin(phi),
+    Math.cos(theta),
+  );
+}
+
+// A true meridian: the great circle through both poles at MERIDIAN_PHI (and
+// its opposite longitude), traced through the same projection so it meets
+// the axis ends exactly.
+function meridianPath(): string {
+  const parts: string[] = [];
+  for (let k = 0; k <= MERIDIAN_SEGMENTS; k++) {
+    const t = (2 * Math.PI * k) / MERIDIAN_SEGMENTS;
+    const s = Math.sin(t);
+    const { sx, sy } = projectPoint(s * Math.cos(MERIDIAN_PHI), s * Math.sin(MERIDIAN_PHI), Math.cos(t));
+    parts.push(`${k ? 'L' : 'M'} ${sx.toFixed(2)} ${sy.toFixed(2)}`);
+  }
+  return parts.join(' ');
+}
+
+// The equator's far half (y > 0) projects above the center and is dashed;
+// the near half is solid, so the sphere reads front from back.
+const EQUATOR_RY = (R * Math.sin(TILT)).toFixed(2);
+const EQUATOR_BACK = `M ${CX - R} ${CY} A ${R} ${EQUATOR_RY} 0 0 1 ${CX + R} ${CY}`;
+const EQUATOR_FRONT = `M ${CX - R} ${CY} A ${R} ${EQUATOR_RY} 0 0 0 ${CX + R} ${CY}`;
+const MERIDIAN = meridianPath();
 
 // Interactive Bloch sphere for the learning-resources page. Idle behavior is
 // a slow phi precession (rAF gated on visibility + on-screen + reduced
@@ -49,6 +89,8 @@ export default function BlochSphere() {
   const vectorRef = useRef<SVGLineElement>(null);
   const tipRef = useRef<SVGCircleElement>(null);
   const readoutRef = useRef<HTMLParagraphElement>(null);
+  const announceRef = useRef<HTMLSpanElement>(null);
+  const announceTimer = useRef(0);
   const angles = useRef({ theta: INITIAL_THETA, phi: INITIAL_PHI });
   const lastInteraction = useRef(0);
   const dragFrom = useRef<{ x: number; y: number } | null>(null);
@@ -118,6 +160,7 @@ export default function BlochSphere() {
 
     return () => {
       if (rafId !== 0) cancelAnimationFrame(rafId);
+      window.clearTimeout(announceTimer.current);
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
       motionQuery.removeEventListener('change', updateRunning);
@@ -160,6 +203,12 @@ export default function BlochSphere() {
       lastInteraction.current = performance.now();
       render();
       e.preventDefault();
+      window.clearTimeout(announceTimer.current);
+      announceTimer.current = window.setTimeout(() => {
+        if (announceRef.current) {
+          announceRef.current.textContent = `theta ${toDeg(a.theta)} degrees, phi ${toDeg(a.phi)} degrees`;
+        }
+      }, ANNOUNCE_DELAY_MS);
     }
   };
 
@@ -185,22 +234,11 @@ export default function BlochSphere() {
         onKeyDown={onKeyDown}
       >
         <svg viewBox="0 0 240 240" aria-hidden="true" focusable="false">
-          {/* Sphere outline + tilted equator + a meridian for depth */}
+          {/* Sphere outline, the equator (far half dashed), and a meridian */}
           <circle className="bloch-outline" cx={CX} cy={CY} r={R} />
-          <ellipse
-            className="bloch-equator"
-            cx={CX}
-            cy={CY}
-            rx={R}
-            ry={R * Math.sin(TILT)}
-          />
-          <ellipse
-            className="bloch-meridian"
-            cx={CX}
-            cy={CY}
-            rx={R * Math.sin(TILT)}
-            ry={R}
-          />
+          <path className="bloch-equator bloch-equator--back" d={EQUATOR_BACK} />
+          <path className="bloch-equator" d={EQUATOR_FRONT} />
+          <path className="bloch-meridian" d={MERIDIAN} />
           {/* Z axis and basis-state labels */}
           <line
             className="bloch-axis"
@@ -220,8 +258,9 @@ export default function BlochSphere() {
           <circle ref={tipRef} className="bloch-tip" cx={sx} cy={sy} r={5} />
         </svg>
       </div>
-      {/* No aria-live: the idle precession changes this ~20x/s, which would
-          flood screen readers with a nonstop announcement queue. */}
+      {/* Not a live region: the idle precession changes it ~20x/s. Keyboard
+          moves are announced through the span below instead. */}
+      <span ref={announceRef} className="sr-only" aria-live="polite" />
       <p ref={readoutRef} className="bloch-readout">
         &theta; = {toDeg(INITIAL_THETA)}&deg; &middot; &phi; = {toDeg(INITIAL_PHI)}&deg;
       </p>

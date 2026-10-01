@@ -1,36 +1,42 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
+import { pageMetadata } from '@/lib/og';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import PastBoardMembers from '@/components/PastBoardMembers';
+import { formatMonthRange } from '@/lib/dates.mjs';
+import pastBoardMembers from '@/data/past-board-members.json';
 
-export const metadata: Metadata = {
+// Formatted here at build time (a bad month fails the build) and trimmed to
+// the card fields; `profile` is reference-only and stays out of the page.
+const pastBoardCards = pastBoardMembers.map((m) => ({
+  name: m.name,
+  role: m.role,
+  tenure: formatMonthRange(m.start, m.end),
+  image: m.image,
+}));
+
+export const metadata: Metadata = pageMetadata({
   title: 'About',
   description:
-    'Learn about the Clemson Quantum Club, a student-led community for accessible quantum computing education, events, and peer support at Clemson.',
-  openGraph: pageOpenGraph({
-    title: 'About | Clemson Quantum Club',
-    description:
-      'Learn about the Clemson Quantum Club, a student-led community for accessible quantum computing education, events, and peer support at Clemson.',
-    url: '/about/',
-  }),
-};
+    'Who Clemson Quantum Club is, what members do, and who has led the club since 2024.',
+  path: '/about/',
+});
 
 const focusAreas = [
   {
-    title: 'Open to everyone',
+    title: 'Open to every student',
     text:
-      'Drop into any meeting. No application, no dues, no prior quantum background.',
+      'Any student can come to any meeting.',
   },
   {
-    title: 'Hands-on learning',
+    title: 'Write and run circuits',
     text:
-      'Workshops and study groups help members move from core concepts to writing and running quantum circuits.',
+      'In workshops and study groups, members write and run their own quantum circuits.',
   },
   {
     title: 'Connect with people',
     text:
-      'Attend events and network with students, industry partners, and academic institutions.',
+      'Meet students, researchers, and people from industry at club events and hackathons.',
   },
 ];
 
@@ -38,7 +44,7 @@ const memberActivities = [
   'Attend beginner-friendly meetings and discussion sessions.',
   'Practice with tools such as Qiskit, PennyLane, and Cirq.',
   'Build teams for quantum hackathons and campus events.',
-  'Connect with faculty, student research pathways, and the Creative Inquiry program.',
+  'Meet faculty and join student research, including two quantum computing Creative Inquiry teams.',
 ];
 
 export default function AboutPage() {
@@ -51,7 +57,13 @@ export default function AboutPage() {
       </header>
 
       <div className="about-page__photo">
-        <SiteImage src="/images/club-photo.webp" alt="Clemson Quantum Club members" />
+        {/* The page's largest image, in the first screen: load it eagerly. */}
+        <SiteImage
+          src="/images/club-photo.webp"
+          alt="Clemson Quantum Club members"
+          loading="eager"
+          fetchPriority="high"
+        />
       </div>
 
       <section className="about-page__section about-page__section--intro">
@@ -59,11 +71,13 @@ export default function AboutPage() {
           <h2>Who we are</h2>
         </div>
         <p>
-          Clemson Quantum Club is an interdisciplinary student organization for
-          students who want to understand, use, and discuss quantum computing.
-          The club is designed for beginners and experienced students alike:
-          computer science, physics, engineering, mathematics, and other fields
-          all have a place in the conversation.
+          Clemson Quantum Club is a student organization for any Clemson
+          student who wants to learn and use quantum computing. Members come
+          from computer science, physics, engineering, mathematics, and other
+          majors; some are new to the subject and some are Ph.D. students
+          doing quantum research. Members can also join Clemson’s two quantum
+          computing Creative Inquiry research teams: Hands-on Quantum Computing
+          and Quantum Optimization for Resilient Systems.
         </p>
       </section>
 
@@ -89,12 +103,7 @@ export default function AboutPage() {
       <section className="about-page__section about-page__section--split">
         <div>
           <h2>What members do</h2>
-          <p>
-            Club meetings combine approachable discussion with hands-on work.
-            Members use the club to learn fundamentals, prepare for events, find
-            teammates, and stay connected to the quantum computing community at
-            Clemson.
-          </p>
+          <p>Meetings mix discussion with coding.</p>
         </div>
         <ul className="about-page__activity-list">
           {memberActivities.map((activity) => (
@@ -105,24 +114,23 @@ export default function AboutPage() {
 
       <section className="about-page__section about-page__section--split">
         <div>
-          <h2>Events and pathways</h2>
+          <h2>Events and resources</h2>
           <p>
             Members participate in workshops, student projects, and hackathons,
-            from MIT iQuHack to SC Quantathon, the student quantum hackathon
-            founded by SC Quantum and now run by Clemson Quantum Club.
+            including one the club hosts every fall.
           </p>
         </div>
         <div className="about-page__link-panel">
-          <Link href="/events/">Browse events</Link>
+          <Link href="/events/">Events</Link>
           <Link href="/events/workshops-and-seminars/">Workshops &amp; Seminars</Link>
-          <Link href="/resources/learning-resources/">Learning resources</Link>
+          <Link href="/resources/learning-resources/">Learning Resources</Link>
           <Link href="/resources/student-work-and-projects/">
-            Student work &amp; projects
+            Student Work &amp; Projects
           </Link>
         </div>
       </section>
 
-      <PastBoardMembers />
+      <PastBoardMembers members={pastBoardCards} />
     </article>
   );
 }

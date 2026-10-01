@@ -1,30 +1,22 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
-import { getAllPages, sortPages } from '@/lib/content';
+import { pageMetadata } from '@/lib/og';
+import { getSortedPages } from '@/lib/content';
 import EventArchive from '@/components/EventArchive';
-import ConstellationDivider from '@/components/ConstellationDivider';
+import ArchiveHeader from '@/components/ArchiveHeader';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'News',
   description:
-    'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing news from Clemson University.',
-  openGraph: pageOpenGraph({
-    title: 'News | Clemson Quantum Club',
-    description:
-      'News and press coverage of the Clemson Quantum Club, from hackathon results to research spotlights and quantum computing news from Clemson University.',
-    url: '/news/',
-  }),
-};
+    'Press coverage of Clemson Quantum Club’s hackathon results and research, plus quantum computing news from Clemson University.',
+  path: '/news/',
+});
 
 export default function NewsPage() {
-  const items = sortPages(getAllPages('news'));
+  const items = getSortedPages('news');
 
   return (
     <div className="archive-page">
-      <header className="archive-hero">
-        <h1 className="archive-hero__title">News</h1>
-        <ConstellationDivider />
-      </header>
+      <ArchiveHeader title="News" />
       {/* Card titles are h3s; this hidden h2 keeps the heading
           hierarchy contiguous for assistive tech. */}
       <h2 className="sr-only">All news coverage</h2>

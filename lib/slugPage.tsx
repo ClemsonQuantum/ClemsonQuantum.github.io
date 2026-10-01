@@ -1,43 +1,25 @@
 import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug, makeExcerpt } from '@/lib/content';
-import { normalizeDate } from '@/lib/content-shared.mjs';
-import { pageOpenGraph } from '@/lib/og';
+import { getPageBySlug, getRoutablePages, makeExcerpt } from '@/lib/content';
+import { isUnlisted, normalizeDate } from '@/lib/content-shared.mjs';
+import { todayInClemson } from '@/lib/dates.mjs';
+import { pageMetadata } from '@/lib/og';
 import { SITE_URL } from '@/lib/site';
-import ReactMarkdown, { defaultUrlTransform, type Components } from 'react-markdown';
+import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
-// react-markdown's default URL filter keeps http(s) and mailto links but
-// blanks everything else, including tel:. Content pages list phone numbers
-// (event hotel blocks), so pass tel: through and defer to the default for
-// the rest.
-function urlTransform(url: string): string {
-  return /^tel:[+\d()\-. ]+$/i.test(url) ? url : defaultUrlTransform(url);
-}
-
-// Named favicon sets a content page can opt into with `favicon: <name>` in its
-// frontmatter. The site-wide icon (app/layout.tsx) is swapped for seasonal
-// events, so pages for a different event pin their own mark here rather than
-// inherit that season's badge. Each entry mirrors the layout `icons` shape.
-const FAVICON_PRESETS: Record<string, Metadata['icons']> = {
-  cqc: {
-    icon: [
-      { url: '/favicon-cqc.ico', sizes: 'any' },
-      { url: '/favicon-cqc-512.png', type: 'image/png', sizes: '512x512' },
-    ],
-    apple: '/apple-icon-cqc.png',
-  },
-};
-
-// Next 15 PageProps: params is a Promise.
+// App Router: params arrive as a Promise.
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
 interface Options {
-  // Per-route react-markdown renderers (e.g. the hackathon pages swap marker
-  // links/divs for modal forms and the live countdown).
+  // react-markdown renderers (the event routes pass EVENT_COMPONENTS, which
+  // turn marker links, divs and spans into modal forms, countdowns and art).
   components?: Components;
+  // The size every front-matter `image` on this route has, for og:image
+  // width/height (event banners: BANNER_SIZE). Leave it out where sizes vary.
+  imageSize?: { width: number; height: number };
 }
 
 // Fallback body for a slug with no markdown file. Only reachable in `next dev`:
@@ -56,7 +38,8 @@ const notFound = (
 // claim to be a scheduled in-person event at all. Frontmatter contract:
 // `date` and `end_date` (YYYY-MM-DD), `location` (venue name), optional
 // `street_address` and `registration_url` (absolute URL); everything else is
-// fixed (Clemson campus address, free admission, club as organizer).
+// fixed (Clemson campus address, free admission, club as organizer). Once the
+// event has ended there is nothing left to register for, so the offer goes.
 function buildEventJsonLd(
   data: Record<string, unknown>,
   title: string,
@@ -102,7 +85,7 @@ function buildEventJsonLd(
       name: 'Clemson Quantum Club',
       url: SITE_URL,
     },
-    ...(typeof registrationUrl === 'string'
+    ...(typeof registrationUrl === 'string' && endDate >= todayInClemson()
       ? {
           offers: {
             '@type': 'Offer',
@@ -117,12 +100,14 @@ function buildEventJsonLd(
 }
 
 // Shared static-export page factory for the markdown-backed event slug routes.
-// `contentSubdir` selects the content directory passed to getAllPages/getPageBySlug.
+// `contentSubdir` selects the content directory passed to
+// getRoutablePages/getPageBySlug.
 export function createSlugPage(contentSubdir: string, options: Options = {}) {
   async function generateStaticParams() {
     // Entries with an external destination link straight there from cards,
-    // nav, and search — no internal detail page is generated for them.
-    return getAllPages(contentSubdir)
+    // nav, and search; no internal detail page is generated for them.
+    // Unlisted pages ARE generated (reachable by URL), just never listed.
+    return getRoutablePages(contentSubdir)
       .filter((p) => !p.isExternal)
       .map((p) => ({ slug: p.slug }));
   }
@@ -135,19 +120,13 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
     const description =
       (typeof page.data.summary === 'string' && page.data.summary) ||
       makeExcerpt(page.content ?? '');
-    const image = typeof page.data.image === 'string' ? page.data.image : undefined;
-    const icons =
-      typeof page.data.favicon === 'string' ? FAVICON_PRESETS[page.data.favicon] : undefined;
+    const image =
+      typeof page.data.image === 'string' ? { url: page.data.image, ...options.imageSize } : undefined;
     return {
-      title,
-      description,
-      openGraph: pageOpenGraph({
-        title,
-        description,
-        url: `/${contentSubdir}/${slug}/`,
-        image,
-      }),
-      ...(icons ? { icons } : {}),
+      ...pageMetadata({ title, description, path: `/${contentSubdir}/${slug}/`, image }),
+      // Unlisted pages are live for review but not announced: keep them out
+      // of search engines too, not just out of the site's own listings.
+      ...(isUnlisted(page.data) ? { robots: { index: false, follow: false } } : {}),
     };
   }
 
@@ -168,7 +147,6 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw]}
-            urlTransform={urlTransform}
             components={options.components}
           >
             {content}
@@ -177,7 +155,11 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
         {eventJsonLd && (
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+            // Escape "<" so a summary containing "</script>" can't end the
+            // block early; JSON parsers read \u003c back as "<".
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(eventJsonLd).replace(/</g, '\\u003c'),
+            }}
           />
         )}
       </>

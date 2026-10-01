@@ -12,7 +12,6 @@ mentors:
 summary: "Poster presenting the first real evaluation of the periodic disorder invariant (PDI) in a Majorana zero mode prediction pipeline, using a ResNet CNN to map simulated conductance data to PDI phase maps."
 image: "/images/resnet-mzm-poster.webp"
 # pdf: "/files/resnet-mzm-poster.pdf"      # add poster PDF -> shows in embedded viewer
-link: "https://ci.clemson.edu/showcase/posters/"
 ---
 
 ## Abstract

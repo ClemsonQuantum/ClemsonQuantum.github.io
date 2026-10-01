@@ -1,24 +1,17 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
+import { pageMetadata } from '@/lib/og';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
-import EmailIcon from '@/components/icons/EmailIcon';
-import WebsiteIcon from '@/components/icons/WebsiteIcon';
-import { LinkedInIcon } from '@/components/icons/ChannelIcons';
-import ConstellationDivider from '@/components/ConstellationDivider';
+import ArchiveHeader from '@/components/ArchiveHeader';
+import PersonLinks from '@/components/PersonLinks';
 import facultyData from '@/data/faculty.json';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Resources',
   description:
     'Quantum computing learning materials, student work, and information about quantum faculty and programs at Clemson University.',
-  openGraph: pageOpenGraph({
-    title: 'Resources | Clemson Quantum Club',
-    description:
-      'Quantum computing learning materials, student work, and information about quantum faculty and programs at Clemson University.',
-    url: '/resources/',
-  }),
-};
+  path: '/resources/',
+});
 
 // Card data lives in data/faculty.json — see data/README.md for the fields.
 interface Faculty {
@@ -36,10 +29,7 @@ const faculty = facultyData as Faculty[];
 export default function ResourcesPage() {
   return (
     <div className="archive-page">
-      <header className="archive-hero">
-        <h1 className="archive-hero__title">Resources</h1>
-        <ConstellationDivider />
-      </header>
+      <ArchiveHeader title="Resources" />
 
       <section className="archive-section">
         <h2>Start here</h2>
@@ -50,8 +40,8 @@ export default function ResourcesPage() {
           >
             <div className="hackathon-resource-title">Learning Resources</div>
             <div className="hackathon-resource-desc">
-              Bootcamps, lecture series, textbooks, and problem sets for every
-              level, from beginner to hackathon prep to professor.
+              Courses, tools, videos, and textbooks, sorted into beginner,
+              intermediate, and advanced.
             </div>
           </Link>
           <Link
@@ -62,18 +52,18 @@ export default function ResourcesPage() {
               Student Work &amp; Projects
             </div>
             <div className="hackathon-resource-desc">
-              Posters and papers from our students and collaborators, each with
-              authors, a short summary, and links to the files.
+              Posters, papers, and conference talks by Clemson Quantum Club
+              members.
             </div>
           </Link>
         </div>
       </section>
 
       <section className="archive-section">
-        <h2>Quantum Courses at Clemson</h2>
+        <h2>Quantum courses at Clemson</h2>
         <div className="course-groups">
           <div className="course-group">
-            <h3>CPSC</h3>
+            <h3>Computer Science (CPSC)</h3>
             <ul>
               <li>Creative Inquiry: Hands-on Quantum Computing (CPSC 3990)</li>
               <li>Introduction to Quantum Computing (CPSC 4750/6750)</li>
@@ -81,7 +71,7 @@ export default function ResourcesPage() {
             </ul>
           </div>
           <div className="course-group">
-            <h3>PHYS</h3>
+            <h3>Physics and Astronomy (PHYS)</h3>
             <ul>
               <li>
                 Quantum Mechanics I/II (PHYS 4550/4560, 6550/6560; PHYS
@@ -92,7 +82,7 @@ export default function ResourcesPage() {
             </ul>
           </div>
           <div className="course-group">
-            <h3>IE</h3>
+            <h3>Industrial Engineering (IE)</h3>
             <ul>
               <li>
                 Creative Inquiry: Quantum Optimization for Resilient Systems (IE
@@ -104,10 +94,10 @@ export default function ResourcesPage() {
       </section>
 
       <section id="faculty" className="archive-section">
-        <h2>Quantum Faculty at Clemson</h2>
+        <h2>Quantum faculty at Clemson</h2>
         <p>
-          Several Clemson professors conduct research and teach courses in
-          quantum computing, quantum information, and quantum physics.
+          Clemson professors who teach quantum courses or do quantum research,
+          and how to reach them.
         </p>
         <div className="faculty-grid">
           {faculty.map((person) => (
@@ -122,41 +112,13 @@ export default function ResourcesPage() {
                 <div>
                   <p className="faculty-card__role">{person.role}</p>
                   <h3 className="faculty-card__name">{person.name}</h3>
-                  {(person.linkedin || person.website || person.email) && (
-                    <div className="faculty-card__links">
-                      {person.linkedin && (
-                        <a
-                          className="faculty-card__link"
-                          href={person.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${person.name} on LinkedIn`}
-                        >
-                          <LinkedInIcon className="faculty-card__link-icon link-icon--brand" />
-                        </a>
-                      )}
-                      {person.email && (
-                        <a
-                          className="faculty-card__link"
-                          href={`mailto:${person.email}`}
-                          aria-label={`Email ${person.name}`}
-                        >
-                          <EmailIcon className="faculty-card__link-icon" />
-                        </a>
-                      )}
-                      {person.website && (
-                        <a
-                          className="faculty-card__link"
-                          href={person.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${person.name} faculty page`}
-                        >
-                          <WebsiteIcon className="faculty-card__link-icon" />
-                        </a>
-                      )}
-                    </div>
-                  )}
+                  <PersonLinks
+                    name={person.name}
+                    email={person.email}
+                    linkedin={person.linkedin}
+                    website={person.website}
+                    classPrefix="faculty-card"
+                  />
                 </div>
               </div>
               <p className="faculty-card__bio">{person.description}</p>

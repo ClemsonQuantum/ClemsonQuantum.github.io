@@ -5,14 +5,17 @@
   "scripts": {
     "predev": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs",
+    "prebuild": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/verify-bloch-sphere.mjs",
     "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "preview": "python3 -m http.server 4000 --directory out",
+    "lint": "eslint . --max-warnings=0 && npm run lint:css",
+    "lint:css": "stylelint \"assets/css/**/*.css\"",
+    "typecheck": "tsc --noEmit",
+    "verify:physics": "node scripts/verify-bloch-sphere.mjs && node scripts/verify-hydrogen.mjs && node scripts/verify-blackhole.mjs && node scripts/verify-kepler.mjs && node scripts/verify-qubits.mjs && node scripts/verify-cameras.mjs && node scripts/verify-entangle.mjs && node scripts/verify-sky.mjs"
   },
   "dependencies": {
-    "next": "^16.3.3",
+    "astronomy-engine": "2.1.19",
+    "next": "^16.3.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^9.0.1",
@@ -21,12 +24,12 @@
     "yaml": "^2.9.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.6",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "eslint": "^9.0.0",
-    "eslint-config-next": "^16.3.3",
+    "eslint-config-next": "^16.3.8",
+    "stylelint": "17.16.0",
     "typescript": "^5.7.0"
   },
   "overrides": {

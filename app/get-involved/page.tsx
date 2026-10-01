@@ -1,64 +1,40 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
-import type { ComponentType } from 'react';
+import { pageMetadata } from '@/lib/og';
 import siteConfig from '@/data/site-config.json';
 import meetingSchedule from '@/data/meeting-schedule.json';
+import ClubLogo from '@/components/ClubLogo';
 import ContactForm from '@/components/ContactForm';
-import SiteImage from '@/components/SiteImage';
-import {
-  DiscordIcon,
-  GroupMeIcon,
-  LinkedInIcon,
-  TigerQuestIcon,
-  GitHubIcon,
-  InstagramIcon,
-} from '@/components/icons/ChannelIcons';
+import { CHANNEL_ICONS } from '@/components/icons/ChannelIcons';
+import { formatShortDate, todayInClemson } from '@/lib/dates.mjs';
+import { CHANNELS, type ChannelId } from '@/lib/site';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Get Involved',
   description:
-    'Join the Clemson Quantum Club: meeting times, Discord, GroupMe, TigerQuest, and how to reach the team. Open to all majors and experience levels.',
-  openGraph: pageOpenGraph({
-    title: 'Get Involved | Clemson Quantum Club',
-    description:
-      'Join the Clemson Quantum Club: meeting times, Discord, GroupMe, TigerQuest, and how to reach the team. Open to all majors and experience levels.',
-    url: '/get-involved/',
-  }),
-};
+    'Join Clemson Quantum Club: meeting times, Discord, GroupMe, TigerQuest, and how to reach the team. Open to students of every major and experience level.',
+  path: '/get-involved/',
+});
 
-const meetingDayDisplay = siteConfig.meetingDay;
-
-// Past/next markers resolve at build time (UTC date-string compare) — the same
-// doctrine as isUpcoming() in lib/types.ts. They refresh with each deploy;
-// never compare dates client-side here (hydration mismatch).
+// Past/next markers resolve at build time against today's date in Clemson,
+// the same rule as isUpcoming() in lib/content.ts. They refresh with each
+// deploy; never compare dates client-side here (hydration mismatch).
 type Meeting = { date: string; title: string; href?: string };
 
-const todayIso = new Date().toISOString().slice(0, 10);
+const todayIso = todayInClemson();
 const meetings: (Meeting & { isPast: boolean })[] = meetingSchedule.meetings.map(
   (m) => ({ ...m, isPast: m.date < todayIso }),
 );
 const nextIndex = meetings.findIndex((m) => !m.isPast);
 
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-// String math, not Date/toLocaleString — deterministic across build machines.
-function shortDate(iso: string) {
-  const [, m, d] = iso.split('-').map(Number);
-  return `${MONTHS[m - 1]} ${d}`;
-}
-
-const channels: {
-  href: string;
-  label: string;
-  Icon: ComponentType<{ className?: string }>;
-}[] = [
-  { href: siteConfig.discordInvite, label: 'Join the Discord community', Icon: DiscordIcon },
-  { href: siteConfig.groupmeUrl, label: 'Join the GroupMe chat', Icon: GroupMeIcon },
-  { href: siteConfig.linkedinUrl, label: 'Follow us on LinkedIn', Icon: LinkedInIcon },
-  { href: siteConfig.instagramUrl, label: 'Follow us on Instagram', Icon: InstagramIcon },
-  { href: siteConfig.githubUrl, label: 'See our code on GitHub', Icon: GitHubIcon },
-  { href: siteConfig.tigerquestUrl, label: 'Find us on TigerQuest', Icon: TigerQuestIcon },
-];
+// Each channel's call to action on this page (the footer shows bare names).
+const CHANNEL_TEXT: Record<ChannelId, string> = {
+  discord: 'Join the Discord community',
+  groupme: 'Join the GroupMe chat',
+  linkedin: 'Follow us on LinkedIn',
+  github: 'See our code on GitHub',
+  tigerquest: 'Find us on TigerQuest',
+  instagram: 'Follow us on Instagram',
+};
 
 export default function GetInvolvedPage() {
   return (
@@ -67,9 +43,7 @@ export default function GetInvolvedPage() {
         <div className="about-page__hero-copy">
           <h1>Get involved with Clemson Quantum Club</h1>
           <p className="about-page__tagline">
-            No application, dues, or prior quantum background required. Drop into
-            a meeting, join our Discord or GroupMe, or send us an email. Students from
-            every major and experience level are welcome.
+            Drop into a meeting, join our Discord or GroupMe, or send us an email.
           </p>
         </div>
         <aside className="about-page__meeting-card" aria-label="Meeting details">
@@ -78,7 +52,7 @@ export default function GetInvolvedPage() {
             <div>
               <dt>When</dt>
               <dd>
-                {meetingDayDisplay} @ {siteConfig.meetingTime}
+                {siteConfig.meetingDay} at {siteConfig.meetingTime}
               </dd>
             </div>
             <div>
@@ -87,7 +61,7 @@ export default function GetInvolvedPage() {
             </div>
             <div>
               <dt>Who</dt>
-              <dd>Open to students from any major and experience level</dd>
+              <dd>Open to every student, from any major and experience level</dd>
             </div>
           </dl>
         </aside>
@@ -98,11 +72,6 @@ export default function GetInvolvedPage() {
         aria-labelledby="gi-schedule-heading"
       >
         <h2 id="gi-schedule-heading">{meetingSchedule.semester} schedule</h2>
-        <p className="gi-channels-intro">
-          {meetingDayDisplay} at {siteConfig.meetingTime},{' '}
-          {siteConfig.location}. Drop in for any of these; no prep or sign-up
-          needed.
-        </p>
         <div className="gi-schedule-layout">
           <ol className="gi-schedule">
           {meetings.map((m, i) => (
@@ -113,7 +82,7 @@ export default function GetInvolvedPage() {
               }${i === nextIndex ? ' gi-schedule__item--next' : ''}`}
             >
               <time className="gi-schedule__date" dateTime={m.date}>
-                {shortDate(m.date)}
+                {formatShortDate(m.date)}
               </time>
               <span className="gi-schedule__title">
                 {m.href ? <a href={m.href}>{m.title}</a> : m.title}
@@ -127,20 +96,7 @@ export default function GetInvolvedPage() {
           </ol>
           <div className="gi-schedule-aside">
             {/* Logo spot — swap this image to feature event art instead. */}
-            <picture>
-              <source
-                srcSet="/images/logo-dark.png"
-                media="(prefers-color-scheme: dark)"
-                width={208}
-                height={176}
-              />
-              <SiteImage
-                src="/images/logo-light.png"
-                alt=""
-                width={258}
-                height={176}
-              />
-            </picture>
+            <ClubLogo alt="" large />
           </div>
         </div>
       </section>
@@ -148,26 +104,25 @@ export default function GetInvolvedPage() {
       <section className="about-page__section">
         <h2>Ways to join</h2>
         <p className="gi-channels-intro">
-          The club mainly uses Discord, with updates sent on GroupMe, and meets
-          in person every other week.
-          Pick whichever way is easiest to get started. There’s no wrong
-          door, and no commitment required to show up.
+          Most club conversation happens on Discord, and announcements go out
+          on GroupMe.
         </p>
         <div className="gi-channels">
-          {channels
-            .filter(({ href }) => href && href !== '#')
-            .map(({ href, label, Icon }) => (
-            <a
-              key={label}
-              className="gi-channel"
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon className="gi-channel__icon" />
-              <span>{label}</span>
-            </a>
-          ))}
+          {CHANNELS.map(({ id, href }) => {
+            const Icon = CHANNEL_ICONS[id];
+            return (
+              <a
+                key={id}
+                className="gi-channel"
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon className="gi-channel__icon" />
+                <span>{CHANNEL_TEXT[id]}</span>
+              </a>
+            );
+          })}
         </div>
       </section>
 
@@ -178,8 +133,8 @@ export default function GetInvolvedPage() {
         <div>
           <h2>Contact the team</h2>
           <p>
-            Interested in joining, volunteering, sponsoring, or collaborating?
-            Send us a note and we’ll get back to you within a few days. You
+            Write to us about joining, collaborating, or sponsoring, and we’ll
+            get back to you within a few days. You
             can also email{' '}
             <a href={`mailto:${siteConfig.contactEmail}`}>
               {siteConfig.contactEmail}

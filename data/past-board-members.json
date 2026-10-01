@@ -1,14 +1,26 @@
 [
   {
+    "name": "Nathan Jones",
+    "role": "Co-Founder & President",
+    "start": "2024-08",
+    "end": "2026-10",
+    "profile": "Co-founded the club in Aug 2024 and served as President from Aug 2024 to Oct 2026, when Valentine Mohaugen took over. Signed the original Constitution (Apr 29, 2025) and Revision 1 (Oct 30, 2025) as President. Quantathon Director on the SC Quantathon v3 committee (Aug 2025 – Sep 2026), and Logistics Lead on the v4 committee since Oct 2026. Computer Science Ph.D. Candidate and Clemson Alumnus; research in Quantum Machine Learning, Variational Quantum Algorithms, and High Performance Computing.",
+    "image": "/images/nathan-jones.jpg"
+  },
+  {
     "name": "Ashton McEntarffer",
-    "role": "Treasurer/Secretary",
-    "years": "Spring 2026",
+    "role": "Secretary & Interim Treasurer",
+    "start": "2025-10",
+    "end": "2026-05",
+    "profile": "Secretary from Oct 2025 to May 2026, and Interim Treasurer over the same months after Evan Hall stepped down; signed Constitution Revision 1 (Oct 30, 2025) in both roles. Handed the Treasurer role to Jack Layton in May 2026. Senior in Computer Science as of May 2026.",
     "image": "/images/ashton-mcentarffer.jpg"
   },
   {
     "name": "Evan Hall",
-    "role": "Co-Founder and Treasurer",
-    "years": "Fall 2024 – Fall 2025",
+    "role": "Co-Founder & Treasurer",
+    "start": "2024-08",
+    "end": "2025-10",
+    "profile": "Co-founded the club in Aug 2024 and served as Treasurer from Aug 2024 to Oct 2025; signed the original Constitution (Apr 29, 2025) as Treasurer. Ashton McEntarffer took over as Interim Treasurer in Oct 2025 (Constitution Revision 1). Math Ph.D. Candidate and Clemson Alumnus; research in Quantum Error Correction.",
     "image": "/images/evan-hall.jpg"
   }
 ]
