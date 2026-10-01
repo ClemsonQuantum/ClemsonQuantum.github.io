@@ -9,10 +9,9 @@ authors:
   - name: "Akhilesh Bondapalli"
 mentors:
   - "Rong Ge"
-summary: "Poster on methods for synthesizing quantum circuits that are optimized for specific hardware constraints (gate set, connectivity, noise characteristics)."
+summary: "Poster on hardware-aware quantum circuit synthesis: a diffusion-model framework that builds circuits fitting a quantum processor’s qubit connectivity, with up to 8x the success rate of a hardware-agnostic baseline."
 image: "/images/hardware-aware-qcs-poster.webp"
 pdf: "/files/hardware-aware-qcs-paper.pdf"
-link: "https://ci.clemson.edu/showcase/posters/"
 ---
 
 ## Abstract

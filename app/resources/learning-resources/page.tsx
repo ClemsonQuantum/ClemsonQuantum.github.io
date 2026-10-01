@@ -1,19 +1,14 @@
 import type { Metadata } from 'next';
-import { pageOpenGraph } from '@/lib/og';
-import ConstellationDivider from '@/components/ConstellationDivider';
+import { pageMetadata } from '@/lib/og';
+import ArchiveHeader from '@/components/ArchiveHeader';
 import BlochSphere from '@/components/BlochSphere';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Learning Resources',
   description:
-    'Curated quantum computing learning path from the Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
-  openGraph: pageOpenGraph({
-    title: 'Learning Resources | Clemson Quantum Club',
-    description:
-      'Curated quantum computing learning path from the Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
-    url: '/resources/learning-resources/',
-  }),
-};
+    'A quantum computing learning path from Clemson Quantum Club: beginner to advanced courses, tutorials, and practice resources.',
+  path: '/resources/learning-resources/',
+});
 
 interface Resource {
   type: string;
@@ -41,7 +36,7 @@ const LEVELS: Level[] = [
     label: 'Beginner',
     title: 'Start from zero',
     blurb:
-      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits. Interactive, hands-on, and nothing to install.',
+      'No prior quantum experience required. These build your intuition for qubits, gates, and your first circuits. Everything runs in the browser.',
     resources: [
       {
         type: 'Course',
@@ -52,19 +47,19 @@ const LEVELS: Level[] = [
       {
         type: 'Tool',
         title: 'IBM Quantum Composer',
-        desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate. The fastest way to see quantum operations.',
+        desc: 'Drag-and-drop circuit builder that shows state changes on a live Bloch sphere and histogram as you place each gate.',
         href: 'https://quantum.cloud.ibm.com/composer',
       },
       {
         type: 'Practice',
         title: 'PennyLane Codebook',
-        desc: 'Bite-sized coding exercises that teach quantum concepts as you write them.',
+        desc: 'Short coding exercises that check your answers as you learn each concept.',
         href: 'https://pennylane.ai/codebook/',
       },
       {
         type: 'Video',
         title: 'Qiskit on YouTube',
-        desc: 'Friendly video walkthroughs and coding tutorials from the Qiskit community.',
+        desc: 'Video walkthroughs and coding tutorials from Qiskit.',
         href: 'https://www.youtube.com/@qiskit',
       },
     ],
@@ -73,20 +68,20 @@ const LEVELS: Level[] = [
     id: 'intermediate',
     num: '02',
     label: 'Intermediate',
-    title: 'Build & compete',
+    title: 'Write your own programs',
     blurb:
-      'Comfortable with the basics? Write real circuits, try a second framework, and get ready for hackathons.',
+      'Tutorials and courses in PennyLane, Q#, and Azure Quantum, plus talks from Google’s quantum team.',
     resources: [
       {
         type: 'Course',
         title: 'PennyLane QML Tutorials',
-        desc: 'PennyLane’s hands-on quantum machine learning tutorials, with runnable demos from variational circuits to quantum neural networks.',
+        desc: 'Runnable quantum machine learning demos covering variational circuits and quantum neural networks.',
         href: 'https://pennylane.ai/learn',
       },
       {
         type: 'Course',
-        title: 'Microsoft Quantum Fundamentals',
-        desc: 'A structured Microsoft Learn path through quantum concepts and programming, from theory to running code in Azure Quantum.',
+        title: 'Get Started with Azure Quantum',
+        desc: 'A Microsoft Learn path through the concepts that ends with running Q# code in Azure Quantum.',
         href: 'https://learn.microsoft.com/en-us/training/paths/quantum-computing-fundamentals/',
       },
       {
@@ -98,7 +93,7 @@ const LEVELS: Level[] = [
       {
         type: 'Video',
         title: 'Google Quantum AI on YouTube',
-        desc: 'Talks and demos from Google’s quantum team, from error correction results to algorithm walkthroughs.',
+        desc: 'Talks and demos from Google’s quantum team, including its error correction results and algorithm walkthroughs.',
         href: 'https://www.youtube.com/@GoogleQuantumAI/videos',
       },
     ],
@@ -109,12 +104,12 @@ const LEVELS: Level[] = [
     label: 'Advanced',
     title: 'Go deep',
     blurb:
-      'Now for the theory: rigorous coursework, the standard textbooks, and the math behind the algorithms.',
+      'University courses, textbooks, and lecture notes on quantum information and computation.',
     resources: [
       {
         type: 'Course',
         title: 'MIT OCW 8.370',
-        desc: 'A rigorous two-part university sequence in quantum information with full lecture notes, problem sets, and exams.',
+        desc: 'A two-part MIT sequence in quantum information, with full lecture notes, problem sets, and exams.',
         href: 'https://ocw.mit.edu/courses/8-370x-quantum-information-science-i-spring-2018/',
         secondary: {
           title: '8.371',
@@ -124,13 +119,13 @@ const LEVELS: Level[] = [
       {
         type: 'Book',
         title: 'Nielsen & Chuang',
-        desc: '“Quantum Computation and Quantum Information”, the field’s standard reference.',
+        desc: '“Quantum Computation and Quantum Information,” the field’s standard reference.',
         href: 'https://doi.org/10.1017/CBO9780511976667',
       },
       {
         type: 'Book',
         title: 'Simon',
-        desc: '“Topological Quantum: Lecture Notes and Proto-Book”, a modern introduction to anyons, topological phases, and topological quantum computation.',
+        desc: '“Topological Quantum: Lecture Notes and Proto-Book,” a modern introduction to anyons, topological phases, and topological quantum computation.',
         href: 'https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2021/TopoBook-Sep28-2021.pdf',
       },
       {
@@ -153,7 +148,7 @@ const ONGOING: { cat: string; title: string; desc: string; href: string }[] = [
   {
     cat: 'Community',
     title: 'Quantum Open Source Foundation',
-    desc: 'Open-source quantum software and a well-known mentorship program.',
+    desc: 'Open-source quantum software and a mentorship program.',
     href: 'https://qosf.org/',
   },
   {
@@ -165,7 +160,7 @@ const ONGOING: { cat: string; title: string; desc: string; href: string }[] = [
   {
     cat: 'Reference',
     title: 'Awesome Quantum Computing',
-    desc: 'A community-curated list of tools, libraries, and learning materials.',
+    desc: 'A community-maintained list of tools, libraries, and learning materials.',
     href: 'https://github.com/desireevl/awesome-quantum-computing',
   },
 ];
@@ -173,13 +168,10 @@ const ONGOING: { cat: string; title: string; desc: string; href: string }[] = [
 export default function LearningResourcesPage() {
   return (
     <div className="archive-page">
-      <header className="archive-hero">
-        <h1 className="archive-hero__title">Learning Resources</h1>
-        <ConstellationDivider />
-      </header>
+      <ArchiveHeader title="Learning Resources" />
       <p className="lr-intro">
-        A path through quantum computing, from your first qubit to your first
-        hackathon. Start at whichever level fits you.
+        Courses, tools, and reading in three levels. Start at whichever level
+        fits you.
       </p>
 
       {LEVELS.map((level) => (

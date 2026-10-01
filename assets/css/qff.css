@@ -1,0 +1,1644 @@
+/* Qiskit Fall Fest pages only: imported by the workshops-and-seminars event
+   route (app/events/workshops-and-seminars/[slug]/page.tsx), so the rest of
+   the site doesn't download it. It loads after style.css, which a few rules
+   here rely on to outrank shared ones. */
+
+/* ===================================================================
+   Qiskit Fall Fest page (.qff-page) — "Decade on the Cloud"
+   Its own system, deliberately unlike the SCQv3 hackathon-* spec sheet:
+   the IBM Quantum deck look. IBM Plex Sans Light titles, Plex Mono
+   eyebrows, Carbon sharp corners (no radius anywhere), 1px hairlines,
+   pink→lavender gradient phrases, a slate band, and the 2026 kit palette
+   (sky #dae5fc, pink #ff7eb6, lavender #be95ff, indigo #31135e, blue
+   #0f62fe). Only approved marks appear: the Qiskit pictogram and the
+   IBM Quantum logotype, both unmodified, plus the kit badge.
+   The hero canvas (CloudSky) reads the --qff-cloud-* tokens AT THE
+   CANVAS, so the light/dark swap below recolors the sky for free.
+   =================================================================== */
+
+/* The whole page in IBM Plex, site chrome included: the nav, footer, and every
+   serif heading resolve the site type tokens at body, so re-pointing the
+   tokens here switches all of it on Fall Fest pages without touching a single
+   chrome rule. (The Plex vars are set on body by next/font, so they resolve.) */
+body:has(.qff-page) {
+  --font-sans: var(--font-plex-sans);
+  --font-serif: var(--font-plex-sans);
+}
+
+.qff-page {
+  --qff-ink: #161616;
+  --qff-slate: #21272a;
+  --qff-sky: #dae5fc;
+  --qff-pink: #ff7eb6;
+  --qff-lav: #be95ff;
+  --qff-indigo: #31135e;
+  --qff-blue: #0f62fe;
+  --qff-line: rgba(22, 22, 22, 0.14);
+  --qff-label: #6929c4;
+  --qff-label-alt: #9f1853;
+  --qff-grad: linear-gradient(90deg, var(--qff-pink), var(--qff-lav));
+  --qff-mono: var(--font-plex-mono, ui-monospace, monospace);
+  --qff-rule-grad: linear-gradient(90deg, #0f62fe, #be95ff, #ff7eb6);
+  --qff-band-bg: #21272a;
+  --qff-band-ink: #f4f4f4;
+  --qff-band-muted: #c6c6c6;
+  --qff-tile-sky: #dae5fc;
+  --qff-tile-gray: #e0e0e0;
+  --qff-tile-pink: var(--qff-pink);
+  --qff-tile-cloud: rgba(255, 255, 255, 0.92);
+  --qff-btn-bg: #161616;
+  --qff-btn-ink: #ffffff;
+  --qff-cloud-rgb: 255, 255, 255;
+  --qff-cloud-alpha: 0.55;
+  /* The faint page-wide layer (PageClouds): sky-tinted, since white
+     vanishes on the cream page. */
+  --qff-page-cloud-rgb: 208, 221, 252;
+  --qff-page-cloud-alpha: 0.75;
+  /* Hummingbirds (inline SVG and the hero canvas both read these). */
+  --qff-hb-pink-back: #d02670;
+  --qff-hb-pink-body: #ff7eb6;
+  --qff-hb-pink-throat: #9f1853;
+  --qff-hb-pink-wing: #ffafd2;
+  --qff-hb-lavender-back: #6929c4;
+  --qff-hb-lavender-body: #be95ff;
+  --qff-hb-lavender-throat: #ff7eb6;
+  --qff-hb-lavender-wing: #d4bbff;
+  --qff-hb-beak: #161616;
+  --qff-hb-eye: #161616;
+  /* Gliding birds (soarerArt.ts), read by CloudSky and PageClouds. */
+  --qff-soar-gull-body: #f6f2ff;
+  --qff-soar-gull-back: #be95ff;
+  --qff-soar-gull-wing: #d4bbff;
+  --qff-soar-gull-accent: #31135e;
+  --qff-soar-gull-beak: #ff7eb6;
+  --qff-soar-gull-eye: #161616;
+  --qff-soar-swallow-body: #6929c4;
+  --qff-soar-swallow-back: #31135e;
+  --qff-soar-swallow-wing: #491d8b;
+  --qff-soar-swallow-accent: #ff7eb6;
+  --qff-soar-swallow-beak: #161616;
+  --qff-soar-swallow-eye: #f4f4f4;
+  --qff-soar-falcon-body: #be95ff;
+  --qff-soar-falcon-back: #6929c4;
+  --qff-soar-falcon-wing: #31135e;
+  --qff-soar-falcon-accent: #ff7eb6;
+  --qff-soar-falcon-beak: #d4bbff;
+  --qff-soar-falcon-eye: #161616;
+  /* How strongly a glider shows through the page-wide cloud layer. */
+  --qff-page-soarer-alpha: 0.55;
+  /* Site tokens re-mapped so inline links and focus rings take kit ink.
+     Link ink is Magenta 70 (~6.9:1 on the sky). */
+  --color-accent: #d02670;
+  --color-accent-rgb: 208, 38, 112;
+  --color-accent-light: #fff0f7;
+  --color-link: #9f1853;
+  --color-link-hover: #740937;
+  /* Purple 70, not 60: small violet text stays 4.5:1 even over a page
+     cloud (PageClouds). */
+  --color-violet: #6929c4;
+  --color-violet-rgb: 105, 41, 196;
+  --color-violet-light: #f6f2ff;
+  --color-text: var(--qff-ink);
+
+  /* Holds the roaming hummingbirds' layer (PageBirds), which sits behind
+     the page content: isolation keeps it above the page's own sky. */
+  position: relative;
+  isolation: isolate;
+  max-width: 100%;
+  margin: 0;
+  /* Periwinkle sky fading to transparent so the body galaxy shows below
+     (same doctrine as .hackathon-page). */
+  background: linear-gradient(
+      180deg,
+      var(--qff-sky) 0,
+      rgba(218, 229, 252, 0.55) 36%,
+      transparent 100%
+    )
+    0 0 / 100% 720px no-repeat;
+}
+
+/* Type: Plex throughout (body:has(.qff-page) re-points the font tokens);
+   light-weight display like the IBM decks. */
+.qff-page h1,
+.qff-page h2,
+.qff-page h3 {
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+.qff-eyebrow,
+.qff-hosted-label,
+.qff-ledger dt,
+.qff-day-num,
+.qff-day-meta,
+.qff-day-summary::after,
+.qff-faq-item summary::after,
+.qff-team-role {
+  font-family: var(--qff-mono);
+}
+
+.qff-eyebrow {
+  margin: 0 0 1rem;
+  color: var(--qff-label);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.qff-gradient-text {
+  /* Light mode: Magenta 70 → Purple 70 so the phrase stays ≥ 4.5:1 on the
+     sky and cream (the kit's pink→lavender is 1.9:1 there); dark mode and
+     the slate band swap the kit gradient back in below. */
+  background: linear-gradient(90deg, #9f1853, #6929c4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero: the deck's cover slide. Copy left, four square tiles right. */
+.qff-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 8vw, 5.5rem) var(--space-xl) clamp(2.5rem, 6vw, 4rem);
+}
+
+/* Cloud canvas: full-bleed behind the hero, fading out toward the bottom
+   so the sky hands off to the page gradient. */
+.cloud-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent);
+  mask-image: linear-gradient(#000 70%, transparent);
+  /* Fades in once its first frame is drawn (data-ready), instead of popping
+     in after hydration. The global reduced-motion rule makes it instant. */
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out-soft);
+}
+
+.cloud-sky[data-ready] {
+  opacity: 1;
+}
+
+/* Faint clouds behind the whole page (components/PageClouds.tsx). The
+   canvas is appended to <body>: fixed, behind all content, and above the
+   starfield's body::before (both z-index -1; later in the tree paints on
+   top). The sentinel only carries the color tokens. */
+.qff-page-clouds {
+  display: none;
+}
+
+.qff-page-clouds-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+@media print {
+  .qff-page-clouds-canvas,
+  .qff-page-birds {
+    display: none;
+  }
+}
+
+/* Forced colors (high contrast): canvas pixels ignore the user's palette, so
+   the decorative canvases step aside. */
+@media (forced-colors: active) {
+  .cloud-sky,
+  .qff-page-clouds-canvas {
+    display: none;
+  }
+}
+
+.qff-hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+/* Hero eyebrow stays on one line on desktop: mono text sized to the column,
+   no wrapping. Phones (single-column hero) may wrap. */
+@media (min-width: 1100px) {
+  .qff-hero .qff-eyebrow {
+    white-space: nowrap;
+  }
+}
+
+.qff-page .qff-hero h1 {
+  margin: 0;
+  padding: 0;
+  color: var(--qff-ink);
+  font-size: clamp(2.8rem, 6.5vw, 4.6rem);
+  line-height: 1.02;
+  text-align: left;
+}
+
+@media (max-width: 767px) {
+  .qff-page .qff-hero h1 {
+    text-align: center;
+  }
+}
+
+.qff-page .qff-tagline {
+  max-width: 54ch;
+  margin: 1.4rem 0 0;
+  color: var(--color-text);
+  font-size: 1.12rem;
+  line-height: 1.7;
+}
+
+/* Tagline link: keep the gradient sentence clean; underline only on hover. */
+.qff-page .qff-tagline a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--color-violet-rgb), 0.45);
+  text-underline-offset: 0.15em;
+}
+
+.qff-page .qff-tagline a:hover {
+  color: var(--color-link);
+}
+
+.qff-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+/* Buttons: Carbon-flat, sharp. */
+.qff-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.85rem 1.4rem;
+  border: 1px solid var(--qff-btn-bg);
+  border-radius: 0;
+  background: var(--qff-btn-bg);
+  color: var(--qff-btn-ink);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+a.qff-btn:hover {
+  background: var(--qff-indigo);
+  border-color: var(--qff-indigo);
+  color: #fff;
+}
+
+.qff-btn:focus-visible {
+  outline: 2px solid var(--qff-blue);
+  outline-offset: 2px;
+}
+
+.qff-btn--ghost {
+  background: transparent;
+  border-color: rgba(22, 22, 22, 0.6); /* ≥ 3:1 boundary contrast on the sky */
+  color: var(--qff-ink);
+}
+
+/* The hero's three buttons need about 470px; the copy column is narrower
+   than that just past the two-column switch, so tighten them there. */
+@media (min-width: 900px) and (max-width: 959px) {
+  .qff-hero .qff-cta-row .qff-btn {
+    padding-right: 1.1rem;
+    padding-left: 1.1rem;
+  }
+}
+
+/* Tiles: the cover-slide 2x2 grid (slate / sky / pink / gray). */
+.qff-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 460px;
+  margin-left: auto;
+}
+
+.qff-tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 0;
+}
+
+.qff-tile img {
+  width: 46%;
+  height: auto;
+}
+
+.qff-tile--slate {
+  background: var(--qff-slate);
+}
+
+.qff-tile--sky {
+  background: var(--qff-tile-sky);
+}
+
+.qff-tile--pink {
+  background: var(--qff-tile-pink);
+}
+
+.qff-tile--gray {
+  background: var(--qff-tile-gray);
+}
+
+/* Keeps a date range on one line ("October 11–22, 2027" broke after the
+   en dash on phones). */
+.qff-nowrap {
+  white-space: nowrap;
+}
+
+/* SC Quantathon's Q mark (a black SVG) on the gray tile of the 2027 page;
+   white once the tile turns charcoal in dark mode. */
+@media (prefers-color-scheme: dark) {
+  .qff-tile--mark img {
+    filter: invert(1);
+  }
+}
+
+/* Sky tile: two soft CSS clouds built from radial-gradient puffs. */
+/* The clouds sit on a layer two tiles wide that repeats, so sliding it by
+   one tile width loops seamlessly. It drifts only while the tile's birds are
+   flying (on screen, motion allowed). */
+.qff-tile--clouds::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 200%;
+  background-image:
+    radial-gradient(ellipse 13% 12% at 30% 34%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 12% 14% at 42% 30%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 26% 10% at 37% 41%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 10% 9% at 68% 66%, var(--qff-tile-cloud) 97%, transparent 100%),
+    radial-gradient(ellipse 20% 8% at 66% 73%, var(--qff-tile-cloud) 97%, transparent 100%);
+  background-size: 50% 100%;
+  background-repeat: repeat-x;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .qff-tile--clouds:has(.qff-bird-zone[data-flying])::before {
+    animation: qff-tile-drift 40s linear infinite;
+  }
+}
+
+@keyframes qff-tile-drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pink tile: an original quantum-circuit drawing (H, CNOTs, measurements). */
+.qff-tile--circuit img {
+  width: 78%;
+}
+
+/* Gradient hairline between bands. */
+.qff-rule {
+  height: 1px;
+  background: var(--qff-rule-grad);
+}
+
+/* Hairlines below the first screen draw in from the left as they scroll
+   into view (a scroll timeline; browsers without one show them whole). The
+   two on the first screen are --static, so they load drawn. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .qff-rule:not(.qff-rule--static) {
+      transform-origin: left center;
+      animation: qff-rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+  }
+}
+
+@keyframes qff-rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* The band's decade counter (DecadeCounter.tsx): even-width digits, so the
+   line doesn't shift while the year counts up. */
+.qff-decade {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hosted-with strip: the label, then four marks in one row (club logo, IBM
+   Quantum logotype, Fall Fest badge, qBraid; IBM Quantum stays before
+   qBraid). Each mark is scaled uniformly (height only), with clear space and
+   no lock-up; the single flex gap is the only spacing between them. */
+.qff-hosted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2.25rem; /* same gap as between the marks */
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1.1rem var(--space-xl);
+}
+
+.qff-hosted-logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2.25rem; /* one fixed gap between every mark */
+}
+
+.qff-hosted-label {
+  color: var(--qff-label);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+/* Each mark's link is the flex item; its <picture> steps aside so the gap
+   math holds. */
+:is(.qff-hosted-cqc, .qff-hosted-logo, .qff-hosted-badge-link, .qff-hosted-sponsor) {
+  display: inline-flex;
+}
+
+.qff-hosted-logo {
+  padding: 0;
+}
+
+:is(.qff-hosted-cqc, .qff-hosted-logo, .qff-hosted-sponsor) picture {
+  display: contents;
+}
+
+:is(.qff-hosted-cqc, .qff-hosted-logo, .qff-hosted-sponsor) img {
+  display: block;
+  width: auto;
+}
+
+.qff-hosted-cqc img {
+  height: 40px;
+}
+
+.qff-hosted-logo img {
+  height: 26px;
+}
+
+.qff-hosted-sponsor img {
+  height: 32px;
+}
+
+.qff-hosted-badge {
+  width: 44px;
+  height: 44px;
+}
+
+/* Narrow screens: the two round marks (club logo, Fall Fest badge) sit side
+   by side and the wide IBM Quantum logotype takes its own row underneath,
+   rather than all three squeezing onto one line. */
+@media (max-width: 639px) {
+  /* .qff-hosted is a wrapping flex row of [label, logos]. Once it wraps, the
+     logo row sizes to its content and lands off-centre, so give it the whole
+     line and centre the parent's items. */
+  .qff-hosted {
+    justify-content: center;
+  }
+
+  .qff-hosted-logos {
+    flex: 1 1 100%;
+    justify-content: center;
+    row-gap: 1.25rem;
+  }
+
+  .qff-hosted-cqc {
+    order: 1;
+  }
+
+  .qff-hosted-badge-link {
+    order: 2;
+  }
+
+  .qff-hosted-logo {
+    order: 3;
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+
+  /* qBraid, the sponsor, gets its own centered line under IBM Quantum. */
+  .qff-hosted-sponsor {
+    order: 4;
+    flex: 0 0 100%;
+    justify-content: center;
+  }
+
+  .qff-hosted-label {
+    text-align: center;
+  }
+}
+
+/* Sections: hairline top, mono eyebrow, light h2. */
+.qff-section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 3.5rem) var(--space-xl);
+}
+
+.qff-section + .qff-section {
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-page .qff-section h2,
+.qff-page .qff-intro-col h2 {
+  margin: 0 0 1.2rem;
+  color: var(--qff-ink);
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  line-height: 1.15;
+}
+
+.qff-page .qff-section h3 {
+  margin: 0;
+}
+
+.qff-page .qff-section p {
+  max-width: 80ch;
+  font-size: 1.02rem;
+  line-height: 1.74;
+}
+
+/* Back-to-back paragraphs (About) ran together: the global reset zeroes
+   paragraph margins. */
+.qff-page .qff-section p + p {
+  margin-top: 1rem;
+}
+
+/* About beside Key Details. */
+.qff-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.qff-ledger {
+  margin: 0;
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-ledger-row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--qff-line);
+}
+
+.qff-ledger dt {
+  padding-top: 0.2em;
+  color: var(--qff-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.qff-ledger dd {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+/* Slate band: the deck's dark slide with a gradient phrase. */
+.qff-band {
+  padding: clamp(3rem, 6vw, 4.5rem) var(--space-xl);
+  background: var(--qff-band-bg);
+  color: var(--qff-band-ink);
+}
+
+.qff-band-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  max-width: var(--content-max);
+  margin: 0 auto;
+}
+
+/* Scroll-driven cryostat (components/Cryostat.tsx): an original line drawing
+   of a dilution-refrigerator "chandelier", inline so its parts can move. The
+   component writes --p, the band's scroll progress, from 0 (the band's top
+   entering the window) to 1 (its top just under the nav); the first half
+   assembles the fridge and the second half cools it.
+   Everything here is derived from --p, so its default of 1 (no JS, print,
+   reduced motion) is the finished, cold drawing.
+   Per part, --t0/--span pick a window of the assembly, --t is the progress
+   inside it, and --e eases it (smoothstep). Per stage, --c/--ce do the same
+   for the cooling, staggered by --k so the frost runs from 300 K down to
+   10 mK. Colors are band tokens because the band flips slate → lavender in
+   dark mode (docs/archive keeps the original static drawings). */
+.qff-page .qff-band {
+  --cryo-line: #be95ff;
+  --cryo-wire: #ff7eb6;
+  --cryo-fill: rgba(190, 149, 255, 0.12);
+  --cryo-glow: rgba(255, 126, 182, 0.18);
+  --cryo-cold: #82cfff; /* IBM Cyan 30, 8.9:1 on the slate band */
+  --cryo-cold-fill: rgba(130, 207, 255, 0.22);
+  --cryo-frost: #bae6ff;
+  /* Hummingbirds on the band: a light beak on slate. */
+  --qff-hb-beak: #f4f4f4;
+}
+
+/* On the lavender dark-mode band the beak turns dark and both birds deepen,
+   since lavender on lavender is 1:1. */
+@media (prefers-color-scheme: dark) {
+  .qff-page .qff-band {
+    --cryo-line: #31135e;
+    --cryo-wire: #9f1853;
+    --cryo-fill: rgba(49, 19, 94, 0.1);
+    --cryo-glow: rgba(159, 24, 83, 0.14);
+    --cryo-cold: #003a6d; /* IBM Cyan 80, 4.9:1 on the lavender band */
+    --cryo-cold-fill: rgba(0, 58, 109, 0.18);
+    --cryo-frost: #e5f6ff;
+    --qff-hb-beak: #161616;
+    --qff-hb-lavender-back: #31135e;
+    --qff-hb-lavender-body: #6929c4;
+    --qff-hb-lavender-wing: #8a3ffc;
+    --qff-hb-pink-back: #9f1853;
+    --qff-hb-pink-body: #d02670;
+  }
+}
+
+.qff-cryostat {
+  --p: 1;
+  --cryo-w: clamp(150px, 18vw, 230px);
+  --cryo-label: 3.2rem; /* the temperature column right of the drawing */
+  --assemble: clamp(0, var(--p) / 0.48, 1);
+  --cool: clamp(0, (var(--p) - 0.52) / 0.48, 1);
+  --g: clamp(0, (var(--cool) - 0.8) / 0.2, 1); /* the chip lighting up */
+  justify-self: end;
+}
+
+.qff-cryostat__frame {
+  position: relative;
+  width: var(--cryo-w);
+  margin-right: var(--cryo-label);
+}
+
+.qff-cryostat__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 320 / 440;
+  overflow: visible;
+  fill: none;
+  stroke: var(--cryo-line);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Assembly */
+.qff-cryostat :is(.qff-cryostat__draw, .qff-cryostat__stage, .qff-cryostat__holder, .qff-cryostat__chip) {
+  --t: clamp(0, (var(--assemble) - var(--t0)) / var(--span), 1);
+  --e: calc(var(--t) * var(--t) * (3 - 2 * var(--t)));
+}
+
+.qff-cryostat__hanger { --t0: 0; --span: 0.12; }
+.qff-cryostat__stage { --t0: calc(0.12 + var(--i) * 0.11); --span: 0.24; }
+.qff-cryostat__flange { --t0: 0.03; --span: 0.16; }
+.qff-cryostat__rod { --t0: calc(0.1 + var(--i) * 0.05); --span: 0.34; }
+.qff-cryostat__coax { --t0: calc(0.34 + var(--i) * 0.06); --span: 0.38; }
+.qff-cryostat__coax--wire { --t0: calc(0.46 + var(--i) * 0.06); --span: 0.32; }
+.qff-cryostat__stem { --t0: 0.64; --span: 0.14; }
+.qff-cryostat__holder { --t0: 0.72; --span: 0.14; }
+.qff-cryostat__chip { --t0: 0.8; --span: 0.18; }
+.qff-cryostat__lead { --t0: 0.9; --span: 0.1; }
+
+/* Lines draw from their first point (pathLength="1" in the markup); the
+   opacity ramp hides the round-cap dot an empty dash leaves behind. */
+.qff-cryostat__draw {
+  stroke-dasharray: 1 1;
+  stroke-dashoffset: calc(1 - var(--e));
+  opacity: clamp(0, var(--t) * 10, 1);
+}
+
+.qff-cryostat__coax--wire,
+.qff-cryostat__lead {
+  stroke: var(--cryo-wire);
+}
+
+/* Plates drop in from above, each from its own side (--dx). */
+.qff-cryostat__stage {
+  opacity: var(--e);
+  transform: translate(calc((1 - var(--e)) * var(--dx) * 1px), calc((1 - var(--e)) * -16px));
+}
+
+.qff-cryostat__holder {
+  fill: var(--cryo-fill);
+  opacity: var(--e);
+  transform: translateY(calc((1 - var(--e)) * -10px));
+}
+
+.qff-cryostat__chip {
+  opacity: var(--e);
+  transform: scale(calc(0.5 + 0.5 * var(--e)));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.qff-cryostat__chip rect {
+  fill: var(--cryo-fill);
+  stroke: var(--cryo-wire);
+}
+
+.qff-cryostat__qubit {
+  fill: var(--cryo-wire);
+  stroke: none;
+}
+
+/* Cooling */
+.qff-cryostat :is(.qff-cryostat__stage, .qff-cryostat__temp) {
+  --c: clamp(0, (var(--cool) - var(--k) * 0.16) / 0.3, 1);
+  --ce: calc(var(--c) * var(--c) * (3 - 2 * var(--c)));
+}
+
+/* How far a plate's color turns cold: --chill, from 0.2 at room
+   temperature to 1 at 10 mK. */
+.qff-cryostat__stage {
+  --mix: calc(var(--ce) * var(--chill) * 100%);
+}
+
+.qff-cryostat__plate {
+  fill: color-mix(in srgb, var(--cryo-cold-fill) var(--mix), var(--cryo-fill));
+  stroke: color-mix(in srgb, var(--cryo-cold) var(--mix), var(--cryo-line));
+}
+
+.qff-cryostat__capsule-line {
+  stroke: color-mix(in srgb, var(--cryo-cold) var(--mix), var(--cryo-line));
+}
+
+/* The frost glow: bright while its stage is cooling (4c(1 − c) peaks
+   mid-way), then a faint residue that grows toward the coldest plate. */
+.qff-cryostat__halo {
+  stroke: none;
+  opacity: calc(var(--c) * (1 - var(--c)) * 3.4 + var(--c) * var(--chill) * 0.3);
+}
+
+.qff-cryostat__frost {
+  stop-color: var(--cryo-frost);
+  stop-opacity: 0.5;
+}
+
+.qff-cryostat__frost--edge {
+  stop-opacity: 0;
+}
+
+.qff-cryostat__leader {
+  stroke: var(--qff-band-muted);
+  stroke-width: 1;
+  stroke-dasharray: 2 3;
+  opacity: calc(var(--ce) * 0.55);
+}
+
+.qff-cryostat__glow {
+  fill: var(--cryo-glow);
+  stroke: none;
+  opacity: var(--g);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.qff-cryostat__temp {
+  position: absolute;
+  top: calc(var(--y) / 440 * 100%);
+  left: calc(100% + 0.4rem);
+  transform: translate(calc((1 - var(--ce)) * -4px), -50%);
+  color: color-mix(in srgb, var(--cryo-cold) calc(var(--ce) * var(--k) * 25%), var(--qff-band-muted));
+  font-family: var(--qff-mono);
+  font-size: 0.68rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  opacity: var(--ce);
+}
+
+.qff-cryostat__deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+@keyframes qff-cryo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(1.5);
+    opacity: 0.15;
+  }
+}
+
+@keyframes qff-cryo-qubit {
+  0%,
+  100% {
+    fill: var(--cryo-wire);
+  }
+
+  50% {
+    fill: var(--cryo-cold);
+  }
+}
+
+/* Three pulses once the chip reaches 10 mK, then it holds. */
+@media (prefers-reduced-motion: no-preference) {
+  .qff-cryostat[data-cold] .qff-cryostat__glow {
+    animation: qff-cryo-pulse 1.5s ease-in-out 3;
+  }
+
+  .qff-cryostat[data-cold] .qff-cryostat__qubit {
+    animation: qff-cryo-qubit 1.5s ease-in-out 3;
+  }
+}
+
+/* Outranks the inline --p the component writes. */
+@media (prefers-reduced-motion: reduce) {
+  .qff-cryostat {
+    --p: 1 !important;
+  }
+}
+
+@media print {
+  .qff-cryostat {
+    --p: 1 !important;
+  }
+}
+
+/* Hummingbirds (Fall Fest 2026 only): original birds from
+   components/hummingbirdArt.ts. An inline <span class="qff-bird-zone"> after
+   a short line such as an eyebrow is a home: PageBirds starts its birds there
+   and lets them roam the whole page in a layer behind the content, so they
+   pass under text, never over it. A --box zone keeps its birds inside a
+   picture (HummingbirdZone). The ones over the hero are drawn by CloudSky
+   (data-hummingbirds on the hero). With reduced motion they hold still. */
+.qff-hb--pink {
+  --hb-back: var(--qff-hb-pink-back);
+  --hb-body: var(--qff-hb-pink-body);
+  --hb-throat: var(--qff-hb-pink-throat);
+  --hb-wing: var(--qff-hb-pink-wing);
+}
+
+.qff-hb--lavender {
+  --hb-back: var(--qff-hb-lavender-back);
+  --hb-body: var(--qff-hb-lavender-body);
+  --hb-throat: var(--qff-hb-lavender-throat);
+  --hb-wing: var(--qff-hb-lavender-wing);
+}
+
+.qff-hb {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 48 / 32;
+  overflow: visible;
+}
+
+.qff-hb__back {
+  fill: var(--hb-back);
+}
+
+.qff-hb__body {
+  fill: var(--hb-body);
+}
+
+.qff-hb__throat {
+  fill: var(--hb-throat);
+}
+
+.qff-hb__beak {
+  fill: var(--qff-hb-beak);
+}
+
+.qff-hb__eye {
+  fill: var(--qff-hb-eye);
+}
+
+.qff-hb__wing {
+  stroke: var(--hb-back);
+  stroke-width: 0.5;
+  stroke-opacity: 0.4;
+  transform-box: fill-box;
+  transform-origin: 100% 100%; /* the shoulder */
+}
+
+.qff-hb__wing-root {
+  stop-color: var(--hb-wing);
+  stop-opacity: 0.95;
+}
+
+.qff-hb__wing-tip {
+  stop-color: var(--hb-wing);
+  stop-opacity: 0.4;
+}
+
+/* An inline zone is an empty marker at the end of the text, where
+   PageBirds starts its birds. */
+.qff-bird-zone {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  pointer-events: none;
+}
+
+.qff-bird-zone__area {
+  position: absolute;
+  display: block;
+}
+
+.qff-bird-zone--box {
+  position: absolute;
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+.qff-bird-zone--box .qff-bird-zone__area {
+  inset: 0;
+}
+
+/* The hero's sky tile, clear of its edges. */
+.qff-bird-zone--tile {
+  inset: 10%;
+}
+
+/* Under the cryostat's 10 mK plate, around the chip; the birds arrive as
+   the chip lights up (--g). */
+.qff-bird-zone--chip {
+  top: 72%;
+  left: 3%;
+  width: 94%;
+  height: 27%;
+  opacity: var(--g);
+}
+
+/* Hidden until the component has placed them. */
+.qff-bird-zone__bird {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 44px;
+  line-height: 0;
+  opacity: 0;
+  transform-origin: center;
+  transition: opacity 0.4s ease;
+}
+
+:is(.qff-bird-zone, .qff-page-birds)[data-ready] .qff-bird-zone__bird {
+  opacity: 1;
+}
+
+/* Roaming hummingbirds (PageBirds): a layer over the whole page, behind its
+   content (z-index -1 inside the isolated .qff-page), so a bird passes under
+   text, behind the band and tiles, and over the page clouds. */
+.qff-page-birds {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.qff-bird-zone__bird[hidden] {
+  display: none;
+}
+
+.qff-bird-zone--chip .qff-bird-zone__bird {
+  width: 36px;
+}
+
+@media (max-width: 639px) {
+  .qff-bird-zone__bird {
+    width: 36px;
+  }
+}
+
+@keyframes qff-hb-flutter {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-70deg);
+  }
+}
+
+/* Only while the birds fly (HummingbirdZone and PageBirds set data-flying). */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.qff-bird-zone, .qff-page-birds)[data-flying] .qff-hb__wing {
+    animation: qff-hb-flutter 0.07s ease-in-out infinite alternate;
+  }
+}
+
+.qff-page .qff-band .qff-eyebrow {
+  color: var(--qff-band-muted);
+}
+
+/* The band lead is the band's heading (an h2); clear the generic heading
+   chrome. */
+.qff-page .qff-band .qff-band-lead {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: var(--qff-band-ink);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.qff-page .qff-band p {
+  max-width: 62ch;
+  margin: 1.2rem 0 0;
+  color: var(--qff-band-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* Ghost button re-inked for the band (light ink on slate; dark ink on the
+   lavender dark-mode band). */
+.qff-page .qff-band .qff-band-cta {
+  margin-top: 1.6rem;
+}
+
+/* The band's long button wraps on small phones; keep its lines apart. */
+.qff-page .qff-band .qff-band-cta .qff-btn {
+  line-height: 1.25;
+}
+
+.qff-page .qff-band .qff-btn--ghost {
+  border-color: rgba(244, 244, 244, 0.55);
+  color: var(--qff-band-ink);
+}
+
+.qff-page .qff-band .qff-btn--ghost:focus-visible {
+  outline-color: var(--qff-band-ink); /* blue fails 3:1 on slate and on the lavender band */
+}
+
+.qff-page .qff-band a.qff-btn--ghost:hover {
+  background: var(--qff-band-ink);
+  border-color: var(--qff-band-ink);
+  color: var(--qff-band-bg);
+}
+
+/* Week at a Glance: one expandable row per day (native <details>). Each
+   open body is the permanent home for that day's write-up and links. */
+.qff-days {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-day {
+  border-bottom: 1px solid var(--qff-line);
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s, padding-left 0.2s var(--ease-out-soft);
+}
+
+.qff-day[open] {
+  border-left-color: var(--qff-pink);
+  padding-left: 0.9rem;
+}
+
+.qff-day-summary {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+  gap: clamp(0.9rem, 2.5vw, 1.75rem);
+  align-items: center;
+  padding: 1.1rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.qff-day-summary::-webkit-details-marker {
+  display: none;
+}
+
+.qff-day-summary:focus-visible {
+  outline: 2px solid var(--qff-blue);
+  outline-offset: 3px;
+}
+
+.qff-day-num {
+  color: var(--qff-label);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.qff-day-meta {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--qff-label);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Sessions and Challenge rows alternate violet and pink (01 violet, 02
+   pink, …), day number and date alike. */
+.qff-days > .qff-day:nth-of-type(even) :is(.qff-day-num, .qff-day-meta) {
+  color: var(--qff-label-alt);
+}
+
+.qff-day-title {
+  display: block;
+  color: var(--color-text);
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.qff-day-summary:hover .qff-day-title,
+.qff-day-summary:focus-visible .qff-day-title {
+  color: var(--color-link);
+}
+
+/* The +/− toggle is the summary's last grid cell. */
+.qff-day-summary::after {
+  content: '+';
+  color: var(--qff-blue);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.qff-day[open] .qff-day-summary::after {
+  content: '\2212';
+}
+
+.qff-day-body {
+  padding: 0.1rem 0.15rem 1.5rem calc(3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
+}
+
+.qff-day[open] .qff-day-body {
+  animation: qff-day-open 0.28s var(--ease-out-soft);
+}
+
+@keyframes qff-day-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.qff-page .qff-day-body p {
+  max-width: 80ch;
+  margin: 0 0 1rem;
+}
+
+/* Resource chips: sharp hairline tags. Links are posted files; a span is a
+   dashed placeholder until the file exists. */
+.qff-day-resources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.qff-day-resource {
+  display: inline-block;
+  padding: 0.34rem 0.9rem;
+  border: 1px solid rgba(var(--color-violet-rgb), 0.45);
+  border-radius: 0;
+  color: var(--color-violet);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a.qff-day-resource:hover,
+a.qff-day-resource:focus-visible {
+  background: var(--color-violet-light);
+  color: var(--color-violet);
+}
+
+span.qff-day-resource {
+  border-style: dashed;
+  border-color: var(--qff-line);
+  color: var(--color-text-secondary);
+}
+
+/* Live leaderboards (components/Leaderboard.tsx): plain hairline tables in
+   the deck's mono labels, the score right-aligned in tabular figures. The
+   <p> pieces need the section prefix to outrank `.qff-page .qff-section p`. */
+.qff-page .qff-section .qff-leaderboard-heading {
+  margin: 2rem 0 0;
+  color: var(--qff-label);
+  font-family: var(--qff-mono);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.qff-leaderboard {
+  max-width: 40rem;
+  margin-top: 1rem;
+}
+
+.qff-challenges {
+  margin-top: 2rem;
+}
+
+.qff-leaderboard__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+.qff-leaderboard__table th,
+.qff-leaderboard__table td {
+  padding: 0.55rem 0.75rem 0.55rem 0;
+  border-bottom: 1px solid var(--qff-line);
+  text-align: left;
+}
+
+.qff-leaderboard__table th {
+  color: var(--qff-label);
+  font-family: var(--qff-mono);
+  font-size: 0.7rem;
+  font-weight: 400; /* Plex Mono loads 400 and 600; 500 rendered as 400 */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.qff-leaderboard__table td {
+  color: var(--qff-ink);
+}
+
+.qff-leaderboard__table th:first-child,
+.qff-leaderboard__table td:first-child {
+  width: 3.5rem;
+  font-family: var(--qff-mono);
+}
+
+.qff-leaderboard__table th:last-child,
+.qff-leaderboard__table td:last-child {
+  padding-right: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The overall top 5 (Qiskit merch): rank in the alternate pink. */
+.qff-leaderboard__top td:first-child {
+  color: var(--qff-label-alt);
+  font-weight: 600;
+}
+
+/* A score that changed on a refresh (Leaderboard sets data-flash). */
+@keyframes qff-leaderboard-flash {
+  from {
+    background-color: rgba(var(--color-violet-rgb), 0.2);
+  }
+
+  to {
+    background-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .qff-leaderboard__table tr[data-flash] td {
+    animation: qff-leaderboard-flash 1.2s ease-out;
+  }
+}
+
+.qff-page .qff-section p.qff-leaderboard__note {
+  max-width: 40rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border: 1px dashed var(--qff-line);
+  color: var(--color-text-secondary);
+  font-size: 0.92rem;
+}
+
+/* Inside a live board the wrapper already supplies the top margin. */
+.qff-page .qff-section .qff-leaderboard p.qff-leaderboard__note {
+  margin-top: 0;
+}
+
+.qff-page .qff-section p.qff-leaderboard__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.5rem 0 0;
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+}
+
+.qff-leaderboard__more {
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-violet);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* FAQ: hairline rows, native <details>. */
+.qff-faq {
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--qff-line);
+}
+
+.qff-faq-item {
+  border-bottom: 1px solid var(--qff-line);
+}
+
+.qff-faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0.15rem;
+  cursor: pointer;
+  list-style: none;
+  color: var(--color-text);
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.qff-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.qff-faq-item summary::after {
+  content: '+';
+  color: var(--qff-blue);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.qff-faq-item[open] summary::after {
+  content: '−';
+}
+
+.qff-faq-item summary:focus-visible {
+  outline: 2px solid var(--qff-blue);
+  outline-offset: 3px;
+}
+
+.qff-page .qff-faq-item p {
+  max-width: 80ch;
+  margin: 0 0.15rem 1.2rem;
+}
+
+/* Organizers: square photos, mono roles. */
+/* Organizers: a centered, wrapping row at every width, so anyone left
+   alone on the last row sits in the middle (owner, 2026-10-15), the same
+   way the SC Quantathon committee grid works. */
+.qff-team {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem 2rem;
+  margin-top: 1.5rem;
+}
+
+.qff-team-member {
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  text-align: center;
+}
+
+.qff-team-photo {
+  width: 92px;
+  height: 92px;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+.qff-team-name {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.qff-team-role {
+  color: var(--qff-label);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 899px) {
+  /* The stacked hero runs to about 1150px; the sky should cover all of it. */
+  .qff-page {
+    background-size: 100% 1150px;
+  }
+
+  .qff-hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .qff-tiles {
+    max-width: 380px;
+    margin-left: 0;
+  }
+
+  .qff-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .qff-band-inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* Centered under the copy; the empty left margin matches the label
+     column so the drawing itself sits on the center line. */
+  .qff-cryostat {
+    --cryo-w: clamp(180px, 26vw, 230px);
+    justify-self: center;
+  }
+
+  .qff-cryostat__frame {
+    margin-left: var(--cryo-label);
+  }
+}
+
+/* Tablets: the stacked hero would leave a tall 2x2 block; one row of four
+   keeps the copy in view. */
+@media (min-width: 640px) and (max-width: 899px) {
+  .qff-tiles {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: none;
+  }
+}
+
+
+@media (max-width: 639px) {
+  .qff-hero,
+  .qff-hosted,
+  .qff-section,
+  .qff-band {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  .qff-cta-row .qff-btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  .qff-ledger-row {
+    grid-template-columns: 7rem minmax(0, 1fr);
+  }
+
+  .qff-day-summary {
+    grid-template-columns: 2.4rem minmax(0, 1fr) auto;
+  }
+
+  .qff-day-num {
+    font-size: 1.15rem;
+  }
+
+  .qff-day-body {
+    padding-left: 0.15rem;
+  }
+
+  .qff-cryostat {
+    --cryo-w: clamp(140px, 50vw, 200px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .qff-page {
+    --qff-ink: #f4f4f4;
+    --qff-line: rgba(244, 244, 244, 0.16);
+    --qff-label: #be95ff;
+    --qff-label-alt: #ff7eb6;
+    --qff-band-bg: #be95ff; /* the deck's lavender slides */
+    --qff-band-ink: #161616;
+    --qff-band-muted: #31135e;
+    --qff-tile-sky: #31135e;
+    --qff-tile-gray: #393939;
+    --qff-tile-cloud: #5b3a8e;
+    --qff-btn-bg: #ff7eb6;
+    --qff-btn-ink: #0b1020;
+    --qff-cloud-rgb: 190, 149, 255;
+    --qff-cloud-alpha: 0.1;
+    --qff-page-cloud-rgb: 190, 149, 255;
+    --qff-page-cloud-alpha: 0.11;
+    --qff-hb-beak: #e0e0e0;
+    /* Indigo vanishes on the navy page: lift the dark parts. */
+    --qff-soar-swallow-body: #a56eff;
+    --qff-soar-swallow-back: #8a3ffc;
+    --qff-soar-swallow-wing: #be95ff;
+    --qff-soar-falcon-back: #8a3ffc;
+    --qff-soar-falcon-wing: #a56eff;
+    --qff-page-soarer-alpha: 0.45;
+    --color-accent: #ff7eb6;
+    --color-accent-rgb: 255, 126, 182;
+    --color-accent-light: rgba(255, 126, 182, 0.14);
+    --color-link: #ff7eb6;
+    --color-link-hover: #ffafd2;
+    --color-violet: #be95ff;
+    --color-violet-rgb: 190, 149, 255;
+    --color-violet-light: rgba(138, 63, 252, 0.22);
+    /* Deep indigo over the starfield; still fades to transparent. */
+    background-image: linear-gradient(
+      180deg,
+      rgba(49, 19, 94, 0.8) 0,
+      rgba(49, 19, 94, 0.45) 36%,
+      transparent 100%
+    );
+  }
+
+  a.qff-btn:hover {
+    background: #ffa1c9;
+    border-color: #ffa1c9;
+    color: #0b1020;
+  }
+
+  .qff-btn--ghost {
+    background: transparent;
+    border-color: rgba(190, 149, 255, 0.55);
+    color: var(--qff-lav);
+  }
+
+  .qff-day-summary::after,
+  .qff-faq-item summary::after {
+    color: var(--qff-lav);
+  }
+
+  .qff-gradient-text {
+    background-image: var(--qff-grad);
+  }
+
+  .qff-page .qff-band .qff-btn--ghost {
+    border-color: rgba(22, 22, 22, 0.6); /* 3.4:1 on the lavender band */
+  }
+
+  .qff-day-resource {
+    border-color: rgba(190, 149, 255, 0.45);
+  }
+}
+
+/* The band's gradient phrase ("decade on the cloud") slides as the band
+   scrolls in, in step with the cryostat and the year counter: --band-p is
+   the band's scroll progress, set by Cryostat.tsx (components/
+   bandProgress.ts: 0 as the band's top enters the window, 1 once it is just
+   under the nav). Each gradient is mirrored (A → B → A) at twice the width,
+   so it moves without a seam and finishes on its usual A → B look; without
+   JS or with reduced motion --band-p stays at its default, 1, the finished
+   frame. */
+.qff-page .qff-band .qff-gradient-text {
+  background-image: linear-gradient(90deg, var(--qff-pink), var(--qff-lav), var(--qff-pink));
+  background-size: 200% 100%;
+  background-position: calc((1 - var(--band-p, 1)) * 100%) 0;
+}
+
+/* On the dark theme's lavender band the pink→lavender phrase would vanish;
+   use the deck's indigo→magenta instead. */
+@media (prefers-color-scheme: dark) {
+  .qff-page .qff-band .qff-gradient-text {
+    background-image: linear-gradient(90deg, #31135e, #9f1853, #31135e);
+  }
+}
+
+/* Organizer cards: these follow the shared people-card rules in style.css. */
+@media (max-width: 800px) {
+  .qff-team {
+    gap: 1.5rem 1.25rem;
+  }
+}
+
+/* Phones: two organizers per row, like the SC Quantathon committee; a lone
+   last one still centers. */
+@media (max-width: 639px) {
+  .qff-team-member {
+    flex-basis: calc(50% - 0.625rem);
+  }
+}

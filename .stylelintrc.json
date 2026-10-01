@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "declaration-block-no-duplicate-properties": [
+      true,
+      { "ignore": ["consecutive-duplicates-with-different-syntaxes"] }
+    ],
+    "declaration-block-no-shorthand-property-overrides": true,
+    "keyframes-name-pattern": [
+      "^[a-z][a-z0-9]*(-[a-z0-9]+)*$",
+      { "message": "Keyframe names are kebab-case (nav-panel-open)" }
+    ]
+  }
+}

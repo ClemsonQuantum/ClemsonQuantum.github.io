@@ -1,11 +1,11 @@
 import { createSlugPage } from '@/lib/slugPage';
-import MarkdownDiv from '@/components/MarkdownDiv';
+import { BANNER_SIZE } from '@/lib/og';
+import { EVENT_COMPONENTS } from '@/components/eventComponents';
+import '@/assets/css/qff.css';
 
-// The shared MarkdownDiv enables the sentinel-class components (quantum hero
-// canvas, cloud sky, countdown) on hosted workshop pages — e.g. Qiskit
-// Fall Fest 2026. Plain-markdown pages pass through it untouched.
 const page = createSlugPage('events/workshops-and-seminars', {
-  components: { div: MarkdownDiv },
+  components: EVENT_COMPONENTS,
+  imageSize: BANNER_SIZE,
 });
 
 export const generateStaticParams = page.generateStaticParams;

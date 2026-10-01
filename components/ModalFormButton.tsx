@@ -4,10 +4,10 @@ import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import siteConfig from '@/data/site-config.json';
-import { web3formsReady } from '@/lib/web3forms';
+import { FORM_COPY, submitWeb3Form, web3formsReady } from '@/lib/web3forms';
 
 // Button that opens an in-page modal form and submits via Web3Forms.
-// Generic modal form; the hackathon slug page configures copy and fields per use.
+// Generic modal form; MarkdownLink configures copy and fields per use.
 type Status = 'idle' | 'submitting' | 'success' | 'error';
 
 export interface ModalFormField {
@@ -15,7 +15,6 @@ export interface ModalFormField {
   label: string;
   type?: 'text' | 'email';
   required?: boolean;
-  multiline?: boolean;
 }
 
 interface Props {
@@ -30,13 +29,8 @@ interface Props {
   successMessage: string;
   submitLabel?: string;
   fields: ModalFormField[];
-}
-
-function autoCompleteFor(field: ModalFormField): string {
-  if (field.type === 'email') return 'email';
-  if (field.name === 'name') return 'name';
-  if (field.name === 'organization') return 'organization';
-  return 'off';
+  /** Trigger classes; defaults to the inline text-link look. */
+  className?: string;
 }
 
 export default function ModalFormButton({
@@ -48,6 +42,7 @@ export default function ModalFormButton({
   successMessage,
   submitLabel = 'Submit',
   fields,
+  className = 'view-all-link',
 }: Props) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
@@ -63,7 +58,7 @@ export default function ModalFormButton({
   useEffect(() => {
     if (!open) return;
     dialogRef.current
-      ?.querySelector<HTMLElement>('input:not([type="checkbox"]), textarea')
+      ?.querySelector<HTMLElement>('input:not([type="checkbox"])')
       ?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -73,8 +68,8 @@ export default function ModalFormButton({
       if (e.key !== 'Tab') return;
       const dialog = dialogRef.current;
       if (!dialog) return;
-      // Visible controls only — offsetParent is null for the display:none
-      // honeypot, and tabIndex -1 skips anything deliberately unfocusable.
+      // Visible controls only: offsetParent is null for the hidden honeypot,
+      // and tabIndex -1 skips anything deliberately unfocusable.
       const focusables = Array.from(
         dialog.querySelectorAll<HTMLElement>(
           'a[href], button:not([disabled]), input, textarea, select',
@@ -83,23 +78,31 @@ export default function ModalFormButton({
       if (focusables.length === 0) return;
       const first = focusables[0];
       const last = focusables[focusables.length - 1];
-      const active = document.activeElement;
+      // -1 when focus is outside the dialog or on something that isn't one of
+      // its controls (the success message parks focus on a tabIndex -1 <p>),
+      // so Tab still wraps instead of escaping to the page behind.
+      const index = focusables.indexOf(document.activeElement as HTMLElement);
       if (e.shiftKey) {
-        if (active === first || !dialog.contains(active)) {
+        if (index <= 0) {
           e.preventDefault();
           last.focus();
         }
-      } else if (active === last || !dialog.contains(active)) {
+      } else if (index === -1 || index === focusables.length - 1) {
         e.preventDefault();
         first.focus();
       }
     };
     document.addEventListener('keydown', onKey);
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    // Lock the root, not body: html's overflow is not visible (overflow-x:
+    // clip), so body's value would not reach the viewport, the page would
+    // keep scrolling, and body would become a scroll container that captures
+    // every sticky element and scroll-driven animation while the modal is open.
+    const root = document.documentElement;
+    const prevOverflow = root.style.overflow;
+    root.style.overflow = 'hidden';
     return () => {
       document.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
+      root.style.overflow = prevOverflow;
       triggerRef.current?.focus();
       triggerRef.current = null;
     };
@@ -122,7 +125,7 @@ export default function ModalFormButton({
 
     if (!web3formsReady) {
       setStatus('error');
-      setErrorMsg('This form isn’t configured yet.');
+      setErrorMsg(FORM_COPY.notReady);
       return;
     }
 
@@ -137,26 +140,13 @@ export default function ModalFormButton({
           String(data.get(key) ?? '').trim(),
         )
       : subject;
-    data.append('access_key', siteConfig.web3formsKey);
-    data.append('subject', composedSubject);
-    data.append('from_name', subject);
-
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: data,
-      });
-      const json = await res.json();
-      if (json.success) {
-        setStatus('success');
-        form.reset();
-      } else {
-        setStatus('error');
-        setErrorMsg(json.message || 'Something went wrong.');
-      }
-    } catch {
+    const error = await submitWeb3Form(data, composedSubject, subject);
+    if (error) {
       setStatus('error');
-      setErrorMsg('Network error.');
+      setErrorMsg(error);
+    } else {
+      setStatus('success');
+      form.reset();
     }
   }
 
@@ -164,7 +154,7 @@ export default function ModalFormButton({
     <>
       <button
         type="button"
-        className="view-all-link"
+        className={className}
         aria-haspopup="dialog"
         onClick={openModal}
       >
@@ -195,6 +185,15 @@ export default function ModalFormButton({
               &times;
             </button>
 
+            {/* Always rendered so aria-labelledby keeps naming the dialog;
+                visually hidden once the form is replaced by the success note. */}
+            <h3
+              id={`${uid}-title`}
+              className={`modal-title${status === 'success' ? ' sr-only' : ''}`}
+            >
+              {title}
+            </h3>
+
             {status === 'success' ? (
               // Replacing the form drops the focused submit button from the
               // DOM; parking focus on the status keeps keyboard users inside
@@ -209,9 +208,6 @@ export default function ModalFormButton({
               </p>
             ) : (
               <>
-                <h3 id={`${uid}-title`} className="modal-title">
-                  {title}
-                </h3>
                 <p className="modal-subtitle">{subtitle}</p>
                 <form className="modal-form" onSubmit={handleSubmit}>
                   {fields.map((field) => {
@@ -219,46 +215,31 @@ export default function ModalFormButton({
                     return (
                       <Fragment key={field.name}>
                         <label htmlFor={id}>{field.label}</label>
-                        {field.multiline ? (
-                          <textarea
-                            id={id}
-                            name={field.name}
-                            rows={4}
-                            required={field.required}
-                          />
-                        ) : (
-                          <input
-                            id={id}
-                            type={field.type ?? 'text'}
-                            name={field.name}
-                            required={field.required}
-                            autoComplete={autoCompleteFor(field)}
-                          />
-                        )}
+                        <input
+                          id={id}
+                          type={field.type ?? 'text'}
+                          name={field.name}
+                          required={field.required}
+                          autoComplete={field.type === 'email' ? 'email' : field.name === 'name' ? 'name' : 'off'}
+                        />
                       </Fragment>
                     );
                   })}
 
-                  {/* Honeypot — bots fill this hidden field; Web3Forms drops them. */}
-                  <input
-                    type="checkbox"
-                    name="botcheck"
-                    style={{ display: 'none' }}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  />
+                  {/* Honeypot: bots tick this hidden box; Web3Forms drops those submissions. */}
+                  <input type="checkbox" name="botcheck" hidden tabIndex={-1} />
 
                   <button
                     type="submit"
                     className="hackathon-cta"
                     disabled={status === 'submitting'}
                   >
-                    {status === 'submitting' ? 'Submitting…' : submitLabel}
+                    {status === 'submitting' ? FORM_COPY.sending : submitLabel}
                   </button>
 
                   {status === 'error' && (
                     <p className="form-error" role="alert">
-                      {errorMsg} Please email us at{' '}
+                      {errorMsg}
                       <a href={`mailto:${siteConfig.contactEmail}`}>
                         {siteConfig.contactEmail}
                       </a>

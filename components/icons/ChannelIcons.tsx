@@ -1,8 +1,10 @@
-import type { SVGProps } from 'react';
+import type { ComponentType, SVGProps } from 'react';
+import type { ChannelId } from '@/lib/site';
 
-// Brand glyphs (Simple Icons paths) for the "Ways to join" channels. They render
-// in `currentColor` so each icon inherits its link's text color and tints to the
-// accent on hover, matching the minimal channel styling.
+// Brand glyphs (Simple Icons paths) for the channel and profile links in the
+// footer, Get Involved, Resources and board member cards. They render in
+// `currentColor` so each icon inherits its link's text color and tints to the
+// accent on hover.
 type IconProps = SVGProps<SVGSVGElement>;
 
 export function DiscordIcon(props: IconProps) {
@@ -55,3 +57,13 @@ export function TigerQuestIcon({ className }: { className?: string }) {
     />
   );
 }
+
+// The glyph for each entry in lib/site.ts CHANNELS.
+export const CHANNEL_ICONS: Record<ChannelId, ComponentType<{ className?: string }>> = {
+  discord: DiscordIcon,
+  groupme: GroupMeIcon,
+  linkedin: LinkedInIcon,
+  github: GitHubIcon,
+  tigerquest: TigerQuestIcon,
+  instagram: InstagramIcon,
+};

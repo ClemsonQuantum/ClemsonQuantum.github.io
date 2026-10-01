@@ -2,16 +2,17 @@
 
 import { useEffect, useState } from 'react';
 
-// Static export bakes new Date() in at build time, so the footer year would
-// freeze at the last deploy. Render the build year for SSR, then correct it
-// client-side (useEffect avoids a hydration mismatch when they differ).
-export default function CopyrightYear() {
-  const [year, setYear] = useState(() => new Date().getFullYear());
+// Static export bakes the year in at build time, so the footer would freeze
+// at the last deploy. The server-rendered Footer passes the build year in;
+// the first client render must use that same value (computing new Date() in
+// a useState initializer runs again in the browser and mismatches the HTML
+// whenever the visitor's year differs, e.g. from Jan 1 until a redeploy).
+// The effect then corrects it to the visitor's year after hydration.
+export default function CopyrightYear({ buildYear }: { buildYear: number }) {
+  const [year, setYear] = useState(buildYear);
 
   useEffect(() => {
-    // Intentional mount-only setState: SSR bakes the build year; this
-    // corrects it to the visitor's year without a hydration mismatch.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- after hydration (above)
     setYear(new Date().getFullYear());
   }, []);
 

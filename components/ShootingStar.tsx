@@ -6,6 +6,8 @@ const MIN_DELAY_MS = 12000; // spawn cadence averages ~15 s
 const MAX_DELAY_MS = 18000;
 const CLEANUP_MS = 3000; // > animation duration; also catches never-started runs
 
+const nextDelay = () => MIN_DELAY_MS + Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS);
+
 // Occasional "paw comet" for the dark-mode sky: a tiny tiger-paw head with a
 // gradient tail streaks across the viewport roughly every 15 seconds, at a
 // random position and heading. Headless spawner — renders one fixed,
@@ -35,20 +37,16 @@ export default function ShootingStar() {
         // Timed removal instead of animationend: still cleans up if the
         // animation never runs (scheme/motion flipped mid-cycle). Tracked so
         // unmount doesn't leave a dangling timer.
-        cleanupIds.add(
-          window.setTimeout(() => star.remove(), CLEANUP_MS)
-        );
+        const id = window.setTimeout(() => {
+          star.remove();
+          cleanupIds.delete(id);
+        }, CLEANUP_MS);
+        cleanupIds.add(id);
       }
-      timeoutId = window.setTimeout(
-        spawn,
-        MIN_DELAY_MS + Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS)
-      );
+      timeoutId = window.setTimeout(spawn, nextDelay());
     }
 
-    timeoutId = window.setTimeout(
-      spawn,
-      MIN_DELAY_MS + Math.random() * (MAX_DELAY_MS - MIN_DELAY_MS)
-    );
+    timeoutId = window.setTimeout(spawn, nextDelay());
 
     return () => {
       window.clearTimeout(timeoutId);

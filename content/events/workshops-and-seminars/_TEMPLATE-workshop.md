@@ -11,7 +11,7 @@ image: "/images/[PLACEHOLDER].webp"
 
 # [WORKSHOP/SEMINAR NAME]
 
-[Brief description of the workshop: what it covers, who it's for, why it matters. 1–2 paragraphs.]
+[What it covers and who it is for. 1–2 paragraphs.]
 
 ## Schedule
 

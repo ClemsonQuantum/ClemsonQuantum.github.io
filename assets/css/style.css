@@ -1,9 +1,26 @@
 /* ===================================================================
-   Clemson Quantum — Modern Design System
+   Clemson Quantum Club — design system
+   Breakpoints in use: 480 / 639–640 / 767–768 / 800–801 (the hamburger nav,
+   mirrored in components/Header.tsx) / 899–900 / 1023–1024.
+
+   Sections, in order (search for the title):
+     Design Tokens, Reset, Global
+     Navigation, Mobile (hamburger drawer), Search Bar
+     Main & Layout, Page Content, Forms, Footer
+     Hackathon Landing Page (buttons, sponsors, hotels)
+     Student Work & Projects, Homepage Hero, Constellation divider
+     Page-specific layout utilities, About Page
+     Second pass (links, nav, archives, cards, people, modal, Learning
+       Resources, hackathon page blocks)
+     SC Quantathon v3: interactive enhancements, dark-mode banner, additions
+     Code of Conduct, Galaxy starfield, Homepage featured-event band
+     SC Quantathon v4, Scroll motion
+   The Fall Fest pages have their own stylesheet (qff.css).
    =================================================================== */
 
 /* --- Design Tokens --- */
 :root {
+  color-scheme: light dark;
   /* Colors */
   --color-bg: #f6f3ee;
   --color-surface: #ffffff;
@@ -11,22 +28,30 @@
   --color-text-secondary: #4f5d73;
   --color-accent: #f56600;
   --color-accent-rgb: 245, 102, 0;
-  --color-accent-hover: #cf5500;
   /* Body-copy link ink — Clemson orange deepened until it clears WCAG AA
      contrast on the cream background and white surfaces.
      Display-size headings and decorative accents stay on --color-accent. */
   --color-link: #b04700;
   --color-link-hover: #963c00;
   --color-accent-light: #fff0e4;
-  --color-accent-900: #19243a; /* deep slate — hackathon section heros */
   --color-violet: #6d28d9;
   --color-violet-rgb: 109, 40, 217;
   --color-violet-light: #efe7ff;
+  --color-violet-hover: #5b21b6;
+  /* Text on a solid accent fill: white by day, navy at night, where the
+     fills turn light (the approved dark solid-CTA invert). */
+  --color-on-fill: #fff;
   --color-border: rgba(22, 32, 51, 0.12);
+  /* Form field outlines: 3:1 against the field and the page (WCAG 1.4.11);
+     --color-border is too faint for a control's boundary. */
+  --color-field-border: rgba(22, 32, 51, 0.55);
+  /* Content edge inside a box that already pads by --space-xl, so its
+     content lines up with the header and every section (x = 62 at 1280). */
+  --content-max: calc(var(--max-width) - 2 * var(--space-xl));
 
   /* Typography */
   --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-serif: 'Source Serif 4', Georgia, serif;
 
   /* Starfield dot colors (see "Galaxy starfield" section). Light mode gets
      faint violet/orange/slate specks on the cream sky; the dark :root swap
@@ -60,6 +85,7 @@
 
   /* Layout */
   --max-width: 1220px;
+  --nav-h: 72px; /* the sticky nav bar; 64px at 800px and below */
 
   /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -69,6 +95,39 @@
   /* Shared orange→violet accent gradient (recomputes automatically in dark
      mode from the swapped --color-accent / --color-violet tokens). */
   --grad-accent: linear-gradient(135deg, var(--color-accent), var(--color-violet));
+}
+
+/* Dark mode: the same tokens, re-inked for the night sky. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #0b1020;
+    --color-surface: #141b31;
+    --color-text: #e8eaf6;
+    --color-text-secondary: #a7aec7;
+    --color-accent: #fb923c;
+    --color-accent-rgb: 251, 146, 60;
+    /* Starlight orange already clears AA on the night sky, so link ink can
+       share the accent hues. */
+    --color-link: #fb923c;
+    --color-link-hover: #fdba74;
+    --color-accent-light: #2a1c10;
+    --color-border: rgba(232, 234, 246, 0.14);
+    --color-field-border: rgba(232, 234, 246, 0.42);
+    --color-violet: #c4b5fd;
+    --color-violet-hover: #d6cbff;
+    --color-on-fill: var(--color-bg);
+    --color-violet-rgb: 196, 181, 253;
+    --color-violet-light: #241d45;
+    --star-a: rgba(232, 234, 246, 0.8);
+    --star-b: rgba(196, 181, 253, 0.55);
+    --star-c: rgba(232, 234, 246, 0.65);
+    --star-d: rgba(251, 146, 60, 0.5);
+    --star-e: rgba(232, 234, 246, 0.45);
+    --star-f: rgba(196, 181, 253, 0.4);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
+    --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
+    --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
+  }
 }
 
 /* --- Reset --- */
@@ -81,8 +140,21 @@
 }
 
 html {
-  overflow-x: hidden;
+  /* clip, not hidden: hidden on both html and body turns body into a scroll
+     container that never scrolls, which freezes every scroll-driven
+     animation and sticky element bound to it. clip trims the same horizontal
+     overflow without creating a scroll container. */
+  overflow-x: clip;
   scrollbar-gutter: stable;
+  /* Anchor jumps and focus scrolling stop just below the sticky nav
+     instead of under it. */
+  scroll-padding-top: calc(var(--nav-h) + 8px);
+}
+
+@media (max-width: 800px) {
+  :root {
+    --nav-h: 64px;
+  }
 }
 
 /* --- Global --- */
@@ -90,6 +162,52 @@ html {
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* A column at least one screen tall, so short pages keep the footer at the
+   bottom (main grows). Fixed and absolute children aren't flex items. */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+  overflow-x: clip; /* see html: clip keeps body from becoming a scroller */
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
+    radial-gradient(ellipse 50% 32% at 88% -4%, rgba(var(--color-violet-rgb), 0.07), transparent 60%),
+    radial-gradient(ellipse 42% 26% at 8% 38%, rgba(var(--color-accent-rgb), 0.04), transparent 55%),
+    linear-gradient(180deg, #fbfaf7 0%, var(--color-bg) 100%);
+}
+
+main {
+  flex: 1 0 auto;
+  margin-bottom: 0;
+  padding-top: var(--space-xl);
+}
+
+/* Archive pages (News, Events, Resources) lead with a centered title and no
+   lead text, so drop the generic main top padding and let the hero supply a
+   small gap — keeps the title close to the sticky header. */
+main:has(.archive-page),
+main:has(.home-hero),
+main:has(.hackathon-page),
+main:has(.qff-page) {
+  padding-top: 0;
+}
+
+/* Visually hidden but exposed to assistive tech (same clip trick as the
+   skip link's resting state). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ===================================================================
@@ -105,6 +223,18 @@ img {
   transition: box-shadow 0.3s, border-color 0.3s;
   /* background, backdrop-filter, and the .nav--scrolled shadow/border are set by
      the later .nav / .nav--scrolled rules, which win by cascade order. */
+}
+
+/* Short viewports (landscape phones, 400% zoom): the bar would cover a large
+   share of the screen, so it scrolls away with the page instead. */
+@media (max-height: 480px) {
+  .nav {
+    position: relative;
+  }
+
+  html {
+    scroll-padding-top: 0;
+  }
 }
 
 .nav-inner {
@@ -167,7 +297,8 @@ img {
   transition: transform 0.25s var(--ease-out-soft);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link[aria-current]::after {
   transform: scaleX(1);
 }
 
@@ -211,15 +342,35 @@ img {
    ungated let `:hover` (specificity 0,3,0) beat the mobile `transform:none`
    reset and slide the open panel off-screen via translateX(-50%). */
 @media (min-width: 801px) {
-  .nav-dropdown:hover > .nav-dropdown-panel,
-  .nav-dropdown:focus-within > .nav-dropdown-panel {
+  /* A closed panel is also out of the tab order, so Tab from a trigger moves
+     on to the next nav item instead of walking through invisible links.
+     visibility waits for the fade-out before it hides the panel. */
+  .nav-dropdown-panel {
+    visibility: hidden;
+    transition: opacity 0.2s, transform 0.2s var(--ease-out-soft), visibility 0s linear 0.2s;
+  }
+
+  /* Open on hover; the keyboard opens a panel with .nav-dropdown--open (the
+     later rule). --dismissed (set by Escape in Header.tsx) keeps a closed
+     panel closed while the pointer is still over it (WCAG 1.4.13). */
+  .nav-dropdown:not(.nav-dropdown--dismissed):hover > .nav-dropdown-panel {
     opacity: 1;
     pointer-events: auto;
     transform: translateX(-50%) translateY(0);
   }
 
-  .nav-dropdown:hover .nav-chevron {
+  .nav-dropdown:not(.nav-dropdown--dismissed):hover > .nav-dropdown-panel,
+  .nav-dropdown--open > .nav-dropdown-panel {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .nav-dropdown:not(.nav-dropdown--dismissed):hover .nav-chevron {
     transform: rotate(180deg);
+  }
+
+  .nav-dropdown--dismissed > .nav-dropdown-panel {
+    visibility: hidden;
   }
 }
 
@@ -263,11 +414,6 @@ img {
   top: -0.42rem;
   height: 1px;
   background: var(--color-border);
-}
-
-.nav-dropdown-link--view-all:hover {
-  color: var(--color-link-hover);
-  background: transparent;
 }
 
 /* Parent link with arrow indicator */
@@ -351,10 +497,6 @@ img {
    =================================================================== */
 
 @media (max-width: 800px) {
-  .nav-inner {
-    padding: 0 var(--space-md);
-  }
-
   .nav-toggle {
     display: flex;
   }
@@ -366,14 +508,14 @@ img {
   .nav-links {
     display: none;
     position: fixed;
-    top: 64px;
+    top: var(--nav-h);
     left: 0;
     right: 0;
     /* vh/dvh are viewport-relative regardless of the containing block (.nav's
        backdrop-filter would otherwise trap a fixed `bottom:0`). dvh tracks the
        mobile URL bar; the vh line is the fallback. */
-    max-height: calc(100vh - 64px);
-    max-height: calc(100dvh - 64px);
+    max-height: calc(100vh - var(--nav-h));
+    max-height: calc(100dvh - var(--nav-h));
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -384,14 +526,14 @@ img {
     padding: 0.5rem 0 0.75rem;
     overflow-y: auto;
     overscroll-behavior: contain;
-    animation: navPanelOpen 0.25s var(--ease-out-soft);
+    animation: nav-panel-open 0.25s var(--ease-out-soft);
   }
 
   .nav-links--open {
     display: flex;
   }
 
-  @keyframes navPanelOpen {
+  @keyframes nav-panel-open {
     from {
       opacity: 0;
       transform: translateY(-8px);
@@ -400,12 +542,6 @@ img {
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  .nav-link {
-    padding: 0.7rem 0.85rem;
-    font-size: 1rem;
-    border-radius: 0.7rem;
   }
 
   .nav-link::after {
@@ -424,17 +560,18 @@ img {
     color: var(--color-link);
   }
 
+  /* The underline is hidden in the drawer, so the current page's row is
+     marked by color instead. */
+  .nav-links .nav-link[aria-current] {
+    color: var(--color-link);
+  }
+
   /* Dropdown on mobile — collapsed by default, expands on tap (.nav-dropdown--open) */
   .nav-dropdown-panel {
     position: static;
     opacity: 1;
     pointer-events: auto;
     transform: none;
-    border: none;
-    box-shadow: none;
-    padding: 0 0 0 var(--space-md);
-    background: transparent;
-    min-width: 0;
     transition: none;
     display: none;
   }
@@ -447,18 +584,9 @@ img {
     display: none;
   }
 
-  .nav-dropdown-link {
-    padding: 0.4rem 0.5rem;
-    color: var(--color-text-secondary);
-  }
-
   /* On mobile, show submenu content inline (no floating clone) */
   .dropdown-submenu::after {
     display: none;
-  }
-
-  .dropdown-submenu-content {
-    padding-left: var(--space-md);
   }
 
   .dropdown-submenu--open > .dropdown-submenu-content {
@@ -471,11 +599,6 @@ img {
 
   .dropdown-submenu--open > .nav-dropdown-link--parent::after {
     transform: rotate(135deg);
-  }
-
-  .nav-search-slot {
-    margin-left: 0;
-    margin-top: var(--space-md);
   }
 
   .nav-search-slot .search {
@@ -543,7 +666,7 @@ img {
   }
 
   .nav-links .dropdown-submenu-content {
-    padding-left: 0;
+    padding: 0.2rem 0 0.35rem;
   }
 
   .nav-links .dropdown-submenu-content .nav-dropdown-link {
@@ -590,7 +713,7 @@ img {
   max-height: 320px;
   overflow-y: auto;
   z-index: 1200;
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
 }
 
@@ -610,6 +733,7 @@ img {
 .search-item:hover,
 .search-item--active {
   background: var(--color-accent-light);
+  color: var(--color-text);
 }
 
 .search-item-title {
@@ -631,18 +755,19 @@ img {
 
 h1, h2, h3 {
   font-family: var(--font-serif);
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 700;
+  font-size: clamp(2.12rem, 5.3vw, 3.18rem);
+  font-weight: 600;
   margin-bottom: var(--space-xs);
 }
 
 h2 {
-  font-size: clamp(1.75rem, 2.8vw, 2.3rem);
-  font-weight: 700;
+  font-size: clamp(1.85rem, 2.97vw, 2.44rem);
+  font-weight: 600;
   line-height: 1.15;
 }
 
@@ -668,7 +793,10 @@ section p {
   line-height: 1.7;
 }
 
-/* --- Page Content (Markdown pages) --- */
+/* --- Page Content (Markdown pages) ---
+   The h2 rule, h3 chip and boxed ul style plain Markdown pages (the Code of
+   Conduct, the workshop template). They match direct children only, so the
+   headings and lists inside an event page's own markup keep their look. */
 .page-content {
   max-width: 800px;
   margin: 0 auto;
@@ -680,22 +808,22 @@ section p {
 }
 
 .page-content h1 {
-  font-size: 2rem;
+  font-size: 2.12rem;
   margin-bottom: 0.5rem;
   padding: 0;
   color: var(--color-text);
   text-align: left;
 }
 
-.page-content h2 {
-  font-size: 1.35rem;
+.page-content > h2 {
+  font-size: 1.43rem;
   margin-top: 1.5rem;
   padding-bottom: 0.375rem;
   border-bottom: 1px solid var(--color-border);
   color: var(--color-text);
 }
 
-.page-content h3 {
+.page-content > h3 {
   background: var(--color-surface);
   display: block;
   padding: 0.75rem 1rem;
@@ -705,30 +833,18 @@ section p {
   color: var(--color-text);
 }
 
-.page-content h4 {
-  margin: 0.5rem 0 0.25rem;
-  font-weight: 600;
-}
-
 .page-content p {
   color: var(--color-text-secondary);
   font-size: 1rem;
   line-height: 1.7;
 }
 
-.page-content ul {
+.page-content > ul {
   background: var(--color-surface);
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   margin-top: 0.5rem;
-}
-
-/* Nested ordered lists (the code of conduct enforcement ladder) indent
-   under their parent item instead of running flush. */
-.page-content ol ol {
-  margin: 0.35rem 0 0.5rem;
-  padding-left: 1.5rem;
 }
 
 .page-content li {
@@ -758,7 +874,7 @@ form select {
   display: block;
   width: 100%;
   padding: 0.625rem 0.875rem;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-field-border);
   border-radius: var(--radius-sm);
   font-family: var(--font-sans);
   font-size: 0.95rem;
@@ -770,7 +886,8 @@ form select {
 form input:focus,
 form textarea:focus,
 form select:focus {
-  outline: none;
+  /* Transparent, not none: forced-colors mode paints it as a real ring. */
+  outline: 2px solid transparent;
   border-color: var(--color-accent);
   /* Strong enough to read as a focus indicator on white (0.15 was nearly
      invisible); the modal form keeps its solid outline. */
@@ -792,7 +909,7 @@ form button[type='submit'] {
   margin-top: var(--space-xl);
   padding: 0.75rem;
   background: var(--color-link);
-  color: #fff;
+  color: var(--color-on-fill);
   border: none;
   border-radius: var(--radius-full);
   font-family: var(--font-sans);
@@ -812,8 +929,8 @@ form button[type='submit']:hover {
    the quantum wire divider above the copyright line. --- */
 footer {
   background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(14px) saturate(1.6);
   -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  backdrop-filter: blur(14px) saturate(1.6);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-secondary);
   font-size: 0.9rem;
@@ -828,7 +945,7 @@ footer {
   justify-content: space-between;
   gap: var(--space-lg);
   flex-wrap: wrap;
-  max-width: var(--max-width);
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
@@ -904,13 +1021,15 @@ footer {
   margin: 0;
   color: var(--color-text-secondary);
   font-size: 0.8rem;
-  max-width: var(--max-width);
+  max-width: var(--content-max);
   margin-left: auto;
   margin-right: auto;
 }
 
 .footer-copy a {
   color: inherit;
+  text-decoration-line: underline;
+  text-underline-offset: 0.18em;
 }
 
 .footer-copy a:hover,
@@ -919,6 +1038,11 @@ footer {
 }
 
 @media (max-width: 800px) {
+  footer {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
   .footer-inner {
     flex-direction: column;
     align-items: center;
@@ -927,9 +1051,12 @@ footer {
   .footer-brand {
     text-align: center;
   }
+}
 
-  .footer-logo-link {
-    display: inline-block;
+@media (prefers-color-scheme: dark) {
+  /* Frosted glass — dark variant */
+  footer {
+    background: rgba(11, 16, 32, 0.82);
   }
 }
 
@@ -954,7 +1081,7 @@ footer {
   white-space: nowrap;
   padding: var(--space-sm) var(--space-md);
   background: var(--color-link);
-  color: #fff;
+  color: var(--color-on-fill);
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 0.9rem;
@@ -976,51 +1103,6 @@ footer {
    Hackathon Landing Page
    =================================================================== */
 
-/* Hero — full-bleed solid banner */
-
-.hackathon-hero h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
-  margin: 0 auto var(--space-sm);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  text-align: center;
-}
-
-.hackathon-hero-eyebrow {
-  display: inline-block;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: var(--space-md);
-  background: rgba(255, 255, 255, 0.25);
-  padding: 0.45rem 1.4rem;
-  border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
-}
-
-.hackathon-hero-tagline {
-  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
-  opacity: 0.9;
-  max-width: 620px;
-  margin: 0 auto var(--space-2xl);
-  line-height: 1.6;
-  font-weight: 400;
-}
-
-/* Visually hidden but exposed to assistive tech (same clip trick as the
-   skip link's resting state). */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
 /* CTA Buttons */
 .hackathon-cta {
   display: inline-block;
@@ -1034,9 +1116,12 @@ footer {
   transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
   cursor: pointer;
   letter-spacing: 0.02em;
+  /* Buttons reset line-height to normal; inherit so a <button> CTA (the
+     participant-updates modal trigger) is as tall as the link CTAs. */
+  line-height: inherit;
   padding: 0.95rem 1.35rem;
   background: var(--color-text);
-  color: #fff;
+  color: var(--color-on-fill);
   border: 1px solid var(--color-text);
   font-size: 0.96rem;
   box-shadow: 0 12px 28px rgba(22, 32, 51, 0.12);
@@ -1045,81 +1130,15 @@ footer {
 .hackathon-cta:hover {
   transform: translateY(-2px);
   background: #24314b;
-  color: #fff;
+  color: var(--color-on-fill);
   box-shadow: 0 16px 34px rgba(22, 32, 51, 0.14);
 }
 
-.hackathon-cta-outline {
-  border: 1px solid var(--color-accent);
-  background: transparent;
-  color: var(--color-link);
-  border-color: rgba(var(--color-accent-rgb), 0.28);
-  box-shadow: none;
-}
-
-.hackathon-cta-outline:hover {
-  background: var(--color-accent-light);
-  color: var(--color-link-hover);
-  border-color: rgba(var(--color-accent-rgb), 0.36);
-  box-shadow: none;
-}
-
-/* CTA color variants (SCQv3 hero): Apply in Clemson orange, Devpost in nebula
-   violet. Double-class selectors outrank the dark-mode .hackathon-cta invert,
-   and the tokens themselves swap to the dark-theme shades. */
-.hackathon-cta.hackathon-cta--orange {
-  /* Link-ink orange: #fff on --color-accent is only 3.1:1, below WCAG AA.
-     In dark mode --color-link matches the accent, so this only deepens the
-     light theme. */
-  background: var(--color-link);
-  border-color: var(--color-link);
-  color: #fff;
-  box-shadow: 0 12px 28px rgba(var(--color-accent-rgb), 0.28);
-}
-
-.hackathon-cta.hackathon-cta--orange:hover {
-  background: var(--color-link-hover);
-  border-color: var(--color-link-hover);
-  color: #fff;
-  box-shadow: 0 16px 34px rgba(var(--color-accent-rgb), 0.32);
-}
-
-.hackathon-cta-outline.hackathon-cta--violet {
-  color: var(--color-violet);
-  border-color: rgba(var(--color-violet-rgb), 0.4);
-}
-
-.hackathon-cta.hackathon-cta--soon {
-  opacity: 0.55;
-  cursor: default;
-  pointer-events: none;
-}
-
-.hackathon-cta-outline.hackathon-cta--violet:hover {
-  background: var(--color-violet-light);
-  color: var(--color-violet);
-  border-color: rgba(var(--color-violet-rgb), 0.55);
-}
-
-/* Dark accent orange is light enough that white text loses contrast — use the
-   page's night-sky ink instead. */
-@media (prefers-color-scheme: dark) {
-  .hackathon-cta.hackathon-cta--orange,
-  .hackathon-cta.hackathon-cta--orange:hover {
-    color: #0b1020;
-  }
-}
-
-/* SCQv3 hero actions. History, so this stops cycling: it was orange + two
-   violet outlines, became three muted solids on 2026-09-08, and came back to
-   orange + two violet outlines on 2026-09-09 (three solids read as arbitrary,
-   neutral-grey outlines read as unfinished). Hierarchy comes from fill vs
-   outline; the palette stays the site's orange/violet pair.
-   Apply is the conversion (orange fill), Devpost is where work is submitted
-   (violet fill), Bootcamp is a reference (violet outline): Apply is the conversion, and
-   Devpost and Bootcamp are references. Squared to match the resource panels
-   and the homepage featured band, with no lift and no coloured drop shadow.
-   White on #b04700 is 5.6:1. */
+/* Hackathon hero and homepage band actions: --primary (orange fill) is the
+   conversion, e.g. Apply or Register; --secondary (violet fill) is where work
+   is submitted (Devpost); --ghost (violet outline) is a reference (Bootcamp,
+   event details). Settled: do not go back to three solids or neutral
+   outlines. Squared, no lift, no shadow. White on #b04700 is 5.6:1. */
 .hackathon-cta.hackathon-cta--primary,
 .hackathon-cta.hackathon-cta--secondary,
 .hackathon-cta.hackathon-cta--ghost {
@@ -1141,25 +1160,25 @@ footer {
 .hackathon-cta.hackathon-cta--primary {
   background: var(--color-link);
   border-color: var(--color-link);
-  color: #fff;
+  color: var(--color-on-fill);
 }
 
 .hackathon-cta.hackathon-cta--primary:hover {
   background: var(--color-link-hover);
   border-color: var(--color-link-hover);
-  color: #fff;
+  color: var(--color-on-fill);
 }
 
 .hackathon-cta.hackathon-cta--secondary {
   background: var(--color-violet);
   border-color: var(--color-violet);
-  color: #fff;
+  color: var(--color-on-fill);
 }
 
 .hackathon-cta.hackathon-cta--secondary:hover {
-  background: #5b21b6;
-  border-color: #5b21b6;
-  color: #fff;
+  background: var(--color-violet-hover);
+  border-color: var(--color-violet-hover);
+  color: var(--color-on-fill);
 }
 
 .hackathon-cta.hackathon-cta--ghost {
@@ -1174,40 +1193,15 @@ footer {
   color: var(--color-violet);
 }
 
+/* Dark: the fills and text swap through the tokens; only the ghost outline
+   needs a stronger edge on the navy page. */
 @media (prefers-color-scheme: dark) {
-  .hackathon-cta.hackathon-cta--primary {
-    background: #fb923c;
-    border-color: #fb923c;
-    color: #0b1020;
-  }
-
-  .hackathon-cta.hackathon-cta--primary:hover {
-    background: #fdba74;
-    border-color: #fdba74;
-    color: #0b1020;
-  }
-
-  .hackathon-cta.hackathon-cta--secondary {
-    background: var(--color-violet);
-    border-color: var(--color-violet);
-    color: #0b1020;
-  }
-
-  .hackathon-cta.hackathon-cta--secondary:hover {
-    background: #d6cbff;
-    border-color: #d6cbff;
-    color: #0b1020;
-  }
-
   .hackathon-cta.hackathon-cta--ghost {
     border-color: rgba(var(--color-violet-rgb), 0.5);
-    color: var(--color-violet);
   }
 
   .hackathon-cta.hackathon-cta--ghost:hover {
-    background: var(--color-violet-light);
     border-color: rgba(var(--color-violet-rgb), 0.75);
-    color: var(--color-violet);
   }
 }
 
@@ -1222,49 +1216,12 @@ footer {
 /* Key Details spec sheet, Schedule timeline, Tracks rows, and Prizes podium
    are defined in the main hackathon block below; search ".hackathon-specs". */
 
-/* Resources list override */
-.hackathon-section ul {
-  margin-top: var(--space-lg);
-  padding-left: 0;
-  list-style: none;
-}
-
-.hackathon-section li {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: 1rem;
-  color: var(--color-text);
-}
-
-.hackathon-section li:last-child {
-  border-bottom: none;
-}
-
-.hackathon-section li strong {
-  color: var(--color-text);
-}
-
-.hackathon-section li a {
-  color: var(--color-link);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.hackathon-section li a:hover {
-  text-decoration: underline;
-}
-
 /* Where to Stay: one row per hotel, set like the Challenges rows (flat
-   dividers, serif name, no card). The .hackathon-section prefix outranks the
-   generic .page-content ul / .hackathon-section li a rules that would
-   otherwise box the list and colour the names as links. */
+   dividers, serif name, no card). */
 .hackathon-section .hackathon-hotels {
   margin: 0.5rem 0 0;
   padding: 0;
   list-style: none;
-  background: none;
-  border: 0;
-  border-radius: 0;
 }
 
 .hackathon-section .hackathon-hotel {
@@ -1275,6 +1232,20 @@ footer {
   margin: 0;
   padding: clamp(1.3rem, 2.5vw, 1.9rem) 0.25rem;
   border-bottom: 1px solid var(--color-border);
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.hackathon-section .hackathon-hotel:last-child {
+  border-bottom: 0;
+}
+
+/* Lists without prices (SC Quantathon v4): no empty third column, so the
+   drive distance stays flush right. Desktop only; phones stack every row. */
+@media (min-width: 801px) {
+  .hackathon-section .hackathon-hotel:not(:has(.hackathon-hotel-price)) {
+    grid-template-columns: 1fr auto;
+  }
 }
 
 /* No rule above the first row, so it sits closer to the intro sentence. */
@@ -1289,13 +1260,13 @@ footer {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-link); /* the accent orange is 2.8:1 on cream */
 }
 
 .hackathon-section .hackathon-hotel-name {
   font-family: var(--font-serif);
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-  font-weight: 700;
+  font-size: clamp(1.22rem, 1.91vw, 1.54rem);
+  font-weight: 600;
   line-height: 1.2;
   color: var(--color-text);
   text-decoration: none;
@@ -1406,18 +1377,13 @@ footer {
 }
 
 .hackathon-sponsor-tier h3 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.33rem;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-secondary);
   text-align: center;
-  margin-bottom: var(--space-md);
-  background: none;
-  padding: 0;
-  border-radius: 0;
-  border: none;
-  box-shadow: none;
+  margin: var(--space-md) 0;
 }
 
 .hackathon-sponsor-logos {
@@ -1487,59 +1453,118 @@ footer {
   max-height: 120px;
 }
 
+/* Sponsor carousel (components/SponsorCarousel.tsx): one endless row of
+   logos, no tiers. The track holds the logo set twice over and slides left by
+   half its width, so the loop is seamless. Edges fade into the page. */
+.sponsor-carousel {
+  overflow: hidden;
+  padding: var(--space-md) 0;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.sponsor-carousel__track {
+  display: flex;
+  width: max-content;
+  animation: sponsor-carousel-scroll var(--sponsor-carousel-duration, 30s) linear infinite;
+}
+
+/* A second row scrolls the other way. */
+.sponsor-carousel--reverse .sponsor-carousel__track {
+  animation-direction: reverse;
+}
+
+/* Hover holds it still to read or click a logo. */
+.sponsor-carousel:hover .sponsor-carousel__track,
+.sponsor-carousel:focus-within .sponsor-carousel__track {
+  animation-play-state: paused;
+}
+
+/* Keyboard focus (only the first copy is in the Tab order) stops the strip
+   at its start and drops the edge fade, so the focused logo is on screen,
+   unfaded, with its focus ring; the browser scrolls a later logo into view. */
+.sponsor-carousel:has(:focus-visible) {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.sponsor-carousel:has(:focus-visible) .sponsor-carousel__track {
+  animation: none;
+}
+
+.sponsor-carousel__set {
+  display: flex;
+  align-items: center;
+  gap: clamp(3rem, 7vw, 5.5rem);
+  padding-right: clamp(3rem, 7vw, 5.5rem);
+}
+
+.sponsor-carousel .hackathon-sponsor-logo {
+  min-width: 0;
+  min-height: 0;
+  padding: 0.5rem 0;
+}
+
+.sponsor-carousel .hackathon-sponsor-logo img {
+  max-height: 64px;
+  max-width: 260px;
+}
+
+/* Squarer marks (SC Quantum, TraCR) read small next to wordmarks at one
+   height; WCU's signature carries a text line under its monogram. */
+.sponsor-carousel .hackathon-sponsor-logo img[src*="scq-logo"],
+.sponsor-carousel .hackathon-sponsor-logo img[src*="tracr-logo"] {
+  max-height: 84px;
+}
+
+.sponsor-carousel .hackathon-sponsor-logo img[src*="wcu-coe-logo"] {
+  max-height: 96px;
+}
+
+/* IBM's kit has the Qiskit pictogram only (no wordmark, and IBM forbids
+   building a lock-up). The SVG has a viewBox but no size, so set one. */
+.sponsor-carousel .hackathon-sponsor-logo img[src*="qiskit-pictogram"] {
+  width: 72px;
+  height: 72px;
+  max-height: none;
+}
+
+@keyframes sponsor-carousel-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Still, centered, each sponsor once. */
+@media (prefers-reduced-motion: reduce) {
+  .sponsor-carousel {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .sponsor-carousel__track {
+    width: auto;
+    justify-content: center;
+    animation: none;
+  }
+
+  .sponsor-carousel__set {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .sponsor-carousel__set[aria-hidden='true'] {
+    display: none;
+  }
+}
+
 /* Hackathon Team Grid */
 
 .hackathon-team-role {
   font-size: 0.8rem;
   color: var(--color-text-secondary);
   margin-top: 0.15rem;
-}
-
-/* Apply Section — full-bleed solid. The template applies BOTH classes
-   (`hackathon-section hackathon-apply`), so these selectors double up the
-   class to outrank the later same-specificity `.hackathon-section` rules —
-   a single `.hackathon-apply` would lose the cascade and render the band's
-   white ink on a transparent background. */
-.hackathon-section.hackathon-apply {
-  text-align: center;
-  padding: 5rem clamp(1.5rem, 5vw, 4rem);
-  background: var(--color-accent-900);
-  color: #fff;
-}
-
-.hackathon-section.hackathon-apply h2 {
-  color: #fff;
-  border-bottom-color: rgba(255, 255, 255, 0.25);
-  display: block;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.hackathon-section.hackathon-apply p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.1rem;
-  max-width: 550px;
-  margin: 0 auto var(--space-xl);
-  line-height: 1.6;
-}
-
-.hackathon-apply-note {
-  font-size: 0.9rem;
-  margin-top: var(--space-xl);
-  opacity: 0.75;
-}
-
-.hackathon-apply-note a {
-  color: #fff;
-  text-decoration: underline;
-}
-
-/* Responsive */
-@media (max-width: 639px) {
-  /* Doubled class for the same cascade reason as the band rules above. */
-  .hackathon-section.hackathon-apply {
-    padding: 3.5rem var(--space-lg);
-  }
 }
 
 /* ===================================================================
@@ -1577,8 +1602,7 @@ footer {
 .sw-filter__count {
   margin-left: 0.35rem;
   font-size: 0.78rem;
-  font-weight: 600;
-  opacity: 0.7;
+  font-weight: 400;
 }
 
 /* On phones the tab row scrolls horizontally instead of wrapping. */
@@ -1589,6 +1613,16 @@ footer {
     overflow-x: auto;
     overflow-y: hidden;
     scrollbar-width: none;
+    /* No scrollbar, so fade the right edge: a cut-off tab shows the row
+       scrolls. The end padding lets the last tab scroll clear of the fade. */
+    padding-right: 2.5rem;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+  }
+
+  /* The scroller clips anything outside it, so draw the focus ring inside. */
+  .sw-filter__btn:focus-visible {
+    outline-offset: -2px;
   }
 
   .sw-filter::-webkit-scrollbar {
@@ -1737,15 +1771,15 @@ footer {
 
 .sw-title {
   margin: 0 0 0.5rem;
-  font-size: 1.22rem;
-  font-weight: 600;
+  font-size: 1.29rem;
+  font-weight: 500;
 }
 .sw-title a {
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.15s;
 }
-.sw-title a:hover {
+.sw-title a:is(:hover, :focus-visible) {
   color: var(--color-link);
 }
 
@@ -1764,7 +1798,7 @@ footer {
 }
 
 /* ===================================================================
-   Homepage Hero — photo + dual CTAs
+   Homepage Hero: title, divider, and two intro paragraphs
    =================================================================== */
 
 /* position: relative — the absolutely-positioned .quantum-canvas (z-index: 0)
@@ -1779,15 +1813,14 @@ footer {
 }
 
 .home-hero__title {
-  font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.025em;
   /* A touch of air above and below so the headline doesn't crowd the header
      or the divider. */
   margin: 0.5rem 0 0.75rem;
   padding: 0;
   color: var(--color-text);
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  font-size: clamp(2.76rem, 5.3vw, 4.45rem);
   line-height: 1;
   text-align: center;
 }
@@ -1881,13 +1914,14 @@ footer {
    so every teleport (the back-to-back offset-distance stops) happens strictly
    while opacity is 0. Browsers without motion-path support — and
    reduced-motion visitors — keep the static dots. Gated off reveal-init so the
-   scroll-reveal fade still owns the entrance. */
+   scroll-reveal fade still owns the entrance, and on data-live, which
+   ConstellationDivider sets only while the divider is on screen. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (offset-path: path('M0 0 L4 0')) {
     /* reveal-init stays on after reveal-in is added, so "revealed or never
        reveal-managed" is: not (reveal-init without reveal-in). */
-    .constellation-divider:not(.reveal-init) .cd-dot--wave,
-    .constellation-divider.reveal-in .cd-dot--wave {
+    .constellation-divider[data-live]:not(.reveal-init) .cd-dot--wave,
+    .constellation-divider[data-live].reveal-in .cd-dot--wave {
       cx: 0;
       cy: 0;
       offset-rotate: 0deg;
@@ -1897,8 +1931,8 @@ footer {
       animation: cd-jump-a 16s ease-in-out infinite;
     }
 
-    .constellation-divider:not(.reveal-init) .cd-dot--wave.cd-dot--violet,
-    .constellation-divider.reveal-in .cd-dot--wave.cd-dot--violet {
+    .constellation-divider[data-live]:not(.reveal-init) .cd-dot--wave.cd-dot--violet,
+    .constellation-divider[data-live].reveal-in .cd-dot--wave.cd-dot--violet {
       offset-path: path(
         'M151 18 q5.25 -6.5 10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0 t10.5 0'
       );
@@ -2010,10 +2044,8 @@ footer {
   }
 }
 
-/* Home hero: the divider is a grid child under the full-width title and
-   must sit above the hero canvas like its siblings. */
+/* Home hero: the divider must sit above the hero canvas like its siblings. */
 .home-hero .constellation-divider {
-  grid-column: 1 / -1;
   position: relative;
   z-index: 1;
   margin-top: -0.5rem;
@@ -2050,18 +2082,11 @@ footer {
 }
 
 /* ===================================================================
-   Search container — positioning anchor for the results dropdown
-   =================================================================== */
-
-.search-container {
-  position: relative;
-}
-
-/* ===================================================================
    Page-specific layout utilities
    =================================================================== */
 
-/* Inline notice shown above the contact form until Formspree is configured */
+/* Inline notice above the contact form (e.g. when the Web3Forms key is missing
+   and the form falls back to mailto). */
 .form-note {
   margin: 0;
   padding: 0.75rem 1rem;
@@ -2105,11 +2130,11 @@ footer {
 }
 
 /* The two "Start here" panels are navigation, not preview cards, so they drop
-   the rounded/​shadowed card language they used to share with the news grid.
+   the rounded/shadowed card language they used to share with the news grid.
    Everything is left-aligned, the per-panel colour moves out of the title text
    and into a top rule, and an arrow makes the link affordance explicit.
-   Scoped to .resource-cards: the bare .hackathon-resource-card class is still
-   used by the hosted-hackathon page template. */
+   Scoped to .resource-cards, which outranks the base .hackathon-resource-card
+   rules. */
 .resource-cards .hackathon-resource-card {
   --rc-accent: var(--color-accent);
   --rc-tint: var(--color-accent-light);
@@ -2151,6 +2176,7 @@ footer {
 .resource-cards .hackathon-resource-card:focus-visible {
   background: var(--rc-tint);
   border-color: var(--rc-accent);
+  box-shadow: none;
 }
 
 .resource-cards .hackathon-resource-card:hover .hackathon-resource-title::after,
@@ -2161,6 +2187,11 @@ footer {
 .resource-cards .hackathon-resource-card:focus-visible {
   outline: 2px solid var(--rc-accent);
   outline-offset: 3px;
+}
+
+/* Orange is 2.8:1 on cream, under the 3:1 a focus ring needs. */
+.resource-cards .hackathon-resource-card:not(.hackathon-resource-card--violet):focus-visible {
+  outline-color: var(--color-link);
 }
 
 /* Quantum faculty — distinct 2-column people layout (role eyebrow + headshot +
@@ -2183,6 +2214,9 @@ footer {
   height: 78px;
   border-radius: 50%;
   object-fit: cover;
+  /* The photos are portraits taller than the circle; a centered crop cut
+     off the tops of heads (Tucker, Tewari, Podila). Crop from the top. */
+  object-position: 50% 0;
   border: 2px solid var(--color-border);
 }
 .faculty-card__role {
@@ -2195,9 +2229,8 @@ footer {
 }
 .faculty-card__name {
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: 1.18rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 500;
   color: var(--color-text);
 }
 .faculty-card__links {
@@ -2213,7 +2246,7 @@ footer {
   transition: color 0.15s;
 }
 .faculty-card__link:hover {
-  color: var(--color-accent);
+  color: var(--color-link);
 }
 .faculty-card__link-icon {
   /* Same box as .board-member__link-icon so both sections' icons match. */
@@ -2351,6 +2384,15 @@ footer {
   -webkit-mask: url('/images/tiger-paw.webp') center / contain no-repeat;
   mask: url('/images/tiger-paw.webp') center / contain no-repeat;
 }
+
+/* Forced colors (high contrast) would replace the background color the paw
+   is painted with, leaving an empty link; paint it in the link color. */
+@media (forced-colors: active) {
+  .tiger-paw-icon {
+    forced-color-adjust: none;
+    background-color: LinkText;
+  }
+}
 @media (max-width: 860px) {
   .gi-channel {
     flex-basis: 42%;
@@ -2370,7 +2412,7 @@ footer {
   padding: 0;
   max-width: 15ch;
   margin-bottom: var(--space-md);
-  font-size: clamp(2.4rem, 5.5vw, 4.4rem);
+  font-size: clamp(2.54rem, 5.83vw, 4.66rem);
   line-height: 1.02;
   color: var(--color-text);
   text-align: left;
@@ -2388,7 +2430,7 @@ footer {
   text-align: center;
   /* Single line on a full desktop window; wraps on narrower viewports
      (never force nowrap on titles — it clips instead of wrapping). */
-  font-size: clamp(2rem, 4.4vw, 3.1rem);
+  font-size: clamp(2.12rem, 4.66vw, 3.29rem);
 }
 
 .about-page__tagline {
@@ -2411,8 +2453,8 @@ footer {
   margin: 0 0 var(--space-lg);
   color: var(--color-text);
   font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 1.43rem;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -2456,9 +2498,8 @@ footer {
 
 .about-page__section h2 {
   max-width: 16ch;
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 3.4vw, 2.75rem);
-  font-weight: 700;
+  font-size: clamp(2.12rem, 3.6vw, 2.92rem);
+  font-weight: 600;
   line-height: 1.1;
   color: var(--color-text);
   margin: 0;
@@ -2511,18 +2552,17 @@ footer {
 
 .about-page__why-num {
   padding-top: 0.2rem; /* optically align with the h3 cap height */
-  color: var(--color-accent);
+  color: var(--color-link); /* the accent orange is 2.8:1 on cream */
   font-family: var(--font-serif);
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.06em;
 }
 
 .about-page__why-item h3 {
   margin: 0 0 var(--space-sm);
   color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: 1.33rem;
   line-height: 1.2;
 }
 
@@ -2546,7 +2586,8 @@ footer {
   border-top: 1px solid var(--color-border);
 }
 
-.about-page__activity-list li::before {
+.about-page__activity-list li::before,
+.gi-schedule__item--next::before {
   content: '';
   position: absolute;
   top: 1.42rem;
@@ -2607,21 +2648,20 @@ footer {
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 800px) {
   .about-page {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
   }
-
 }
 
 /* Get Involved semester schedule: editorial ruled rows, no card chrome.
    Past meetings dim behind a check; the next meeting reuses the glowing
    node marker recipe from .about-page__activity-list li::before. Past/next
-   classes are computed at build time (UTC date compare), so they refresh
-   with each deploy. */
+   classes are computed at build time against today in Clemson
+   (todayInClemson), so they refresh with each deploy. */
 /* Schedule split: meeting list on the left, logo/artwork spot on the
-   right (swap the image in page.tsx to feature something else). */
+   right (the image is set in app/get-involved/page.tsx). */
 .gi-schedule-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 0.5fr);
@@ -2678,18 +2718,6 @@ footer {
   color: var(--color-link);
 }
 
-.gi-schedule__item--next::before {
-  content: '';
-  position: absolute;
-  top: 1.42rem;
-  left: 0;
-  width: 7px;
-  height: 7px;
-  background: var(--color-accent);
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(var(--color-violet-rgb), 0.45);
-}
-
 /* Past: dimmed with a small check in the marker slot — never strikethrough. */
 .gi-schedule__item--past {
   /* 0.92 keeps the secondary ink at 4.6:1 on cream; 0.85 fell to 4.3:1. */
@@ -2721,15 +2749,10 @@ footer {
 }
 
 /* ===================================================================
-   Dark Mode
+   Second pass: links, nav, search, archive pages, cards, people, the
+   modal, Learning Resources and the hackathon page blocks. The nav and
+   search rules here win over the earlier blocks by source order.
    =================================================================== */
-
-@media (prefers-color-scheme: dark) {
-  /* Frosted glass — dark variant */
-  footer {
-    background: rgba(11, 16, 32, 0.82);
-  }
-}
 
 /* Inline SVG icons inside board-member link rows (envelope, LinkedIn, GitHub,
    website globe). Color only — sizing comes from .board-member__link-icon so
@@ -2754,7 +2777,7 @@ footer {
 
 .about-past-board__header h2 {
   max-width: none;
-  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-size: clamp(1.54rem, 2.65vw, 2.12rem);
 }
 
 .about-past-board__header p {
@@ -2776,11 +2799,18 @@ button.view-all-link {
   list-style: none;
   padding: 0;
   margin: var(--space-lg) 0 0;
-  display: grid;
-  /* Up to 3 per row across the section; auto-fill (not auto-fit) keeps a lone
-     member from stretching to full width, and it wraps to 2/1 on narrow screens. */
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
-  gap: var(--space-md);
+  /* Members spread evenly across the section (3 in a row on desktop), and
+     space-evenly centers any member left alone on a wrapped row. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: var(--space-md) var(--space-xl);
+}
+
+/* The list stays in the DOM while collapsed; display:flex above would
+   otherwise override the hidden attribute. */
+.about-past-board__list[hidden] {
+  display: none;
 }
 .about-past-board__item {
   display: flex;
@@ -2823,27 +2853,10 @@ button.view-all-link {
 }
 
 @media (max-width: 639px) {
-  .about-past-board {
-    padding: 0;
-  }
-
   .about-past-board__header {
     align-items: flex-start;
     flex-direction: column;
   }
-}
-
-body {
-  width: 100%;
-  overflow-x: hidden;
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  color: var(--color-text);
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
-    radial-gradient(ellipse 50% 32% at 88% -4%, rgba(var(--color-violet-rgb), 0.07), transparent 60%),
-    radial-gradient(ellipse 42% 26% at 8% 38%, rgba(var(--color-accent-rgb), 0.04), transparent 55%),
-    linear-gradient(180deg, #fbfaf7 0%, var(--color-bg) 100%);
 }
 
 a {
@@ -2856,11 +2869,22 @@ a:hover {
   color: var(--color-link-hover);
 }
 
+/* Links inside running text are underlined: their color alone is too close
+   to the body text to find them (WCAG 1.4.1). Only unclassed links in
+   paragraphs, list items, and table cells, so nav, buttons, cards, chips,
+   and logos (all classed) keep their own look. The Fall Fest tagline has
+   its own underline style. */
+:is(.page-content, .about-page, .archive-page) :is(p, li, dd, td):not(.qff-tagline) a:not([class]) {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
 .nav {
   background: rgba(251, 250, 247, 0.88);
   border-bottom-color: rgba(22, 32, 51, 0.08);
-  backdrop-filter: blur(18px) saturate(1.25);
   -webkit-backdrop-filter: blur(18px) saturate(1.25);
+  backdrop-filter: blur(18px) saturate(1.25);
 }
 
 .nav--scrolled {
@@ -2869,7 +2893,7 @@ a:hover {
 }
 
 .nav-inner {
-  height: 72px;
+  height: var(--nav-h);
   padding: 0 var(--space-xl);
 }
 
@@ -2890,16 +2914,11 @@ a:hover {
   background: rgba(22, 32, 51, 0.06);
 }
 
-.nav-link::after {
-  background: var(--color-accent);
-}
-
 .nav-dropdown-panel {
   top: calc(100% + 10px);
-  left: 50%;
   min-width: 250px;
   padding: 0.65rem;
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   border: 1px solid rgba(22, 32, 51, 0.1);
   box-shadow: var(--shadow-lg);
 }
@@ -2915,7 +2934,6 @@ a:hover {
 }
 
 .nav-dropdown-link {
-  color: var(--color-text);
   border-radius: 0.8rem;
 }
 
@@ -2929,11 +2947,6 @@ a:hover {
   font-weight: 600;
 }
 
-.nav-dropdown-link--parent::after {
-  border-right-color: var(--color-text-secondary);
-  border-top-color: var(--color-text-secondary);
-}
-
 .nav-dropdown-link--view-all {
   color: var(--color-link);
 }
@@ -2941,10 +2954,6 @@ a:hover {
 .nav-dropdown-link--view-all:hover,
 .nav-dropdown-link--view-all:focus-visible {
   color: var(--color-link-hover);
-}
-
-.nav-dropdown-link--all {
-  margin-top: 0.85rem;
 }
 
 @media (min-width: 801px) {
@@ -2973,7 +2982,7 @@ a:hover {
     transform: translateY(4px);
     background: var(--color-surface);
     border: 1px solid rgba(22, 32, 51, 0.1);
-    border-radius: 1rem;
+    border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     transition: opacity 0.16s ease, transform 0.16s ease;
   }
@@ -3000,6 +3009,8 @@ a:hover {
 .search:focus-within {
   border-color: var(--color-link);
   box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.45);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }
 
 .search-icon {
@@ -3021,20 +3032,7 @@ a:hover {
   margin-left: 0.55rem;
 }
 
-main {
-  margin-bottom: 0;
-  padding-top: var(--space-xl);
-}
-
-/* Archive pages (News, Events, Resources) lead with a centered title and no
-   lead text, so drop the generic main top padding and let the hero supply a
-   small gap — keeps the title close to the sticky header. */
-main:has(.archive-page),
-main:has(.home-hero),
-main:has(.hackathon-page),
-main:has(.qff-page) {
-  padding-top: 0;
-}
+/* --- Archive pages, preview cards and homepage sections --- */
 
 .archive-page,
 .home-section {
@@ -3056,7 +3054,7 @@ main:has(.qff-page) {
   padding: 0;
   color: var(--color-text);
   text-align: center;
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.65rem, 5.3vw, 4.24rem);
   line-height: 0.95;
 }
 
@@ -3123,8 +3121,11 @@ main:has(.qff-page) {
     0 0 0 1px rgba(var(--color-violet-rgb), 0.08);
 }
 
+/* min-height: 0 keeps the slot at 16:9. As a flex item its default
+   min-height: auto lets a tall image (portrait posters) stretch the slot. */
 .preview-card__media {
   aspect-ratio: 16 / 9;
+  min-height: 0;
   overflow: hidden;
   background: #f0ece5;
 }
@@ -3144,80 +3145,57 @@ main:has(.qff-page) {
   transform: scale(1.03);
 }
 
-/* Posters that are more square/portrait than the 16:9 card slot get cropped by
-   the default `cover`. For these, show the whole image with `contain` and fill
-   the letterbox with a blurred, zoomed copy of the same image so the card still
-   reads as full-bleed rather than having bars. Targeted per image via its src;
-   all other cards keep `cover`. */
-.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"]),
-.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"]),
-.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"]),
-.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"]) {
+/* Card images (PreviewCard's IMAGE_FIT). A --poster is squarer than the 16:9
+   slot, so it shows whole (contain) over a blurred, zoomed copy of itself
+   (--card-image) and the card still reads full-bleed. A --logo is a wide logo
+   on white, shown whole on a white slot so the letterbox blends in. Double
+   classes outrank the dark-mode media background. */
+.preview-card__media.preview-card__media--poster {
   position: relative;
 }
 
-.preview-card__image[src$="scq-v1-graphic.webp"],
-.preview-card__image[src$="scq-v2-graphic.webp"],
-.preview-card__image[src$="iquhack-2026.webp"],
-.preview-card__image[src$="building-quantum-talent.webp"] {
+.preview-card__media--poster .preview-card__image {
   position: relative;
   object-fit: contain;
 }
 
-.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before,
-.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before,
-.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before,
-.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"])::before {
+.preview-card__media.preview-card__media--poster::before {
   content: '';
   position: absolute;
   inset: 0;
   filter: blur(20px) brightness(0.8);
   transform: scale(1.18);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: var(--card-image) center / cover no-repeat;
 }
 
-.preview-card__media:has(.preview-card__image[src$="scq-v1-graphic.webp"])::before {
-  background-image: url('/images/scq-v1-graphic.webp');
-}
-.preview-card__media:has(.preview-card__image[src$="scq-v2-graphic.webp"])::before {
-  background-image: url('/images/scq-v2-graphic.webp');
-}
-.preview-card__media:has(.preview-card__image[src$="iquhack-2026.webp"])::before {
-  background-image: url('/images/iquhack-2026.webp');
-}
-.preview-card__media:has(.preview-card__image[src$="building-quantum-talent.webp"])::before {
-  background-image: url('/images/building-quantum-talent.webp');
-}
-
-/* Tiger Prowl is a wide logo on a white background; show it whole and centered
-   (contain) on a white slot so it isn't cropped and the letterbox blends with
-   the logo's own white background. */
-.preview-card__media:has(.preview-card__image[src$="tiger-prowl.webp"]) {
+.preview-card__media.preview-card__media--logo {
   background: #ffffff;
 }
 
-.preview-card__image[src$="tiger-prowl.webp"] {
+.preview-card__media--logo .preview-card__image {
   object-fit: contain;
   object-position: center;
   padding: 0.5rem;
 }
 
 .preview-card__body {
-  position: relative; /* anchors the absolutely-positioned Upcoming badge */
   display: flex;
   flex: 1;
   flex-direction: column;
   gap: 0.9rem;
   padding: 1.25rem;
+  /* Every card the same height, even a lone card in a filtered term, with
+     the title and summary sitting together at the top; any spare room
+     falls above the footer instead of between title and summary. */
+  min-height: 19rem;
 }
 
 .preview-card__meta {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.75rem;
+  align-items: center;
+  gap: 0.4rem 0.75rem;
   min-height: 1.4rem;
 }
 
@@ -3229,15 +3207,13 @@ main:has(.qff-page) {
   text-transform: uppercase;
 }
 
-/* Pinned to the top-right of the card's text area (below the image) at every
-   breakpoint, aligned with the date line. */
+/* At the right end of the date line at every breakpoint. In the row, not
+   pinned over it, so a long date on a narrow card pushes the badge onto its
+   own line instead of running under it. */
 .preview-card__badge {
-  position: absolute;
-  top: 1.1rem;
-  right: 1.25rem;
-  z-index: 1;
+  margin-left: auto;
   padding: 0.22rem 0.58rem;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   background: var(--color-violet-light);
   color: var(--color-violet);
   font-size: 0.7rem;
@@ -3250,22 +3226,27 @@ main:has(.qff-page) {
 .preview-card__title {
   margin: 0;
   color: var(--color-text);
-  font-size: 1.18rem;
+  font-size: 1.25rem;
   line-height: 1.22;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 4;
   overflow: hidden;
 }
 
+/* Centered in the space between the title and the footer (or the card's
+   bottom edge): the summary's auto margins split the spare room evenly, and
+   a footer right after it gives up its own auto margin below. */
 .preview-card__summary {
-  margin: 0;
+  margin: auto 0;
   color: var(--color-text-secondary);
   font-size: 0.96rem;
   line-height: 1.65;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  /* Summaries are one or two sentences; 8 lines shows them whole and only
+     guards against a runaway one. */
+  -webkit-line-clamp: 8;
   overflow: hidden;
 }
 
@@ -3275,6 +3256,17 @@ main:has(.qff-page) {
   margin-top: auto;
   padding-top: 0.9rem;
   border-top: 1px solid rgba(22, 32, 51, 0.08);
+}
+
+.preview-card__summary + .preview-card__footer {
+  margin-top: 0;
+}
+
+/* No footer: center against the card's bottom edge. Above the summary sits
+   the 0.9rem flex gap; below it, the body's 1.25rem padding. The difference
+   evens them out. */
+.preview-card__summary:last-child {
+  padding-top: calc(1.25rem - 0.9rem);
 }
 
 .preview-card__label {
@@ -3293,7 +3285,7 @@ main:has(.qff-page) {
 .home-section__title {
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(2rem, 4vw, 2.8rem);
+  font-size: clamp(2.12rem, 4.24vw, 2.97rem);
   text-align: left;
   line-height: 1.02;
 }
@@ -3363,6 +3355,8 @@ main:has(.qff-page) {
   text-align: center;
 }
 
+/* --- People cards (board, faculty, past board) --- */
+
 .board-members-list {
   gap: var(--space-lg);
   max-width: 1000px;
@@ -3394,7 +3388,7 @@ main:has(.qff-page) {
   flex-shrink: 0;
   width: 120px;
   height: 120px;
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   object-fit: cover;
   background: #efede7;
 }
@@ -3415,12 +3409,11 @@ main:has(.qff-page) {
 }
 
 .board-member__name {
-  font-family: var(--font-serif);
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: -0.01em;
   margin: 0;
   color: var(--color-text);
-  font-size: 1.45rem;
+  font-size: 1.54rem;
 }
 
 .board-member__role {
@@ -3436,6 +3429,7 @@ main:has(.qff-page) {
   color: var(--color-text-secondary);
   line-height: 1.72;
   font-size: 1rem;
+  white-space: pre-line; /* keeps the line breaks written in the description */
 }
 
 .board-member__links {
@@ -3443,6 +3437,21 @@ main:has(.qff-page) {
   display: flex;
   align-items: center;
   gap: 0.85rem;
+}
+
+/* Tap targets of at least 24×24px (WCAG 2.5.8) around the icons; the icons
+   keep their one shared 1.45rem size. Also the past-board "View archive". */
+.board-member__links a,
+.faculty-card__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.about-past-board__header .view-all-link {
+  min-height: 24px;
 }
 
 .board-member__link-icon {
@@ -3480,7 +3489,7 @@ main:has(.qff-page) {
     height: auto;
     min-height: 0;
     padding: 0.8rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-lg);
   }
 
   .preview-card__media {
@@ -3492,6 +3501,7 @@ main:has(.qff-page) {
 
   .preview-card__body {
     min-width: 0;
+    min-height: 0; /* compact rows are sized by their 96px thumbnail */
     padding: 0;
     gap: 0.35rem;
   }
@@ -3507,14 +3517,11 @@ main:has(.qff-page) {
   }
 
   .preview-card__badge {
-    top: 0;
-    right: 0;
     padding: 0.16rem 0.5rem;
-    font-size: 0.64rem;
   }
 
   .preview-card__title {
-    font-size: 1rem;
+    font-size: 1.06rem;
     line-height: 1.25;
     -webkit-line-clamp: 2;
   }
@@ -3527,7 +3534,6 @@ main:has(.qff-page) {
 
 @media (max-width: 800px) {
   .nav-inner {
-    height: 64px;
     padding: 0 var(--space-md);
   }
 
@@ -3537,26 +3543,11 @@ main:has(.qff-page) {
     border: none;
     border-radius: 0;
     box-shadow: none;
-    padding: 0 0 0 var(--space-md);
     min-width: 0;
-    top: auto;
-    left: auto;
   }
 
   .nav-dropdown--open > .nav-dropdown-panel {
     transform: none;
-  }
-
-  .dropdown-submenu-content {
-    position: static;
-    width: auto;
-    padding: 0.2rem 0 0.35rem var(--space-md);
-    opacity: 1;
-    pointer-events: auto;
-    transform: none;
-    border: 0;
-    box-shadow: none;
-    background: transparent;
   }
 
   .search {
@@ -3574,7 +3565,7 @@ main:has(.qff-page) {
   }
 
   .archive-hero__title {
-    font-size: clamp(2.2rem, 11vw, 3rem);
+    font-size: clamp(2.33rem, 11.66vw, 3.18rem);
   }
 
   .home-hero {
@@ -3583,7 +3574,7 @@ main:has(.qff-page) {
 
   .home-section__title {
     text-align: left;
-    font-size: clamp(2rem, 9vw, 2.6rem);
+    font-size: clamp(2.12rem, 9.54vw, 2.76rem);
   }
 
   .home-section__header {
@@ -3595,12 +3586,14 @@ main:has(.qff-page) {
     align-items: center;
   }
 
+  /* One centered column: photo, name, description, icons. */
   .board-member {
-    grid-template-columns: 68px minmax(0, 1fr);
-    column-gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
     row-gap: 0.7rem;
     align-items: center;
     padding: 1.15rem 0;
+    text-align: center;
   }
 
   .board-member:last-child {
@@ -3623,16 +3616,15 @@ main:has(.qff-page) {
   }
 
   .board-member__name {
-    font-size: 1.2rem;
+    font-size: 1.27rem;
   }
 
   .board-member__role {
     font-size: 0.95rem;
   }
 
-  .board-member__description,
-  .board-member__links {
-    grid-column: 1 / -1;
+  .board-member__description {
+    text-align: center;
   }
 
   .board-member__links {
@@ -3642,6 +3634,8 @@ main:has(.qff-page) {
     justify-content: center;
   }
 }
+
+/* --- Full-bleed event pages (hackathon and Fall Fest) --- */
 
 .page-content:has(.hackathon-page),
 .page-content:has(.qff-page) {
@@ -3670,36 +3664,35 @@ main:has(.qff-page) {
   border: none;
 }
 
-.hackathon-hero > * {
-  max-width: 920px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .hackathon-hero .hackathon-hero-text h1 {
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  /* SC Quantathon titles use a display face (Space Grotesk, app/layout.tsx);
+     the site's serif is the fallback. */
+  font-family: var(--font-display), var(--font-serif);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.97rem, 7.42vw, 5.09rem);
   line-height: 0.94;
   text-align: left;
 }
 
 .hackathon-hero .hackathon-hero-eyebrow {
+  display: inline-block;
   margin-bottom: 1rem;
-  padding: 0;
-  background: transparent;
-  border: 0;
   color: var(--color-violet);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .hackathon-hero .hackathon-hero-tagline {
   max-width: 60ch;
   margin: 1.2rem 0 0;
   color: var(--color-text);
+  opacity: 0.9;
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.75;
@@ -3711,7 +3704,7 @@ main:has(.qff-page) {
   align-items: center;
   justify-content: space-between;
   gap: clamp(1.5rem, 4vw, 3rem);
-  max-width: var(--max-width);
+  max-width: var(--content-max);
   margin: 0 auto;
 }
 
@@ -3726,6 +3719,12 @@ main:has(.qff-page) {
   height: auto;
 }
 
+/* A square mark (the Quantathon Q) reads far larger than a wide wordmark at
+   the same width, so it gets a smaller box. */
+.hackathon-hero-logo.hackathon-hero-logo--mark {
+  width: clamp(110px, 13vw, 170px);
+}
+
 @media (max-width: 767px) {
   .hackathon-hero-inner {
     flex-direction: column;
@@ -3738,6 +3737,10 @@ main:has(.qff-page) {
     /* The hero stacks into a flex column at this width; without this the
        logo hugs the left edge under the centred title block. */
     align-self: center;
+  }
+
+  .hackathon-hero-logo.hackathon-hero-logo--mark {
+    width: clamp(96px, 28vw, 140px);
   }
 }
 
@@ -3804,16 +3807,9 @@ main:has(.qff-page) {
   color: var(--color-text);
 }
 
-/* Scoped to .modal-bubble so it beats the generic `.page-content h3` rule
-   (specificity 0,1,1) that otherwise leaks a surface chip background, shadow,
-   and padding onto the modal heading — the modal is injected inside
-   `.page-content` via react-markdown's custom link renderer. */
+/* The modal is portaled to <body>, so no page styles reach its heading. */
 .modal-bubble .modal-title {
   margin: 0 0 0.35rem;
-  padding: 0;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
   color: var(--color-text);
   font-size: 1.3rem;
 }
@@ -3835,8 +3831,7 @@ main:has(.qff-page) {
   font-weight: 600;
 }
 .modal-form input[type='text'],
-.modal-form input[type='email'],
-.modal-form textarea {
+.modal-form input[type='email'] {
   margin-bottom: 0.95rem;
   padding: 0.6rem 0.7rem;
   font: inherit;
@@ -3844,16 +3839,13 @@ main:has(.qff-page) {
      var(--color-text) would flip to near-white in dark mode and vanish. */
   color: #162033;
   background: #fff;
-  border: 1px solid var(--color-border);
+  /* Fixed like the colors above (the field is white in both modes), so not
+     the theme token, which turns light in dark mode. 3.75:1 on white. */
+  border: 1px solid rgba(22, 32, 51, 0.55);
   border-radius: 0.55rem;
 }
-.modal-form textarea {
-  resize: vertical;
-  min-height: 4.75rem;
-}
-.modal-form input:focus-visible,
-.modal-form textarea:focus-visible {
-  outline: 2px solid var(--color-accent);
+.modal-form input:focus-visible {
+  outline: 2px solid var(--color-link);
   outline-offset: 1px;
   border-color: var(--color-accent);
 }
@@ -3927,8 +3919,13 @@ main:has(.qff-page) {
 
 .lr-section {
   position: relative;
+  /* Clears the generic `section` box (1000px, 2rem sides) so the section
+     lines up with the intro above it. */
+  max-width: none;
   margin: 0 0 var(--space-2xl);
   padding-top: var(--space-lg);
+  padding-right: 0;
+  padding-left: 0;
   border-top: 1px solid var(--color-border);
 }
 
@@ -3938,7 +3935,7 @@ main:has(.qff-page) {
   right: 0;
   font-family: var(--font-serif);
   font-size: clamp(3.25rem, 10vw, 6rem);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   color: var(--lr-accent);
   opacity: 0.16;
@@ -3957,7 +3954,7 @@ main:has(.qff-page) {
 
 .lr-section__title {
   margin: 0 0 0.5rem;
-  font-size: clamp(1.5rem, 3vw, 2.05rem);
+  font-size: clamp(1.59rem, 3.18vw, 2.17rem);
   text-align: left;
 }
 
@@ -4018,10 +4015,10 @@ main:has(.qff-page) {
 .lr-item__title:has(~ .lr-item__title)::after {
   content: none;
 }
-.lr-item:hover .lr-item__title {
+.lr-item:is(:hover, :focus-within) .lr-item__title {
   color: var(--lr-accent);
 }
-.lr-item:hover .lr-item__title::after {
+.lr-item:is(:hover, :focus-within) .lr-item__title::after {
   opacity: 1;
 }
 
@@ -4035,13 +4032,19 @@ main:has(.qff-page) {
 
 .lr-ongoing {
   margin-top: var(--space-xl);
+  margin-right: 0;
   margin-bottom: var(--space-2xl);
+  margin-left: 0;
+  max-width: none;
   padding-top: var(--space-lg);
+  padding-right: 0;
+  padding-left: 0;
   border-top: 1px solid var(--color-border);
 }
+
 .lr-ongoing__title {
   margin: 0 0 0.35rem;
-  font-size: 1.4rem;
+  font-size: 1.48rem;
   text-align: left;
 }
 .lr-ongoing__note {
@@ -4078,10 +4081,10 @@ main:has(.qff-page) {
   opacity: 0;
   transition: opacity 0.15s;
 }
-.lr-ongoing__item:hover .lr-ongoing__name {
+.lr-ongoing__item:is(:hover, :focus-within) .lr-ongoing__name {
   color: var(--color-link);
 }
-.lr-ongoing__item:hover .lr-ongoing__name::after {
+.lr-ongoing__item:is(:hover, :focus-within) .lr-ongoing__name::after {
   opacity: 1;
 }
 .lr-ongoing__desc {
@@ -4134,8 +4137,7 @@ main:has(.qff-page) {
   font-size: 1.15rem;
 }
 
-.hackathon-section,
-.hackathon-section:nth-child(even) {
+.hackathon-section {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: clamp(2.2rem, 5vw, 3.4rem) var(--space-xl);
@@ -4144,43 +4146,17 @@ main:has(.qff-page) {
   text-align: left;
 }
 
-.hackathon-section:nth-child(even) > * {
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
-}
-
 .hackathon-section + .hackathon-section {
   border-top: 1px solid rgba(22, 32, 51, 0.08);
 }
 
 .hackathon-section h2 {
-  font-weight: 700;
+  font-weight: 600;
   display: block;
   margin: 0 0 1.4rem;
-  padding: 0;
   color: var(--color-text);
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  border: 0;
+  font-size: clamp(2.12rem, 4.24vw, 2.92rem);
   text-align: left;
-}
-
-/* Section title row with a right-aligned action link (mirrors .home-section__header) */
-.hackathon-section-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-  margin-bottom: 1.4rem;
-}
-
-.hackathon-section-header h2 {
-  margin: 0;
-}
-
-.hackathon-section-header .view-all-link {
-  flex-shrink: 0;
 }
 
 .hackathon-section p {
@@ -4246,19 +4222,13 @@ main:has(.qff-page) {
   margin-top: 1.5rem;
 }
 
-/* Every reset here is load-bearing against the generic .page-content h3 card style. */
 .hackathon-schedule-day h3 {
   margin: 0 0 1.15rem;
   padding: 0 0 0.9rem;
-  background: none;
-  border: 0;
   border-bottom: 1px solid var(--color-border);
-  border-radius: 0;
-  box-shadow: none;
   color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: 1.55rem;
-  font-weight: 700;
+  font-size: 1.64rem;
+  font-weight: 600;
   line-height: 1.2;
 }
 
@@ -4334,27 +4304,11 @@ main:has(.qff-page) {
   color: var(--color-text);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 899px) {
   .hackathon-schedule {
     grid-template-columns: 1fr;
     gap: 2.4rem;
   }
-}
-
-.hackathon-section:has(.hackathon-tracks),
-.hackathon-section:has(.hackathon-resources-grid),
-.hackathon-section:has(.hackathon-prizes),
-.hackathon-section:has(.hackathon-team-grid) {
-  max-width: var(--max-width);
-}
-
-.hackathon-section:has(.hackathon-tracks) > *,
-.hackathon-section:has(.hackathon-resources-grid) > *,
-.hackathon-section:has(.hackathon-prizes) > *,
-.hackathon-section:has(.hackathon-team-grid) > * {
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
 }
 
 /* Challenge Tracks — editorial numbered rows separated by hairlines. */
@@ -4386,14 +4340,6 @@ main:has(.qff-page) {
   flex-direction: column;
   gap: 0.5rem;
   text-align: center;
-}
-
-.hackathon-track-slot-label {
-  color: var(--color-violet);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 .hackathon-track-slot-box {
@@ -4428,11 +4374,10 @@ main:has(.qff-page) {
   height: auto;
 }
 
-/* Both CQC assets are 176px tall, but the light logo has a wider canvas.
-   Keep its display box in both themes without stretching the darker mark. */
-.hackathon-track-logo--cqc {
-  aspect-ratio: 258 / 176;
-  object-fit: contain;
+/* A challenge whose sponsor isn't announced yet holds the logo column with
+   the dashed placeholder box (SC Quantathon v4). */
+.hackathon-track--logo > .hackathon-track-slot-box {
+  text-align: center;
 }
 
 /* Sponsor mark wrapped in a link: the anchor occupies the logo column and the
@@ -4449,25 +4394,10 @@ main:has(.qff-page) {
 }
 
 .hackathon-track-link:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 4px;
 }
 
-/* Giant serif index numeral. The gradient runs vertically so both the orange
-   and the violet read clearly within the glyph height. */
-.hackathon-track-num {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 700;
-  line-height: 0.9;
-  background: linear-gradient(180deg, var(--color-accent), var(--color-violet));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.85;
-  transition: opacity 0.3s;
-}
 
 /* Hover: left gradient bar drops in, numeral saturates, faint tint sweep. */
 .hackathon-track::after {
@@ -4492,10 +4422,6 @@ main:has(.qff-page) {
       rgba(var(--color-violet-rgb), 0.04) 55%,
       transparent
     );
-  }
-
-  .hackathon-track:hover .hackathon-track-num {
-    opacity: 1;
   }
 
   .hackathon-track:hover::after {
@@ -4535,18 +4461,11 @@ main:has(.qff-page) {
   }
 }
 
-/* Resets are load-bearing against the generic .page-content h3 card style. */
 .hackathon-track h3 {
   margin: 0 0 0.45rem;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
   color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: clamp(1.35rem, 2.4vw, 1.65rem);
-  font-weight: 700;
+  font-size: clamp(1.43rem, 2.54vw, 1.75rem);
+  font-weight: 600;
 }
 
 /* Scoped under .hackathon-track-body so it outranks the generic
@@ -4565,17 +4484,14 @@ main:has(.qff-page) {
     align-items: start;
   }
 
-  .hackathon-track-num {
-    font-size: 2rem;
-  }
-
   /* Sponsor mark stacks above the challenge text at phone widths. */
   .hackathon-track--logo {
     grid-template-columns: 1fr;
     row-gap: 0.9rem;
   }
 
-  .hackathon-track-logo {
+  .hackathon-track-logo,
+  .hackathon-track--logo > .hackathon-track-slot-box {
     max-width: 200px;
   }
 
@@ -4591,68 +4507,6 @@ main:has(.qff-page) {
   }
 }
 
-/* Prizes — three parallel award categories (track winners, grand, newcomer),
-   deliberately styled as equals: same hairline entry treatment, no featured
-   center — they aren't ranked against each other. */
-.hackathon-prizes {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: start;
-  margin-top: 1.5rem;
-}
-
-.hackathon-prize {
-  border-top: 1px solid var(--color-border);
-  padding: 1.4rem 0 0.25rem;
-  text-align: left;
-}
-
-/* Resets are load-bearing against the generic .page-content h3 card style. */
-.hackathon-prize h3 {
-  margin: 0 0 0.55rem;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  color: var(--color-text);
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-/* Scoped under .hackathon-prize so it outranks the generic
-   .hackathon-section p color/size rule. */
-.hackathon-prize .hackathon-prize-value {
-  margin: 0 0 0.7rem;
-  color: var(--color-link);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.hackathon-prize p:not(.hackathon-prize-value) {
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.65;
-}
-
-@media (max-width: 767px) {
-  .hackathon-prizes {
-    grid-template-columns: 1fr;
-    gap: 1.75rem;
-  }
-}
-
-.hackathon-resources-grid {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
-}
-
 .hackathon-resource-card {
   display: block;
   text-decoration: none;
@@ -4660,7 +4514,7 @@ main:has(.qff-page) {
   transition: box-shadow 0.2s, transform 0.2s;
   padding: 1.3rem;
   border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.94);
   box-shadow: var(--shadow-sm);
 }
@@ -4679,8 +4533,8 @@ main:has(.qff-page) {
 }
 
 .course-group h3 {
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
@@ -4711,11 +4565,6 @@ main:has(.qff-page) {
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
-}
-
-/* The template markup still emits the icon div; keep it hidden. */
-.hackathon-resource-icon {
-  display: none;
 }
 
 .hackathon-resource-title {
@@ -4769,30 +4618,25 @@ main:has(.qff-page) {
   margin-top: 0.75rem;
 }
 
-@media (max-width: 1023px) {
-  .hackathon-resources-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* 16px side gutters from 800px down, with the nav and every other page. */
+@media (max-width: 800px) {
+  .hackathon-hero,
+  .hackathon-hero-cta,
+  .hackathon-section {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
   }
 }
 
 @media (max-width: 767px) {
   .hackathon-hero {
-    padding: 2.2rem var(--space-md);
+    padding-top: 2.2rem;
+    padding-bottom: 2.2rem;
   }
 
   .hackathon-cta {
     width: 100%;
     justify-content: center;
-  }
-
-  .hackathon-section,
-  .hackathon-section:nth-child(even) {
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-  }
-
-  .hackathon-resources-grid {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -4804,25 +4648,34 @@ main:has(.qff-page) {
 /* Quantum hero canvas: decorative backdrop layered behind the hero content.
    QuantumCanvas.tsx reads --color-accent-rgb / --color-violet-rgb at runtime,
    so the particles recolor automatically with the light/dark token swap. */
-.hackathon-hero--quantum {
+.hackathon-hero--quantum,
+.scq4-hero--sky {
   position: relative;
   overflow: hidden;
 }
 
-/* max-width/margin: the generic `.hackathon-hero > *` rule caps direct children
-   at 920px; the canvas must span the full hero instead. */
-.quantum-canvas {
+.quantum-canvas,
+.scq4-sky {
   position: absolute;
   inset: 0;
   z-index: 0;
   width: 100%;
   height: 100%;
-  max-width: none;
-  margin: 0;
   pointer-events: none;
 }
 
-.hackathon-hero--quantum .hackathon-hero-inner {
+/* Fades in once its first frame is drawn (data-ready), like .cloud-sky. */
+.quantum-canvas {
+  opacity: 0;
+  transition: opacity 0.6s var(--ease-out-soft);
+}
+
+.quantum-canvas[data-ready] {
+  opacity: 1;
+}
+
+.hackathon-hero--quantum .hackathon-hero-inner,
+.scq4-hero--sky .hackathon-hero-inner {
   position: relative;
   z-index: 1;
 }
@@ -4898,7 +4751,7 @@ main:has(.qff-page) {
   display: block;
   margin-top: 0.45rem;
   color: var(--color-violet);
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -4928,35 +4781,6 @@ main:has(.qff-page) {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-  --color-bg: #0b1020;
-  --color-surface: #141b31;
-  --color-text: #e8eaf6;
-  --color-text-secondary: #a7aec7;
-  --color-accent: #fb923c;
-  --color-accent-rgb: 251, 146, 60;
-  --color-accent-hover: #fdba74;
-  /* Starlight orange already clears AA on the night sky, so link ink can
-     share the accent hues. */
-  --color-link: #fb923c;
-  --color-link-hover: #fdba74;
-  --color-accent-light: #2a1c10;
-  --color-accent-900: #10162c;
-  --color-border: rgba(232, 234, 246, 0.14);
-  --color-violet: #c4b5fd;
-  --color-violet-rgb: 196, 181, 253;
-  --color-violet-light: #241d45;
-  --star-a: rgba(232, 234, 246, 0.8);
-  --star-b: rgba(196, 181, 253, 0.55);
-  --star-c: rgba(232, 234, 246, 0.65);
-  --star-d: rgba(251, 146, 60, 0.5);
-  --star-e: rgba(232, 234, 246, 0.45);
-  --star-f: rgba(196, 181, 253, 0.4);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
-  --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.34);
-  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.42);
-}
-
   body {
     background:
       radial-gradient(ellipse 60% 42% at 12% -6%, rgba(109, 40, 217, 0.26), transparent 62%),
@@ -5034,27 +4858,14 @@ main:has(.qff-page) {
   }
 
   .hackathon-cta {
-    color: #0b1020;
-    background: var(--color-text);
     /* Deep-black shadow — the light theme's slate rgba(22,32,51,…) smudges
        on the navy backdrop. */
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   }
 
   .hackathon-cta:hover {
-    color: #0b1020;
     background: #f4f0fa;
     box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
-  }
-
-  .hackathon-cta-outline {
-    color: var(--color-accent);
-    background: transparent;
-  }
-
-  .hackathon-cta-outline:hover {
-    color: var(--color-accent-hover);
-    background: var(--color-accent-light);
   }
 
   .footer-links a,
@@ -5091,6 +4902,7 @@ main:has(.qff-page) {
 }
 
 @media (prefers-color-scheme: dark) and (max-width: 800px) {
+  .nav-dropdown-panel,
   .dropdown-submenu-content {
     background: transparent;
     box-shadow: none;
@@ -5161,8 +4973,8 @@ main:has(.qff-page) {
    map slot beside the spec sheet, and a native <details> FAQ.
    =================================================================== */
 
-/* Venue: map on the left, address and entry notes on the right. Sits under
-   the Key Details spec grid inside the same section. */
+/* Venue: a map or photo on the left, address and entry notes on the right.
+   Sits under the Key Details spec grid inside the same section. */
 .hackathon-venue {
   display: grid;
   grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
@@ -5171,6 +4983,35 @@ main:has(.qff-page) {
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid var(--color-border);
+}
+
+/* Without a map (the past v3 page), the text takes the full width. */
+.hackathon-venue:not(:has(> .hackathon-venue-map)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* A small photo of the venue instead of a map: photo left, text right from
+   768px; stacked below that, with the text first like the map. */
+@media (min-width: 768px) {
+  .hackathon-venue:has(> .hackathon-venue-photo) {
+    grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
+  }
+}
+
+.hackathon-venue-photo {
+  margin: 0;
+}
+
+.hackathon-venue-photo img {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.hackathon-venue-photo figcaption {
+  margin-top: 0.4rem;
+  color: var(--color-text-secondary);
+  font-size: 0.75rem;
 }
 
 .hackathon-venue-map {
@@ -5210,7 +5051,7 @@ main:has(.qff-page) {
 
 .hackathon-section .hackathon-venue-name {
   font-family: var(--font-serif);
-  font-size: 1.35rem;
+  font-size: 1.43rem;
   color: var(--color-text);
 }
 
@@ -5253,7 +5094,7 @@ main:has(.qff-page) {
 
 .hackathon-faq-item summary::after {
   content: '+';
-  color: var(--color-accent);
+  color: var(--color-link);
   font-size: 1.35rem;
   font-weight: 600;
   line-height: 1;
@@ -5264,7 +5105,7 @@ main:has(.qff-page) {
 }
 
 .hackathon-faq-item summary:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }
@@ -5280,22 +5121,16 @@ main:has(.qff-page) {
   }
 
   /* Stacked, the address and directions are what someone actually reads
-     first, so the map follows them instead of pushing them below the fold. */
+     first, so the map or photo follows them instead of pushing them below
+     the fold. */
   .hackathon-venue-text {
     order: 1;
   }
 
-  .hackathon-venue-map {
+  .hackathon-venue-map,
+  .hackathon-venue-photo {
     order: 2;
   }
-}
-
-/* Two-column schedule (bootcamp): the two week columns sit an equal
-   distance from each other and from the section edges. */
-.hackathon-schedule--two {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: clamp(2rem, 8vw, 6rem);
-  padding: 0 clamp(2rem, 8vw, 6rem);
 }
 
 /* Daily content list: compact <details> rows reusing the FAQ row styling. */
@@ -5316,7 +5151,10 @@ main:has(.qff-page) {
 
 .hackathon-day-title {
   flex: 1 1 auto;
+  min-width: 0;
   font-weight: 600;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .hackathon-day-date {
@@ -5354,17 +5192,8 @@ main:has(.qff-page) {
   text-decoration: none;
 }
 
-.hackathon-resource--pending {
-  border-style: dashed;
-  border-color: var(--color-border);
-  color: var(--color-text-secondary);
-}
-
-@media (max-width: 767px) {
-  .hackathon-schedule--two {
-    grid-template-columns: 1fr;
-    padding: 0;
-  }
+.hackathon-resource:hover {
+  color: var(--color-violet);
 }
 
 /* ===================================================================
@@ -5380,8 +5209,7 @@ main:has(.qff-page) {
 
 .coc-page h1 {
   margin-bottom: 1rem;
-  font-family: var(--font-serif);
-  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-size: clamp(2.54rem, 5.3vw, 3.6rem);
   line-height: 1.05;
 }
 
@@ -5399,8 +5227,7 @@ main:has(.qff-page) {
   padding: 1.25rem 0 0.5rem;
   border-top: 1px solid var(--color-border);
   border-bottom: 0;
-  font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
 }
 
 .coc-page h3 {
@@ -5409,8 +5236,7 @@ main:has(.qff-page) {
   background: none;
   border: 0;
   box-shadow: none;
-  font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: 1.27rem;
 }
 
 .coc-page p {
@@ -5456,898 +5282,12 @@ main:has(.qff-page) {
   color: var(--color-text);
 }
 
-/* ===================================================================
-   Qiskit Fall Fest page (.qff-page) — "Decade on the Cloud"
-   Its own system, deliberately unlike the SCQv3 hackathon-* spec sheet:
-   the IBM Quantum deck look. IBM Plex Sans Light titles, Plex Mono
-   eyebrows, Carbon sharp corners (no radius anywhere), 1px hairlines,
-   pink→lavender gradient phrases, a slate band, and the 2026 kit palette
-   (sky #dae5fc, pink #ff7eb6, lavender #be95ff, indigo #31135e, blue
-   #0f62fe). Only approved marks appear: the Qiskit pictogram and the
-   IBM Quantum logotype, both unmodified, plus the kit badge.
-   The hero canvas (CloudSky) reads the --qff-cloud-* tokens AT THE
-   CANVAS, so the light/dark swap below recolors the sky for free.
-   =================================================================== */
-
-/* The whole page in IBM Plex, site chrome included: the nav, footer, and every
-   serif heading resolve the site type tokens at body, so re-pointing the
-   tokens here switches all of it on Fall Fest pages without touching a single
-   chrome rule. (The Plex vars are set on body by next/font, so they resolve.) */
-body:has(.qff-page) {
-  --font-sans: var(--font-plex-sans);
-  --font-serif: var(--font-plex-sans);
-}
-
-.qff-page {
-  --qff-ink: #161616;
-  --qff-slate: #21272a;
-  --qff-sky: #dae5fc;
-  --qff-pink: #ff7eb6;
-  --qff-lav: #be95ff;
-  --qff-indigo: #31135e;
-  --qff-blue: #0f62fe;
-  --qff-line: rgba(22, 22, 22, 0.14);
-  --qff-label: #6929c4;
-  --qff-label-alt: #9f1853;
-  --qff-grad: linear-gradient(90deg, #ff7eb6, #be95ff);
-  --qff-rule-grad: linear-gradient(90deg, #0f62fe, #be95ff, #ff7eb6);
-  --qff-band-bg: #21272a;
-  --qff-band-ink: #f4f4f4;
-  --qff-band-muted: #c6c6c6;
-  --qff-tile-sky: #dae5fc;
-  --qff-tile-gray: #e0e0e0;
-  --qff-tile-pink: #ff7eb6;
-  --qff-tile-cloud: rgba(255, 255, 255, 0.92);
-  --qff-btn-bg: #161616;
-  --qff-btn-ink: #ffffff;
-  --qff-cloud-rgb: 255, 255, 255;
-  --qff-cloud-alpha: 0.55;
-  --qff-bird-rgb: 49, 19, 94;
-  --qff-bird-alpha: 0.5;
-  /* Site tokens re-mapped so inline links and focus rings take kit ink.
-     Link ink is Magenta 70 (~6.9:1 on the sky). */
-  --color-accent: #d02670;
-  --color-accent-rgb: 208, 38, 112;
-  --color-accent-hover: #9f1853;
-  --color-accent-light: #fff0f7;
-  --color-link: #9f1853;
-  --color-link-hover: #740937;
-  --color-violet: #8a3ffc;
-  --color-violet-rgb: 138, 63, 252;
-  --color-violet-light: #f6f2ff;
-
-  max-width: 100%;
-  margin: 0;
-  font-family: var(--font-plex-sans, var(--font-sans));
-  /* Periwinkle sky fading to transparent so the body galaxy shows below
-     (same doctrine as .hackathon-page). */
-  background: linear-gradient(
-    180deg,
-    #dae5fc 0,
-    rgba(218, 229, 252, 0.55) 260px,
-    transparent 720px
-  );
-}
-
-/* Type: Plex throughout; light-weight display like the IBM decks. */
-.qff-page h1,
-.qff-page h2,
-.qff-page h3 {
-  font-family: var(--font-plex-sans, var(--font-sans));
-  font-weight: 300;
-  letter-spacing: -0.01em;
-}
-
-.qff-eyebrow,
-.qff-hosted-label,
-.qff-ledger dt,
-.qff-day-num,
-.qff-day-meta,
-.qff-day-toggle,
-.qff-faq-item summary::after,
-.qff-team-role {
-  font-family: var(--font-plex-mono, ui-monospace, monospace);
-}
-
-.qff-eyebrow {
-  margin: 0 0 1rem;
-  color: var(--qff-label);
-  font-size: 0.82rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-}
-
-.qff-gradient-text {
-  /* Light mode: Magenta 70 → Purple 70 so the phrase stays ≥ 4.5:1 on the
-     sky and cream (the kit's pink→lavender is 1.9:1 there); dark mode and
-     the slate band swap the kit gradient back in below. */
-  background: linear-gradient(90deg, #9f1853, #6929c4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Hero: the deck's cover slide. Copy left, four square tiles right. */
-.qff-hero {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(3rem, 8vw, 5.5rem) var(--space-xl) clamp(2.5rem, 6vw, 4rem);
-}
-
-/* Cloud canvas: full-bleed behind the hero, fading out toward the bottom
-   so the sky hands off to the page gradient. */
-.cloud-sky {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  margin: 0;
-  pointer-events: none;
-  -webkit-mask-image: linear-gradient(#000 70%, transparent);
-  mask-image: linear-gradient(#000 70%, transparent);
-}
-
-.qff-hero-inner {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-  align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-/* Hero eyebrow stays on one line on desktop: mono text sized to the column,
-   no wrapping. Phones (single-column hero) may wrap. */
-@media (min-width: 1100px) {
-  .qff-hero .qff-eyebrow {
-    white-space: nowrap;
-    font-size: clamp(0.62rem, 0.95vw, 0.82rem);
-  }
-}
-
-.qff-page .qff-hero h1 {
-  margin: 0;
-  padding: 0;
-  color: var(--qff-ink);
-  font-size: clamp(2.8rem, 6.5vw, 4.6rem);
-  line-height: 1.02;
-  text-align: left;
-}
-
-@media (max-width: 767px) {
-  .qff-page .qff-hero h1 {
-    text-align: center;
-  }
-}
-
-.qff-page .qff-tagline {
-  max-width: 54ch;
-  margin: 1.4rem 0 0;
-  color: var(--color-text);
-  font-size: 1.12rem;
-  line-height: 1.7;
-}
-
-.qff-cta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 2rem;
-}
-
-/* Buttons: Carbon-flat, sharp. */
-.qff-btn {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.85rem 1.4rem;
-  border: 1px solid var(--qff-btn-bg);
-  border-radius: 0;
-  background: var(--qff-btn-bg);
-  color: var(--qff-btn-ink);
-  font-family: var(--font-plex-sans, var(--font-sans));
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1;
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-}
-
-a.qff-btn:hover {
-  background: var(--qff-indigo);
-  border-color: var(--qff-indigo);
-  color: #fff;
-}
-
-.qff-btn:focus-visible {
-  outline: 2px solid var(--qff-blue);
-  outline-offset: 2px;
-}
-
-.qff-btn--ghost {
-  background: transparent;
-  border-color: rgba(22, 22, 22, 0.6); /* ≥ 3:1 boundary contrast on the sky */
-  color: var(--qff-ink);
-}
-
-/* Tiles: the cover-slide 2x2 grid (slate / sky / pink / gray). */
-.qff-tiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  max-width: 460px;
-  margin-left: auto;
-}
-
-.qff-tile {
-  position: relative;
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 0;
-}
-
-.qff-tile img {
-  width: 46%;
-  height: auto;
-  filter: none; /* the badge art is full-color; never invert */
-}
-
-.qff-tile--slate {
-  background: var(--qff-slate);
-}
-
-.qff-tile--sky {
-  background: var(--qff-tile-sky);
-}
-
-.qff-tile--pink {
-  background: var(--qff-tile-pink);
-}
-
-.qff-tile--gray {
-  background: var(--qff-tile-gray);
-}
-
-/* Sky tile: two soft CSS clouds built from radial-gradient puffs. */
-.qff-tile--clouds {
-  background-image:
-    radial-gradient(ellipse 13% 12% at 30% 34%, var(--qff-tile-cloud) 97%, transparent 100%),
-    radial-gradient(ellipse 12% 14% at 42% 30%, var(--qff-tile-cloud) 97%, transparent 100%),
-    radial-gradient(ellipse 26% 10% at 37% 41%, var(--qff-tile-cloud) 97%, transparent 100%),
-    radial-gradient(ellipse 10% 9% at 68% 66%, var(--qff-tile-cloud) 97%, transparent 100%),
-    radial-gradient(ellipse 20% 8% at 66% 73%, var(--qff-tile-cloud) 97%, transparent 100%);
-}
-
-/* Pink tile: an original quantum-circuit drawing (H, CNOTs, measurements). */
-.qff-tile--circuit img {
-  width: 78%;
-}
-
-/* Gradient hairline between bands. */
-.qff-rule {
-  height: 1px;
-  background: var(--qff-rule-grad);
-}
-
-/* Hosted-with strip: label + three marks in one row (Clemson Quantum Club
-   logo, IBM Quantum logotype, Fall Fest badge). Each mark is scaled
-   uniformly (height only) and the single flex gap keeps the spacing equal. */
-.qff-hosted {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 2.25rem; /* same gap as between the marks */
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 1.1rem var(--space-xl);
-}
-
-/* Logo row: Fall Fest badge, IBM Quantum logotype, club logo. Each mark is
-   its own element with clear space between them (no lock-up). */
-.qff-hosted-logos {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 2.25rem; /* one fixed gap between every mark */
-}
-
-/* Narrow screens: the two round marks (club logo, Fall Fest badge) sit side
-   by side and the wide IBM Quantum logotype takes its own row underneath,
-   rather than all three squeezing onto one line. */
-@media (max-width: 640px) {
-  /* .qff-hosted is a wrapping flex row of [label, logos]. Once it wraps, the
-     logo row sizes to its content and lands off-centre, so give it the whole
-     line and centre the parent's items. */
-  .qff-hosted {
-    justify-content: center;
-  }
-
-  .qff-hosted-logos {
-    flex: 1 1 100%;
-    justify-content: center;
-    row-gap: 1.25rem;
-  }
-
-  .qff-hosted-cqc {
-    order: 1;
-  }
-
-  .qff-hosted-badge-link {
-    order: 2;
-  }
-
-  .qff-hosted-logo {
-    order: 3;
-    flex: 0 0 100%;
-    justify-content: center;
-  }
-
-  .qff-hosted-label {
-    text-align: center;
-  }
-}
-
-.qff-hosted-badge-link {
-  display: inline-flex;
-}
-
-.qff-hosted-badge {
-  width: 44px;
-  height: 44px;
-  filter: none; /* full-color kit badge; never invert */
-}
-
-/* Tagline link: keep the gradient sentence clean; underline only on hover. */
-.qff-page .qff-tagline a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: rgba(var(--color-violet-rgb), 0.45);
-  text-underline-offset: 0.15em;
-}
-
-.qff-page .qff-tagline a:hover {
-  color: var(--color-link);
-}
-
-.qff-hosted-cqc {
-  display: inline-flex;
-}
-
-.qff-hosted-cqc picture {
-  display: contents; /* the <a> is the flex item; keeps the gap math intact */
-}
-
-.qff-hosted-cqc img {
-  display: block;
-  width: auto;
-  height: 40px;
-  filter: none;
-}
-
-.qff-hosted-label {
-  color: var(--qff-label);
-  font-size: 0.82rem;
-  letter-spacing: 0.02em;
-}
-
-.qff-hosted-logo {
-  display: inline-flex;
-  padding: 0; /* no extra padding, so the flex gap is the only spacing */
-}
-
-.qff-hosted-logo picture {
-  display: contents;
-}
-
-.qff-hosted-logo img {
-  display: block;
-  width: auto;
-  height: 26px;
-  filter: none;
-}
-
-/* Sections: hairline top, mono eyebrow, light h2. */
-.qff-section {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: clamp(2.5rem, 5vw, 3.5rem) var(--space-xl);
-}
-
-.qff-section + .qff-section {
-  border-top: 1px solid var(--qff-line);
-}
-
-/* Reset the generic .page-content heading chrome (h2 underline, h3 card). */
-.qff-page .qff-section h2,
-.qff-page .qff-intro-col h2 {
-  margin: 0 0 1.2rem;
-  padding: 0;
-  border: 0;
-  color: var(--qff-ink);
-  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
-  line-height: 1.15;
-}
-
-.qff-page .qff-section h3 {
-  margin: 0;
-  padding: 0;
-  background: none;
-  border: 0;
-  box-shadow: none;
-}
-
-.qff-page .qff-section p {
-  max-width: 62ch;
-  font-size: 1.02rem;
-  line-height: 1.74;
-}
-
-/* About beside Key Details. */
-.qff-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
-  align-items: start;
-}
-
-.qff-ledger {
-  margin: 0;
-  border-top: 1px solid var(--qff-line);
-}
-
-.qff-ledger-row {
-  display: grid;
-  grid-template-columns: 8.5rem minmax(0, 1fr);
-  gap: 1rem;
-  padding: 0.85rem 0;
-  border-bottom: 1px solid var(--qff-line);
-}
-
-.qff-ledger dt {
-  padding-top: 0.2em;
-  color: var(--qff-label);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
-
-.qff-ledger dd {
-  margin: 0;
-  color: var(--color-text);
-  font-size: 1.02rem;
-  font-weight: 500;
-}
-
-/* Slate band: the deck's dark slide with a gradient phrase. */
-.qff-band {
-  padding: clamp(3rem, 6vw, 4.5rem) var(--space-xl);
-  background: var(--qff-band-bg);
-  color: var(--qff-band-ink);
-}
-
-.qff-band-inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: clamp(2rem, 5vw, 4rem);
-  max-width: var(--max-width);
-  margin: 0 auto;
-}
-
-/* Original line illustration of a dilution-refrigerator "chandelier"; two
-   files because the band flips slate → lavender in dark mode. */
-.qff-band-art {
-  display: block;
-  justify-self: end;
-}
-
-.qff-band-art img {
-  display: block;
-  width: clamp(150px, 18vw, 230px);
-  height: auto;
-  filter: none;
-}
-
-.qff-page .qff-band .qff-eyebrow {
-  color: var(--qff-band-muted);
-}
-
-.qff-page .qff-band .qff-gradient-text {
-  background: var(--qff-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-.qff-page .qff-band p.qff-band-lead {
-  margin: 0;
-  color: var(--qff-band-ink);
-  font-size: clamp(2rem, 4.5vw, 3.4rem);
-  font-weight: 300;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-}
-
-.qff-page .qff-band p {
-  max-width: 62ch;
-  margin: 1.2rem 0 0;
-  color: var(--qff-band-muted);
-  font-size: 1.05rem;
-  line-height: 1.7;
-}
-
-/* Ghost button re-inked for the band (light ink on slate; dark ink on the
-   lavender dark-mode band). */
-.qff-page .qff-band .qff-band-cta {
-  margin-top: 1.6rem;
-}
-
-.qff-page .qff-band .qff-btn--ghost {
-  border-color: rgba(244, 244, 244, 0.55);
-  color: var(--qff-band-ink);
-}
-
-.qff-page .qff-band .qff-btn--ghost:focus-visible {
-  outline-color: var(--qff-band-ink); /* blue fails 3:1 on slate and on the lavender band */
-}
-
-.qff-page .qff-band a.qff-btn--ghost:hover {
-  background: var(--qff-band-ink);
-  border-color: var(--qff-band-ink);
-  color: var(--qff-band-bg);
-}
-
-/* Week at a Glance: one expandable row per day (native <details>). Each
-   open body is the permanent home for that day's write-up and links. */
-.qff-days {
-  margin-top: 1.5rem;
-  border-top: 1px solid var(--qff-line);
-}
-
-.qff-day {
-  border-bottom: 1px solid var(--qff-line);
-  border-left: 2px solid transparent;
-  transition: border-color 0.2s, padding-left 0.2s var(--ease-out-soft);
-}
-
-.qff-day[open] {
-  border-left-color: var(--qff-pink);
-  padding-left: 0.9rem;
-}
-
-.qff-day-summary {
-  display: grid;
-  grid-template-columns: 3.4rem minmax(0, 1fr) auto;
-  gap: clamp(0.9rem, 2.5vw, 1.75rem);
-  align-items: center;
-  padding: 1.1rem 0.15rem;
-  cursor: pointer;
-  list-style: none;
-}
-
-.qff-day-summary::-webkit-details-marker {
-  display: none;
-}
-
-.qff-day-summary:focus-visible {
-  outline: 2px solid var(--qff-blue);
-  outline-offset: 3px;
-}
-
-.qff-day-num {
-  color: var(--qff-label);
-  font-size: 1.4rem;
-  font-weight: 600;
-}
-
-.qff-day-meta {
-  display: block;
-  margin-bottom: 0.25rem;
-  color: var(--qff-label);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.qff-day--workshop .qff-day-meta {
-  color: var(--qff-label-alt);
-}
-
-.qff-day-title {
-  display: block;
-  color: var(--color-text);
-  font-size: 1.08rem;
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.qff-day-summary:hover .qff-day-title,
-.qff-day-summary:focus-visible .qff-day-title {
-  color: var(--color-link);
-}
-
-.qff-day-toggle::before {
-  content: '+';
-  color: var(--qff-blue);
-  font-size: 1.45rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.qff-day[open] .qff-day-toggle::before {
-  content: '−';
-}
-
-.qff-day-body {
-  padding: 0.1rem 0.15rem 1.5rem calc(3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
-}
-
-.qff-day[open] .qff-day-body {
-  animation: qff-day-open 0.28s var(--ease-out-soft);
-}
-
-@keyframes qff-day-open {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
-
-.qff-page .qff-day-body p {
-  max-width: 66ch;
-  margin: 0 0 1rem;
-}
-
-/* Resource chips: sharp hairline tags; --pending are dashed placeholders. */
-.qff-day-resources {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.qff-day-resource {
-  display: inline-block;
-  padding: 0.34rem 0.9rem;
-  border: 1px solid rgba(138, 63, 252, 0.45);
-  border-radius: 0;
-  color: var(--color-violet);
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-a.qff-day-resource:hover,
-a.qff-day-resource:focus-visible {
-  background: var(--color-violet-light);
-}
-
-.qff-day-resource--pending {
-  border-style: dashed;
-  border-color: var(--qff-line);
-  color: var(--color-text-secondary);
-}
-
-/* FAQ: hairline rows, native <details>. */
-.qff-faq {
-  margin-top: 0.5rem;
-  border-top: 1px solid var(--qff-line);
-}
-
-.qff-faq-item {
-  border-bottom: 1px solid var(--qff-line);
-}
-
-.qff-faq-item summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 0.15rem;
-  cursor: pointer;
-  list-style: none;
-  color: var(--color-text);
-  font-size: 1.05rem;
-  font-weight: 500;
-}
-
-.qff-faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.qff-faq-item summary::after {
-  content: '+';
-  color: var(--qff-blue);
-  font-size: 1.3rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.qff-faq-item[open] summary::after {
-  content: '−';
-}
-
-.qff-faq-item summary:focus-visible {
-  outline: 2px solid var(--qff-blue);
-  outline-offset: 3px;
-}
-
-.qff-page .qff-faq-item p {
-  max-width: 66ch;
-  margin: 0 0.15rem 1.2rem;
-}
-
-/* Organizers: square photos, mono roles. */
-.qff-team {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.5rem 1.25rem;
-  margin-top: 1.5rem;
-}
-
-.qff-team-member {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-
-.qff-team-photo {
-  width: 92px;
-  height: 92px;
-  border-radius: 0;
-  object-fit: cover;
-}
-
-.qff-team-name {
-  color: var(--color-text);
-  font-weight: 600;
-}
-
-.qff-team-role {
-  color: var(--qff-label);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 899px) {
-  .qff-hero-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .qff-tiles {
-    max-width: 380px;
-    margin-left: 0;
-  }
-
-  .qff-intro {
-    grid-template-columns: 1fr;
-  }
-
-  .qff-band-inner {
-    grid-template-columns: 1fr;
-  }
-
-  .qff-band-art {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 639px) {
-  .qff-hero,
-  .qff-hosted,
-  .qff-section,
-  .qff-band {
-    padding-left: var(--space-md);
-    padding-right: var(--space-md);
-  }
-
-  .qff-cta-row .qff-btn {
-    flex: 1 1 100%;
-    justify-content: center;
-  }
-
-  .qff-ledger-row {
-    grid-template-columns: 7rem minmax(0, 1fr);
-  }
-
-  .qff-day-summary {
-    grid-template-columns: 2.4rem minmax(0, 1fr) auto;
-  }
-
-  .qff-day-num {
-    font-size: 1.15rem;
-  }
-
-  .qff-day-body {
-    padding-left: 0.15rem;
-  }
-
-  .qff-band-art {
-    justify-self: center;
-    max-width: 200px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .qff-page {
-    --qff-ink: #f4f4f4;
-    --qff-line: rgba(244, 244, 244, 0.16);
-    --qff-label: #be95ff;
-    --qff-label-alt: #ff7eb6;
-    --qff-band-bg: #be95ff; /* the deck's lavender slides */
-    --qff-band-ink: #161616;
-    --qff-band-muted: #31135e;
-    --qff-tile-sky: #31135e;
-    --qff-tile-gray: #393939;
-    --qff-tile-cloud: rgba(190, 149, 255, 0.3);
-    --qff-btn-bg: #ff7eb6;
-    --qff-btn-ink: #0b1020;
-    --qff-cloud-rgb: 190, 149, 255;
-    --qff-cloud-alpha: 0.1;
-    --qff-bird-rgb: 190, 149, 255;
-    --qff-bird-alpha: 0;
-    --color-accent: #ff7eb6;
-    --color-accent-rgb: 255, 126, 182;
-    --color-accent-hover: #ffa1c9;
-    --color-accent-light: rgba(255, 126, 182, 0.14);
-    --color-link: #ff7eb6;
-    --color-link-hover: #ffafd2;
-    --color-violet: #be95ff;
-    --color-violet-rgb: 190, 149, 255;
-    --color-violet-light: rgba(138, 63, 252, 0.22);
-    /* Deep indigo over the starfield; still fades to transparent. */
-    background: linear-gradient(
-      180deg,
-      rgba(49, 19, 94, 0.8) 0,
-      rgba(49, 19, 94, 0.45) 260px,
-      transparent 720px
-    );
-  }
-
-  a.qff-btn:hover {
-    background: #ffa1c9;
-    border-color: #ffa1c9;
-    color: #0b1020;
-  }
-
-  .qff-btn--ghost {
-    background: transparent;
-    border-color: rgba(190, 149, 255, 0.55);
-    color: var(--qff-lav);
-  }
-
-  .qff-day-toggle::before,
-  .qff-faq-item summary::after {
-    color: var(--qff-lav);
-  }
-
-  .qff-gradient-text {
-    background: var(--qff-grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
-
-  .qff-page .qff-band .qff-btn--ghost {
-    border-color: rgba(22, 22, 22, 0.45);
-  }
-
-  /* On the lavender band the pink→lavender phrase would vanish; use the
-     deck's indigo→magenta instead. Three classes to outrank the light-mode
-     band rule. */
-  .qff-page .qff-band .qff-gradient-text {
-    background: linear-gradient(90deg, #31135e, #9f1853);
-    -webkit-background-clip: text;
-    background-clip: text;
-  }
-
-  .qff-day-resource {
-    border-color: rgba(190, 149, 255, 0.45);
+/* Forced colors (high contrast): canvas pixels ignore the user's palette, so
+   the decorative canvases step aside (the Fall Fest ones in qff.css). */
+@media (forced-colors: active) {
+  .quantum-canvas,
+  .shooting-star-layer {
+    display: none;
   }
 }
 
@@ -6405,8 +5345,9 @@ body::after {
   opacity: 0.7;
 }
 
-/* Twinkle only when the OS allows motion; reduced-motion keeps static stars. */
-@media (prefers-reduced-motion: no-preference) {
+/* Twinkle in dark mode only (the light-mode specks are nearly invisible
+   under the frosted nav) and only when the OS allows motion. */
+@media (prefers-color-scheme: dark) and (prefers-reduced-motion: no-preference) {
   body::before {
     animation: star-twinkle 9s ease-in-out infinite;
   }
@@ -6454,7 +5395,7 @@ body::after {
 }
 
 .bloch-stage:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 3px;
 }
 
@@ -6475,6 +5416,10 @@ body::after {
   fill: none;
   stroke: var(--color-border);
   stroke-width: 1;
+}
+
+.bloch-equator--back {
+  stroke-dasharray: 3 4;
 }
 
 .bloch-axis {
@@ -6524,6 +5469,17 @@ body::after {
   text-align: center;
 }
 
+/* Phones: article pages and the 404 use the same 16px gutter as the nav and
+   every other page family. */
+@media (max-width: 800px) {
+  .page-content,
+  .sw-detail,
+  .qf-404 {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+}
+
 .qf-404__canvas {
   position: relative;
   height: 230px;
@@ -6540,6 +5496,7 @@ body::after {
   color: var(--color-text-secondary);
   font-size: 1.08rem;
   line-height: 1.65;
+  text-align: center;
 }
 
 .qf-404__cta {
@@ -6590,6 +5547,12 @@ body::after {
 
   .tr-word--fade {
     animation-name: tr-fade-rise;
+  }
+
+  /* First load: the whole title fades in with the first paint instead of
+     being split after it (TitleReveal splits only on client navigations). */
+  main h1:not([data-title-reveal='done'], .sw-detail__title) {
+    animation: tr-fade-rise 0.7s var(--ease-out-soft) both;
   }
 }
 
@@ -6672,12 +5635,11 @@ body::after {
   }
 }
 
-
 /* ===================================================================
-   TEMPORARY: SCQv3 homepage promo, as a featured-event band sitting between
-   the hero and the News section. After the event, delete this whole block
-   and the matching <section class="home-featured"> in app/page.tsx. Nothing
-   needs restoring: the hero above is self-contained and carries no image.
+   Homepage featured-event band, between the hero and the News section.
+   Which event it shows is FEATURED_EVENT in lib/featured.ts; the title,
+   dates, image, and Register link come from that event's frontmatter, and
+   the band hides itself once the event has ended.
    =================================================================== */
 
 /* Full-bleed band under the hero. The tint and the top/bottom hairlines are
@@ -6727,6 +5689,12 @@ body::after {
   background: #ece7df;
 }
 
+@media (prefers-color-scheme: dark) {
+  .home-featured__art {
+    background: #1a2140; /* the card-media placeholder */
+  }
+}
+
 .home-featured__image {
   width: 100%;
   height: 100%;
@@ -6736,7 +5704,7 @@ body::after {
 }
 
 .home-featured__art:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid var(--color-link);
   outline-offset: 3px;
 }
 
@@ -6746,7 +5714,7 @@ body::after {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-link); /* the accent orange is 2.8:1 on cream */
 }
 
 .home-featured__title {
@@ -6754,9 +5722,8 @@ body::after {
      otherwise centre this against the left-aligned label and facts. */
   text-align: left;
   margin: 0 0 1.1rem;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  font-size: clamp(1.59rem, 3.18vw, 2.12rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--color-text);
@@ -6773,7 +5740,7 @@ body::after {
 
 .home-featured__fact dt {
   margin-bottom: 0.15rem;
-  font-size: 0.63rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -6793,14 +5760,480 @@ body::after {
   gap: 0.65rem;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 800px) {
   .home-featured__inner {
-    grid-template-columns: 1fr;
-    padding: 1.25rem var(--space-md) 1.5rem;
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
   }
 }
 
-/* Squared-off variant of the pill CTA, per the promo design. */
-.hackathon-cta--rect {
-  border-radius: var(--radius-sm);
+@media (max-width: 767px) {
+  .home-featured__inner {
+    grid-template-columns: 1fr;
+    padding-top: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
 }
+
+/* ===================================================================
+   SC Quantathon v4 (local-only draft page; see docs/PLAN_STATUS.md)
+   =================================================================== */
+
+/* Committee placeholder: a dashed ring in the photo's exact footprint, so a
+   real headshot <img class="hackathon-team-photo"> can replace it with no
+   layout shift. Two classes to beat the base and dark border colors. */
+.hackathon-team-photo.hackathon-team-photo--pending {
+  display: inline-block;
+  /* Baseline, like the inline <img> beside it: an empty inline-block's
+     baseline is its bottom margin edge, the same as the photo's, so the
+     names under real and pending photos line up. */
+  vertical-align: baseline;
+  border-style: dashed;
+  border-color: var(--color-border);
+  background: transparent;
+}
+
+/* The route under the hero: apply, bootcamp, Devpost, in order, from the
+   archived scroll-stage design. Plain type on a hairline, no boxes: an italic
+   numeral and a serif name on one baseline, the status beneath. An open step's
+   name is a link; one that isn't open yet stays muted text. Scoped to the hero
+   CTA band (the v4 page and the archived scroll-stage page); two classes
+   outrank the generic `.page-content li` and link rules. */
+.hackathon-hero-cta .hackathon-route {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 clamp(1rem, 4vw, 3rem);
+  width: min(100%, 640px);
+  margin: 0;
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--color-border);
+  list-style: none;
+}
+
+.hackathon-hero-cta .hackathon-route-step {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-content: start;
+  align-items: baseline;
+  column-gap: 0.4rem;
+  margin: 0;
+  text-align: center;
+}
+
+.hackathon-hero-cta .hackathon-route-num {
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.hackathon-hero-cta .hackathon-route-name {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  color: var(--color-text-secondary);
+}
+
+/* Open: the link color, no underline (the owner's call); hover dims it.
+   The padding makes a 44px tap target without moving the type. */
+.hackathon-hero-cta a.hackathon-route-name {
+  margin: -0.5rem -0.25rem;
+  padding: 0.5rem 0.25rem;
+  color: var(--color-link);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.hackathon-hero-cta a.hackathon-route-name:hover,
+.hackathon-hero-cta a.hackathon-route-name:focus-visible {
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.hackathon-hero-cta .hackathon-route-status {
+  grid-column: 1 / -1;
+  margin-top: 0.2rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.hackathon-hero-cta .hackathon-route-updates {
+  margin: 0;
+}
+
+/* "Get updates" opens the sign-up form; the underline answers hover and
+   focus without the site's sweep. */
+.hackathon-hero-cta .hackathon-route-updates .view-all-link {
+  min-height: 44px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.hackathon-hero-cta .hackathon-route-updates .view-all-link::after {
+  content: none;
+}
+
+.hackathon-hero-cta .hackathon-route-updates .view-all-link:hover,
+.hackathon-hero-cta .hackathon-route-updates .view-all-link:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Phones: the three columns stay, a size down, with each numeral above its
+   name so "Bootcamp" fits its column. */
+@media (max-width: 480px) {
+  .hackathon-hero-cta .hackathon-route {
+    column-gap: 0.75rem;
+  }
+
+  .hackathon-hero-cta .hackathon-route-step {
+    grid-template-columns: auto;
+  }
+
+  .hackathon-hero-cta .hackathon-route-name {
+    font-size: 1.1rem;
+  }
+}
+
+/* ===================================================================
+   Scroll motion (site-wide)
+   Scroll-driven animations on each element's own view timeline, so motion
+   follows the scroll in both directions and runs off the main thread:
+   - cards and figures rise into focus (blur -> sharp) as they enter and sink
+     slightly out of focus as they leave the top (depth of field);
+   - rows and specs rise; section titles wipe in; grid columns start at
+     staggered depths and settle into line; photos drift inside their frames;
+     hero copy drifts back and softens as the page scrolls past it.
+   Only the individual transform properties (translate / scale / rotate) are
+   animated, so they compose with the `transform` that hover states use.
+   Browsers without animation-timeline keep ScrollReveal's one-shot entrance
+   (components/ScrollReveal.tsx bails when this is supported); reduced motion
+   gets neither.
+   =================================================================== */
+@supports (animation-timeline: view()) {
+  /* overflow: hidden makes an element a scroll container, and view() binds
+     to the nearest one, so these frames would freeze the animations inside
+     them (the photo drift, the hero exits). clip trims the same overflow,
+     rounded corners included, without creating a scroller. (The Qiskit Fall
+     Fest hero keeps its IBM-style stillness: no hero exit there.) */
+
+  .preview-card,
+  .preview-card__media,
+  .about-page__photo,
+  .hackathon-hero--quantum,
+  .scq4-hero--sky {
+    overflow: clip;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes sm-rise {
+      from {
+        opacity: 0;
+        translate: 0 var(--sm-rise, 30px);
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+
+    @keyframes sm-focus {
+      from {
+        opacity: 0;
+        translate: 0 var(--sm-rise, 40px);
+        scale: 0.97;
+        filter: blur(4px);
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+        scale: 1;
+        filter: none;
+      }
+    }
+
+    @keyframes sm-out {
+      to {
+        opacity: 0.35;
+        translate: 0 -18px;
+        filter: blur(2px);
+      }
+    }
+
+    @keyframes sm-wipe {
+      from {
+        opacity: 0.15;
+        translate: var(--sm-from-x, -14px) 0;
+        clip-path: inset(-0.25em 100% -0.25em 0);
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+        clip-path: inset(-0.25em 0 -0.25em 0);
+      }
+    }
+
+    @keyframes sm-parallax {
+      from {
+        translate: 0 -3.5%;
+      }
+      to {
+        translate: 0 3.5%;
+      }
+    }
+
+    @keyframes sm-hero-out {
+      to {
+        opacity: 0.2;
+        translate: 0 72px;
+        scale: 0.97;
+      }
+    }
+
+    /* The hero's blur, run on its own late range (see the hero rule). */
+
+    @keyframes sm-blur-out {
+      to {
+        filter: blur(3px);
+      }
+    }
+
+    /* sm-hero-out without the drift, for heroes that clip (see below). */
+
+    @keyframes sm-hero-fade {
+      to {
+        opacity: 0.2;
+      }
+    }
+
+    @keyframes sm-draw {
+      from {
+        stroke-dashoffset: 1;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes sm-spin-in {
+      from {
+        opacity: 0;
+        scale: 0.8;
+        rotate: -120deg;
+      }
+      to {
+        opacity: 1;
+        scale: 1;
+        rotate: 0deg;
+      }
+    }
+
+    /* Cards and figures: into focus on the way in, softly out of focus on
+       the way out. The way out is the last 160px before the bottom edge
+       leaves the top of the window, so a tall card stays sharp while any
+       real part of it is still in view (a percentage of exit blurred the
+       text of a 600px card while it sat mid-screen). max(0%, …) keeps it
+       from starting before the element begins to leave: for anything
+       shorter than 160px the plain calc would start early, blurring a
+       title that sits near the top of the page at rest. Here and in the
+       rise list below, anything holding keyboard focus is left out, so it
+       shows at full strength and in place (mouse clicks don't count). */
+
+    :is(
+      .preview-card,
+      .faculty-card,
+      .hackathon-track,
+      .hackathon-team-member,
+      .hackathon-venue,
+      .hackathon-video,
+      .qff-team-member,
+      .sw-item,
+      .about-page__photo
+    ):not(:focus-visible, :has(:focus-visible)) {
+      animation:
+        sm-focus var(--ease-out-soft) both,
+        sm-out linear forwards;
+      animation-timeline: view(), view();
+      animation-range:
+        entry 0% cover 25%,
+        exit max(0%, calc(100% - 160px)) exit 100%;
+    }
+
+    /* Rows, specs, and list items: a plain rise, no blur on running text.
+       Text ranges are fixed lengths of scroll, so tall and short blocks
+       settle alike, and eased, so most of the rise lands early. */
+
+    :is(
+      .board-member,
+      .lr-item,
+      .lr-ongoing__item,
+      .gi-schedule__item,
+      .gi-channel,
+      .course-group,
+      .about-page__section,
+      .hackathon-spec,
+      .hackathon-schedule-day,
+      .hackathon-faq-item,
+      .hackathon-hotel,
+      .hackathon-sponsor-tier,
+      .qff-ledger-row,
+      .qff-day,
+      .qff-faq-item
+    ):not(:focus-visible, :has(:focus-visible)) {
+      animation: sm-rise var(--ease-out-soft) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 160px;
+    }
+
+    /* Grid placement: columns start at staggered depths and settle into a
+       line as the grid scrolls up, so a row cascades instead of popping in. */
+
+    /* The card grid is 3 columns from 1025px and 2 columns from 768px
+       (see .preview-grid), so the stagger follows the column index. */
+
+    @media (min-width: 1025px) {
+      .preview-grid > :nth-child(3n + 2) {
+        --sm-rise: 80px;
+      }
+
+      .preview-grid > :nth-child(3n + 3) {
+        --sm-rise: 120px;
+      }
+    }
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .preview-grid > :nth-child(2n) {
+        --sm-rise: 90px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .hackathon-schedule > :nth-child(2),
+      .hackathon-specs > :nth-child(3n + 2) {
+        --sm-rise: 56px;
+      }
+
+      .hackathon-schedule > :nth-child(3),
+      .hackathon-specs > :nth-child(3n + 3) {
+        --sm-rise: 82px;
+      }
+    }
+
+    /* Section titles wipe in along their reading direction. */
+
+    :is(
+      .home-section__title,
+      .hackathon-section h2,
+      .lr-section__title,
+      .sw-detail__title,
+      .qff-page h2
+    ) {
+      animation: sm-wipe var(--ease-out-soft) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 160px;
+    }
+
+    /* Photos drift inside their frames. Posters and logos framed with
+       object-fit: contain are left whole, and so are 16:9 graphics with text
+       near their edges, which the 1.08 zoom and drift would cut off. */
+
+    .preview-card__image:not(.preview-card__image--still),
+    .about-page__photo img {
+      /* 4% of spare height at each edge covers the 3.5% drift. */
+      scale: 1.08;
+      animation: sm-parallax linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* Hero copy drifts back and fades as the page scrolls past it, and
+       blurs only in its last 160px, right at the top of the window. */
+
+    :is(
+      .home-hero__title,
+      .home-hero__intro,
+      .archive-hero,
+      .about-page__hero-copy,
+      .hackathon-hero-text
+    ) {
+      animation:
+        sm-hero-out linear both,
+        sm-blur-out linear both;
+      animation-timeline: view(), view();
+      animation-range:
+        exit 0% exit 100%,
+        exit max(0%, calc(100% - 160px)) exit 100%;
+    }
+
+    /* The SC Quantathon heroes clip at their edge (overflow: clip, above, for
+       the particle canvas), so the downward drift sliced the tagline in half
+       there. Their text fades and softens in place instead. */
+
+    .hackathon-hero-text {
+      animation-name: sm-hero-fade, sm-blur-out;
+    }
+
+    /* The homepage's featured event can sit in the first screen, so it gets
+       no entrance; its art only softens as it leaves the top. */
+
+    .home-featured__art {
+      animation: sm-out linear forwards;
+      animation-timeline: view();
+      animation-range: exit max(0%, calc(100% - 160px)) exit 100%;
+    }
+
+    /* A section that animates its own rows doesn't rise as a block too. */
+
+    .about-page__section:has(.gi-schedule__item, .gi-channel) {
+      animation: none;
+    }
+
+    /* The constellation divider draws itself in with the scroll, while it
+       enters: the footer's divider never gets further up the screen. */
+
+    .constellation-divider {
+      view-timeline: --cd-view block;
+    }
+
+    .constellation-divider .cd-path {
+      animation: sm-draw linear both;
+      animation-timeline: --cd-view;
+      animation-range: entry 0% entry 100%;
+    }
+  }
+}
+
+/* People cards on small windows (owner, 2026-10-15: "center the organizers
+   when on a smaller window, and do that for all pages"): the photo sits
+   above the name and everything is centered. 800px matches where the board
+   cards already stack. The SC Quantathon committee grid is centered at
+   every width already. Last in the file so it outranks each card's base and
+   earlier mobile rules. */
+@media (max-width: 800px) {
+  .faculty-card__bio {
+    text-align: center;
+  }
+
+  /* Resources faculty. */
+  .faculty-card {
+    text-align: center;
+  }
+
+  .faculty-card__top {
+    flex-direction: column;
+  }
+
+  .faculty-card__links {
+    justify-content: center;
+  }
+
+  /* About: past board members. */
+  .about-past-board__item {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+

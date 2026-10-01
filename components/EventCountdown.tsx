@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useEffect, useState } from 'react';
+import type { ReactNode } from 'react';
 
 interface EventCountdownProps {
   /** Event start, ISO 8601 with explicit UTC offset (e.g. 2026-09-25T17:00:00-04:00). */
@@ -13,6 +14,10 @@ interface EventCountdownProps {
   endedMessage?: string;
   /** Copy shown between `target` and `end`. */
   liveMessage?: string;
+  /** The event had already ended when the site was built, so the static HTML
+   *  shows the wrap-up message instead of placeholder digits. Safe for
+   *  hydration: every visitor's clock is later than the build's. */
+  endedAtBuild?: boolean;
 }
 
 const UNITS = ['Days', 'Hours', 'Minutes', 'Seconds'] as const;
@@ -26,6 +31,13 @@ function splitRemaining(ms: number): string[] {
   return [days, hours, minutes, seconds].map((v) => String(v).padStart(2, '0'));
 }
 
+// aria-live off: a per-second announcement would flood screen readers.
+const shell = (children: ReactNode) => (
+  <div className="event-countdown" role="timer" aria-live="off">
+    {children}
+  </div>
+);
+
 // Live countdown to an event start. `now` stays null on the server and on the
 // first client render so the static-export HTML and the hydrated DOM match
 // exactly (placeholder digits) — the real clock only starts inside useEffect.
@@ -33,23 +45,22 @@ export default function EventCountdown({
   target,
   end,
   srSummary,
-  endedMessage = 'This event has wrapped. Thanks for coming!',
+  endedMessage = 'This event has ended.',
   liveMessage = 'Happening now',
+  endedAtBuild = false,
 }: EventCountdownProps) {
   const [now, setNow] = useState<number | null>(null);
 
   const targetMs = Date.parse(target);
   const endMs = end ? Date.parse(end) : targetMs;
-  const ended = now !== null && now >= endMs;
+  const ended = endedAtBuild || (now !== null && now >= endMs);
 
   useEffect(() => {
     // An unparsable target renders null below, but without this guard the
     // interval would still tick setState forever ("ended" can never be true
     // against NaN).
     if (ended || Number.isNaN(targetMs)) return;
-    // Intentional mount-only setState: the clock must start client-side so
-    // the SSR placeholder digits hydrate cleanly.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- the clock starts after hydration (above)
     setNow(Date.now());
     const id = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(id);
@@ -57,26 +68,16 @@ export default function EventCountdown({
 
   if (Number.isNaN(targetMs)) return null;
 
-  if (ended) {
-    return (
-      <div className="event-countdown" role="timer" aria-live="off">
-        <span className="event-countdown-done">{endedMessage}</span>
-      </div>
-    );
-  }
+  if (ended) return shell(<span className="event-countdown-done">{endedMessage}</span>);
 
   if (now !== null && now >= targetMs) {
-    return (
-      <div className="event-countdown" role="timer" aria-live="off">
-        <span className="event-countdown-live">{liveMessage}</span>
-      </div>
-    );
+    return shell(<span className="event-countdown-live">{liveMessage}</span>);
   }
 
   const digits = now === null ? UNITS.map(() => '--') : splitRemaining(targetMs - now);
 
-  return (
-    <div className="event-countdown" role="timer" aria-live="off">
+  return shell(
+    <>
       <span className="event-countdown-label" aria-hidden="true">
         Event starts in
       </span>
@@ -92,6 +93,6 @@ export default function EventCountdown({
           </Fragment>
         ))}
       </div>
-    </div>
+    </>,
   );
 }

@@ -15,9 +15,7 @@ export default function NotFoundJoke() {
   const [joke, setJoke] = useState(JOKES[0]);
 
   useEffect(() => {
-    // Intentional mount-only setState: SSR renders a fixed joke; the random
-    // pick happens client-side so hydration always matches.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- after hydration (above)
     setJoke(JOKES[Math.floor(Math.random() * JOKES.length)]);
   }, []);
 

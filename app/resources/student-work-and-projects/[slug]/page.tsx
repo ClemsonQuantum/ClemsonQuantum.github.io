@@ -1,9 +1,10 @@
-import type { Metadata } from 'next';
-import { getAllPages, getPageBySlug, formatDate, makeExcerpt } from '@/lib/content';
-import type { Author } from '@/lib/types';
-import { capitalize as cap } from '@/lib/types';
+import { notFound } from 'next/navigation';
+import { getPageBySlug } from '@/lib/content';
 import { normalizeDate } from '@/lib/content-shared.mjs';
-import { pageOpenGraph } from '@/lib/og';
+import { formatDate } from '@/lib/dates.mjs';
+import { createSlugPage } from '@/lib/slugPage';
+import type { Author } from '@/lib/types';
+import { capitalize } from '@/lib/types';
 import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -13,34 +14,11 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  // Match lib/slugPage.tsx: external entries link out from cards and get no
-  // internal detail page.
-  return getAllPages('resources/student-work-and-projects')
-    .filter((p) => !p.isExternal)
-    .map((p) => ({ slug: p.slug }));
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const page = getPageBySlug('resources/student-work-and-projects', slug);
-  if (!page || !page.data) return { title: String(slug) };
-  const title = String(page.data.title ?? slug);
-  const description =
-    (typeof page.data.summary === 'string' && page.data.summary) ||
-    makeExcerpt(page.content ?? '');
-  const image = typeof page.data.image === 'string' ? page.data.image : undefined;
-  return {
-    title,
-    description,
-    openGraph: pageOpenGraph({
-      title,
-      description,
-      url: `/resources/student-work-and-projects/${slug}/`,
-      image,
-    }),
-  };
-}
+// Same static params, metadata and noindex rules as the event routes; this
+// route keeps its own page body. No imageSize: poster images aren't banners.
+const slugPage = createSlugPage('resources/student-work-and-projects');
+export const generateStaticParams = slugPage.generateStaticParams;
+export const generateMetadata = slugPage.generateMetadata;
 
 const isPdf = (p: string) => /\.pdf($|\?)/i.test(p);
 const isImage = (p: string) => /\.(png|jpe?g|webp|gif|svg)($|\?)/i.test(p);
@@ -54,22 +32,11 @@ const hostOf = (url: string) => {
 
 export default async function StudentWorkProjectPage({ params }: PageProps) {
   const { slug } = await params;
-  const page = getPageBySlug('resources/student-work-and-projects', slug);
+  const { data, content } = getPageBySlug('resources/student-work-and-projects', slug);
+  if (!data) notFound();
 
-  if (!page || !page.data || !page.content) {
-    return (
-      <div className="sw-detail">
-        <h1 className="sw-detail__title">Not Found</h1>
-        <p>This student work / project could not be found.</p>
-      </div>
-    );
-  }
-
-  const { data, content } = page;
   const title = String(data.title ?? slug);
   const type = typeof data.type === 'string' ? data.type : null;
-  // normalizeDate handles both string dates and Date objects, matching
-  // getAllPages.
   const date = normalizeDate(data.date);
   const authors: Author[] = Array.isArray(data.authors)
     ? (data.authors as Author[])
@@ -94,7 +61,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   return (
     <article className="sw-detail">
       <header className="sw-detail__header">
-        {type && <span className="sw-type">{cap(type)}</span>}
+        {type && <span className="sw-type">{capitalize(type)}</span>}
         <h1 className="sw-detail__title">{title}</h1>
         {(date || authors.length > 0) && (
           <p className="sw-detail__meta">
@@ -120,7 +87,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           href={imageSrc}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Open full-size poster"
+          aria-label={`Open full-size ${mediaLabel.toLowerCase()}`}
         >
           {/* Intrinsic dimensions reserve layout space (both posters are
               4:3); CSS width:100%/height:auto keeps them responsive. */}
@@ -131,6 +98,8 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
             className="sw-media__image"
             width={1600}
             height={1200}
+            loading="eager"
+            fetchPriority="high"
           />
         </a>
       )}
@@ -156,12 +125,12 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
         <div className="sw-actions">
           {imageSrc && (
             <a className="sw-action" href={imageSrc} download>
-              ↓ Download {mediaLabel.toLowerCase()}
+              <span aria-hidden="true">↓</span> Download {mediaLabel.toLowerCase()}
             </a>
           )}
           {pdfSrc && (
             <a className="sw-action" href={pdfSrc} download>
-              ↓ Download PDF
+              <span aria-hidden="true">↓</span> Download PDF
             </a>
           )}
           {externalLink && (
@@ -171,7 +140,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View on {hostOf(externalLink)} ↗
+              View on {hostOf(externalLink)} <span aria-hidden="true">↗</span>
             </a>
           )}
         </div>
@@ -179,7 +148,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
 
       <div className="sw-detail__body">
         <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-          {content}
+          {content ?? ''}
         </ReactMarkdown>
       </div>
     </article>

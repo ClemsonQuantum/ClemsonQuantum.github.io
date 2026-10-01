@@ -3,7 +3,12 @@ import Link from 'next/link';
 import QuantumCanvas from '@/components/QuantumCanvas';
 import NotFoundJoke from '@/components/NotFoundJoke';
 
-export const metadata: Metadata = { title: 'Page Not Found' };
+// canonical: null drops the layout's './' canonical, which resolved to
+// /_not-found/ (a URL that doesn't exist) on the exported 404 page.
+export const metadata: Metadata = {
+  title: 'Page Not Found',
+  alternates: { canonical: null },
+};
 
 // Quantum 404: a small entangled-qubit cluster drifting above the headline
 // (QuantumCanvas already handles reduced motion with a single static frame),
@@ -17,7 +22,7 @@ export default function NotFound() {
       <h1 className="qf-404__title">This page is in a superposition</h1>
       <NotFoundJoke />
       <Link href="/" className="hackathon-cta qf-404__cta">
-        Return to a definite state &rarr;
+        Collapse back to the homepage &rarr;
       </Link>
     </section>
   );

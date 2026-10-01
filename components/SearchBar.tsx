@@ -10,12 +10,15 @@ interface SearchResult {
   excerpt: string;
   /** Hidden searchable text: author/mentor names, outlet, type. */
   meta?: string;
+  /** The page body (or a person's full bio) with markup stripped. */
+  body?: string;
 }
 
 // Word-based AND matching: every query word must appear somewhere in the
-// entry (title, hidden meta, or excerpt), so "valentine mohaugen paper" finds
-// a paper authored by Valentine even when no field contains that exact
-// phrase. Title and author hits rank above body hits.
+// entry (title, hidden meta, excerpt, or body), so "valentine mohaugen paper"
+// finds a paper authored by Valentine even when no field contains that exact
+// phrase. Title hits rank above meta hits (names, outlet, type), which rank
+// above summary and body hits.
 function rankResults(index: SearchResult[], query: string): SearchResult[] {
   const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
   if (tokens.length === 0) return [];
@@ -24,11 +27,12 @@ function rankResults(index: SearchResult[], query: string): SearchResult[] {
       const title = item.title.toLowerCase();
       const meta = (item.meta ?? '').toLowerCase();
       const excerpt = (item.excerpt ?? '').toLowerCase();
+      const body = (item.body ?? '').toLowerCase();
       let score = 0;
       for (const t of tokens) {
         if (title.includes(t)) score += 3;
         else if (meta.includes(t)) score += 2;
-        else if (excerpt.includes(t)) score += 1;
+        else if (excerpt.includes(t) || body.includes(t)) score += 1;
         else return null; // AND semantics: every word must match somewhere
       }
       return { item, score };
@@ -45,10 +49,14 @@ export default function SearchBar() {
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const indexRequested = useRef(false);
   const router = useRouter();
   const listboxId = 'search-listbox';
 
-  useEffect(() => {
+  // The index loads on first focus or hover, not on every page view.
+  const loadIndex = useCallback(() => {
+    if (indexRequested.current) return;
+    indexRequested.current = true;
     fetch('/search.json')
       .then((r) => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -60,8 +68,15 @@ export default function SearchBar() {
         else console.warn('[search] Unexpected search index shape');
       })
       .catch(() => {
+        // Let the next focus try again.
+        indexRequested.current = false;
         console.warn('[search] Failed to load search index');
       });
+  }, []);
+
+  const clear = useCallback(() => {
+    setQuery('');
+    setActiveIndex(-1);
   }, []);
 
   // Results are derived, not mirrored into state (activeIndex resets in the
@@ -78,20 +93,22 @@ export default function SearchBar() {
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
       ) {
-        setQuery('');
+        clear();
       }
     }
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
-  }, []);
+  }, [clear]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       // Escape must work even with zero results, so the "No results" panel
-      // is dismissible from the keyboard.
+      // is dismissible from the keyboard. While there is text, it only clears
+      // the box: the header's document listener would also close the phone
+      // drawer around it.
       if (e.key === 'Escape') {
-        setQuery('');
-        setActiveIndex(-1);
+        if (query) e.nativeEvent.stopImmediatePropagation();
+        clear();
         inputRef.current?.blur();
         return;
       }
@@ -106,24 +123,24 @@ export default function SearchBar() {
           e.preventDefault();
           setActiveIndex((prev) => (prev > 0 ? prev - 1 : results.length - 1));
           break;
-        case 'Enter':
-          if (activeIndex >= 0 && results[activeIndex]) {
-            const url = results[activeIndex].url;
-            setQuery('');
-            // External results (news/attended events) leave the site; internal
-            // ones keep the SPA transition.
-            if (url.includes('://')) window.location.href = url;
-            else router.push(url);
-          }
+        case 'Enter': {
+          // With nothing highlighted, Enter (or the phone's Search key) opens
+          // the top result.
+          const url = results[activeIndex >= 0 ? activeIndex : 0].url;
+          clear();
+          // External results (news/attended events) leave the site; internal
+          // ones keep the SPA transition.
+          if (url.includes('://')) window.location.href = url;
+          else router.push(url);
           break;
+        }
       }
     },
-    [results, activeIndex, router]
+    [query, results, activeIndex, router, clear]
   );
 
-  const hasMinQuery = query.trim().length >= 1;
+  const isOpen = query.trim().length >= 1;
   const hasResults = results.length > 0;
-  const isOpen = hasMinQuery;
 
   return (
     <div className="search search-container" ref={containerRef}>
@@ -159,13 +176,15 @@ export default function SearchBar() {
           setActiveIndex(-1);
         }}
         onKeyDown={handleKeyDown}
+        onFocus={loadIndex}
+        onPointerEnter={loadIndex}
         role="combobox"
         aria-expanded={isOpen && hasResults}
         aria-autocomplete="list"
         // Only reference the listbox while it exists — the empty-state panel
         // is a status region, not a listbox.
         aria-controls={isOpen && hasResults ? listboxId : undefined}
-        aria-activedescendant={activeIndex >= 0 ? `search-option-${activeIndex}` : undefined}
+        aria-activedescendant={isOpen && activeIndex >= 0 ? `search-option-${activeIndex}` : undefined}
         aria-label="Search site content"
       />
       {isOpen && hasResults && (
@@ -176,9 +195,7 @@ export default function SearchBar() {
               className: `search-item${i === activeIndex ? ' search-item--active' : ''}`,
               role: 'option',
               'aria-selected': i === activeIndex,
-              onClick: () => {
-                setQuery('');
-              },
+              onClick: clear,
             };
             // Internal results keep the SPA transition via next/link;
             // external ones (news, attended events) are plain anchors.

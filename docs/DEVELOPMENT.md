@@ -24,99 +24,41 @@ Open http://localhost:3000.
 
 ## Scripts
 
-- `npm run dev` — starts the Next.js dev server. `predev` validates content and regenerates the search index first.
-- `npm run build` — runs `prebuild` (validates content, regenerates the search index), then `next build`. Static output lands in `out/` (`public/.nojekyll` copies through for GitHub Pages).
-- `npm run typecheck` — `tsc --noEmit` (same gate CI runs).
-- `npm run lint` — `eslint .`.
+- `npm run dev`: starts the Next.js dev server. `predev` validates content and regenerates the search index first.
+- `npm run build`: runs `prebuild` (validates content, regenerates the search index, and runs the Bloch-sphere physics check, `scripts/verify-bloch-sphere.mjs`), then `next build`. Static output lands in `out/` (`public/.nojekyll` copies through for GitHub Pages).
+- `npm run preview`: serves the last build from `out/` at http://localhost:4000 (`python3 -m http.server`). `next start` does not work with `output: 'export'`.
+- `npm run typecheck`: `tsc --noEmit` (same gate CI runs).
+- `npm run lint`: `eslint . --max-warnings=0`, so a warning fails CI like an error, then `npm run lint:css`: stylelint on `assets/css/`, with only three rules in `.stylelintrc.json` (no repeated property in a block, except a vh/dvh-style fallback pair; no shorthand that wipes an earlier longhand; kebab-case keyframe names).
+- `npm run verify:physics`: all eight physics suites (`scripts/verify-*.mjs`), including the ones for the shelved SC Quantathon v4 scroll stage. Only the Bloch-sphere suite runs in `prebuild`.
 
 ## Project structure
 
-```
-app/                                 # App Router routes
-  layout.tsx                         # Root layout, metadata, JSON-LD, CSP
-  page.tsx                           # Home
-  about/page.tsx
-  get-involved/page.tsx
-  robots.ts                          # robots.txt (generated)
-  sitemap.ts                         # sitemap.xml (generated)
-  not-found.tsx                      # 404 page
-  events/
-    page.tsx
-    hackathons/page.tsx
-    hackathons/[slug]/page.tsx
-    meetings/page.tsx
-    workshops-and-seminars/page.tsx
-    workshops-and-seminars/[slug]/page.tsx
-  news/
-    page.tsx
-  resources/
-    page.tsx
-    learning-resources/page.tsx
-    student-work-and-projects/page.tsx
-    student-work-and-projects/[slug]/page.tsx
-components/
-  Header.tsx                         # Navigation header with search
-  Footer.tsx
-  BoardMember.tsx                    # Executive board member
-  PastBoardMembers.tsx               # Past board roster (expandable)
-  PreviewCard.tsx                    # News / event preview card
-  SearchBar.tsx                      # Site-wide search
-  ContactForm.tsx                    # Web3Forms contact form
-  ModalFormButton.tsx                # Generic Web3Forms modal (participant sign-ups)
-  CopyrightYear.tsx                  # Client-corrected footer year
-  StudentWorkList.tsx                # Student work listing
-  EventArchive.tsx                   # Term-filtered archive for events + news
-  EventCountdown.tsx                 # Countdown to an event date
-  MarkdownDiv.tsx                    # Sentinel-class div renderer shared by event slug routes
-  SiteImage.tsx                      # Plain <img> wrapper
-  QuantumCanvas.tsx                  # Entangled-qubit particle field canvas
-  CloudSky.tsx                       # Drifting-clouds canvas (Qiskit Fall Fest hero)
-  BlochSphere.tsx                    # Interactive Bloch sphere
-  ConstellationDivider.tsx           # Decorative section divider
-  ScrollReveal.tsx                   # Headless reveal-on-scroll effect (adds classes to allow-listed elements, renders nothing)
-  ShootingStar.tsx                   # Comet animation
-  TitleReveal.tsx                    # Headless per-word entrance for the page h1 (mutates the existing heading)
-  NotFoundJoke.tsx                   # 404 page easter egg
-  icons/EmailIcon.tsx
-  icons/WebsiteIcon.tsx
-  icons/ChannelIcons.tsx
-lib/
-  content.ts                         # Markdown content loader (cached in prod builds)
-  content-shared.mjs                 # Rules shared with the pre-build scripts
-  slugPage.tsx                       # Shared factory for markdown slug routes
-  og.ts                              # Shared per-page OpenGraph builder
-  navData.ts                         # Navigation data builder
-  types.ts                           # Shared TypeScript types
-content/                             # Markdown content (see content/README.md)
-  events/hackathons/
-  events/meetings/
-  events/workshops-and-seminars/
-  news/
-  resources/student-work-and-projects/
-data/                                # JSON data (see data/README.md)
-  board-members.json
-  past-board-members.json
-  faculty.json
-  site-config.json
-  meeting-schedule.json
-scripts/
-  validate-content.mjs               # Validates content/ front matter (pre dev/build)
-  generate-search-index.mjs          # Builds public/search.json (pre dev/build)
-assets/
-  css/style.css                      # Single global stylesheet (imported by app/layout.tsx)
-public/
-  CNAME                              # Custom domain (clemsonquantum.com)
-  images/                            # Served at /images/...
-  files/                             # PDFs (posters, papers) served at /files/...
-  .nojekyll                          # Keeps GitHub Pages from running Jekyll
-  favicon.ico, favicon-512.png, apple-icon.png
-  search.json                        # Generated search index (gitignored)
-```
+| Folder | What lives there |
+|---|---|
+| `app/` | App Router routes, one folder per URL (`page.tsx`), plus `layout.tsx`, `not-found.tsx`, `robots.ts`, `sitemap.ts`, `manifest.ts` |
+| `components/` | React components; `scq4/` is the shelved v4 scroll stage, kept for the archived page |
+| `lib/` | Content loading, dates, metadata helpers, shared types; `physics/` and `webgl.ts` are the shelved v4 stage's physics and WebGL helpers (the live Bloch sphere uses `lib/blochSphere.mjs`) |
+| `scripts/` | Pre-build scripts (`validate-content.mjs`, `generate-search-index.mjs`), the physics checks, and data generators |
+| `content/` | Markdown for events, news, and student work (see [content/README.md](../content/README.md)) |
+| `data/` | JSON for the board, faculty, site settings, and the meeting schedule (see [data/README.md](../data/README.md)) |
+| `assets/css/` | `style.css`, the global stylesheet (a section index sits at the top); `qff.css`, the Fall Fest pages' styles, imported only by the workshops route; and `scq4-archive.css` for the shelved stage |
+| `public/` | Served as-is: `images/`, `files/` (posters, papers, bootcamp files), icons, `CNAME`, `.nojekyll`, and the legacy `*.html` redirect stubs for old URLs |
+| `docs/` | This file, `PLAN_STATUS.md` (local status notes, kept out of git) and `archive/` (the original cryostat drawings) |
+| `curriculum/` | Sources for event curricula (Qiskit Fall Fest 2026 notebooks and slides) |
+
+Entry points worth knowing:
+
+- `app/layout.tsx`: root layout, site metadata, JSON-LD, CSP.
+- `lib/slugPage.tsx`: the shared factory behind every markdown detail page (`[slug]` routes).
+- `components/MarkdownDiv.tsx` and `components/MarkdownSpan.tsx`: turn marker classes in event markdown into live components (see "Interactive blocks" in content/README.md).
+- `lib/content.ts`: reads and caches `content/`.
+- `lib/featured.ts`: the homepage featured band; edit `FEATURED_EVENT` to change it.
+- `scripts/validate-content.mjs`: the content rules that fail `dev` and `build`.
 
 ## Content editing
 
-- Content lives in `content/` as Markdown — see [content/README.md](../content/README.md).
-- Site/board configuration lives in `data/` as JSON — see [data/README.md](../data/README.md).
+- Content lives in `content/` as Markdown. See [content/README.md](../content/README.md).
+- Site/board configuration lives in `data/` as JSON. See [data/README.md](../data/README.md).
 - All content filenames must be lowercase kebab-case.
 
 ## Deployment
@@ -126,7 +68,7 @@ public/
 1. `npm ci`
 2. `npm run lint`
 3. `npm run typecheck`
-4. `npm run build` (content validation + search index + static export into `out/`)
+4. `npm run build` (content validation, search index, Bloch-sphere check, then the static export into `out/`)
 5. Publish `out/` to GitHub Pages
 
 The custom domain (`clemsonquantum.com`) is set via `public/CNAME`.
@@ -136,3 +78,6 @@ The custom domain (`clemsonquantum.com`) is set via `public/CNAME`.
 - **Static export.** No server-side features (no API routes, no SSR at request time). Dates and other dynamic values are resolved at build time.
 - **Search index is generated.** `public/search.json` is gitignored and rebuilt by `predev`/`prebuild`. It must exist at runtime in dev.
 - **Images are plain `<img>`.** `next/image` optimization is unavailable under static export, so images are served as-is.
+- **Never run `npm run build` while `next dev` is running.** Both write to `.next/`, and the build corrupts the dev server's copy (pages come back unstyled). To recover, stop the dev server, delete `.next/`, and start it again.
+- **`overflow-x: clip`, not `hidden`, on `html` and `body`.** With `hidden` on both, `body` becomes a scroll container that never scrolls, which freezes every scroll-driven animation.
+- **Drafts show only under `next dev`.** A page with `draft: true` is left out of production builds entirely (see content/README.md).

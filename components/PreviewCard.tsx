@@ -1,6 +1,23 @@
+import type { CSSProperties } from 'react';
 import SiteImage from './SiteImage';
 import type { PageMeta } from '@/lib/types';
-import { formatDate } from '@/lib/types';
+import { formatDate } from '@/lib/dates.mjs';
+
+// Card images that don't simply fill the 16:9 slot, by file name. A poster is
+// squarer than 16:9 and shows whole over a blurred copy of itself; a logo is
+// wide on white and shows whole on a white slot; a still image is a 16:9
+// graphic with text near its edges. All three skip the scroll drift, whose
+// zoom would crop them (style.css, "Card images").
+const IMAGE_FIT: Record<string, 'poster' | 'logo' | 'still'> = {
+  'scq-v1-graphic.webp': 'poster',
+  'scq-v2-graphic.webp': 'poster',
+  'iquhack-2026.webp': 'poster',
+  'building-quantum-talent.webp': 'poster',
+  'tiger-prowl.webp': 'logo',
+  'scq-v3-banner.webp': 'still',
+  'quantum-era-clemson.webp': 'still',
+  'yquantum-2025.webp': 'still',
+};
 
 interface PreviewCardProps {
   item: PageMeta;
@@ -9,48 +26,14 @@ interface PreviewCardProps {
   showFooter?: boolean;
 }
 
-function getSourceLabel(item: PageMeta): string | null {
-  // An explicit `source` credits the original publisher (e.g. an internally
-  // hosted recap of a Clemson News or SC Quantum article still names the outlet).
-  if (item.source) {
-    return item.source;
-  }
-
-  if (!item.isExternal) {
-    return 'Clemson Quantum Club';
-  }
-
-  if (item.cta_label?.startsWith('Read on ')) {
-    return item.cta_label.replace(/^Read on /, '');
-  }
-
-  // News entries go external via source_url; events via external_url.
-  const destination = item.external_url ?? item.source_url;
-  if (!destination) {
-    return 'External';
-  }
-
-  try {
-    const host = new URL(destination).hostname.replace(/^www\./, '');
-    if (host === 'news.clemson.edu') return 'Clemson News';
-    if (host === 'scquantum.org') return 'SC Quantum';
-    return host
-      .replace(/\.[^.]+$/, '')
-      .split('.')
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(' ');
-  } catch {
-    return 'External';
-  }
-}
-
 export default function PreviewCard({
   item,
   kind,
   metaLabel,
   showFooter = true,
 }: PreviewCardProps) {
-  const footerLabel = kind === 'news' ? getSourceLabel(item) : metaLabel;
+  // News cards credit the outlet (the validator requires `source` on news).
+  const footerLabel = kind === 'news' ? item.source : metaLabel;
   const summary = item.summary ?? item.excerpt;
   // `dateDisplay` lets a card show custom text (e.g. "TBD") in the date slot
   // while a real `date` is still used for sorting and the Upcoming badge.
@@ -58,6 +41,8 @@ export default function PreviewCard({
   // Event cards get the Upcoming badge from the build-time `isUpcoming` flag
   // (resolved in getAllPages, so server HTML and client hydration always agree).
   const badge = kind === 'event' && item.isUpcoming ? 'Upcoming' : null;
+  const fit = item.image ? IMAGE_FIT[item.image.split('/').pop() ?? ''] : undefined;
+  const framed = fit === 'poster' || fit === 'logo';
 
   return (
     <a
@@ -66,11 +51,14 @@ export default function PreviewCard({
       {...(item.isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {item.image && (
-        <div className="preview-card__media">
+        <div
+          className={framed ? `preview-card__media preview-card__media--${fit}` : 'preview-card__media'}
+          style={fit === 'poster' ? ({ '--card-image': `url(${item.image})` } as CSSProperties) : undefined}
+        >
           {/* Decorative here — the adjacent h3 already announces the title,
               so a non-empty alt would read it twice. */}
           <SiteImage
-            className="preview-card__image"
+            className={fit ? 'preview-card__image preview-card__image--still' : 'preview-card__image'}
             src={item.image}
             alt=""
           />
@@ -85,11 +73,17 @@ export default function PreviewCard({
             <span className="preview-card__badge">{badge}</span>
           )}
         </div>
-        <h3 className="preview-card__title">{item.title}</h3>
+        <h3 className="preview-card__title">
+          {item.title}
+          {item.isExternal && <span className="sr-only"> (opens in a new tab)</span>}
+        </h3>
         {summary && <p className="preview-card__summary">{summary}</p>}
         {showFooter && footerLabel && (
           <div className="preview-card__footer">
-            <span className="preview-card__label">{footerLabel}</span>
+            <span className="preview-card__label">
+              {footerLabel}
+              {item.isExternal && <span aria-hidden="true"> ↗</span>}
+            </span>
           </div>
         )}
       </div>

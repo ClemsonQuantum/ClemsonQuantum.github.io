@@ -7,6 +7,6 @@ interface SiteImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 export default function SiteImage({ src, alt, ...props }: SiteImageProps) {
   // lazy/async are defaults only — they sit before the spread so callers can
-  // override them (e.g. the home hero loads eagerly as the LCP candidate).
+  // override them (e.g. the homepage featured-band image loads eagerly).
   return <img loading="lazy" decoding="async" src={src} alt={alt} {...props} />;
 }
