@@ -138,11 +138,19 @@ body:has(.qff-page) {
 }
 
 .qff-eyebrow {
-  /* Ink and size come from the paragraph rules (.page-content p and the
-     section and band p rules), which outrank this class. */
   margin: 0 0 1rem;
   font-weight: 400;
   letter-spacing: 0.02em;
+}
+
+/* The hero and section eyebrows ("Clemson Quantum Club · November 9–20,
+   2026", "01 / About" to "06 / Organizers") take the deck's label look, like
+   "Hosted at Clemson University with": IBM purple at 0.82rem. The prefix
+   outranks the paragraph rules (.page-content p, .qff-page .qff-section p);
+   the band's eyebrow keeps its own ink and size. */
+.qff-page :is(.qff-hero, .qff-section) p.qff-eyebrow {
+  color: var(--qff-label);
+  font-size: 0.82rem;
 }
 
 .qff-gradient-text {
@@ -396,9 +404,10 @@ a.qff-btn:hover {
 }
 
 /* A " · " separator hides once the part after it drops to its own line, so
-   no line ends in a dot: the hero eyebrow below 449px (its 416.7px line plus
-   16px gutters) and the session date and time below 350px. */
-@media (max-width: 448px) {
+   no line ends in a dot: the hero eyebrow below 381px (its 341.7px line plus
+   16px gutters, with about 2% to spare for Safari's slightly different text
+   widths) and the session date and time below 350px. */
+@media (max-width: 380px) {
   .qff-hero .qff-eyebrow-sep {
     display: none;
   }
