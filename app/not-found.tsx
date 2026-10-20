@@ -22,7 +22,7 @@ export default function NotFound() {
       <h1 className="qf-404__title">This page is in a superposition</h1>
       <NotFoundJoke />
       <Link href="/" className="hackathon-cta qf-404__cta">
-        Collapse back to the homepage &rarr;
+        Collapse back to the homepage <span aria-hidden="true">&rarr;</span>
       </Link>
     </section>
   );

@@ -1,7 +1,8 @@
 /* ===================================================================
    Clemson Quantum Club — design system
-   Breakpoints in use: 480 / 639–640 / 767–768 / 800–801 (the hamburger nav,
-   mirrored in components/Header.tsx) / 899–900 / 1023–1024.
+   Breakpoints in use: 359 / 400 / 480 / 580 / 600 / 639–640 / 767–768 /
+   800–801 (the hamburger nav, mirrored in components/Header.tsx) / 860 /
+   899–900 / 959–960 / 1023–1024 / 1024–1025 (the card ladder).
 
    Sections, in order (search for the title):
      Design Tokens, Reset, Global
@@ -85,7 +86,7 @@
 
   /* Layout */
   --max-width: 1220px;
-  --nav-h: 72px; /* the sticky nav bar; 64px at 800px and below */
+  --nav-h: 72px; /* the sticky nav bar; 64px at the 50em nav switch and below */
 
   /* Motion */
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
@@ -130,6 +131,22 @@
   }
 }
 
+/* Arrows (← ↑ → ↓ and the diagonals) for Source Sans 3 text. The Source
+   Sans 3 files next/font loads (latin subset) have no →, so it fell back to a
+   system font. This file is those ten glyphs from Adobe's Source Sans 3
+   variable font (SIL Open Font License 1.1; renamed inside to "CQC Arrows"
+   for the license's Reserved Font Name "Source"). Same family name as
+   next/font registers, so it joins that family; browsers fetch it (5 KB)
+   only on pages that show an arrow. */
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url('/fonts/source-sans-3-arrows.woff') format('woff');
+  unicode-range: U+2190-2199;
+}
+
 /* --- Reset --- */
 *,
 *::before,
@@ -151,7 +168,7 @@ html {
   scroll-padding-top: calc(var(--nav-h) + 8px);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   :root {
     --nav-h: 64px;
   }
@@ -175,6 +192,9 @@ body {
   overflow-x: clip; /* see html: clip keeps body from becoming a scroller */
   font-family: var(--font-sans);
   line-height: 1.6;
+  /* No one-word last line in running text (inherited; Chrome and Safari).
+     Headings balance instead (see h1, h2, h3). */
+  text-wrap: pretty;
   color: var(--color-text);
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 30%),
@@ -302,6 +322,15 @@ main:has(.qff-page) {
   transform: scaleX(1);
 }
 
+/* Forced colors replace the background the bar is painted with, which
+   would leave the current page unmarked; paint it in the link color. */
+@media (forced-colors: active) {
+  .nav-link::after {
+    forced-color-adjust: none;
+    background: LinkText;
+  }
+}
+
 /* Chevron icon in dropdown triggers */
 .nav-chevron {
   width: 10px;
@@ -337,11 +366,11 @@ main:has(.qff-page) {
   height: 14px;
 }
 
-/* Hover-reveal is DESKTOP-ONLY. On the ≤800px hamburger drawer the panel is
+/* Hover-reveal is DESKTOP-ONLY. On the ≤50em hamburger drawer the panel is
    static and dropdowns open on tap (.nav-dropdown--open); leaving these
    ungated let `:hover` (specificity 0,3,0) beat the mobile `transform:none`
    reset and slide the open panel off-screen via translateX(-50%). */
-@media (min-width: 801px) {
+@media (min-width: 50.0625em) {
   /* A closed panel is also out of the tab order, so Tab from a trigger moves
      on to the next nav item instead of walking through invisible links.
      visibility waits for the fade-out before it hides the panel. */
@@ -372,16 +401,6 @@ main:has(.qff-page) {
   .nav-dropdown--dismissed > .nav-dropdown-panel {
     visibility: hidden;
   }
-}
-
-.nav-dropdown-section {
-  padding: 0.25rem 0;
-}
-
-.nav-dropdown-section + .nav-dropdown-section {
-  margin-top: 0.375rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--color-border);
 }
 
 .nav-dropdown-link {
@@ -493,10 +512,15 @@ main:has(.qff-page) {
 }
 
 /* ===================================================================
-   Mobile (≤ 800px, hamburger drawer)
+   Mobile (≤ 50em, hamburger drawer)
+   The nav switch is in em: 800px at the default 16px text size, and wider
+   when a visitor turns their browser's text size up (1000px at 20px), so
+   the desktop row never crowds the logo or clips the search box. Every rule
+   that switches with the nav (side gutters, people cards) uses the same
+   50em / 50.0625em pair, as does Header.tsx.
    =================================================================== */
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .nav-toggle {
     display: flex;
   }
@@ -560,10 +584,26 @@ main:has(.qff-page) {
     color: var(--color-link);
   }
 
+  /* The rows are full-bleed inside the scrolling sheet, which clips anything
+     outside it, so draw the focus ring inside the row. */
+  .nav-links .nav-link:focus-visible,
+  .nav-links .nav-dropdown-link:focus-visible {
+    outline-offset: -2px;
+  }
+
   /* The underline is hidden in the drawer, so the current page's row is
      marked by color instead. */
   .nav-links .nav-link[aria-current] {
     color: var(--color-link);
+  }
+
+  /* Forced colors give every link one color, so underline the row there. */
+  @media (forced-colors: active) {
+    .nav-links .nav-link[aria-current] {
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.3em;
+    }
   }
 
   /* Dropdown on mobile — collapsed by default, expands on tap (.nav-dropdown--open) */
@@ -594,11 +634,11 @@ main:has(.qff-page) {
   }
 
   .nav-dropdown-link--parent::after {
-    transform: rotate(45deg);
+    transform: rotate(135deg);
   }
 
   .dropdown-submenu--open > .nav-dropdown-link--parent::after {
-    transform: rotate(135deg);
+    transform: rotate(-45deg);
   }
 
   .nav-search-slot .search {
@@ -634,7 +674,9 @@ main:has(.qff-page) {
     border-bottom: 1px solid var(--color-border);
   }
 
-  .nav-links > .nav-dropdown:last-of-type {
+  /* The last row: Get Involved, right before the search slot (a div that
+     order: -1 moves to the top, so :last-of-type never matched a row). */
+  .nav-links > :has(+ .nav-search-slot) {
     border-bottom: 0;
   }
 
@@ -669,6 +711,11 @@ main:has(.qff-page) {
     padding: 0.2rem 0 0.35rem;
   }
 
+  /* As a flex row the link drops the space before its arrow; put it back. */
+  .nav-links .nav-dropdown-link--view-all {
+    gap: 0.25em;
+  }
+
   .nav-links .dropdown-submenu-content .nav-dropdown-link {
     padding-left: calc(var(--space-md) * 3);
     font-size: 0.93rem;
@@ -700,14 +747,19 @@ main:has(.qff-page) {
   outline: none;
 }
 
+/* The search-match highlight's color is set in components/SearchHighlight.tsx
+   (Next's CSS parser does not know ::highlight() yet). */
+
 .search-results-dropdown {
   position: absolute;
   top: calc(100% + 6px);
-  right: 0;
+  /* -1px and +2px: right and width resolve inside the 1px border of the
+     pill, so these put the panel flush with its outer edges. */
+  right: -1px;
   /* Right-anchored so the panel grows leftward into the page — the nav
      search box sits at the viewport edge, so a left anchor would push
      the extra width off-screen. */
-  width: max(100%, 280px);
+  width: max(calc(100% + 2px), 280px);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   max-height: 320px;
@@ -715,6 +767,14 @@ main:has(.qff-page) {
   z-index: 1200;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+}
+
+/* Phone drawer: the sheet ends 290px below the search box, so the list stops
+   short of it; 8 results scroll inside the list instead of being cut off. */
+@media (max-width: 50em) {
+  .nav-search-slot .search-results-dropdown {
+    max-height: 280px;
+  }
 }
 
 .search-item {
@@ -731,9 +791,26 @@ main:has(.qff-page) {
 }
 
 .search-item:hover,
-.search-item--active {
+.search-item--active,
+.search-item:focus-visible {
   background: var(--color-accent-light);
   color: var(--color-text);
+  /* The tint alone is about 1.1:1 on the panel; the bar marks the row. */
+  box-shadow: inset 2px 0 0 var(--color-link);
+}
+
+/* Inset ring: the overflow of the list clips an outset one on every side. */
+.search-item:focus-visible {
+  outline-offset: -2px;
+}
+
+/* Forced colors drop the tint and the bar, so the row chosen with the arrow
+   keys gets an inset ring like keyboard focus. */
+@media (forced-colors: active) {
+  .search-item--active {
+    outline: 2px solid Highlight;
+    outline-offset: -2px;
+  }
 }
 
 .search-item-title {
@@ -757,6 +834,8 @@ h1, h2, h3 {
   font-family: var(--font-serif);
   font-weight: 600;
   letter-spacing: -0.02em;
+  /* Even lines: a heading never leaves one word alone on its last line. */
+  text-wrap: balance;
 }
 
 h1 {
@@ -794,8 +873,9 @@ section p {
 }
 
 /* --- Page Content (Markdown pages) ---
-   The h2 rule, h3 chip and boxed ul style plain Markdown pages (the Code of
-   Conduct, the workshop template). They match direct children only, so the
+   The h2 rule, h3 chip and boxed ul style plain Markdown pages (the workshop
+   template; the Code of Conduct overrides them in .coc-page). They match
+   direct children only, so the
    headings and lists inside an event page's own markup keep their look. */
 .page-content {
   max-width: 800px;
@@ -808,7 +888,8 @@ section p {
 }
 
 .page-content h1 {
-  font-size: 2.12rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+  line-height: 1.15;
   margin-bottom: 0.5rem;
   padding: 0;
   color: var(--color-text);
@@ -858,6 +939,17 @@ form {
   margin: var(--space-xl) auto;
 }
 
+/* Get Involved: the form fills its split column from the top edge, like
+   the right column of every other split section. */
+#contact form {
+  max-width: none;
+  margin: 0;
+}
+
+#contact form + .form-note {
+  margin-top: var(--space-md);
+}
+
 form label {
   display: block;
   font-weight: 500;
@@ -899,10 +991,6 @@ form textarea {
   min-height: 100px;
 }
 
-form br {
-  display: none;
-}
-
 form button[type='submit'] {
   display: block;
   width: 100%;
@@ -922,6 +1010,23 @@ form button[type='submit'] {
 form button[type='submit']:hover {
   background: var(--color-link-hover);
   transform: translateY(-1px);
+}
+
+/* While sending (aria-disabled, so the button keeps keyboard focus): dimmed
+   like the disabled modal button, without the hover lift or darker fill. */
+form button[type='submit'][aria-disabled='true'] {
+  background: var(--color-link);
+  opacity: 0.65;
+  transform: none;
+  cursor: default;
+}
+
+/* Forced colors erase the fill, and border: none would leave bare text;
+   give the button an edge like the fields above it. */
+@media (forced-colors: active) {
+  form button[type='submit'] {
+    border: 1px solid ButtonText;
+  }
 }
 
 /* --- Footer — mirrors the frosted-glass nav. One row on desktop (brand /
@@ -955,18 +1060,15 @@ footer {
 
 .footer-logo-link {
   display: inline-block;
+  /* Off the text baseline, so the brand box is exactly as tall as the
+     30px logo. */
+  vertical-align: top;
 }
 
 .footer-logo {
   height: 30px;
   width: auto;
   display: block;
-}
-
-.footer-meeting {
-  margin: 0.45rem 0 0;
-  font-size: 0.82rem;
-  color: var(--color-text-secondary);
 }
 
 .footer-links {
@@ -985,7 +1087,7 @@ footer {
   color: var(--color-text-secondary);
   text-decoration: none;
   border-radius: var(--radius-sm);
-  transition: color 0.2s, background 0.2s;
+  transition: color 0.2s;
 }
 
 .footer-links a:hover,
@@ -1037,12 +1139,17 @@ footer {
   color: var(--color-link);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   footer {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
   }
+}
 
+/* Stacked and centered until the one-row footer fits (about 890px, or about
+   940px with the wider Plex links on the Fall Fest page), so the icon row
+   never wraps alone onto a second line. */
+@media (max-width: 959px) {
   .footer-inner {
     flex-direction: column;
     align-items: center;
@@ -1050,6 +1157,25 @@ footer {
 
   .footer-brand {
     text-align: center;
+  }
+}
+
+/* One row: equal-width side groups put the quick links on the page center,
+   over the centered divider and copyright line. min-width keeps the logo
+   from shrinking to nothing under flex-basis 0. */
+@media (min-width: 960px) {
+  .footer-brand,
+  .footer-social {
+    flex: 1 1 0;
+    min-width: max-content;
+  }
+
+  /* Moved out by the 0.5rem link padding, so the last glyph ends on the
+     content edge like the logo on the left; the tap area hangs past it. */
+  .footer-social {
+    position: relative;
+    left: 0.5rem;
+    justify-content: flex-end;
   }
 }
 
@@ -1089,13 +1215,17 @@ footer {
   border-radius: var(--radius-sm);
 }
 
+.skip-link:hover {
+  color: var(--color-on-fill);
+}
+
 .skip-link:focus-visible {
   width: auto;
   height: auto;
   overflow: visible;
   clip-path: none;
   white-space: normal;
-  outline: 2px solid #fff;
+  outline: 2px solid var(--color-on-fill);
   outline-offset: -4px;
 }
 
@@ -1147,7 +1277,7 @@ footer {
   font-weight: 600;
   letter-spacing: 0.01em;
   box-shadow: none;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .hackathon-cta.hackathon-cta--primary:hover,
@@ -1230,7 +1360,7 @@ footer {
   column-gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: center;
   margin: 0;
-  padding: clamp(1.3rem, 2.5vw, 1.9rem) 0.25rem;
+  padding: clamp(1.3rem, 2.5vw, 1.9rem) 0;
   border-bottom: 1px solid var(--color-border);
   font-size: 1rem;
   color: var(--color-text);
@@ -1238,11 +1368,13 @@ footer {
 
 .hackathon-section .hackathon-hotel:last-child {
   border-bottom: 0;
+  /* The section bottom padding alone is the gap above the next divider. */
+  padding-bottom: 0;
 }
 
 /* Lists without prices (SC Quantathon v4): no empty third column, so the
    drive distance stays flush right. Desktop only; phones stack every row. */
-@media (min-width: 801px) {
+@media (min-width: 50.0625em) {
   .hackathon-section .hackathon-hotel:not(:has(.hackathon-hotel-price)) {
     grid-template-columns: 1fr auto;
   }
@@ -1256,7 +1388,7 @@ footer {
 .hackathon-hotel-tag {
   display: block;
   margin-bottom: 0.35rem;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -1294,8 +1426,10 @@ footer {
 }
 
 /* The rate-block lead sentence stays on one line where the column is wide
-   enough; on phones it wraps like any other prose. */
-@media (min-width: 801px) {
+   enough; on phones it wraps like any other prose. In em (801px at the
+   default 16px font), so a larger default font keeps it wrapping until the
+   row has room; at 24px it pushed the price stat off the page. */
+@media (min-width: 50.0625em) {
   .hackathon-hotel-note-lead {
     white-space: nowrap;
   }
@@ -1317,8 +1451,8 @@ footer {
 
 .hackathon-hotel-distance::before,
 .hackathon-hotel-price::before {
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
@@ -1336,7 +1470,7 @@ footer {
   letter-spacing: 0.06em;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .hackathon-section .hackathon-hotel {
     grid-template-columns: 1fr;
     row-gap: 0.7rem;
@@ -1346,6 +1480,7 @@ footer {
   .hackathon-hotel-price {
     flex-direction: row;
     justify-content: space-between;
+    align-items: baseline;
     min-width: 0;
   }
 }
@@ -1355,7 +1490,21 @@ footer {
   display: flex;
   flex-direction: column;
   gap: var(--space-2xl);
-  margin-top: var(--space-xl);
+  /* Cancels the top margin of the first tier heading, so “Powered by” sits
+     as close under the h2 as the first line of every other section. */
+  margin-top: calc(-1 * var(--space-md));
+}
+
+/* Section ends: the bottom padding of the last row would stack on the
+   section padding, so trim it to keep the same air above every rule. */
+.hackathon-sponsor-tier:last-child .hackathon-sponsor-logos {
+  margin-bottom: calc(-1 * var(--space-xl));
+}
+
+/* The last track keeps its own padding for the hover tint; this repeats
+   the .hackathon-track padding clamp, so change both together. */
+.hackathon-section .hackathon-tracks {
+  margin-bottom: calc(-1 * clamp(1.6rem, 3vw, 2.4rem));
 }
 
 /* Paired variant: the first two tiers ("Powered by" / "Hosted by") share a
@@ -1370,7 +1519,7 @@ footer {
   grid-column: 1 / -1;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .hackathon-sponsors--paired {
     grid-template-columns: 1fr;
   }
@@ -1425,6 +1574,14 @@ footer {
 .hackathon-sponsor-logo:has(img):hover {
   border-color: transparent;
   opacity: 0.8;
+}
+
+/* Forced colors paint the transparent border back in, which would box
+   every logo like an empty sponsor slot. */
+@media (forced-colors: active) {
+  .hackathon-sponsor-logo:has(img) {
+    border-style: none;
+  }
 }
 
 .hackathon-sponsor-logo picture {
@@ -1605,6 +1762,16 @@ footer {
   font-weight: 400;
 }
 
+/* Forced colors paint the transparent border as a real line, so every tab
+   looked underlined; only the active tab keeps it. The padding keeps the
+   tabs the same height. */
+@media (forced-colors: active) {
+  .sw-filter__btn:not(.is-active) {
+    border-bottom-style: hidden;
+    padding-bottom: calc(0.5rem + 2px);
+  }
+}
+
 /* On phones the tab row scrolls horizontally instead of wrapping. */
 @media (max-width: 767px) {
   .sw-filter {
@@ -1612,12 +1779,17 @@ footer {
     gap: 1.1rem;
     overflow-x: auto;
     overflow-y: hidden;
+    /* The scroller clips at its padding box, so draw the rule inside it,
+       where the underline of the active tab can cover it, as on desktop. */
+    border-bottom: 0;
+    box-shadow: inset 0 -1px 0 var(--color-border);
     scrollbar-width: none;
     /* No scrollbar, so fade the right edge: a cut-off tab shows the row
-       scrolls. The end padding lets the last tab scroll clear of the fade. */
+       scrolls. The end padding lets the last tab scroll clear of the fade.
+       The second mask layer keeps the bottom 1px (the rule) unfaded. */
     padding-right: 2.5rem;
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
-    mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent);
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent), linear-gradient(to top, #000 1px, transparent 1px);
+    mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent), linear-gradient(to top, #000 1px, transparent 1px);
   }
 
   /* The scroller clips anything outside it, so draw the focus ring inside. */
@@ -1631,7 +1803,15 @@ footer {
 
   .sw-filter__btn {
     flex: 0 0 auto;
+    margin-bottom: 0;
     white-space: nowrap;
+  }
+
+  /* Forced colors drop box shadows, so the rule is a border again there. */
+  @media (forced-colors: active) {
+    .sw-filter {
+      border-bottom: 1px solid var(--color-border);
+    }
   }
 }
 
@@ -1641,7 +1821,9 @@ footer {
 }
 
 .sw-list {
-  padding-bottom: var(--space-2xl);
+  /* Plus the 2rem bottom padding of the last item: the same 3rem cushion
+     above the footer as the other archive pages. */
+  padding-bottom: var(--space-md);
 }
 
 /* Student Work & Projects — individual project page */
@@ -1669,7 +1851,7 @@ footer {
 .sw-detail__mentors {
   margin: 0.35rem 0 0;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .sw-media {
@@ -1722,12 +1904,12 @@ footer {
   gap: 0.4rem;
   padding: 0.55rem 1.1rem;
   border: 1px solid var(--color-border);
-  border-radius: 0.6rem;
+  border-radius: var(--radius-sm);
   color: var(--color-text);
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  transition: border-color 0.15s, color 0.15s;
 }
 .sw-action:hover {
   border-color: var(--color-link);
@@ -1790,8 +1972,7 @@ footer {
 }
 
 .sw-summary {
-  max-width: 72ch;
-  margin: 0 0 0.75rem;
+  margin: 0;
   color: var(--color-text-secondary);
   font-size: 0.97rem;
   line-height: 1.65;
@@ -1803,8 +1984,7 @@ footer {
 
 /* position: relative — the absolutely-positioned .quantum-canvas (z-index: 0)
    sits behind the lifted children, mirroring .hackathon-hero--quantum. No
-   overflow: hidden here — the canvas clips to its own bounds anyway, and
-   clipping would cut off the visual's 70px box-shadow. */
+   overflow: hidden here; the canvas clips to its own bounds anyway. */
 .home-hero {
   position: relative;
   max-width: var(--max-width);
@@ -1825,9 +2005,9 @@ footer {
   text-align: center;
 }
 
-/* The two intro paragraphs, set side by side under the divider. Capped well
-   short of the hero's own max-width so each column lands near 48ch rather
-   than the ~60ch two full-width halves would give. */
+/* The two intro paragraphs, set side by side under the divider. Capped short
+   of the hero max-width so each column holds about 59ch (504px at 1200px
+   and up) rather than the wider measure two full-width halves give. */
 .home-hero__intro {
   margin: 0 auto;
   max-width: 66rem;
@@ -2166,6 +2346,7 @@ footer {
 
 .resource-cards .hackathon-resource-title::after {
   content: "\2192";
+  content: "\2192" / "";
   display: inline-block;
   color: var(--rc-accent);
   font-weight: 400;
@@ -2223,9 +2404,12 @@ footer {
   margin: 0 0 0.15rem;
   color: var(--color-violet);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  /* Even halves, so a two-line role never ends a line on “&” or leaves
+     one word alone. */
+  text-wrap: balance;
 }
 .faculty-card__name {
   margin: 0;
@@ -2252,7 +2436,7 @@ footer {
   /* Same box as .board-member__link-icon so both sections' icons match. */
   width: 1.45rem;
   height: 1.45rem;
-  opacity: 0.75;
+  opacity: 0.78;
   transition: opacity 0.15s;
 }
 /* Brand glyphs (LinkedIn, GitHub) draw edge-to-edge in their viewBox while
@@ -2270,6 +2454,26 @@ footer {
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* Two-column faculty rows share their header height, so a role that wraps to
+   two lines (801–890px) grows upward and names, links and bios still line
+   up across the row. */
+@media (min-width: 50.0625em) {
+  .faculty-card {
+    display: grid;
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+
+  .faculty-card__top {
+    align-items: flex-end;
+  }
+
+  .faculty-card__photo {
+    align-self: center;
+  }
 }
 
 @media (min-width: 768px) {
@@ -2298,7 +2502,7 @@ footer {
    =================================================================== */
 
 .about-page {
-  max-width: 1120px;
+  max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 var(--space-xl) var(--space-2xl);
 }
@@ -2315,15 +2519,15 @@ footer {
   align-items: center;
 }
 
-/* About page lead photo placeholder (swap for a real club photo). */
+/* About page lead photo (the club photo). */
 .about-page__photo {
   aspect-ratio: 16 / 7;
-  margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: clamp(3.5rem, 6vw, 4rem);
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow:
-    0 24px 60px rgba(15, 23, 42, 0.12),
+    var(--shadow-lg),
     0 0 34px rgba(var(--color-violet-rgb), 0.08);
 }
 
@@ -2333,14 +2537,13 @@ footer {
   object-fit: cover;
   /* Bias the crop downward — the upper ~40% of the photo is building/palms,
      so center the visible slice on the students rather than the empty space. */
-  object-position: center 80%;
+  object-position: center 100%;
   display: block;
 }
 
 /* Get-involved channels — stacked under the heading (not the title-left /
    box-right split), as a responsive grid of tiles. */
 .gi-channels-intro {
-  max-width: 60ch;
   color: var(--color-text-secondary);
 }
 .gi-channels {
@@ -2398,7 +2601,7 @@ footer {
     flex-basis: 42%;
   }
 }
-@media (max-width: 560px) {
+@media (max-width: 580px) {
   .gi-channel {
     flex-basis: 100%;
   }
@@ -2431,6 +2634,12 @@ footer {
   /* Single line on a full desktop window; wraps on narrower viewports
      (never force nowrap on titles — it clips instead of wrapping). */
   font-size: clamp(2.12rem, 4.66vw, 3.29rem);
+}
+
+/* Get Involved: one line (“Get involved”) at every width, topping out at
+   4.2rem, about the size of the archive page titles (4.24rem). */
+.about-page__hero:has(.about-page__meeting-card) h1 {
+  font-size: clamp(2.54rem, 5.83vw, 4.2rem);
 }
 
 .about-page__tagline {
@@ -2469,16 +2678,31 @@ footer {
   border-top: 1px solid var(--color-border);
 }
 
-.about-page__meeting-card dt {
+/* The About page's quick facts ("Who we are") share the meeting card's
+   label and value look, without the card: side by side under one hairline,
+   so the column ends above the paragraph beside it instead of below. */
+.about-page__facts {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  gap: var(--space-md) clamp(2rem, 4vw, 3.5rem);
+  margin: var(--space-lg) 0 0;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-page__meeting-card dt,
+.about-page__facts dt {
   margin-bottom: 0.25rem;
   color: var(--color-text-secondary);
   font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.about-page__meeting-card dd {
+.about-page__meeting-card dd,
+.about-page__facts dd {
   margin: 0;
   color: var(--color-text);
   font-weight: 600;
@@ -2487,17 +2711,17 @@ footer {
 
 .about-page__section {
   /* Override the generic centered+padded `section` rule so section headings
-     line up with the hero title at the page's left margin. */
+     line up with the hero title at the page's left margin, and so the space
+     between sections is this one margin rather than the margin plus 32px of
+     padding above and below. */
   max-width: none;
   margin-left: 0;
   margin-right: 0;
-  padding-left: 0;
-  padding-right: 0;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  padding: 0;
+  margin-bottom: clamp(3.5rem, 6vw, 4.5rem);
 }
 
 .about-page__section h2 {
-  max-width: 16ch;
   font-size: clamp(2.12rem, 3.6vw, 2.92rem);
   font-weight: 600;
   line-height: 1.1;
@@ -2551,7 +2775,7 @@ footer {
 }
 
 .about-page__why-num {
-  padding-top: 0.2rem; /* optically align with the h3 cap height */
+  padding-top: 0.125rem; /* sits on the h3 baseline */
   color: var(--color-link); /* the accent orange is 2.8:1 on cream */
   font-family: var(--font-serif);
   font-size: 1.05rem;
@@ -2586,6 +2810,19 @@ footer {
   border-top: 1px solid var(--color-border);
 }
 
+/* Side by side, the first row has no rule above it, so it starts on the
+   line of the heading instead of 0.9rem below it. */
+@media (min-width: 900px) {
+  .about-page__activity-list li:first-child,
+  .about-page__link-panel a:first-child {
+    padding-top: 0;
+  }
+
+  .about-page__activity-list li:first-child::before {
+    top: 0.52rem; /* 1.42rem minus the 0.9rem padding */
+  }
+}
+
 .about-page__activity-list li::before,
 .gi-schedule__item--next::before {
   content: '';
@@ -2609,7 +2846,7 @@ footer {
   justify-content: space-between;
   align-items: baseline;
   gap: var(--space-md);
-  padding: 0.9rem 0.15rem;
+  padding: 0.9rem 0.15rem 0.9rem 0;
   color: var(--color-text);
   font-weight: 600;
   text-decoration: none;
@@ -2621,6 +2858,7 @@ footer {
 
 .about-page__link-panel a::after {
   content: '\2192';
+  content: '\2192' / '';
   color: var(--color-accent);
   transition: transform 0.2s var(--ease-out-soft);
 }
@@ -2642,16 +2880,20 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .about-page__hero h1,
-  .about-page__section h2 {
+  .about-page__hero h1 {
     max-width: 16ch;
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .about-page {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
+  }
+
+  /* Same title gap under the nav as the archive heroes (1rem here). */
+  main:has(.about-page) {
+    padding-top: var(--space-md);
   }
 }
 
@@ -2676,6 +2918,7 @@ footer {
 }
 
 .gi-schedule-aside img {
+  display: block;
   width: min(100%, 300px);
   height: auto;
 }
@@ -2720,7 +2963,7 @@ footer {
 
 /* Past: dimmed with a small check in the marker slot — never strikethrough. */
 .gi-schedule__item--past {
-  /* 0.92 keeps the secondary ink at 4.6:1 on cream; 0.85 fell to 4.3:1. */
+  /* 0.92 keeps the secondary ink at 5.0:1 on cream; 0.85 fell to 4.3:1. */
   opacity: 0.92;
 }
 
@@ -2729,10 +2972,17 @@ footer {
   color: var(--color-text-secondary);
 }
 
+/* A link in a past row dims with the row (it keeps its underline) and takes
+   the link color again on hover. */
+.gi-schedule__item--past .gi-schedule__title a:not(:hover) {
+  color: inherit;
+}
+
 .gi-schedule__item--past::before {
   content: '\2713';
+  content: '\2713' / '';
   position: absolute;
-  top: 0.82rem;
+  top: 1.07rem;
   left: 0;
   color: var(--color-text-secondary);
   font-size: 0.8rem;
@@ -2745,6 +2995,14 @@ footer {
 
   .gi-schedule-aside {
     margin-top: var(--space-lg);
+  }
+}
+
+/* Phones: the dates are about 50px wide, so a narrower date column gives
+   the titles room (“SC Quantathon v3” broke at a 20px default font). */
+@media (max-width: 580px) {
+  .gi-schedule__item {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
   }
 }
 
@@ -2764,25 +3022,28 @@ footer {
 
 /* Past board members archive on /about page */
 .about-past-board {
-  /* No card box — sits flat on the page like the homepage section headers. */
-  padding: 0;
+  /* No card box: sits flat on the page like the homepage section headers,
+     spaced like the other About sections. */
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .about-past-board__header {
   display: flex;
-  align-items: center;
+  /* The toggle sits on the lede line (flex-end where last baseline is not
+     supported). */
+  align-items: flex-end;
+  align-items: last baseline;
   justify-content: space-between;
   gap: var(--space-lg);
 }
 
 .about-past-board__header h2 {
   max-width: none;
-  font-size: clamp(1.54rem, 2.65vw, 2.12rem);
 }
 
 .about-past-board__header p {
   margin-top: 0.4rem;
-  font-size: 0.98rem;
 }
 
 /* Let the standardized .view-all-link work on <button> (e.g. the archive
@@ -2832,19 +3093,45 @@ button.view-all-link {
   margin: 0 0 0.2rem;
   color: var(--color-text);
   font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-weight: 700;
   line-height: 1.2;
+}
+
+/* A name with a LinkedIn profile links to it: body text with the brand
+   glyph beside it, the link color on hover or keyboard focus. */
+.about-past-board__name-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: inherit;
+}
+
+.about-past-board__name-link:is(:hover, :focus-visible) {
+  color: var(--color-link);
+}
+
+.about-past-board__linkedin {
+  flex-shrink: 0;
+  width: 0.5em;
+  height: 0.5em;
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.about-past-board__name-link:is(:hover, :focus-visible) .about-past-board__linkedin {
+  color: inherit;
 }
 
 .about-past-board__item p {
   margin: 0;
   color: var(--color-text);
   font-size: 0.92rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.35;
 }
 
-.about-past-board__item span {
+.about-past-board__item div > span {
   display: block;
   margin-top: 0.15rem;
   color: var(--color-text-secondary);
@@ -2889,7 +3176,7 @@ a:hover {
 
 .nav--scrolled {
   box-shadow: 0 18px 30px rgba(15, 23, 42, 0.06);
-  border-bottom-color: rgba(22, 32, 51, 0.12);
+  border-bottom-color: var(--color-border);
 }
 
 .nav-inner {
@@ -2956,9 +3243,20 @@ a:hover {
   color: var(--color-link-hover);
 }
 
-@media (min-width: 801px) {
+@media (min-width: 50.0625em) {
   .dropdown-submenu {
     position: relative;
+  }
+
+  /* An open flyout keeps its parent row in the hover look (dark twin with
+     the dark nav rules), so the row stays tied to the flyout while the
+     pointer is inside it. */
+  .dropdown-submenu--open > .nav-dropdown-link--parent {
+    background: rgba(22, 32, 51, 0.06);
+  }
+
+  .dropdown-submenu--open > .nav-dropdown-link--parent::after {
+    border-color: var(--color-accent);
   }
 
   .dropdown-submenu::after {
@@ -2973,7 +3271,9 @@ a:hover {
   .dropdown-submenu-content {
     display: block;
     position: absolute;
-    top: -0.45rem;
+    /* Pulls the flyout up by its padding and border, so the first item sits
+       on the line of the parent row. */
+    top: calc(-0.6rem - 1px);
     left: calc(100% + 8px);
     width: min(320px, 42vw);
     padding: 0.6rem;
@@ -2984,10 +3284,15 @@ a:hover {
     border: 1px solid rgba(22, 32, 51, 0.1);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
-    transition: opacity 0.16s ease, transform 0.16s ease;
+    /* A closed flyout leaves the tab order too, like the closed panel;
+       visibility waits for the fade-out before it hides the flyout. */
+    visibility: hidden;
+    transition: opacity 0.16s ease, transform 0.16s ease, visibility 0s linear 0.16s;
   }
 
   .dropdown-submenu--open > .dropdown-submenu-content {
+    visibility: visible;
+    transition-delay: 0s;
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
@@ -3054,7 +3359,7 @@ a:hover {
   padding: 0;
   color: var(--color-text);
   text-align: center;
-  font-size: clamp(2.65rem, 5.3vw, 4.24rem);
+  font-size: clamp(3.18rem, 5.3vw, 4.24rem);
   line-height: 0.95;
 }
 
@@ -3184,9 +3489,8 @@ a:hover {
   flex-direction: column;
   gap: 0.9rem;
   padding: 1.25rem;
-  /* Every card the same height, even a lone card in a filtered term, with
-     the title and summary sitting together at the top; any spare room
-     falls above the footer instead of between title and summary. */
+  /* Every card the same height, even a lone card in a filtered term; the
+     summary centers itself in the spare room (see .preview-card__summary). */
   min-height: 19rem;
 }
 
@@ -3196,7 +3500,9 @@ a:hover {
   justify-content: space-between;
   align-items: center;
   gap: 0.4rem 0.75rem;
-  min-height: 1.4rem;
+  /* Height of the Upcoming badge (0.7rem x 1.6 + 2 x 0.22rem), so titles
+     line up across a row with or without it. */
+  min-height: 1.56rem;
 }
 
 .preview-card__date {
@@ -3230,7 +3536,8 @@ a:hover {
   line-height: 1.22;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
+  /* 5, not 4: the longest headline needs 5 lines at 768–820 and 1025–1210. */
+  -webkit-line-clamp: 5;
   overflow: hidden;
 }
 
@@ -3271,7 +3578,7 @@ a:hover {
 
 .preview-card__label {
   color: var(--color-text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3282,17 +3589,22 @@ a:hover {
   padding-bottom: var(--space-2xl);
 }
 
+/* After the featured band, match the air the hero leaves above it. */
+.home-featured + .home-section {
+  padding-top: clamp(2rem, 4vw, 3.5rem);
+}
+
 .home-section__title {
   margin: 0;
   color: var(--color-text);
-  font-size: clamp(2.12rem, 4.24vw, 2.97rem);
+  font-size: clamp(2.76rem, 4.24vw, 2.92rem);
   text-align: left;
   line-height: 1.02;
 }
 
 .home-section__header {
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
   justify-content: space-between;
   gap: var(--space-lg);
   margin-bottom: var(--space-lg);
@@ -3390,7 +3702,7 @@ a:hover {
   height: 120px;
   border-radius: var(--radius-full);
   object-fit: cover;
-  background: #efede7;
+  background: #f0ece5;
 }
 
 .board-member__body {
@@ -3469,7 +3781,7 @@ a:hover {
 
 /* Card ladder: 3-up on desktop (base rule), 2-up on tablet, 1-up on phones.
    This seam is independent of the nav's: the nav switches to its desktop
-   row at 801px, while this ladder keeps the cards 2-up through 1024px purely
+   row at 50.0625em (801px at the default text size), while this ladder keeps the cards 2-up through 1024px purely
    for card width — so the two breakpoints are intentionally different. */
 @media (min-width: 768px) and (max-width: 1024px) {
   .preview-grid > .preview-card {
@@ -3486,8 +3798,6 @@ a:hover {
     flex-direction: row;
     align-items: center;
     gap: 0.9rem;
-    height: auto;
-    min-height: 0;
     padding: 0.8rem;
     border-radius: var(--radius-lg);
   }
@@ -3507,7 +3817,7 @@ a:hover {
   }
 
   .preview-card__meta {
-    justify-content: flex-start;
+    justify-content: space-between;
     gap: 0.6rem;
     min-height: 0;
   }
@@ -3517,13 +3827,14 @@ a:hover {
   }
 
   .preview-card__badge {
+    margin-left: 0;
     padding: 0.16rem 0.5rem;
   }
 
   .preview-card__title {
     font-size: 1.06rem;
     line-height: 1.25;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
   }
 
   .preview-card__summary,
@@ -3532,7 +3843,20 @@ a:hover {
   }
 }
 
-@media (max-width: 800px) {
+/* Narrowest phones: room for a cross-month date range on one line. */
+@media (max-width: 359px) {
+  .preview-card__media {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+  }
+
+  .preview-card__date {
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 50em) {
   .nav-inner {
     padding: 0 var(--space-md);
   }
@@ -3596,17 +3920,13 @@ a:hover {
     text-align: center;
   }
 
-  .board-member:last-child {
-    border-bottom: 1px solid var(--color-border);
-  }
-
   .board-member__avatar {
     width: 68px;
     height: 68px;
   }
 
-  /* Promote head/description/links to grid items of .board-member so the
-     description and icon row span full width below the avatar+name row. */
+  /* Promote head/description/links to grid items of .board-member so
+     photo, name, description and icons stack as one centered column. */
   .board-member__body {
     display: contents;
   }
@@ -3619,8 +3939,15 @@ a:hover {
     font-size: 1.27rem;
   }
 
+  /* Centered column: the role sits on its own line under the name (as on the
+     past-board cards), so a long role never strands a word. */
   .board-member__role {
+    display: block;
     font-size: 0.95rem;
+  }
+
+  .board-member__role > [aria-hidden='true'] {
+    display: none;
   }
 
   .board-member__description {
@@ -3668,8 +3995,9 @@ a:hover {
   margin: 0;
   padding: 0;
   color: var(--color-text);
-  /* SC Quantathon titles use a display face (Space Grotesk, app/layout.tsx);
-     the site's serif is the fallback. */
+  /* SC Quantathon titles use a display face (Space Grotesk, app/layout.tsx).
+     While it loads, the metric-matched Arial from next/font stands in; the
+     serif is reached only where Arial is missing. */
   font-family: var(--font-display), var(--font-serif);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -3726,6 +4054,14 @@ a:hover {
 }
 
 @media (max-width: 767px) {
+  /* Small enough on phones that “SC Quantathon v3” fits on one line in both
+     the display font and its fallback (10vw leaves room down to 320px), so
+     the title does not reflow when the font arrives; from 641px the base
+     clamp’s 7.42vw takes over again, as above 767px. */
+  .hackathon-hero .hackathon-hero-text h1 {
+    font-size: clamp(min(2.97rem, 10vw), 7.42vw, 5.09rem);
+  }
+
   .hackathon-hero-inner {
     flex-direction: column;
     align-items: flex-start;
@@ -3735,7 +4071,7 @@ a:hover {
   .hackathon-hero-logo {
     width: clamp(150px, 48vw, 230px);
     /* The hero stacks into a flex column at this width; without this the
-       logo hugs the left edge under the centred title block. */
+       logo hugs the left edge under the left-aligned title block. */
     align-self: center;
   }
 
@@ -3959,7 +4295,6 @@ a:hover {
 }
 
 .lr-section__blurb {
-  max-width: 60ch;
   margin: 0 0 var(--space-lg);
   color: var(--color-text-secondary);
   line-height: 1.7;
@@ -3988,7 +4323,7 @@ a:hover {
   color: var(--lr-accent);
   font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
@@ -4004,7 +4339,13 @@ a:hover {
   text-decoration: none;
 }
 .lr-item__title::after {
-  content: ' ↗';
+  /* ↑ turned 45°: the loaded Source Sans subset has ↑ and ↓ but not ↗. The
+     margin stands in for the space, which an inline-block drops. */
+  content: '\2191';
+  content: '\2191' / '';
+  display: inline-block;
+  margin-left: 0.2em;
+  transform: rotate(45deg);
   color: var(--lr-accent);
   opacity: 0;
   transition: opacity 0.15s;
@@ -4038,6 +4379,7 @@ a:hover {
   max-width: none;
   padding-top: var(--space-lg);
   padding-right: 0;
+  padding-bottom: 0;
   padding-left: 0;
   border-top: 1px solid var(--color-border);
 }
@@ -4065,18 +4407,23 @@ a:hover {
   display: block;
   margin-bottom: 0.2rem;
   color: var(--color-text-secondary);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .lr-ongoing__name {
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 600;
   color: var(--color-text);
 }
 .lr-ongoing__name::after {
-  content: ' ↗';
+  /* The same turned ↑ as .lr-item__title::after. */
+  content: '\2191';
+  content: '\2191' / '';
+  display: inline-block;
+  margin-left: 0.2em;
+  transform: rotate(45deg);
   color: var(--color-link);
   opacity: 0;
   transition: opacity 0.15s;
@@ -4089,10 +4436,10 @@ a:hover {
 }
 .lr-ongoing__desc {
   display: block;
-  margin-top: 0.25rem;
+  margin-top: 0.22rem;
   color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.93rem;
+  line-height: 1.55;
 }
 @media (max-width: 600px) {
   .lr-ongoing__grid {
@@ -4147,7 +4494,21 @@ a:hover {
 }
 
 .hackathon-section + .hackathon-section {
-  border-top: 1px solid rgba(22, 32, 51, 0.08);
+  position: relative;
+}
+
+/* Divider on the text column, not across the side padding: the line takes
+   the side padding of the section (32px, or 16px at 50em and below). */
+.hackathon-section + .hackathon-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  padding-left: inherit;
+  padding-right: inherit;
+  background: var(--color-border) content-box;
 }
 
 .hackathon-section h2 {
@@ -4217,7 +4578,7 @@ a:hover {
 .hackathon-schedule {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.75rem, 3.5vw, 3rem);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
   align-items: start;
   margin-top: 1.5rem;
 }
@@ -4252,8 +4613,8 @@ a:hover {
 .hackathon-schedule-items::before {
   content: '';
   position: absolute;
-  top: 0.6rem;
-  bottom: 0.6rem;
+  top: 1.25rem;
+  bottom: 1.25rem;
   left: 0;
   width: 2px;
   border-radius: 1px;
@@ -4277,11 +4638,21 @@ a:hover {
   content: '';
   position: absolute;
   left: calc(-1.25rem - 2px);
-  top: calc(0.52rem + 0.32em);
+  top: calc(0.52rem + 0.52em);
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
+}
+
+/* Forced colors drop the spine gradient and the dot fill, which left the
+   times indented under an empty gutter; draw both in the text color. */
+@media (forced-colors: active) {
+  .hackathon-schedule-items::before,
+  .hackathon-schedule-item::before {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
 }
 
 .hackathon-time {
@@ -4297,6 +4668,9 @@ a:hover {
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.55;
+  /* Balance, not the inherited pretty: pretty still left “presentations”
+     alone at 1000px. */
+  text-wrap: balance;
   transition: color 0.2s;
 }
 
@@ -4325,7 +4699,6 @@ a:hover {
   align-items: center;
   padding: clamp(1.6rem, 3vw, 2.4rem) 0.25rem;
   border-bottom: 1px solid var(--color-border);
-  transition: background-color 0.3s;
 }
 
 /* Hairlines sit above each row and between rows only — the list ends open. */
@@ -4355,6 +4728,18 @@ a:hover {
    the dashed sponsor slot, so the row collapses to logo + body. */
 .hackathon-track--logo {
   grid-template-columns: clamp(150px, 18vw, 220px) 1fr;
+}
+
+/* A challenge title can link to its files (the logo links to the sponsor):
+   heading ink, the link color on hover or keyboard focus. */
+.hackathon-track-title-link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.hackathon-track-title-link:is(:hover, :focus-visible) {
+  color: var(--color-link);
 }
 
 /* Lets the <picture> wrapper (dark-mode logo swap) participate in the grid
@@ -4471,7 +4856,6 @@ a:hover {
 /* Scoped under .hackathon-track-body so it outranks the generic
    .hackathon-section p color/size rule. */
 .hackathon-track-body p {
-  max-width: 62ch;
   color: var(--color-text-secondary);
   font-size: 0.98rem;
   line-height: 1.7;
@@ -4511,17 +4895,6 @@ a:hover {
   display: block;
   text-decoration: none;
   color: var(--color-text);
-  transition: box-shadow 0.2s, transform 0.2s;
-  padding: 1.3rem;
-  border: 1px solid rgba(22, 32, 51, 0.1);
-  border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: var(--shadow-sm);
-}
-
-.hackathon-resource-card:hover {
-  transform: none;
-  box-shadow: var(--shadow-md);
 }
 
 /* Quantum Courses at Clemson (resources page): department columns. */
@@ -4530,6 +4903,19 @@ a:hover {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
   gap: var(--space-lg) var(--space-2xl);
   margin-top: var(--space-lg);
+  container-type: inline-size;
+}
+
+/* Two columns (39rem = 2 x 18rem + the 3rem gap, up to the 60rem where a
+   third fits): center a lone group left over in the last row, like the
+   faculty grid. Queried on the grid itself, so scrollbars and the default
+   font size do not shift the band. */
+@container (min-width: 39rem) and (max-width: 59.98rem) {
+  .course-groups > .course-group:nth-child(odd):last-child {
+    grid-column: 1 / -1;
+    max-width: calc(50% - var(--space-2xl) / 2);
+    margin-inline: auto;
+  }
 }
 
 .course-group h3 {
@@ -4590,7 +4976,7 @@ a:hover {
 }
 
 .hackathon-team-member {
-  flex: 0 0 170px;
+  flex: 0 0 10.625rem; /* 170px at the default text size */
   text-align: center;
 }
 
@@ -4607,7 +4993,7 @@ a:hover {
   margin-bottom: var(--space-sm);
   width: 92px;
   height: 92px;
-  border: 2px solid rgba(22, 32, 51, 0.08);
+  border: 2px solid var(--color-border);
 }
 
 .hackathon-team-name {
@@ -4618,8 +5004,16 @@ a:hover {
   margin-top: 0.75rem;
 }
 
-/* 16px side gutters from 800px down, with the nav and every other page. */
-@media (max-width: 800px) {
+/* Narrowest phones: the longest name (about 133px at 0.95rem) overflowed the
+   132px card at 320px and wrapped. Still larger than the 0.8rem role. */
+@media (max-width: 359px) {
+  .hackathon-team-name {
+    font-size: 0.9rem;
+  }
+}
+
+/* 16px side gutters from 50em (800px) down, with the nav and every other page. */
+@media (max-width: 50em) {
   .hackathon-hero,
   .hackathon-hero-cta,
   .hackathon-section {
@@ -4636,7 +5030,6 @@ a:hover {
 
   .hackathon-cta {
     width: 100%;
-    justify-content: center;
   }
 }
 
@@ -4771,6 +5164,7 @@ a:hover {
   color: var(--color-text-secondary);
   font-size: 1rem;
   font-weight: 600;
+  text-align: center;
 }
 
 @media (max-width: 767px) {
@@ -4809,7 +5203,6 @@ a:hover {
   .dropdown-submenu-content,
   .search-results-dropdown {
     border-color: rgba(229, 226, 235, 0.12);
-    background: var(--color-surface);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.36);
   }
 
@@ -4823,8 +5216,7 @@ a:hover {
     box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb), 0.45);
   }
 
-  .preview-card,
-  .hackathon-resource-card {
+  .preview-card {
     border-color: rgba(229, 226, 235, 0.12);
     background: rgba(20, 27, 49, 0.92);
   }
@@ -4852,8 +5244,7 @@ a:hover {
       0 0 90px rgba(var(--color-accent-rgb), 0.07);
   }
 
-  .preview-card__footer,
-  .hackathon-section + .hackathon-section {
+  .preview-card__footer {
     border-color: rgba(229, 226, 235, 0.12);
   }
 
@@ -4866,16 +5257,6 @@ a:hover {
   .hackathon-cta:hover {
     background: #f4f0fa;
     box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4);
-  }
-
-  .footer-links a,
-  .footer-social a,
-  .footer-copy {
-    color: rgba(248, 250, 252, 0.84);
-  }
-
-  .footer-meeting {
-    color: rgba(248, 250, 252, 0.62);
   }
 
   /* Contact-form status messages: lighter inks — the light-theme greens/reds
@@ -4894,6 +5275,10 @@ a:hover {
     border-color: rgba(229, 226, 235, 0.14);
   }
 
+  .hackathon-venue-photo img {
+    box-shadow: 0 0 0 1px rgba(229, 226, 235, 0.14);
+  }
+
   /* The bright teal is fine on the navy background (7.3:1); the light theme
      darkens it to #0f766e for AA on the small labels. */
   .lr-section--beginner {
@@ -4901,10 +5286,22 @@ a:hover {
   }
 }
 
-@media (prefers-color-scheme: dark) and (max-width: 800px) {
+/* Dark twin of the open flyout parent tint (see .dropdown-submenu--open
+   in the desktop nav rules). */
+@media (prefers-color-scheme: dark) and (min-width: 50.0625em) {
+  .dropdown-submenu--open > .nav-dropdown-link--parent {
+    background: rgba(229, 226, 235, 0.08);
+  }
+}
+
+@media (prefers-color-scheme: dark) and (max-width: 50em) {
+  /* The drawer sheet takes the dark panel shadow, like the dropdowns. */
+  .nav-links {
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.36);
+  }
+
   .nav-dropdown-panel,
   .dropdown-submenu-content {
-    background: transparent;
     box-shadow: none;
   }
 }
@@ -4985,7 +5382,8 @@ a:hover {
   border-top: 1px solid var(--color-border);
 }
 
-/* Without a map (the past v3 page), the text takes the full width. */
+/* With neither a map nor a photo, the text takes the full width; a venue
+   photo gets its own two-column rule below. */
 .hackathon-venue:not(:has(> .hackathon-venue-map)) {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -4995,6 +5393,16 @@ a:hover {
 @media (min-width: 768px) {
   .hackathon-venue:has(> .hackathon-venue-photo) {
     grid-template-columns: minmax(0, 21rem) minmax(0, 1fr);
+  }
+}
+
+/* With Key Details at three columns, the photo takes one spec column and
+   the spec gap (this repeats the .hackathon-specs column-gap clamp, so
+   change both together), so the venue text starts on the second column. */
+@media (min-width: 1024px) {
+  .hackathon-venue:has(> .hackathon-venue-photo) {
+    grid-template-columns: calc((100% - 2 * clamp(1.75rem, 4vw, 3.5rem)) / 3) minmax(0, 1fr);
+    column-gap: clamp(1.75rem, 4vw, 3.5rem);
   }
 }
 
@@ -5052,6 +5460,7 @@ a:hover {
 .hackathon-section .hackathon-venue-name {
   font-family: var(--font-serif);
   font-size: 1.43rem;
+  font-weight: 600;
   color: var(--color-text);
 }
 
@@ -5075,6 +5484,13 @@ a:hover {
   border-bottom: 1px solid var(--color-border);
 }
 
+/* The list ends open: the rule of the next section closes it (no double
+   hairline). The bootcamp day list is the last block on its page and keeps
+   its closing rule. */
+.hackathon-faq:not(.hackathon-days) > .hackathon-faq-item:last-child {
+  border-bottom: 0;
+}
+
 .hackathon-faq-item summary {
   display: flex;
   align-items: center;
@@ -5086,6 +5502,7 @@ a:hover {
   color: var(--color-text);
   font-size: 1.05rem;
   font-weight: 600;
+  text-wrap: balance;
 }
 
 .hackathon-faq-item summary::-webkit-details-marker {
@@ -5094,6 +5511,7 @@ a:hover {
 
 .hackathon-faq-item summary::after {
   content: '+';
+  content: '+' / '';
   color: var(--color-link);
   font-size: 1.35rem;
   font-weight: 600;
@@ -5102,6 +5520,7 @@ a:hover {
 
 .hackathon-faq-item[open] summary::after {
   content: '−';
+  content: '−' / '';
 }
 
 .hackathon-faq-item summary:focus-visible {
@@ -5111,7 +5530,6 @@ a:hover {
 }
 
 .hackathon-section .hackathon-faq-item p {
-  max-width: 66ch;
   margin: 0 0.15rem 1.2rem;
 }
 
@@ -5155,6 +5573,18 @@ a:hover {
   font-weight: 600;
   overflow-wrap: break-word;
   hyphens: auto;
+  text-wrap: balance;
+}
+
+/* Phones: the label column shrinks to the label so the title gets the room. */
+@media (max-width: 767px) {
+  .hackathon-days .hackathon-day summary {
+    gap: 0.75rem;
+  }
+
+  .hackathon-day-num {
+    flex-basis: 3rem;
+  }
 }
 
 .hackathon-day-date {
@@ -5181,6 +5611,13 @@ a:hover {
   margin-bottom: 1rem;
 }
 
+/* Phones: when the pills wrap, a lone last pill sits centered, not hard left. */
+@media (max-width: 400px) {
+  .hackathon-section .hackathon-day .hackathon-resources {
+    justify-content: center;
+  }
+}
+
 .hackathon-resource {
   display: inline-block;
   padding: 0.3rem 0.85rem;
@@ -5192,7 +5629,9 @@ a:hover {
   text-decoration: none;
 }
 
-.hackathon-resource:hover {
+.hackathon-resource:hover,
+.hackathon-resource:focus-visible {
+  background: var(--color-violet-light);
   color: var(--color-violet);
 }
 
@@ -5215,7 +5654,6 @@ a:hover {
 
 /* The lead paragraph right after the title. */
 .coc-page h1 + p {
-  max-width: 62ch;
   margin-bottom: 2.25rem;
   color: var(--color-text);
   font-size: 1.15rem;
@@ -5240,15 +5678,24 @@ a:hover {
 }
 
 .coc-page p {
-  max-width: 66ch;
   margin: 0 0 1rem;
   font-size: 1.02rem;
   line-height: 1.72;
+  /* A long URL breaks instead of running off a narrow screen. */
+  overflow-wrap: anywhere;
+}
+
+/* Wide enough for the attribution URLs: keep each one whole (they broke
+   after the hyphen in contributor-covenant). */
+@media (min-width: 640px) {
+  .coc-page a[href*='contributor-covenant.org'],
+  .coc-page a[href*='creativecommons.org'] {
+    white-space: nowrap;
+  }
 }
 
 .coc-page ul,
 .coc-page ol {
-  max-width: 66ch;
   margin: 0.75rem 0 1.25rem;
   padding: 0 0 0 1.5rem;
   background: none;
@@ -5258,6 +5705,7 @@ a:hover {
 
 .coc-page li {
   margin: 0.45rem 0;
+  font-size: 1.02rem;
   line-height: 1.6;
 }
 
@@ -5278,16 +5726,44 @@ a:hover {
   color: var(--color-text-secondary);
 }
 
+/* Step names (Warning … Permanent Ban) read above their sub-steps. */
+.coc-page li:has(> ol) {
+  color: var(--color-text);
+}
+
 .coc-page strong {
   color: var(--color-text);
 }
 
-/* Forced colors (high contrast): canvas pixels ignore the user's palette, so
-   the decorative canvases step aside (the Fall Fest ones in qff.css). */
-@media (forced-colors: active) {
+/* Print and forced colors (high contrast): canvas pixels ignore a forced
+   palette and would print over the text, so the decorative canvases step
+   aside (the Fall Fest ones in qff.css). */
+@media print, (forced-colors: active) {
   .quantum-canvas,
   .shooting-star-layer {
     display: none;
+  }
+}
+
+/* Forced colors erase backgrounds, so the menu bars get a system color. */
+@media (forced-colors: active) {
+  .nav-toggle span {
+    forced-color-adjust: none;
+    background: ButtonText;
+  }
+}
+
+/* Print: the menu button and search do nothing on paper, and closed
+   <details> rows print their content too (browsers without
+   ::details-content print them closed, as before). */
+@media print {
+  .nav-toggle,
+  .nav-search-slot {
+    display: none;
+  }
+
+  details::details-content {
+    content-visibility: visible;
   }
 }
 
@@ -5362,14 +5838,15 @@ body::after {
    modes recolor automatically. touch-action: none lets pointer-drag own the
    gesture on touch screens without scrolling the page mid-drag. --- */
 .bloch-figure {
-  margin: 1.4rem 0 0.4rem;
+  margin: 1.4rem auto var(--space-lg);
   max-width: 270px;
 }
 
 /* Desktop: park the sphere at the far right of the Beginner section (below
    the big "01" numeral) so the resource list reads exactly as before; the
-   list gets matching right padding so rows never run underneath it. On
-   narrow screens the figure stays in flow under the blurb. */
+   blurb and the list get matching right padding so text never runs
+   underneath it. On narrow screens the figure stays in flow under the
+   blurb. */
 @media (min-width: 1024px) {
   .lr-section--beginner .bloch-figure {
     position: absolute;
@@ -5379,6 +5856,7 @@ body::after {
     margin: 0;
   }
 
+  .lr-section--beginner .lr-section__blurb,
   .lr-section--beginner .lr-list {
     padding-right: 280px;
   }
@@ -5471,12 +5949,18 @@ body::after {
 
 /* Phones: article pages and the 404 use the same 16px gutter as the nav and
    every other page family. */
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .page-content,
   .sw-detail,
   .qf-404 {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
+  }
+
+  /* The 760px column must not re-center inside the 16px gutter band. */
+  .coc-page,
+  .qf-404 {
+    max-width: none;
   }
 }
 
@@ -5488,11 +5972,15 @@ body::after {
 
 .qf-404__title {
   margin: 0 0 0.6rem;
+  line-height: 1.15;
 }
 
 .qf-404__joke {
   margin: 0 auto 1.9rem;
   max-width: 46ch;
+  /* Balance, not the inherited pretty: a short two-word last line is not an
+     orphan to pretty. */
+  text-wrap: balance;
   color: var(--color-text-secondary);
   font-size: 1.08rem;
   line-height: 1.65;
@@ -5505,8 +5993,8 @@ body::after {
 
 /* --- Title reveal (TitleReveal.tsx): per-word entrance for page h1s. The
    spans are inline-block only so transform/filter apply; word wrap and the
-   h1's own alignment/spacing are untouched. Layout is identical once every
-   word settles. Runs only when the OS allows motion (the component also
+   h1's own alignment/spacing are untouched. Layout matches once every word
+   settles (a kerning pair across a word gap can widen a title by 1–2px). Runs only when the OS allows motion (the component also
    bails, so reduced-motion titles are never split at all). --- */
 @keyframes tr-blur-settle {
   from {
@@ -5670,23 +6158,17 @@ body::after {
   align-items: center;
 }
 
-/* Deliberately square, flush and unshadowed: the art belongs to the strip.
-   No hover lift or image scale here, so it does not borrow the PreviewCard
-   language and read as a card that drifted up out of the grid below. */
-/* Spans the band at the banner's native 16:9, so nothing in the artwork is
-   cropped: the wordmark at the top and the presenter logos at the bottom both
-   sit close to the edges and a letterbox crop would clip them. */
-/* Sits in the left column at the banner's own 16:9, so the whole artwork
-   shows: the wordmark at the top and the presenter logos at the bottom both
-   run close to the edges and any crop clips one of them. Deliberately square
-   and unshadowed, with no hover lift, so it belongs to the strip rather than
-   borrowing the PreviewCard language of the grid below. */
+/* Sits in the left column at the 16:9 of the featured art (1200×675), so
+   the whole artwork shows uncropped. Deliberately square and unshadowed,
+   with no hover lift, so it belongs to the strip rather than borrowing the
+   PreviewCard language of the grid below. */
 .home-featured__art {
   display: block;
+  box-sizing: content-box;
   aspect-ratio: 1200 / 675;
   overflow: hidden;
   border: 1px solid var(--color-border);
-  background: #ece7df;
+  background: #f0ece5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -5734,7 +6216,9 @@ body::after {
   padding-top: 1rem;
   border-top: 1px solid var(--color-border);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* At most two columns, so the four facts never split 3 + 1 (0.8rem is a
+     little over half the 1.5rem column gap, for rounding slack). */
+  grid-template-columns: repeat(auto-fit, minmax(max(200px, calc(50% - 0.8rem)), 1fr));
   gap: 0.9rem 1.5rem;
 }
 
@@ -5760,7 +6244,7 @@ body::after {
   gap: 0.65rem;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 50em) {
   .home-featured__inner {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
@@ -6110,14 +6594,32 @@ body::after {
       }
     }
 
-    @media (min-width: 768px) {
-      .hackathon-schedule > :nth-child(2),
+    /* Key Details is 2 columns at 640–1023px and 3 from 1024px; the
+       schedule is 3 columns from 900px (see .hackathon-specs and
+       .hackathon-schedule), so the stagger follows the real column. */
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hackathon-specs > :nth-child(2n) {
+        --sm-rise: 56px;
+      }
+    }
+
+    @media (min-width: 1024px) {
       .hackathon-specs > :nth-child(3n + 2) {
         --sm-rise: 56px;
       }
 
-      .hackathon-schedule > :nth-child(3),
       .hackathon-specs > :nth-child(3n + 3) {
+        --sm-rise: 82px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .hackathon-schedule > :nth-child(2) {
+        --sm-rise: 56px;
+      }
+
+      .hackathon-schedule > :nth-child(3) {
         --sm-rise: 82px;
       }
     }
@@ -6208,12 +6710,13 @@ body::after {
 
 /* People cards on small windows (owner, 2026-10-15: "center the organizers
    when on a smaller window, and do that for all pages"): the photo sits
-   above the name and everything is centered. 800px matches where the board
+   above the name and everything is centered. 50em matches where the board
    cards already stack. The SC Quantathon committee grid is centered at
    every width already. Last in the file so it outranks each card's base and
    earlier mobile rules. */
-@media (max-width: 800px) {
-  .faculty-card__bio {
+@media (max-width: 50em) {
+  .faculty-card__bio,
+  .faculty-card__role {
     text-align: center;
   }
 
@@ -6234,6 +6737,17 @@ body::after {
   .about-past-board__item {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* The LinkedIn glyph (0.5em) and its 0.35em gap trail the name; the same
+     space on the left keeps the name itself on the center line. */
+  .about-past-board__name-link {
+    margin-left: 0.85em;
+  }
+
+  /* Stacked: more space between people than inside one card. */
+  .about-past-board__list {
+    row-gap: var(--space-xl);
   }
 }
 

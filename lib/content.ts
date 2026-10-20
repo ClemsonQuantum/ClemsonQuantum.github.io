@@ -5,6 +5,7 @@ import { todayInClemson } from './dates.mjs';
 import {
   externalDestination,
   hiddenAsDraft,
+  isDraft,
   isUnlisted,
   normalizeDate,
   parseFrontmatter,
@@ -96,6 +97,7 @@ function readAllPages(contentSubdir: string): PageMeta[] {
       isExternal,
       isUpcoming: isUpcoming({ date, endDate: normalizeDate(data.end_date) }),
       unlisted: isUnlisted(data),
+      draft: isDraft(data),
       excerpt: makeExcerpt(content),
     }];
   });

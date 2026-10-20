@@ -17,15 +17,16 @@ interface HeaderProps {
   navData: NavData;
 }
 
-// On the hamburger nav (≤800px), dropdowns/submenus open on tap, not hover.
+// On the hamburger nav (≤50em), dropdowns/submenus open on tap, not hover.
 // The breakpoint must match the drawer media query in assets/css/style.css
-// (max-width: 800px, desktop from 801px).
+// (max-width: 50em, desktop from 50.0625em: 800px and 801px at the default
+// text size, wider when the visitor's browser text size is larger).
 // The MediaQueryList is created once and reused — handlers call this on every
 // hover/focus/click across the nav.
 let mobileNavQuery: MediaQueryList | null = null;
 const isMobileNav = () => {
   if (typeof window === 'undefined') return false;
-  mobileNavQuery ??= window.matchMedia('(max-width: 800px)');
+  mobileNavQuery ??= window.matchMedia('(max-width: 50em)');
   return mobileNavQuery.matches;
 };
 
@@ -125,6 +126,7 @@ function EventsSubmenu({
               : {})}
           >
             {item.title}
+            {item.isExternal && <span className="sr-only"> (opens in a new tab)</span>}
           </Link>
         ))}
         {viewAllLabel && (
@@ -341,6 +343,16 @@ export default function Header({ navData }: HeaderProps) {
         <div
           className={`nav-links${menuOpen ? ' nav-links--open' : ''}`}
           id="navLinks"
+          // Tabbing out of the open phone sheet closes it, so focus never lands
+          // on page content hidden under the sheet. Shift+Tab back to the menu
+          // button keeps it open; a click elsewhere is the click listener's job.
+          onBlur={(e) => {
+            const next = e.relatedTarget as Node | null;
+            const toggle = document.getElementById('navToggle');
+            if (menuOpen && next && !e.currentTarget.contains(next) && !toggle?.contains(next)) {
+              closeMenus();
+            }
+          }}
         >
           <Link href="/about/" className="nav-link" aria-current={navCurrent(path, '/about/')} onClick={closeMenus}>About</Link>
           <Link href="/news/" className="nav-link" aria-current={navCurrent(path, '/news/')} onClick={closeMenus}>News</Link>
@@ -370,7 +382,7 @@ export default function Header({ navData }: HeaderProps) {
                   openSubmenu={openSubmenu}
                   setOpenSubmenu={setOpenSubmenu}
                   closeMenus={closeMenus}
-                  viewAllLabel={navData[id].hasMore ? viewAllLabel : undefined}
+                  viewAllLabel={viewAllLabel}
                 />
               ))}
               <Link
@@ -379,7 +391,7 @@ export default function Header({ navData }: HeaderProps) {
                 className="nav-dropdown-link nav-dropdown-link--view-all"
                 onClick={closeMenus}
               >
-                All events <span aria-hidden="true">&rarr;</span>
+                View all events <span aria-hidden="true">&rarr;</span>
               </Link>
             </div>
           </div>
@@ -412,7 +424,7 @@ export default function Header({ navData }: HeaderProps) {
                   className="nav-dropdown-link nav-dropdown-link--view-all"
                   onClick={closeMenus}
                 >
-                  All resources <span aria-hidden="true">&rarr;</span>
+                  View all resources <span aria-hidden="true">&rarr;</span>
                 </Link>
               </div>
             </div>

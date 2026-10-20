@@ -63,7 +63,8 @@ export default function EventArchive({
 
   return (
     <>
-      {semesters.length > 0 && (
+      {/* One term only: All and that term would show the same cards. */}
+      {semesters.length > 1 && (
         <FilterButtons
           label="Filter by semester"
           options={[
@@ -79,12 +80,14 @@ export default function EventArchive({
         <p className="sw-empty">{emptyText}</p>
       ) : (
         <div className="preview-grid">
-          {visible.map((item) => (
+          {/* The first row (three cards on desktop) is in the first screen. */}
+          {visible.map((item, i) => (
             <PreviewCard
               key={item.slug}
               item={item}
               kind={kind}
               showFooter={showFooter}
+              eager={i < 3}
             />
           ))}
         </div>

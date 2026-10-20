@@ -2,7 +2,7 @@
   {
     "name": "Dr. Rong Ge",
     "role": "Professor, School of Computing",
-    "description": "Faculty advisor for Clemson Quantum Club. Teaches Creative Inquiry: Hands-on Quantum Computing (CPSC 3990), Introduction to Quantum Computing (CPSC 4750/6750), and Quantum Algorithms and Applications (CPSC 4760/6760). Research interests include high-performance computing, parallel and distributed systems, and quantum computing education.",
+    "description": "Faculty advisor for Clemson Quantum Club. Teaches Creative\u00a0Inquiry: Hands\u2011on\u00a0Quantum\u00a0Computing (CPSC\u00a03990), Introduction to Quantum Computing (CPSC\u00a04750/6750), and Quantum Algorithms and Applications (CPSC\u00a04760/6760). Research interests include high-performance computing, parallel and distributed systems, and quantum computing education.",
     "image": "/images/rong-ge.jpg",
     "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/",
     "website": "https://rge.people.clemson.edu/",
@@ -10,8 +10,8 @@
   },
   {
     "name": "Dr. Emily Tucker",
-    "role": "Assistant Professor, Industrial Engineering",
-    "description": "Teaches the Quantum Optimization for Resilient Systems Creative Inquiry (IE 4040), which Jack Layton leads. Research applies stochastic, discrete, and quantum optimization to disaster relief, logistics, and supply chains.",
+    "role": "Assistant Professor, Industrial\u00a0Engineering",
+    "description": "Teaches the Quantum Optimization for Resilient Systems Creative\u00a0Inquiry (IE\u00a04040), which Jack\u00a0Layton leads. Research applies stochastic, discrete, and quantum optimization to disaster relief, logistics, and supply chains.",
     "image": "/images/emily-tucker.jpg",
     "linkedin": "https://www.linkedin.com/in/emilyltucker/",
     "website": "https://sites.google.com/view/EmilyLTucker/",
@@ -19,8 +19,8 @@
   },
   {
     "name": "Dr. Sumanta Tewari",
-    "role": "Professor, Physics & Astronomy",
-    "description": "An American Physical Society Fellow whose research focuses on topological quantum computation, Majorana fermions, superconductivity, and condensed matter theory. Teaches Quantum Mechanics I/II (PHYS 4550/4560, 6550/6560, 9510/9520) and Quantum Field Theory (PHYS 9530). His work on semiconductor-superconductor heterostructures helped establish them as a leading platform for Majorana-based qubits.",
+    "role": "Professor, Physics\u00a0and\u00a0Astronomy",
+    "description": "An American Physical Society Fellow whose research focuses on topological quantum computation, Majorana fermions, superconductivity, and condensed matter theory. Teaches Quantum Mechanics I/II (PHYS\u00a04550/4560, 6550/6560, 9510/9520) and Quantum Field Theory (PHYS\u00a09530). His work on semiconductor-superconductor heterostructures helped establish them as a leading platform for Majorana-based qubits.",
     "image": "/images/sumanta-tewari.jpg",
     "linkedin": "https://www.linkedin.com/in/sumanta-tewari-b2102270/",
     "website": "",
@@ -29,7 +29,7 @@
   {
     "name": "Dr. Ronnie Chowdhury",
     "role": "Professor, Civil Engineering",
-    "description": "Eugene Douglas Mays Chair of Transportation in the Glenn Department of Civil Engineering and founding director of the USDOT Center for Connected Multimodal Mobility. His quantum work applies AI and quantum computing to cybersecurity for transportation and smart-city infrastructure, including the SC Quantum Sentinel initiative. Named a 2024 Clemson University Researcher of the Year.",
+    "description": "Eugene Douglas Mays Chair of Transportation in the Glenn Department of Civil Engineering and founding director of the USDOT Center for Connected Multimodal Mobility. His quantum work applies AI and quantum computing to cybersecurity for transportation and smart-city infrastructure, including the SC\u00a0Quantum\u00a0Sentinel initiative. Named a 2024 Clemson\u00a0University Researcher of the Year.",
     "image": "/images/ronnie-chowdhury.jpg",
     "linkedin": "https://www.linkedin.com/in/mashrur-ronnie-chowdhury-ba313260/",
     "website": "https://cecas.clemson.edu/C2M2/",
@@ -37,8 +37,8 @@
   },
   {
     "name": "Dr. Ramakrishna Podila",
-    "role": "Associate Professor, Physics & Astronomy",
-    "description": "Directs the Laboratory of Nano-BioPhysics and teaches Open Quantum Systems (PHYS 8750). His research spans quantum machine learning, nanoscale physics, and nano-bio interfaces, combining condensed matter physics and optical spectroscopy with quantum methods. He is a Fellow of the Royal Society of Chemistry and the Institute of Physics.",
+    "role": "Associate Professor, Physics\u00a0and\u00a0Astronomy",
+    "description": "Directs the Laboratory of Nano-BioPhysics and teaches Open Quantum Systems (PHYS\u00a08750). His research spans quantum machine learning, nanoscale physics, and nano-bio interfaces, combining condensed matter physics and optical spectroscopy with quantum methods. He is a Fellow of the Royal\u00a0Society\u00a0of\u00a0Chemistry and the Institute\u00a0of\u00a0Physics.",
     "image": "/images/ramakrishna-podila.jpg",
     "linkedin": "https://www.linkedin.com/in/ramakrishna-podila-90570117b/",
     "website": "https://clemsonnanobio.com/",

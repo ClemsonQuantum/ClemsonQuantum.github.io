@@ -42,6 +42,7 @@ export default function MarkdownLink(
   return (
     <a className={className} {...rest}>
       {children}
+      {rest.target === '_blank' && <span className="sr-only"> (opens in a new tab)</span>}
     </a>
   );
 }

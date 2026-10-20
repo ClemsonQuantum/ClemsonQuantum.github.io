@@ -43,6 +43,14 @@ function rankResults(index: SearchResult[], query: string): SearchResult[] {
     .slice(0, 8);
 }
 
+// Internal results carry the query, so the page they open can scroll to and
+// highlight where it appears (SearchHighlight). Any #section anchor stays last.
+function withQuery(url: string, query: string): string {
+  if (url.includes('://') || !query) return url;
+  const [path, hash] = url.split('#');
+  return `${path}${path.includes('?') ? '&' : '?'}q=${encodeURIComponent(query)}${hash ? `#${hash}` : ''}`;
+}
+
 export default function SearchBar() {
   const [query, setQuery] = useState('');
   const [indexData, setIndexData] = useState<SearchResult[] | null>(null);
@@ -109,7 +117,6 @@ export default function SearchBar() {
       if (e.key === 'Escape') {
         if (query) e.nativeEvent.stopImmediatePropagation();
         clear();
-        inputRef.current?.blur();
         return;
       }
       if (results.length === 0) return;
@@ -126,7 +133,7 @@ export default function SearchBar() {
         case 'Enter': {
           // With nothing highlighted, Enter (or the phone's Search key) opens
           // the top result.
-          const url = results[activeIndex >= 0 ? activeIndex : 0].url;
+          const url = withQuery(results[activeIndex >= 0 ? activeIndex : 0].url, query.trim());
           clear();
           // External results (news/attended events) leave the site; internal
           // ones keep the SPA transition.
@@ -143,7 +150,17 @@ export default function SearchBar() {
   const hasResults = results.length > 0;
 
   return (
-    <div className="search search-container" ref={containerRef}>
+    <div
+      className="search search-container"
+      ref={containerRef}
+      // Keyboard focus leaving the search closes the panel, as an outside
+      // click does. A null relatedTarget (Safari link clicks, blank-area
+      // clicks) is left to the click listener so result clicks still work.
+      onBlur={(e) => {
+        const next = e.relatedTarget as Node | null;
+        if (next && !e.currentTarget.contains(next)) clear();
+      }}
+    >
       <svg
         className="search-icon"
         width="18"
@@ -166,6 +183,7 @@ export default function SearchBar() {
       <input
         ref={inputRef}
         className="search-input"
+        name="q"
         type="text"
         enterKeyHint="search"
         autoComplete="off"
@@ -188,7 +206,7 @@ export default function SearchBar() {
         aria-label="Search site content"
       />
       {isOpen && hasResults && (
-        <div className="search-results-dropdown" role="listbox" id={listboxId}>
+        <div className="search-results-dropdown" role="listbox" id={listboxId} aria-label="Search results">
           {results.map((r, i) => {
             const shared = {
               id: `search-option-${i}`,
@@ -204,19 +222,23 @@ export default function SearchBar() {
                 <div className="search-item-title">{r.title}</div>
               </a>
             ) : (
-              <Link key={`${r.url}-${r.title}`} href={r.url} {...shared}>
+              <Link key={`${r.url}-${r.title}`} href={withQuery(r.url, query.trim())} {...shared}>
                 <div className="search-item-title">{r.title}</div>
               </Link>
             );
           })}
         </div>
       )}
-      {/* Only claim "no results" once the index has actually loaded. */}
-      {isOpen && !hasResults && indexData !== null && (
-        <div className="search-results-dropdown" role="status">
-          <div className="search-empty">No results for &ldquo;{query.trim()}&rdquo;</div>
-        </div>
-      )}
+      {/* Only claim "no results" once the index has actually loaded. The
+          status region stays mounted so the message is announced when it
+          appears; a live region inserted together with its text often is not. */}
+      <div role="status">
+        {isOpen && !hasResults && indexData !== null && (
+          <div className="search-results-dropdown">
+            <div className="search-empty">No results for &ldquo;{query.trim()}&rdquo;</div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

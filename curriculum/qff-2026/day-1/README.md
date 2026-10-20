@@ -8,7 +8,7 @@ Served copies go to `public/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipy
 - IBM Hello World tutorial: https://quantum.cloud.ibm.com/docs/en/tutorials/hello-world
 - IBM Your First Quantum Experiment: https://quantum.cloud.ibm.com/learning/en/courses/use-a-qc-today/your-first-quantum-experiment
 
-## Seminar (guest, speaker TBD, 45–60 min): the foundations
+## Seminar (guest, speaker TBD, 45 min): the foundations
 Qubit, superposition, measurement and the Born rule, Bloch sphere, single-qubit gates as rotations, entanglement through the Bell pair and GHZ states (correlations, why they are not classical), the four Qiskit Pattern steps, simulator-first workflow (Aer / StatevectorSampler) before hardware, account and AI-tool norms. It closes with how the hardware has changed since 2016, when IBM put the first quantum processor on the cloud (the event's theme). Do NOT promise "by the end of the day you will know…" phrasing on the page. Slide sources: Lanes, Foundations of Quantum Mechanics; IBM Qiskit 101 deck (pathways, two-prompt demo).
 
 ## Also in the lab (QGSS 2025 Lab 1, Chapter 1 + CHSH)

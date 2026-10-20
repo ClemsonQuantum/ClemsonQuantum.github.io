@@ -23,6 +23,10 @@ export interface PageMeta {
   /** `unlisted: true` in frontmatter: the page is generated (see
    * getRoutablePages) but getAllPages keeps it out of every listing. */
   unlisted: boolean;
+  /** `draft: true` in frontmatter. Production builds never load drafts, so
+   * this is only ever true in the dev server; checks that must match the
+   * published site (like the About page's hackathon count) filter on it. */
+  draft: boolean;
   excerpt: string;
 }
 

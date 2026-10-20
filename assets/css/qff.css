@@ -87,7 +87,7 @@ body:has(.qff-page) {
   /* How strongly a glider shows through the page-wide cloud layer. */
   --qff-page-soarer-alpha: 0.55;
   /* Site tokens re-mapped so inline links and focus rings take kit ink.
-     Link ink is Magenta 70 (~6.9:1 on the sky). */
+     Link ink is Magenta 70 (6.1:1 on the sky, just under 7:1 on cream). */
   --color-accent: #d02670;
   --color-accent-rgb: 208, 38, 112;
   --color-accent-light: #fff0f7;
@@ -138,9 +138,9 @@ body:has(.qff-page) {
 }
 
 .qff-eyebrow {
+  /* Ink and size come from the paragraph rules (.page-content p and the
+     section and band p rules), which outrank this class. */
   margin: 0 0 1rem;
-  color: var(--qff-label);
-  font-size: 0.82rem;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
@@ -214,6 +214,24 @@ body:has(.qff-page) {
   .qff-page-clouds-canvas {
     display: none;
   }
+
+  /* The forced palette paints the closed rows' transparent rule; only an
+     open row keeps one. */
+  .qff-day:not([open]) {
+    border-left-color: Canvas;
+  }
+
+  /* The gradient hairlines would vanish; draw them in the text color. */
+  .qff-page .qff-rule {
+    forced-color-adjust: none;
+    background: CanvasText;
+  }
+
+  /* The 2x2 cover is brand art (a white pictogram on slate, clouds on sky);
+     it keeps its own paint. */
+  .qff-tile {
+    forced-color-adjust: none;
+  }
 }
 
 .qff-hero-inner {
@@ -242,6 +260,9 @@ body:has(.qff-page) {
   font-size: clamp(2.8rem, 6.5vw, 4.6rem);
   line-height: 1.02;
   text-align: left;
+  /* Breaks after "Fest" ("Qiskit Fall Fest" / "2026"); balanced wrapping
+     would split the name. */
+  text-wrap: wrap;
 }
 
 @media (max-width: 767px) {
@@ -256,6 +277,15 @@ body:has(.qff-page) {
   color: var(--color-text);
   font-size: 1.12rem;
   line-height: 1.7;
+}
+
+/* Even lines, so "the cloud." never ends the tagline on its own. From 449px
+   the tagline is six lines or fewer, the most Chrome balances; narrower
+   phones keep the pretty wrapping it inherits from body. */
+@media (min-width: 449px) {
+  .qff-page .qff-tagline {
+    text-wrap: balance;
+  }
 }
 
 /* Tagline link: keep the gradient sentence clean; underline only on hover. */
@@ -290,6 +320,7 @@ body:has(.qff-page) {
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
+  text-wrap: balance; /* a two-line label splits evenly */
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
@@ -362,6 +393,42 @@ a.qff-btn:hover {
    en dash on phones). */
 .qff-nowrap {
   white-space: nowrap;
+}
+
+/* A " · " separator hides once the part after it drops to its own line, so
+   no line ends in a dot: the hero eyebrow below 449px (its 416.7px line plus
+   16px gutters) and the session date and time below 350px. */
+@media (max-width: 448px) {
+  .qff-hero .qff-eyebrow-sep {
+    display: none;
+  }
+
+  .qff-hero .qff-eyebrow .qff-nowrap {
+    display: block;
+  }
+}
+
+@media (max-width: 349px) {
+  .qff-day-sep {
+    display: none;
+  }
+
+  .qff-day-meta .qff-nowrap {
+    display: block;
+  }
+}
+
+/* Plex sets the footer's copyright line wider (about 298px), so on the
+   narrowest phones the email takes its own line instead of leaving a "·"
+   at the end of the first (separator span in components/Footer.tsx). */
+@media (max-width: 339px) {
+  body:has(.qff-page) .footer-copy__sep {
+    display: none;
+  }
+
+  body:has(.qff-page) .footer-copy a {
+    display: block;
+  }
 }
 
 /* SC Quantathon's Q mark (a black SVG) on the gray tile of the 2027 page;
@@ -507,21 +574,27 @@ a.qff-btn:hover {
   height: 44px;
 }
 
+/* .qff-hosted is a wrapping flex row of [label, logos]. Below about 842px it
+   wraps onto two lines (the label, then the logos); each line is centered, so
+   neither sits alone at the left. */
+@media (max-width: 849px) {
+  .qff-hosted {
+    justify-content: center;
+  }
+}
+
 /* Narrow screens: the two round marks (club logo, Fall Fest badge) sit side
    by side and the wide IBM Quantum logotype takes its own row underneath,
    rather than all three squeezing onto one line. */
 @media (max-width: 639px) {
-  /* .qff-hosted is a wrapping flex row of [label, logos]. Once it wraps, the
-     logo row sizes to its content and lands off-centre, so give it the whole
-     line and centre the parent's items. */
-  .qff-hosted {
-    justify-content: center;
-  }
-
+  /* Here the logos wrap among themselves: the logo row takes the whole line
+     (sized to its content, it would land off-center), and reading-flow makes
+     Tab follow the reordered marks below (Chrome 137+). */
   .qff-hosted-logos {
     flex: 1 1 100%;
     justify-content: center;
     row-gap: 1.25rem;
+    reading-flow: flex-visual;
   }
 
   .qff-hosted-cqc {
@@ -550,15 +623,12 @@ a.qff-btn:hover {
   }
 }
 
-/* Sections: hairline top, mono eyebrow, light h2. */
+/* Sections: mono eyebrow, light h2. The hairlines between bands are the
+   .qff-rule dividers in the markup. */
 .qff-section {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: clamp(2.5rem, 5vw, 3.5rem) var(--space-xl);
-}
-
-.qff-section + .qff-section {
-  border-top: 1px solid var(--qff-line);
 }
 
 .qff-page .qff-section h2,
@@ -611,7 +681,7 @@ a.qff-btn:hover {
   color: var(--qff-label);
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -620,6 +690,8 @@ a.qff-btn:hover {
   color: var(--color-text);
   font-size: 1.02rem;
   font-weight: 500;
+  /* Even halves: pretty still left "participants" alone at many widths. */
+  text-wrap: balance;
 }
 
 /* Slate band: the deck's dark slide with a gradient phrase. */
@@ -1057,7 +1129,9 @@ a.qff-btn:hover {
   }
 }
 
+/* The band's p rule outranks .qff-eyebrow, so the margin is restated. */
 .qff-page .qff-band .qff-eyebrow {
+  margin: 0 0 1rem;
   color: var(--qff-band-muted);
 }
 
@@ -1075,7 +1149,7 @@ a.qff-btn:hover {
 }
 
 .qff-page .qff-band p {
-  max-width: 62ch;
+  max-width: 80ch;
   margin: 1.2rem 0 0;
   color: var(--qff-band-muted);
   font-size: 1.05rem;
@@ -1089,8 +1163,10 @@ a.qff-btn:hover {
 }
 
 /* The band's long button wraps on small phones; keep its lines apart. */
-.qff-page .qff-band .qff-band-cta .qff-btn {
-  line-height: 1.25;
+@media (max-width: 639px) {
+  .qff-page .qff-band .qff-band-cta .qff-btn {
+    line-height: 1.25;
+  }
 }
 
 .qff-page .qff-band .qff-btn--ghost {
@@ -1099,7 +1175,7 @@ a.qff-btn:hover {
 }
 
 .qff-page .qff-band .qff-btn--ghost:focus-visible {
-  outline-color: var(--qff-band-ink); /* blue fails 3:1 on slate and on the lavender band */
+  outline-color: var(--qff-band-ink); /* blue is a bare 3.0:1 on slate and fails 3:1 on the lavender band */
 }
 
 .qff-page .qff-band a.qff-btn--ghost:hover {
@@ -1180,9 +1256,12 @@ a.qff-btn:hover {
   color: var(--color-link);
 }
 
-/* The +/− toggle is the summary's last grid cell. */
+/* The +/− toggle is the summary's last grid cell. The second content line
+   gives it empty alt text, so screen readers don't add "plus" or "minus" to
+   the summary's name; browsers without alt text keep the first. */
 .qff-day-summary::after {
   content: '+';
+  content: '+' / '';
   color: var(--qff-blue);
   font-size: 1.45rem;
   font-weight: 600;
@@ -1191,10 +1270,13 @@ a.qff-btn:hover {
 
 .qff-day[open] .qff-day-summary::after {
   content: '\2212';
+  content: '\2212' / '';
 }
 
+/* The body lines up under the title: the summary's 0.15rem padding, the
+   number column and the grid gap. */
 .qff-day-body {
-  padding: 0.1rem 0.15rem 1.5rem calc(3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
+  padding: 0.1rem 0.15rem 1.5rem calc(0.15rem + 3.4rem + clamp(0.9rem, 2.5vw, 1.75rem));
 }
 
 .qff-day[open] .qff-day-body {
@@ -1252,9 +1334,9 @@ span.qff-day-resource {
   color: var(--qff-label);
   font-family: var(--qff-mono);
   font-size: 0.72rem;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1.6;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -1393,6 +1475,7 @@ span.qff-day-resource {
 
 .qff-faq-item summary::after {
   content: '+';
+  content: '+' / '';
   color: var(--qff-blue);
   font-size: 1.3rem;
   font-weight: 600;
@@ -1401,6 +1484,7 @@ span.qff-day-resource {
 
 .qff-faq-item[open] summary::after {
   content: '−';
+  content: '−' / '';
 }
 
 .qff-faq-item summary:focus-visible {
@@ -1408,8 +1492,15 @@ span.qff-day-resource {
   outline-offset: 3px;
 }
 
+/* The same hover cue as the Sessions rows (.qff-day-summary:hover). */
+.qff-faq-item summary:hover,
+.qff-faq-item summary:focus-visible {
+  color: var(--color-link);
+}
+
 .qff-page .qff-faq-item p {
-  max-width: 80ch;
+  /* Answers run the full width (the section's other prose stops at 80ch). */
+  max-width: none;
   margin: 0 0.15rem 1.2rem;
 }
 
@@ -1422,12 +1513,12 @@ span.qff-day-resource {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem 2rem;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
 }
 
 .qff-team-member {
   display: flex;
-  flex: 0 0 180px;
+  flex: 0 0 11.25rem; /* 180px at the default text size */
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
@@ -1454,7 +1545,9 @@ span.qff-day-resource {
 }
 
 @media (max-width: 899px) {
-  /* The stacked hero runs to about 1150px; the sky should cover all of it. */
+  /* Below 640px the tiles stack 2x2 and the hero runs to about 950–1090px;
+     the sky covers all of it. From 640px the tiles sit in one row and the
+     hero ends near 610–730px, so the sky runs on past it into About. */
   .qff-page {
     background-size: 100% 1150px;
   }
@@ -1498,7 +1591,8 @@ span.qff-day-resource {
 }
 
 
-@media (max-width: 639px) {
+/* 16px side gutters from 50em (800px) down, with the nav and every other page. */
+@media (max-width: 50em) {
   .qff-hero,
   .qff-hosted,
   .qff-section,
@@ -1506,14 +1600,18 @@ span.qff-day-resource {
     padding-left: var(--space-md);
     padding-right: var(--space-md);
   }
+}
 
+@media (max-width: 639px) {
   .qff-cta-row .qff-btn {
     flex: 1 1 100%;
     justify-content: center;
   }
 
+  /* "November 9–20, 2026" (about 168px, kept whole) fits beside the
+     labels at 320px. */
   .qff-ledger-row {
-    grid-template-columns: 7rem minmax(0, 1fr);
+    grid-template-columns: 6.25rem minmax(0, 1fr);
   }
 
   .qff-day-summary {
@@ -1628,8 +1726,10 @@ span.qff-day-resource {
   }
 }
 
-/* Organizer cards: these follow the shared people-card rules in style.css. */
-@media (max-width: 800px) {
+/* Organizers at 50em (800px) and below: a tighter column gap (the phone rule
+   below subtracts half of it). .qff-team above keeps them centered at
+   every width. */
+@media (max-width: 50em) {
   .qff-team {
     gap: 1.5rem 1.25rem;
   }
@@ -1640,5 +1740,13 @@ span.qff-day-resource {
 @media (max-width: 639px) {
   .qff-team-member {
     flex-basis: calc(50% - 0.625rem);
+  }
+}
+
+/* Narrowest phones: the longest name (about 151px) wrapped in the 134–149px
+   card at 320–350px. Still larger than the 0.68rem role. */
+@media (max-width: 359px) {
+  .qff-team-name {
+    font-size: 0.875rem;
   }
 }

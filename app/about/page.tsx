@@ -3,6 +3,7 @@ import { pageMetadata } from '@/lib/og';
 import Link from 'next/link';
 import SiteImage from '@/components/SiteImage';
 import PastBoardMembers from '@/components/PastBoardMembers';
+import { getAllPages } from '@/lib/content';
 import { formatMonthRange } from '@/lib/dates.mjs';
 import pastBoardMembers from '@/data/past-board-members.json';
 
@@ -13,6 +14,7 @@ const pastBoardCards = pastBoardMembers.map((m) => ({
   role: m.role,
   tenure: formatMonthRange(m.start, m.end),
   image: m.image,
+  linkedin: m.linkedin,
 }));
 
 export const metadata: Metadata = pageMetadata({
@@ -44,10 +46,18 @@ const memberActivities = [
   'Attend beginner-friendly meetings and discussion sessions.',
   'Practice with tools such as Qiskit, PennyLane, and Cirq.',
   'Build teams for quantum hackathons and campus events.',
-  'Meet faculty and join student research, including two quantum computing Creative Inquiry teams.',
+  'Meet faculty and join student research, including two quantum computing Creative\u00a0Inquiry teams.',
 ];
 
 export default function AboutPage() {
+  // Quick fact under "Who we are": every published entry on the Hackathons
+  // page whose last day has passed. Drafts (staged events) never count, in
+  // the dev server either; unlisted pages are already out of getAllPages.
+  // Like the Upcoming badges, it is counted when the site is built.
+  const hackathonsAttended = getAllPages('events/hackathons').filter(
+    (p) => !p.draft && !p.isUpcoming,
+  ).length;
+
   return (
     <article className="about-page">
       <header className="about-page__hero">
@@ -57,18 +67,32 @@ export default function AboutPage() {
       </header>
 
       <div className="about-page__photo">
-        {/* The page's largest image, in the first screen: load it eagerly. */}
-        <SiteImage
-          src="/images/club-photo.webp"
-          alt="Clemson Quantum Club members"
-          loading="eager"
-          fetchPriority="high"
-        />
+        {/* The page's largest image, in the first screen: load it eagerly.
+            The <picture> keeps React from emitting a preload hint for it,
+            which link prefetch would apply on every page that links here. */}
+        <picture>
+          <SiteImage
+            src="/images/club-photo.webp"
+            alt="Clemson Quantum Club members"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </picture>
       </div>
 
       <section className="about-page__section about-page__section--intro">
         <div>
           <h2>Who we are</h2>
+          <dl className="about-page__facts">
+            <div>
+              <dt>Founded</dt>
+              <dd>2024</dd>
+            </div>
+            <div>
+              <dt>Hackathons attended</dt>
+              <dd>{hackathonsAttended}</dd>
+            </div>
+          </dl>
         </div>
         <p>
           Clemson Quantum Club is a student organization for any Clemson
@@ -76,7 +100,7 @@ export default function AboutPage() {
           from computer science, physics, engineering, mathematics, and other
           majors; some are new to the subject and some are Ph.D. students
           doing quantum research. Members can also join Clemson’s two quantum
-          computing Creative Inquiry research teams: Hands-on Quantum Computing
+          computing Creative&nbsp;Inquiry research teams: Hands&#x2011;on&nbsp;Quantum&nbsp;Computing
           and Quantum Optimization for Resilient Systems.
         </p>
       </section>

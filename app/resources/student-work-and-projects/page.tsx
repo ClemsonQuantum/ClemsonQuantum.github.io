@@ -21,7 +21,7 @@ export default function StudentWorkPage() {
           hierarchy contiguous for assistive tech. */}
       <h2 className="sr-only">All student work</h2>
       <p className="lr-intro">
-        Posters, papers, and conference talks from Clemson Quantum Club members.
+        Posters, papers, and conference talks from Clemson&nbsp;Quantum&nbsp;Club members.
         Open a title for its abstract, files, and links.
       </p>
       <StudentWorkList works={works} />
