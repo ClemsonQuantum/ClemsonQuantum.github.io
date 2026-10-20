@@ -17,13 +17,24 @@ const IMAGE_FIT: Record<string, 'poster' | 'logo' | 'still'> = {
   'scq-v3-banner.webp': 'still',
   'quantum-era-clemson.webp': 'still',
   'yquantum-2025.webp': 'still',
+  'nyuad-2025.jpg': 'still',
+  'iquhack-2025.jpg': 'still',
 };
+
+// Names never break across lines, so card titles and summaries show these
+// with no-break spaces. Display only: frontmatter, search, and page titles
+// keep plain spaces.
+const NAMES =
+  /\b(?:SC Quantathon(?: v\d)?|SC Quantum|Abu Dhabi|Dr\. Rong Ge|Alice & Bob|Fall Fest PLUS|Clemson Quantum Club|Clemson University|The Wolfpack|Watt Family Innovation Center|Savannah River)\b/g;
+const keepNames = (text: string) => text.replace(NAMES, (name) => name.replace(/ /g, '\u00a0'));
 
 interface PreviewCardProps {
   item: PageMeta;
   kind: 'news' | 'event';
   metaLabel?: string | null;
   showFooter?: boolean;
+  /** In the first screen (an archive grid's first row): skip lazy loading. */
+  eager?: boolean;
 }
 
 export default function PreviewCard({
@@ -31,6 +42,7 @@ export default function PreviewCard({
   kind,
   metaLabel,
   showFooter = true,
+  eager = false,
 }: PreviewCardProps) {
   // News cards credit the outlet (the validator requires `source` on news).
   const footerLabel = kind === 'news' ? item.source : metaLabel;
@@ -61,6 +73,7 @@ export default function PreviewCard({
             className={fit ? 'preview-card__image preview-card__image--still' : 'preview-card__image'}
             src={item.image}
             alt=""
+            {...(eager ? { loading: 'eager' as const } : {})}
           />
         </div>
       )}
@@ -74,15 +87,26 @@ export default function PreviewCard({
           )}
         </div>
         <h3 className="preview-card__title">
-          {item.title}
+          {keepNames(item.title)}
           {item.isExternal && <span className="sr-only"> (opens in a new tab)</span>}
         </h3>
-        {summary && <p className="preview-card__summary">{summary}</p>}
+        {summary && <p className="preview-card__summary">{keepNames(summary)}</p>}
         {showFooter && footerLabel && (
           <div className="preview-card__footer">
             <span className="preview-card__label">
               {footerLabel}
-              {item.isExternal && <span aria-hidden="true"> ↗</span>}
+              {/* ↑ turned 45°: the loaded Source Sans subset has ↑ and ↓ but not ↗. */}
+              {item.isExternal && (
+                <>
+                  {' '}
+                  <span
+                    aria-hidden="true"
+                    style={{ display: 'inline-block', transform: 'rotate(45deg)' }}
+                  >
+                    ↑
+                  </span>
+                </>
+              )}
             </span>
           </div>
         )}

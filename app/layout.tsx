@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import {
   IBM_Plex_Mono,
   IBM_Plex_Sans,
@@ -10,6 +11,7 @@ import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ScrollReveal from '@/components/ScrollReveal';
+import SearchHighlight from '@/components/SearchHighlight';
 import ShootingStar from '@/components/ShootingStar';
 import TitleReveal from '@/components/TitleReveal';
 import { getNavData } from '@/lib/navData';
@@ -152,6 +154,11 @@ export default function RootLayout({
         <ScrollReveal />
         <TitleReveal />
         <ShootingStar />
+        {/* Search results open page/?q=…; this scrolls to and highlights the
+            match. useSearchParams needs the Suspense boundary in a static export. */}
+        <Suspense fallback={null}>
+          <SearchHighlight />
+        </Suspense>
       </body>
     </html>
   );

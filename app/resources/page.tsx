@@ -9,7 +9,7 @@ import facultyData from '@/data/faculty.json';
 export const metadata: Metadata = pageMetadata({
   title: 'Resources',
   description:
-    'Quantum computing learning materials, student work, and information about quantum faculty and programs at Clemson University.',
+    'Quantum computing learning materials, student work, and information about quantum courses and faculty at Clemson University.',
   path: '/resources/',
 });
 
@@ -32,7 +32,7 @@ export default function ResourcesPage() {
       <ArchiveHeader title="Resources" />
 
       <section className="archive-section">
-        <h2>Start here</h2>
+        <h2 className="home-section__title">Start here</h2>
         <div className="resource-cards">
           <Link
             href="/resources/learning-resources/"
@@ -52,7 +52,7 @@ export default function ResourcesPage() {
               Student Work &amp; Projects
             </div>
             <div className="hackathon-resource-desc">
-              Posters, papers, and conference talks by Clemson Quantum Club
+              Posters, papers, and conference talks by Clemson&nbsp;Quantum&nbsp;Club
               members.
             </div>
           </Link>
@@ -60,33 +60,33 @@ export default function ResourcesPage() {
       </section>
 
       <section className="archive-section">
-        <h2>Quantum courses at Clemson</h2>
+        <h2 className="home-section__title">Quantum courses at Clemson</h2>
         <div className="course-groups">
           <div className="course-group">
             <h3>Computer Science (CPSC)</h3>
             <ul>
-              <li>Creative Inquiry: Hands-on Quantum Computing (CPSC 3990)</li>
-              <li>Introduction to Quantum Computing (CPSC 4750/6750)</li>
-              <li>Quantum Algorithms and Applications (CPSC 4760/6760)</li>
+              <li>Creative&nbsp;Inquiry: Hands&#x2011;on&nbsp;Quantum&nbsp;Computing (CPSC&nbsp;3990)</li>
+              <li>Introduction to Quantum Computing (CPSC&nbsp;4750/6750)</li>
+              <li>Quantum Algorithms and Applications (CPSC&nbsp;4760/6760)</li>
             </ul>
           </div>
           <div className="course-group">
             <h3>Physics and Astronomy (PHYS)</h3>
             <ul>
               <li>
-                Quantum Mechanics I/II (PHYS 4550/4560, 6550/6560; PHYS
+                Quantum Mechanics I/II (PHYS&nbsp;4550/4560, 6550/6560,
                 9510/9520)
               </li>
-              <li>Quantum Field Theory (PHYS 9530)</li>
-              <li>Open Quantum Systems (PHYS 8750)</li>
+              <li>Quantum Field Theory (PHYS&nbsp;9530)</li>
+              <li>Open Quantum Systems (PHYS&nbsp;8750)</li>
             </ul>
           </div>
           <div className="course-group">
             <h3>Industrial Engineering (IE)</h3>
             <ul>
               <li>
-                Creative Inquiry: Quantum Optimization for Resilient Systems (IE
-                4040)
+                Creative&nbsp;Inquiry: Quantum Optimization for Resilient Systems
+                (IE&nbsp;4040)
               </li>
             </ul>
           </div>
@@ -94,7 +94,7 @@ export default function ResourcesPage() {
       </section>
 
       <section id="faculty" className="archive-section">
-        <h2>Quantum faculty at Clemson</h2>
+        <h2 className="home-section__title">Quantum faculty at Clemson</h2>
         <p>
           Clemson professors who teach quantum courses or do quantum research,
           and how to reach them.

@@ -23,11 +23,22 @@
     "github": "https://github.com/cosmicdrifter423"
   },
   {
+    "name": "Nathan Jones",
+    "role": "Student Advisor",
+    "start": "2026-10",
+    "profile": "Student Advisor since Oct 2026, after co-founding the club and serving as President from Aug 2024 to Oct 2026 (that role stays in past-board-members.json). Also Student Advisor to the SC Quantathon v4 committee since Oct 2026. When he graduates and stops being Student Advisor, add a second past-board entry for this role (start 2026-10) and remove this one.",
+    "description": "Computer Science Ph.D. Candidate and Clemson Alumnus\nResearch in High-Performance Computing, Quantum Machine Learning, and Variational Quantum Algorithms",
+    "image": "/images/nathan-jones.jpg",
+    "email": "najones@clemson.edu",
+    "linkedin": "https://www.linkedin.com/in/njonescomputing/",
+    "github": "https://github.com/njones93531/"
+  },
+  {
     "name": "Rong Ge",
     "role": "Faculty Advisor",
     "start": "2024-08",
     "profile": "Faculty Advisor since the club started in Aug 2024. Under Constitution Art. V the Advisor approves all club expenditures and is the liaison between the club and the supporting department.",
-    "description": "Professor in the School of Computing\nResearch in High Performance Computing, Parallel and Distributed Systems, and Quantum Computing Education",
+    "description": "Professor in the School of Computing\nResearch in High-Performance Computing, Parallel and Distributed Systems, and Quantum Computing Education",
     "image": "/images/rong-ge.jpg",
     "email": "rge@clemson.edu",
     "linkedin": "https://www.linkedin.com/in/rong-ge-64416719/",

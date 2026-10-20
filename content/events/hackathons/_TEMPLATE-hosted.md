@@ -29,7 +29,7 @@ image: /images/[PLACEHOLDER].webp
       <h1>[EVENT NAME]</h1>
       <p class="hackathon-hero-tagline">[One plain sentence: what the event is, where, and who sets the challenges.]</p>
     </div>
-    <img src="/images/[EVENT-LOGO].svg" class="hackathon-hero-logo" alt="[EVENT NAME] logo" width="[WIDTH]" height="[HEIGHT]" />
+    <img src="/images/[EVENT-LOGO].svg" class="hackathon-hero-logo" alt="" width="[WIDTH]" height="[HEIGHT]" />
   </div>
 </div>
 
@@ -313,7 +313,7 @@ image: /images/[PLACEHOLDER].webp
   </details>
   <details class="hackathon-faq-item">
     <summary>Is there a code of conduct?</summary>
-    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club code of conduct</a>. Organizers are available all weekend if anything needs to be addressed.</p>
+    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club Code of Conduct</a>. Organizers are available all weekend if anything needs to be addressed.</p>
   </details>
 </div>
 

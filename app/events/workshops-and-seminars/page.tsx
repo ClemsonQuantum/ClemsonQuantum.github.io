@@ -16,7 +16,7 @@ export default function WorkshopsPage() {
 
   return (
     <div className="archive-page">
-      <ArchiveHeader title="Workshops & Seminars" />
+      <ArchiveHeader title={'Workshops &\u00a0Seminars'} />
       {/* Card titles are h3s; this hidden h2 keeps the heading
           hierarchy contiguous for assistive tech. */}
       <h2 className="sr-only">All workshops and seminars</h2>

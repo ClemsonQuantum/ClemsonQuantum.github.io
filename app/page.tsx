@@ -41,22 +41,29 @@ export default function HomePage() {
         <QuantumCanvas pxPerParticle={34} maxCount={48} />
         <h1 className="home-hero__title">Clemson Quantum Club</h1>
         <ConstellationDivider />
+        {/* The two paragraphs are the same length (about 415 characters
+            each), so on desktop (1104px and wider, where the columns stop
+            growing) both run seven lines and end together. Keep them even
+            when editing either one. */}
         <div className="home-hero__intro">
           <p>
-            Clemson Quantum Club is a student-led group at Clemson University
+            Clemson Quantum Club is a student-led group at Clemson&nbsp;University
             that helps students learn and work with quantum computing at any
             level. Since the club started in 2024, members have competed in
-            quantum hackathons around the country, attended conferences, tuned
-            in to seminars, and presented posters and papers. Members can also
-            join Clemson’s two quantum computing Creative Inquiry research
-            teams. Any student is welcome at club meetings.
+            quantum hackathons around the country, attended conferences, and
+            presented posters and papers. Members can also join Clemson’s two
+            quantum computing Creative&nbsp;Inquiry research teams. Any student
+            is welcome at club meetings.
           </p>
+          {/* &nbsp; and the word joiner (&#x2060;) keep the names and the
+              hackathon's dates on one line. */}
           <p>
-            Each fall the club runs seminars and workshops on campus and hosts
-            a student quantum hackathon, open to every skill level. The next
-            one, SC Quantathon v4, is October 22–24, 2027. Teams spend a
-            weekend working on challenges written by companies and
-            national labs, learn new tools, and meet professionals from
+            Each fall the club runs seminars and workshops on campus, including
+            Qiskit&nbsp;Fall&nbsp;Fest with IBM&nbsp;Quantum, and hosts a free
+            student quantum hackathon, open to every major and skill level. The
+            next one, SC&nbsp;Quantathon&nbsp;v4, is October&nbsp;22–&#x2060;24,&nbsp;2027. Teams
+            spend a full weekend working on challenges written by companies and
+            national labs, learn new quantum tools, and meet professionals from
             industry and research along the way.
           </p>
         </div>
@@ -72,19 +79,27 @@ export default function HomePage() {
             {featured.image && (
               <Link
                 href={featured.href}
+                // No prefetch, as in the Header: prefetching the event page would
+                // preload its stylesheet and images on the homepage.
+                prefetch={false}
                 className="home-featured__art"
                 aria-label={`${featured.title} event page`}
               >
-                {/* Above-the-fold LCP candidate: override SiteImage's lazy default. */}
-                <SiteImage
-                  src={featured.image}
-                  alt={`${featured.title}, ${featured.dateText}`}
-                  className="home-featured__image"
-                  width={1200}
-                  height={675}
-                  loading="eager"
-                  fetchPriority="high"
-                />
+                {/* Above-the-fold LCP candidate: override SiteImage's lazy default.
+                    The <picture> keeps React from emitting a preload hint for
+                    it, which link prefetch would apply on every page that
+                    links home. */}
+                <picture>
+                  <SiteImage
+                    src={featured.image}
+                    alt={`${featured.title}, ${featured.dateText}`}
+                    className="home-featured__image"
+                    width={1200}
+                    height={675}
+                    loading="eager"
+                    fetchPriority="high"
+                  />
+                </picture>
               </Link>
             )}
             <div>
@@ -107,6 +122,7 @@ export default function HomePage() {
               <div className="home-featured__cta-row">
                 <Link
                   href={featured.href}
+                  prefetch={false}
                   className="hackathon-cta hackathon-cta--ghost"
                 >
                   Event details
@@ -119,6 +135,7 @@ export default function HomePage() {
                     className="hackathon-cta hackathon-cta--primary"
                   >
                     Register
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 )}
               </div>

@@ -14,10 +14,6 @@ export default function Footer() {
           <Link href="/" className="footer-logo-link" aria-label="Clemson Quantum Club home">
             <ClubLogo className="footer-logo" />
           </Link>
-          <p className="footer-meeting">
-            Meetings: {siteConfig.meetingDay} at {siteConfig.meetingTime} &middot;{' '}
-            {siteConfig.location}
-          </p>
         </div>
 
         <nav className="footer-links" aria-label="Footer">
@@ -38,7 +34,7 @@ export default function Footer() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={label}
+                aria-label={`${label} (opens in a new tab)`}
               >
                 <Icon className="footer-social__icon" />
               </a>
@@ -50,7 +46,7 @@ export default function Footer() {
       <ConstellationDivider wide />
 
       <p className="footer-copy">
-        &copy; <CopyrightYear buildYear={new Date().getFullYear()} /> Clemson Quantum Club &middot;{' '}
+        &copy; <CopyrightYear buildYear={new Date().getFullYear()} /> Clemson Quantum Club<span className="footer-copy__sep"> &middot;{' '}</span>
         <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
       </p>
     </footer>

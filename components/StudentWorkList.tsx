@@ -12,8 +12,14 @@ import FilterButtons from './FilterButtons';
 
 const ALL = 'all';
 
+// The `conference` type is a conference talk (posters and papers are often
+// presented at conferences too), so its label says what it is: Talk.
+function typeLabel(type: string): string {
+  return type === 'conference' ? 'Talk' : capitalize(type);
+}
+
 function pluralLabel(type: string): string {
-  const label = capitalize(type);
+  const label = typeLabel(type);
   return label.endsWith('s') ? label : `${label}s`;
 }
 
@@ -57,7 +63,7 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
           {visible.map((p) => (
             <article key={p.slug} className="sw-item">
               {p.type && (
-                <span className="sw-type">{capitalize(p.type)}</span>
+                <span className="sw-type">{typeLabel(p.type)}</span>
               )}
               <h3 className="sw-title">
                 {/* p.href resolves external entries to their destination and
@@ -69,7 +75,7 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
               <p className="sw-meta">
                 {p.date && <span>{formatDate(p.date)}</span>}
                 {p.date && p.authors && <span> · </span>}
-                {p.authors?.map((a) => a.name).join(', ')}
+                {p.authors?.map((a) => a.name.replace(/ /g, '\u00a0')).join(', ')}
               </p>
               {(p.summary || p.excerpt) && (
                 <p className="sw-summary">{p.summary ?? p.excerpt}</p>

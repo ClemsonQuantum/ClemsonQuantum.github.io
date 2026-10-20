@@ -43,7 +43,9 @@ export default function TitleReveal() {
     const variant = Math.random() < 0.5 ? 'tr-word--blur' : 'tr-word--fade';
     const fragment = document.createDocumentFragment();
     let wordIndex = 0;
-    for (const part of text.split(/(\s+)/)) {
+    // A no-break space stays inside its word span, so the words it joins
+    // never land on different lines.
+    for (const part of text.split(/([^\S\u00a0]+)/)) {
       if (!part) continue;
       if (/^\s+$/.test(part)) {
         fragment.appendChild(document.createTextNode(part));

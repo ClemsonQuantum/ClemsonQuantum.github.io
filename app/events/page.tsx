@@ -8,7 +8,7 @@ import ArchiveHeader from '@/components/ArchiveHeader';
 export const metadata: Metadata = pageMetadata({
   title: 'Events',
   description:
-    'Quantum computing events at Clemson: hackathons, workshops and seminars, and biweekly club meetings hosted by Clemson Quantum Club.',
+    'Quantum computing events from Clemson Quantum Club: hackathons the club hosts and competes in, workshops and seminars, and biweekly club meetings.',
   path: '/events/',
 });
 
@@ -19,7 +19,7 @@ const SECTIONS = [
   { dir: 'events/hackathons', title: 'Hackathons', viewAll: 'View all hackathons' },
   {
     dir: 'events/workshops-and-seminars',
-    title: 'Workshops & Seminars',
+    title: 'Workshops &\u00a0Seminars',
     viewAll: 'View all workshops & seminars',
   },
   { dir: 'events/meetings', title: 'Meetings', viewAll: 'View all meetings' },

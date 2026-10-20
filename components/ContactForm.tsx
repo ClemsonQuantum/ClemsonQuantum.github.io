@@ -88,13 +88,28 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    // action/method: without JS (or before hydration) Send falls back to the
+    // same mailto POST as the no-key branch; handleSubmit prevents it otherwise.
+    <form
+      onSubmit={handleSubmit}
+      action={`mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(SUBJECT)}`}
+      method="post"
+      encType="text/plain"
+    >
       {fields}
 
       {/* Honeypot: bots tick this hidden box; Web3Forms drops those submissions. */}
       <input type="checkbox" name="botcheck" hidden tabIndex={-1} />
 
-      <button type="submit" disabled={status === 'submitting'}>
+      {/* aria-disabled, not disabled: disabling the focused button would drop
+          keyboard focus to <body> while the message sends. */}
+      <button
+        type="submit"
+        aria-disabled={status === 'submitting' || undefined}
+        onClick={(e) => {
+          if (status === 'submitting') e.preventDefault();
+        }}
+      >
         {status === 'submitting' ? FORM_COPY.sending : 'Send message'}
       </button>
 

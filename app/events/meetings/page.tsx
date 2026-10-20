@@ -23,10 +23,10 @@ export default function MeetingsPage() {
       {/* Built from data/ so the time, room, and semester never drift from
           the Get Involved page. */}
       <p className="lr-intro">
-        Any student is welcome at club meetings ({siteConfig.meetingDay} at{' '}
+        Any student is welcome at club meetings ({siteConfig.meetingDay.replace(/^Biweekly/, 'biweekly')} at{' '}
         {siteConfig.meetingTime}, {siteConfig.location}). See the{' '}
-        <Link href="/get-involved/">{meetingSchedule.semester} schedule</Link>.
-        Fairs and other one-off events are below.
+        <Link href="/get-involved/">{meetingSchedule.semester.replace(/ /g, '\u00a0')} schedule</Link>.
+        Fairs and other one&#x2011;off events are below.
       </p>
       {/* Card titles are h3s; this hidden h2 keeps the heading
           hierarchy contiguous for assistive tech. */}
