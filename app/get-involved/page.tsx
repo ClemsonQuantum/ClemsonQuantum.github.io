@@ -41,7 +41,7 @@ export default function GetInvolvedPage() {
     <article className="about-page">
       <header className="about-page__hero">
         <div className="about-page__hero-copy">
-          <h1>Get involved with Clemson Quantum Club</h1>
+          <h1>Get involved</h1>
           <p className="about-page__tagline">
             Drop into a meeting, join our Discord or GroupMe, or send us an email.
           </p>
@@ -96,7 +96,7 @@ export default function GetInvolvedPage() {
           </ol>
           <div className="gi-schedule-aside">
             {/* Logo spot — swap this image to feature event art instead. */}
-            <ClubLogo alt="" large />
+            <ClubLogo alt="" large eager />
           </div>
         </div>
       </section>
@@ -120,6 +120,7 @@ export default function GetInvolvedPage() {
               >
                 <Icon className="gi-channel__icon" />
                 <span>{CHANNEL_TEXT[id]}</span>
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             );
           })}

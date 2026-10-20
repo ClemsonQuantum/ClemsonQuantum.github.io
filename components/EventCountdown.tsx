@@ -38,6 +38,9 @@ const shell = (children: ReactNode) => (
   </div>
 );
 
+// The live and wrap-up messages are static text, not a timer.
+const message = (children: ReactNode) => <div className="event-countdown">{children}</div>;
+
 // Live countdown to an event start. `now` stays null on the server and on the
 // first client render so the static-export HTML and the hydrated DOM match
 // exactly (placeholder digits) — the real clock only starts inside useEffect.
@@ -68,10 +71,10 @@ export default function EventCountdown({
 
   if (Number.isNaN(targetMs)) return null;
 
-  if (ended) return shell(<span className="event-countdown-done">{endedMessage}</span>);
+  if (ended) return message(<span className="event-countdown-done">{endedMessage}</span>);
 
   if (now !== null && now >= targetMs) {
-    return shell(<span className="event-countdown-live">{liveMessage}</span>);
+    return message(<span className="event-countdown-live">{liveMessage}</span>);
   }
 
   const digits = now === null ? UNITS.map(() => '--') : splitRemaining(targetMs - now);

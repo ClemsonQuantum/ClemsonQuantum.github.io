@@ -76,7 +76,7 @@ link: "https://example.com/related-page"
 Write the abstract here.
 ```
 
-`pdf` (a file in `public/files/`) powers the embedded viewer and "Download PDF" button on the detail page; `link` adds a related external link. Both are optional — the detail page still exists either way.
+`pdf` (a file in `public/files/`) powers the embedded viewer and "Download PDF" button on the detail page (`pdf_label` replaces the word PDF on that button, e.g. `paper` when the page also shows a poster image); `link` adds a related external link. Both are optional — the detail page still exists either way.
 
 ---
 
@@ -104,6 +104,7 @@ The `---` block at the top of each file is called "front matter." Here are all t
 | `authors` | Student work | No | List of `- name: "..."` entries |
 | `mentors` | Student work | No | List of plain `- "..."` name strings |
 | `pdf` | Student work | No | Path in `public/files/` — drives the embedded viewer and download button |
+| `pdf_label` | Student work | No | Word after Download on the PDF button (default `PDF`); use `paper` when the page also shows a poster image |
 | `link` | Student work | No | Related external link shown on the detail page |
 
 ---
@@ -195,7 +196,7 @@ The page shows the top 10 with a "Show all" button. Names appear exactly as type
 - **Page clouds** (2026 page). `<div class="qff-page-clouds" aria-hidden="true"></div>` near the top of `.qff-page` lets faint clouds drift behind the whole page (one per page). They hold still for visitors who prefer reduced motion.
 - **Decade counter** (2026 page). `<span class="qff-decade" data-from="2016" data-to="2026">2016–2026</span>` in the band's eyebrow counts the end year up from `data-from` to `data-to` as the band scrolls past, in step with the cryostat. The component writes the range itself from those two attributes (any text inside the span is replaced), and screen readers, search engines, and reduced-motion visitors always get the full range.
 - **Hairlines.** Each `<div class="qff-rule" aria-hidden="true"></div>` draws in from the left as it scrolls into view (browsers without scroll-driven animation, and reduced motion, show the full line). Add `qff-rule--static` to a rule in the first screen so it loads fully drawn; on the 2026 page that is the first two, after the hero and after the hosted strip.
-- **Session and challenge files** go in `public/files/qff-<year>/`. On the 2026 page each session row has a Notebook chip and a Slides chip (there are no separate notes; they are part of each notebook), and each challenge row has Challenge notebook and Files. The chips start as plain text after a hidden "Posted after the session:" label for screen readers. To post a file, replace its chip with a link, e.g. `<a class="qff-day-resource" href="/files/qff-2026/(file)">Notebook</a>`, and delete the row's `<span class="sr-only">` label once every chip in it is a link.
+- **Session and challenge files** go in `public/files/qff-<year>/`. On the 2026 page each session row has a Notebook chip and a Slides chip (there are no separate notes; they are part of each notebook), and each challenge row has Challenge notebook and Files. The chips start as plain text after a hidden screen-reader label that says when they will be posted. To post a file, replace its chip with a link, e.g. `<a class="qff-day-resource" href="/files/qff-2026/(file)">Notebook</a>`, and delete the row's `<span class="sr-only">` label once every chip in it is a link.
 - Session and challenge rows alternate violet and pink on their own (odd rows violet, even rows pink); there is no class to set.
 
 ## Tips
@@ -205,5 +206,6 @@ The page shows the top 10 with a "Show all" button. Names appear exactly as type
 - **File names:** Use all-lowercase kebab-case with dashes instead of spaces. The filename becomes the page URL verbatim, so any uppercase letter produces a mixed-case URL that breaks on the case-sensitive deploy server.
   - Events (hackathons, workshops, meetings): descriptive name first, **year at the end** (e.g. `my-event-2026.md` → `/events/.../my-event-2026/`).
   - News: name by date (e.g. `2026-03-15.md`), with an optional slug suffix (e.g. `2026-05-18-scalab-initiative.md`).
+- **Keeping words together:** a time, date, room, course code, or name that must never break across lines takes a no-break space (U+00A0) instead of a plain space, e.g. "5:00 PM" or "Watt Family Innovation Center"; type the character itself, since `&nbsp;` would show up in search results. A hyphen that must not break is a no-break hyphen (U+2011), and the en dash of a range takes a word joiner (U+2060) right after it. On Fall Fest pages, wrap a range in `<span class="qff-nowrap">` instead, as those pages already do.
 - **Dates:** The `date:` field must be `YYYY-MM-DD` format — listings are sorted by this field, not by the filename, so the filename order doesn't affect sorting.
 - **Adding a new event type:** Currently supports hackathons, workshops & seminars, and meetings. To add a new category, a developer will need to create a new folder and route.

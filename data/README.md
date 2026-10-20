@@ -35,14 +35,17 @@ Each person is an object with these fields:
 
 Controls the collapsible **Past board members** archive on the About page. Entries render in file order — keep the newest departures first.
 
+One person can be in both files. When someone moves from one board role to another, their earlier role stays here and the new role goes in `board-members.json`. Nathan Jones, for example, is the current Student Advisor and a past President. When they leave the new role, add a second entry here for it (with its own `start` and `end`) and leave the earlier entry as it is.
+
 | Field | Required | Description |
 |-------|----------|-------------|
 | `name` | Yes | Full name |
 | `role` | Yes | Title(s) held, joined with "&", e.g. "Co-Founder & Treasurer" |
 | `start` | Yes | First month in the role, `YYYY-MM` (e.g. `2024-08`) |
-| `end` | Yes | Last month in the role, `YYYY-MM`. The archive shows the pair as "Aug 2024 – Oct 2026"; a malformed month or an end before the start fails the build |
+| `end` | Yes | Last month in the role, `YYYY-MM`. The archive shows the pair as "Aug 2024–Oct 2026"; a malformed month or an end before the start fails the build |
 | `profile` | Yes | Reference notes on the person, as in `board-members.json`. Not shown on the site |
 | `image` | No | Path to their photo (reuse the one in `public/images/`) |
+| `linkedin` | No | Full LinkedIn URL; their name links to it |
 
 ---
 
@@ -73,8 +76,8 @@ Controls meeting info, social links, and contact details used across the site (G
 | Field | Description |
 |-------|-------------|
 | `meetingDay` | Day of the week (e.g. "Biweekly Tuesdays") |
-| `meetingTime` | Time (e.g. "5:00 PM", matching the event pages) |
-| `location` | Meeting location (building and room, e.g. "McAdams 107") |
+| `meetingTime` | Time (e.g. "5:00\u00a0PM", matching the event pages; the `\u00a0` no-break space keeps the time on one line) |
+| `location` | Meeting location (building and room, e.g. "McAdams\u00a0107", with the same no-break space) |
 | `discordInvite` | Full Discord invite URL |
 | `groupmeUrl` | GroupMe join URL |
 | `tigerquestUrl` | TigerQuest listing URL |

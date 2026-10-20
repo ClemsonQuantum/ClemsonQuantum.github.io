@@ -14,11 +14,11 @@ image: "/images/scq-v3-banner.webp"
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">September 25–27, 2026 • Clemson, South Carolina</p>
+      <p class="hackathon-hero-eyebrow">September 25–27, 2026 • Clemson, South Carolina</p>
       <h1>SC Quantathon v3</h1>
-      <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University, with challenges set by Savannah River National Laboratory and Quantum Rings.</p>
+      <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University, with challenges set by Savannah River National Laboratory and Quantum Rings.</p>
     </div>
-    <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="SC Quantathon v3 logo" width="855" height="275" />
+    <img src="/images/quantathon-v3-logo.svg" class="hackathon-hero-logo" alt="" width="855" height="275" />
   </div>
 </div>
 
@@ -34,11 +34,11 @@ image: "/images/scq-v3-banner.webp"
 
 ## About
 
-**SC Quantathon v3** carries forward the quantum hackathon that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, Clemson Quantum Club and Clemson University hosted it at the Watt Family Innovation Center.
+**SC Quantathon v3** carries forward the quantum hackathon that SC Quantum founded and hosted for its first two iterations in the Southeast. For this third edition, Clemson Quantum Club and Clemson University hosted it at the Watt Family Innovation Center.
 
 Teams worked through the weekend with mentors and organizers on hand, and sponsors held firesides on Saturday.
 
-<p>Past editions: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1 (2024)</a> and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2 (2025)</a>.</p>
+<p>Past editions: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1 (2024)</a> and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2 (2025)</a>.</p>
 
 <p>Recap of SC Quantathon v2 (2025) in Columbia:</p>
 
@@ -63,7 +63,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Eligibility</div>
-    <div class="hackathon-spec-value">Undergraduate and graduate students, 18 or older</div>
+    <div class="hackathon-spec-value">Undergraduate and graduate students, 18 or older</div>
   </div>
   <div class="hackathon-spec">
     <div class="hackathon-spec-label">Format</div>
@@ -86,7 +86,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
   </figure>
   <div class="hackathon-venue-text">
     <div class="hackathon-spec-label">Venue</div>
-    <p class="hackathon-venue-name">Watt Family Innovation Center</p>
+    <p class="hackathon-venue-name">Watt Family Innovation Center</p>
     <p class="hackathon-venue-address">405 S Palmetto Blvd, Clemson, SC 29634</p>
     <p>Check-in was at the north door into the Atrium, and hotel shuttles dropped off at the traffic circle outside.</p>
     <p class="hackathon-venue-links"><a href="https://maps.apple.com/?q=Watt+Family+Innovation+Center&amp;address=405+S+Palmetto+Blvd,+Clemson,+SC+29634" target="_blank" rel="noopener noreferrer">Open in Apple Maps</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query=Watt+Family+Innovation+Center+405+S+Palmetto+Blvd+Clemson+SC" target="_blank" rel="noopener noreferrer">Google Maps</a></p>
@@ -145,8 +145,8 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
       <img src="/images/srnl-logo.svg" alt="Savannah River National Laboratory" class="hackathon-track-logo" width="367" height="64" loading="lazy" />
     </a>
     <div class="hackathon-track-body">
-      <h3>SRNL Challenge</h3>
-      <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, set a challenge drawn from its applied research. The full brief was released at the opening ceremony.</p>
+      <h3><a class="hackathon-track-title-link" href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026/tree/main/challenges/srnl" target="_blank" rel="noopener noreferrer">SRNL Challenge<span class="sr-only"> files on GitHub</span></a></h3>
+      <p>Savannah River National Laboratory, the Department of Energy lab in Aiken, South Carolina, set a challenge drawn from its applied research. The full brief was released at the opening ceremony.</p>
     </div>
   </div>
   <div class="hackathon-track hackathon-track--logo hackathon-track--brand hackathon-track--quantum-rings">
@@ -157,8 +157,8 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
       </picture>
     </a>
     <div class="hackathon-track-body">
-      <h3>Quantum Rings Challenge</h3>
-      <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge had teams analyze QASM files and build machine learning models that predict how long a circuit takes to run on the Quantum Rings simulator. The full brief was released at the opening ceremony.</p>
+      <h3><a class="hackathon-track-title-link" href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026/tree/main/challenges/quantum-rings" target="_blank" rel="noopener noreferrer">Quantum Rings Challenge<span class="sr-only"> files on GitHub</span></a></h3>
+      <p>Quantum Rings builds a high-performance quantum circuit simulator and SDK. Its challenge had teams analyze QASM files and build machine learning models that predict how long a circuit takes to run on the Quantum Rings simulator. The full brief was released at the opening ceremony.</p>
     </div>
   </div>
 </div>
@@ -255,7 +255,7 @@ Hotels near Clemson University. Dollar signs are estimates for prices. Shuttles 
   </li>
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">
-      <a class="hackathon-hotel-name" href="https://www.ihg.com/holidayinnexpress/hotels/us/en/clemson/ceupd/hoteldetail" target="_blank" rel="noopener noreferrer">Holiday Inn Express &amp; Suites Clemson</a>
+      <a class="hackathon-hotel-name" href="https://www.ihg.com/holidayinnexpress/hotels/us/en/clemson/ceupd/hoteldetail" target="_blank" rel="noopener noreferrer">Holiday Inn Express &amp; Suites Clemson</a>
       <span class="hackathon-hotel-address">1381 Tiger Blvd, Clemson</span>
     </div>
     <span class="hackathon-hotel-distance">2.5 mi</span>
@@ -269,7 +269,7 @@ Hotels near Clemson University. Dollar signs are estimates for prices. Shuttles 
 
 ## FAQ
 
-These were the answers for the September 2026 event.
+These were the answers for the September 2026 event.
 
 <div class="hackathon-faq">
   <details class="hackathon-faq-item">
@@ -290,31 +290,31 @@ These were the answers for the September 2026 event.
   </details>
   <details class="hackathon-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts, set up before you arrive. If your team is assigned the Quantum Rings challenge, you will set up that account on Saturday.</p>
+    <p>A laptop and charger, plus free <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> and <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> accounts, set up before you arrive. If your team is assigned the Quantum Rings challenge, you will set up that account on Saturday.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where should I stay?</summary>
-    <p>See the <a href="#stay">Where to Stay</a> list above for a discounted group rate and other hotels close to the Watt Family Innovation Center.</p>
+    <p>See the <a href="#stay">Where to Stay</a> list above for a discounted group rate and other hotels close to the Watt Family Innovation Center.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How do I get to Clemson?</summary>
-    <p>If you are flying, use Greenville-Spartanburg International Airport (GSP), about 45 minutes from campus by car or rideshare. Shuttles run between the hotels listed above and the Watt Family Innovation Center: Friday they leave the hotels at 4:45 PM and leave Watt at 8:45 PM; Saturday they leave the hotels at 8:15 AM and leave Watt at 11:30 PM; Sunday they leave the hotels at 8:15 AM and leave Watt at 7:45 PM. Do not park on campus without a pass, since Clemson Parking tows. If you are driving, tell us on the lodging and parking form sent to accepted participants and we will arrange a daily pass. Otherwise, visitor passes can be bought online and metered parking is available near Watt.</p>
+    <p>If you are flying, use Greenville-Spartanburg International Airport (GSP), about 45 minutes from campus by car or rideshare. Shuttles run between the hotels listed above and the Watt Family Innovation Center: Friday they leave the hotels at 4:45 PM and leave Watt at 8:45 PM; Saturday they leave the hotels at 8:15 AM and leave Watt at 11:30 PM; Sunday they leave the hotels at 8:15 AM and leave Watt at 7:45 PM. Do not park on campus without a pass, since Clemson Parking tows. If you are driving, tell us on the lodging and parking form sent to accepted participants and we will arrange a daily pass. Otherwise, visitor passes can be bought online and metered parking is available near Watt.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Where in the building will things happen?</summary>
-    <p>Check in at the north door into the Atrium, which also hosts Friday dinner, Saturday sponsor tabling and firesides, and Sunday meals. The welcome and awards ceremonies are in the Auditorium, and Saturday meals and the opening ceremony are on the Terrace. Team rooms are on the second and third floors. Mentors are in Watt 323, and judging is in Watt 310, 313, and 316. Watt stays open overnight on Saturday for hacking.</p>
+    <p>Check in at the north door into the Atrium, which also hosts Friday dinner, Saturday sponsor tabling and firesides, and Sunday meals. The welcome and awards ceremonies are in the Auditorium, and Saturday meals and the opening ceremony are on the Terrace. Team rooms are on the second and third floors. Mentors are in Watt 323, and judging is in Watt 310, 313, and 316. Watt stays open overnight on Saturday for hacking.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How should I prepare?</summary>
-    <p>Work through the self-paced <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 22. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
+    <p>Work through the self-paced <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/">bootcamp</a>, released one day at a time from September 14 to 22. It covers the basics and the tools the challenges use. Brushing up on Python helps too. Project work starts at the opening ceremony, not before.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at 12:00 PM and awards are at 6:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at 12:00 PM and awards are at 6:00 PM.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How does judging work?</summary>
-    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each challenge, plus one Grand Prize across both challenges.</p>
+    <p>Judging starts Sunday at 12:00 PM. Each team presents for 10 minutes, then takes 5 minutes of questions from the judges, who include the sponsor that wrote the challenge. First place is awarded for each challenge, plus one grand prize across both challenges.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is travel reimbursed?</summary>
@@ -326,7 +326,7 @@ These were the answers for the September 2026 event.
   </details>
   <details class="hackathon-faq-item">
     <summary>Is there a code of conduct?</summary>
-    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club code of conduct</a>. Organizers are available all weekend if anything needs to be addressed.</p>
+    <p>Yes. Everyone at the event agrees to the <a href="/code-of-conduct/">Clemson Quantum Club Code of Conduct</a>. Organizers are available all weekend if anything needs to be addressed.</p>
   </details>
 </div>
 

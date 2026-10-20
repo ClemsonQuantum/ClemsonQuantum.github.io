@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import SiteImage from './SiteImage';
+import { LinkedInIcon } from './icons/ChannelIcons';
 
 // Only the fields the archive shows. The page (a server component) reads
 // data/past-board-members.json and passes these, so reference-only fields
@@ -11,6 +12,8 @@ export interface PastBoardMemberCard {
   role: string;
   tenure: string;
   image?: string;
+  /** Their LinkedIn profile; the name links to it when set. */
+  linkedin?: string;
 }
 
 export default function PastBoardMembers({
@@ -38,7 +41,7 @@ export default function PastBoardMembers({
       <div className="about-past-board__header">
         <div>
           <h2>Past board members</h2>
-          <p>Previous student officers who helped build Clemson Quantum Club.</p>
+          <p>Previous student officers who helped build Clemson&nbsp;Quantum&nbsp;Club.</p>
         </div>
         <button
           type="button"
@@ -50,6 +53,11 @@ export default function PastBoardMembers({
           {expanded ? 'Hide past board members' : 'Show past board members'}
         </button>
       </div>
+      {/* Without scripts the button can't open the list: show the list and drop
+          the button. React leaves <noscript> contents alone on the client. */}
+      <noscript>
+        <style>{'#past-board-list[hidden]{display:flex}#past-board .view-all-link{display:none}'}</style>
+      </noscript>
       {/* Always in the DOM (hidden while collapsed) so the button's
           aria-controls points at a real element. */}
       <ul id="past-board-list" className="about-past-board__list" hidden={!expanded}>
@@ -65,7 +73,22 @@ export default function PastBoardMembers({
               height={52}
             />
             <div>
-              <h3>{m.name}</h3>
+              <h3>
+                {m.linkedin ? (
+                  <a
+                    className="about-past-board__name-link"
+                    href={m.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {m.name}
+                    <LinkedInIcon className="about-past-board__linkedin" />
+                    <span className="sr-only"> on LinkedIn (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  m.name
+                )}
+              </h3>
               <p>{m.role}</p>
               <span>{m.tenure}</span>
             </div>

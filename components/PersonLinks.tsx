@@ -35,17 +35,17 @@ export default function PersonLinks({
         </a>
       )}
       {linkedin && (
-        <a className={linkClass} href={linkedin} {...offsite} aria-label={`${name} on LinkedIn`}>
+        <a className={linkClass} href={linkedin} {...offsite} aria-label={`${name} on LinkedIn (opens in a new tab)`}>
           <LinkedInIcon className={`${iconClass} link-icon--brand`} />
         </a>
       )}
       {github && (
-        <a className={linkClass} href={github} {...offsite} aria-label={`${name} on GitHub`}>
+        <a className={linkClass} href={github} {...offsite} aria-label={`${name} on GitHub (opens in a new tab)`}>
           <GitHubIcon className={`${iconClass} link-icon--brand`} />
         </a>
       )}
       {website && (
-        <a className={linkClass} href={website} {...offsite} aria-label={`${name}’s website`}>
+        <a className={linkClass} href={website} {...offsite} aria-label={`${name}’s website (opens in a new tab)`}>
           <WebsiteIcon className={iconClass} />
         </a>
       )}

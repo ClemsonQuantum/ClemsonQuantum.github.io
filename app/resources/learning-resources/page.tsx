@@ -41,7 +41,7 @@ const LEVELS: Level[] = [
       {
         type: 'Course',
         title: 'IBM Quantum Learning',
-        desc: 'Interactive lessons for any level, with a detailed 4-part fundamentals course.',
+        desc: 'Interactive lessons for any level, with a detailed four-part fundamentals course.',
         href: 'https://quantum.cloud.ibm.com/learning/en',
       },
       {
@@ -131,7 +131,7 @@ const LEVELS: Level[] = [
       {
         type: 'Video',
         title: 'Preskill’s Ph219 Lectures',
-        desc: 'Recorded lectures from Caltech’s Ph/CS 219A Quantum Computation course, taught by John Preskill.',
+        desc: 'Recorded lectures from Caltech’s Ph/CS 219A Quantum Computation course, taught by John\u00a0Preskill.',
         href: 'https://youtube.com/playlist?list=PL0ojjrEqIyPy-1RRD8cTD_lF1hflo89Iu',
       },
     ],
@@ -202,10 +202,12 @@ export default function LearningResourcesPage() {
                     rel="noopener noreferrer"
                   >
                     {r.title}
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                   {r.secondary && (
                     <>
-                      {' & '}
+                      {/* Styled as a title, so the & matches the two titles it joins. */}
+                      <span className="lr-item__title">{' & '}</span>
                       <a
                         className="lr-item__title"
                         href={r.secondary.href}
@@ -213,6 +215,7 @@ export default function LearningResourcesPage() {
                         rel="noopener noreferrer"
                       >
                         {r.secondary.title}
+                        <span className="sr-only"> (opens in a new tab)</span>
                       </a>
                     </>
                   )}
@@ -241,6 +244,7 @@ export default function LearningResourcesPage() {
               <span className="lr-ongoing__cat">{o.cat}</span>
               <span className="lr-ongoing__name">{o.title}</span>
               <span className="lr-ongoing__desc">{o.desc}</span>
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           ))}
         </div>

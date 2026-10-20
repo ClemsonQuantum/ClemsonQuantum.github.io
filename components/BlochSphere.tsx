@@ -247,10 +247,12 @@ export default function BlochSphere() {
             x2={CX}
             y2={CY + poleY}
           />
-          <text className="bloch-label" x={CX} y={CY - poleY - 8} textAnchor="middle">
+          {/* Set off from the outline (R), not from the tilted pole inside it,
+              so neither label touches the circle. */}
+          <text className="bloch-label" x={CX} y={CY - R - 7} textAnchor="middle">
             |0&#x27E9;
           </text>
-          <text className="bloch-label" x={CX} y={CY + poleY + 16} textAnchor="middle">
+          <text className="bloch-label" x={CX} y={CY + R + 15} textAnchor="middle">
             |1&#x27E9;
           </text>
           {/* State vector */}

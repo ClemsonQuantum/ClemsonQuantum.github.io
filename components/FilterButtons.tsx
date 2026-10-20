@@ -24,6 +24,10 @@ export default function FilterButtons({
         <button
           key={option.value}
           type="button"
+          // The whitespace between label and count is dropped from the
+          // computed name ("Fall 20263"), so name the button explicitly,
+          // with exactly the visible words so the name contains the label.
+          aria-label={`${option.text} ${option.count}`}
           aria-pressed={value === option.value}
           className={`sw-filter__btn${value === option.value ? ' is-active' : ''}`}
           onClick={() => onChange(option.value)}

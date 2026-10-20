@@ -14,8 +14,6 @@ export interface NavItem {
 
 export interface NavCategory {
   items: NavItem[];
-  /** More entries exist than the submenu shows: render its "View all" link. */
-  hasMore: boolean;
 }
 
 export interface NavData {
@@ -29,7 +27,6 @@ function category(pages: PageMeta[]): NavCategory {
     items: pages
       .slice(0, EVENTS_IN_DROPDOWN)
       .map(({ title, href, isExternal }) => ({ title, href, isExternal })),
-    hasMore: pages.length > EVENTS_IN_DROPDOWN,
   };
 }
 

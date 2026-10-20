@@ -57,11 +57,14 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   const imageSrc = image ?? (localLink && isImage(localLink) ? localLink : null);
   const mediaLabel =
     type === 'paper' ? 'Paper' : type === 'conference' ? 'Talk' : 'Poster';
+  // `pdf_label` names the PDF on its download button when it isn't the
+  // poster itself (e.g. `pdf_label: paper`); otherwise the button says PDF.
+  const pdfLabel = typeof data.pdf_label === 'string' ? data.pdf_label : 'PDF';
 
   return (
     <article className="sw-detail">
       <header className="sw-detail__header">
-        {type && <span className="sw-type">{capitalize(type)}</span>}
+        {type && <span className="sw-type">{type === 'conference' ? 'Talk' : capitalize(type)}</span>}
         <h1 className="sw-detail__title">{title}</h1>
         {(date || authors.length > 0) && (
           <p className="sw-detail__meta">
@@ -69,7 +72,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
             {date && authors.length > 0 && <span> · </span>}
             {authors.map((a, i) => (
               <span key={i}>
-                {a.name}
+                {a.name.replace(/ /g, '\u00a0')}
                 {a.affiliation ? ` (${a.affiliation})` : ''}
                 {i < authors.length - 1 ? ', ' : ''}
               </span>
@@ -77,7 +80,12 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           </p>
         )}
         {mentors.length > 0 && (
-          <p className="sw-detail__mentors">Mentored by {mentors.join(', ')}</p>
+          <p className="sw-detail__mentors">
+            Mentored by{' '}
+            {new Intl.ListFormat('en', { type: 'conjunction' }).format(
+              mentors.map((m) => m.replace(/ /g, '\u00a0'))
+            )}
+          </p>
         )}
       </header>
 
@@ -87,20 +95,24 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           href={imageSrc}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Open full-size ${mediaLabel.toLowerCase()}`}
+          aria-label={`Open full-size ${mediaLabel.toLowerCase()} (opens in a new tab)`}
         >
           {/* Intrinsic dimensions reserve layout space (both posters are
               4:3); CSS width:100%/height:auto keeps them responsive. */}
           {/* alt="" because the page h1 already carries the title; the link is labelled instead. */}
-          <SiteImage
-            src={imageSrc}
-            alt=""
-            className="sw-media__image"
-            width={1600}
-            height={1200}
-            loading="eager"
-            fetchPriority="high"
-          />
+          {/* The <picture> keeps React from emitting a preload hint for the
+              poster, which link prefetch would apply on the Student Work list. */}
+          <picture>
+            <SiteImage
+              src={imageSrc}
+              alt=""
+              className="sw-media__image"
+              width={1600}
+              height={1200}
+              loading="eager"
+              fetchPriority="high"
+            />
+          </picture>
         </a>
       )}
       {pdfSrc && (
@@ -130,7 +142,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           )}
           {pdfSrc && (
             <a className="sw-action" href={pdfSrc} download>
-              <span aria-hidden="true">↓</span> Download PDF
+              <span aria-hidden="true">↓</span> Download {pdfLabel}
             </a>
           )}
           {externalLink && (
@@ -140,7 +152,15 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View on {hostOf(externalLink)} <span aria-hidden="true">↗</span>
+              {/* ↑ turned 45°: the loaded Source Sans subset has ↑ and ↓ but not ↗. */}
+              View on {hostOf(externalLink)}{' '}
+              <span
+                aria-hidden="true"
+                style={{ display: 'inline-block', transform: 'rotate(45deg)' }}
+              >
+                ↑
+              </span>
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           )}
         </div>
