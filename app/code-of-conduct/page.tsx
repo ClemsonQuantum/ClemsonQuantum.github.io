@@ -22,15 +22,16 @@ export const metadata: Metadata = pageMetadata({
 // there. Read inside the component rather than at module scope so `next dev`
 // picks up edits to the .md on the next request (a module-scope read is
 // cached until page.tsx itself changes). The site is a static export, so in
-// production this still runs once at build time. `{{contactEmail}}` in the
-// markdown is filled from data/site-config.json.
+// production this still runs once at build time. `{{contactEmail}}` and
+// `{{tigerquestUrl}}` in the markdown are filled from data/site-config.json.
 function readMarkdown(): string {
   return fs
     .readFileSync(
       path.join(process.cwd(), 'app', 'code-of-conduct', 'code-of-conduct.md'),
       'utf8',
     )
-    .replaceAll('{{contactEmail}}', siteConfig.contactEmail);
+    .replaceAll('{{contactEmail}}', siteConfig.contactEmail)
+    .replaceAll('{{tigerquestUrl}}', siteConfig.tigerquestUrl);
 }
 
 // External links open in a new tab, like every other external link on the

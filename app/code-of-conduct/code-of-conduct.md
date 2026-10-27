@@ -2,6 +2,8 @@
 
 This Code of Conduct covers everything Clemson Quantum Club does: meetings, workshops, hackathons, Qiskit Fall Fest, our Discord and GroupMe, and anywhere someone is representing the club. It applies to members, participants, organizers, mentors, judges, speakers, and sponsors alike.
 
+**Definitions.** “Organizers” means the club Officers and, at a club event, the Director of the committee running that event and the committee members the Director designates.
+
 ## Our Pledge
 
 We pledge to make our community welcoming, safe, and equitable for all.
@@ -51,10 +53,12 @@ When an incident does occur, it is important to report it promptly. To report a 
 
 Organizers will investigate all reports of code of conduct violations, reviewing messages, logs, and recordings, or interviewing witnesses and other participants. Organizers will keep investigation and enforcement actions as transparent as possible while prioritizing safety and confidentiality. In order to honor these values, enforcement actions are carried out in private with the involved parties, but communicating to the whole community may be part of a mutually agreed‑upon resolution.
 
+Nothing in this Code of Conduct limits anyone’s right to report directly to Clemson University. Where a report involves discrimination, harassment, retaliation, or sexual misconduct, organizers will direct the reporting person to Clemson’s reporting resources (Division of Civil and Individual Rights / Title IX) and notify the club’s Faculty Advisor.
+
 
 ## Addressing and Repairing Harm
 
-**Organizers will review all reports and respond within 24 hours during an event and within 48 hours at any other time. Violations are handled with the four steps below, at the discretion of the organizing team.**
+**Organizers will review all reports and respond within 24 hours during an event and within 48 hours at any other time. Violations are handled with the four steps below, at the discretion of the organizers and subject to the rules for club members below.**
 
 1) **Warning**
    1) Event: A violation involving a single incident or series of incidents.
@@ -73,12 +77,20 @@ Organizers will investigate all reports of code of conduct violations, reviewing
    2) Consequence: Access to all community spaces, tools, and communication channels is removed. In general, permanent bans should be rarely used, should have strong reasoning behind them, and should only be resorted to if working through other remedies has failed to change the behavior.
    3) Repair: There is no possible repair in cases of this severity.
 
-This enforcement ladder is intended as a guideline. It does not limit the ability of organizers to use their discretion and judgment, in keeping with the best interests of our community.
+**Club members.** For club members, these steps are applied only through Article IX of the club Constitution, including written notice, a chance to respond, a decision by the Officers, and appeal. A Warning is a written reprimand; Temporarily Limited Activities and Temporary Suspension are temporary suspensions; a Permanent Ban is removal from the club.
+
+**Non-members.** For participants, mentors, judges, speakers, and sponsors who are not club members, organizers may apply any step directly and will inform the Faculty Advisor of any suspension or ban.
+
+**Immediate safety.** Organizers may remove anyone from an event or online space in progress when needed to protect others’ safety. Any further action against a club member then follows Article IX.
+
+**Discretion.** This ladder is a guideline. Organizers may use their judgment in the community’s best interest, within the limits above.
 
 
 ## Scope
 
 This Code of Conduct applies within all Clemson Quantum Club spaces, in person and online, and also applies when an individual is officially representing the club in public or other spaces. Examples of representing the club include using an official email address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
+
+This Code of Conduct is adopted under Article IX of the Clemson Quantum Club Constitution. The full governing documents are available on [TigerQuest]({{tigerquestUrl}}).
 
 
 ## Attribution
