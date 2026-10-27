@@ -154,6 +154,20 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="about-page__section about-page__section--split">
+        <div>
+          <h2>How the club is run</h2>
+          <p>
+            The Constitution, Bylaws, and Code of Conduct set out how the club
+            works.
+          </p>
+        </div>
+        <div className="about-page__link-panel">
+          <Link href="/governing-documents/">Governing Documents</Link>
+          <Link href="/code-of-conduct/">Code of Conduct</Link>
+        </div>
+      </section>
+
       <PastBoardMembers members={pastBoardCards} />
     </article>
   );

@@ -89,6 +89,19 @@ Controls meeting info, social links, and contact details used across the site (G
 
 ---
 
+## governing-documents.json
+
+Controls the **Governing Documents** page (`/governing-documents/`).
+
+| Field | Description |
+|-------|-------------|
+| `lastUpdated` | Date shown as “Last updated”, `YYYY-MM-DD`. Change it whenever a document changes |
+| `documents` | One entry per row: `title`, `description`, and `href` |
+
+**PDFs:** put each file in `public/documents/` with exactly the name in its `href` (spaces included, e.g. `Clemson Quantum Club Constitution.pdf`). The link is URL-encoded automatically. Until a PDF exists, its row shows “Coming soon” instead of “View PDF”. An `href` that isn’t a `.pdf` (like `/code-of-conduct/`) links to that page.
+
+---
+
 ## meeting-schedule.json
 
 Controls the semester meeting list on the Get Involved page.

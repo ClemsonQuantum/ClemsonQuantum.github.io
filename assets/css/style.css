@@ -2546,6 +2546,9 @@ footer {
 .gi-channels-intro {
   color: var(--color-text-secondary);
 }
+.about-page__section .gi-channels-intro + .gi-channels-intro {
+  margin-top: 0.75rem;
+}
 .gi-channels {
   display: flex;
   flex-wrap: wrap;
@@ -2871,6 +2874,80 @@ footer {
 .about-page__link-panel a:hover::after,
 .about-page__link-panel a:focus-visible::after {
   transform: translateX(4px);
+}
+
+/* Governing Documents: ruled rows like the link panel above, each with a
+   description and a View PDF link (or "Coming soon" until the PDF exists). */
+.gov-docs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.gov-docs__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-md);
+  padding: 1.1rem 0;
+}
+
+.gov-docs__item + .gov-docs__item {
+  border-top: 1px solid var(--color-border);
+}
+
+.gov-docs__item:first-child {
+  padding-top: 0;
+}
+
+.about-page__section .gov-docs__title {
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+}
+
+.about-page__section .gov-docs__desc {
+  margin-top: 0.3rem;
+}
+
+.gov-docs__link,
+.gov-docs__soon {
+  flex-shrink: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.gov-docs__link {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.gov-docs__link::after {
+  content: '\2192';
+  content: '\2192' / '';
+  margin-left: 0.4em;
+  color: var(--color-accent);
+}
+
+.gov-docs__link:hover,
+.gov-docs__link:focus-visible {
+  color: var(--color-link);
+}
+
+.gov-docs__soon {
+  color: var(--color-text-secondary);
+}
+
+.about-page__section .gov-docs__footer {
+  margin-top: var(--space-lg);
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 639px) {
+  .gov-docs__item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
 }
 
 @media (max-width: 899px) {
