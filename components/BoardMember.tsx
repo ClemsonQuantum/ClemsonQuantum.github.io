@@ -27,14 +27,20 @@ export default function BoardMember({
       {/* Source photos vary in size but render as a fixed 120px square
           (object-fit: cover), so the square keeps layout stable pre-CSS.
           Decorative: the h3 right next to it already announces the name, so
-          a non-empty alt would read it twice. */}
-      <SiteImage
-        className="board-member__avatar"
-        src={imageSrc}
-        alt=""
-        width={120}
-        height={120}
-      />
+          a non-empty alt would read it twice. An empty image path (headshot
+          pending) keeps the circle without a broken <img>. */}
+      {imageSrc ? (
+        <SiteImage
+          className="board-member__avatar"
+          src={imageSrc}
+          alt=""
+          width={120}
+          height={120}
+        />
+      ) : (
+        // Headshot pending: an empty circle in the avatar's background color.
+        <span className="board-member__avatar" aria-hidden="true" />
+      )}
       <div className="board-member__body">
         <div className="board-member__head">
           <h3 className="board-member__name">

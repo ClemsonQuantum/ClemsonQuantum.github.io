@@ -19,7 +19,7 @@ Each person is an object with these fields:
 | `start` | Yes | Month they started this role, `YYYY-MM` (e.g. `2026-10`). Not shown on the site |
 | `profile` | Yes | Reference notes on the person (role history, background). Not shown on the site, but this repo is public, so keep it to public facts |
 | `description` | Yes | Short bio — major, research area, etc. |
-| `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg` |
+| `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg`. Leave it `""` while a headshot is pending: the card shows an empty circle in its place |
 | `email` | No | Clemson email address |
 | `linkedin` | No | Full LinkedIn URL |
 | `github` | No | Full GitHub URL |

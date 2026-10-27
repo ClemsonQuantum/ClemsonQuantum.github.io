@@ -1,7 +1,7 @@
 [
   {
     "name": "Valentine Mohaugen",
-    "role": "Co-Founder & President",
+    "role": "President & Co-Founder",
     "start": "2026-10",
     "profile": "Co-founded the club in Aug 2024 and served as Vice President from Aug 2024 to Oct 2026, signing the original Constitution (Apr 29, 2025) and Revision 1 (Oct 30, 2025). President since Oct 2026, taking over from Nathan Jones; the presidency carries the Quantathon Committee directorship (Bylaws Art. III §3). SC Quantathon: Technology Lead on the v3 committee (Aug 2025 – Sep 2026), Quantathon Director for v4 since Oct 2026.",
     "description": "Civil Engineering Ph.D. Student and Clemson Alumnus\nResearch in Quantum Machine Learning, Cybersecurity, and Cyber-Physical Systems",
@@ -10,6 +10,17 @@
     "linkedin": "https://www.linkedin.com/in/valmohaugen/",
     "github": "https://github.com/Valmohaugen/",
     "website": "https://valmohaugen.com"
+  },
+  {
+    "name": "Landon Holcomb",
+    "role": "Vice President",
+    "start": "2026-10",
+    "profile": "Vice President since Oct 2026, succeeding Valentine Mohaugen (VP Aug 2024 – Oct 2026), who became President. Computer Science Ph.D. student at Clemson after an MS in Physics at Clemson and a BS in Physics at Texas A&M. Research (from landonholcomb.com): quantum machine learning, variational quantum algorithms and barren plateaus, and quantum natural language processing; earlier exoplanet-atmosphere instrumentation work (ETSI). Physics and astronomy TA at Clemson 2023–2025.",
+    "description": "Computer Science Ph.D. Student and Clemson Alumnus\nResearch in Quantum Machine Learning, Variational Quantum Algorithms, and Quantum Natural Language Processing",
+    "image": "/images/landon-holcomb.jpg",
+    "email": "lholco2@clemson.edu",
+    "linkedin": "https://www.linkedin.com/in/landonholcomb/",
+    "website": "https://landonholcomb.com"
   },
   {
     "name": "Jack Layton",
@@ -23,8 +34,18 @@
     "github": "https://github.com/cosmicdrifter423"
   },
   {
+    "name": "Daniela Solano",
+    "role": "Secretary",
+    "start": "2026-10",
+    "profile": "Secretary since Oct 2026, the role last held by Ashton McEntarffer (Secretary + Interim Treasurer Oct 2025 – May 2026). Computer Science freshman, no research yet. Headshot still to come.",
+    "description": "Computer Science Freshman\nResearch areas TBD",
+    "image": "",
+    "email": "dsolano@clemson.edu",
+    "linkedin": "https://www.linkedin.com/in/daniela-solano-641977431/"
+  },
+  {
     "name": "Nathan Jones",
-    "role": "Student Advisor",
+    "role": "Student Advisor & Co-Founder",
     "start": "2026-10",
     "profile": "Student Advisor since Oct 2026, after co-founding the club and serving as President from Aug 2024 to Oct 2026 (that role stays in past-board-members.json). Also Student Advisor to the SC Quantathon v4 committee since Oct 2026. When he graduates and stops being Student Advisor, add a second past-board entry for this role (start 2026-10) and remove this one.",
     "description": "Computer Science Ph.D. Candidate and Clemson Alumnus\nResearch in High-Performance Computing, Quantum Machine Learning, and Variational Quantum Algorithms",
