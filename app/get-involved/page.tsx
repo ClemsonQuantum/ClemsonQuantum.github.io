@@ -104,6 +104,15 @@ export default function GetInvolvedPage() {
       <section className="about-page__section">
         <h2>Ways to join</h2>
         <p className="gi-channels-intro">
+          To become an official voting member,{' '}
+          <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener noreferrer">
+            join Clemson Quantum Club on TigerQuest
+            <span className="sr-only"> (opens in a new tab)</span>
+          </a>
+          . Anyone can come to meetings, but only members on our TigerQuest
+          roster can vote in club elections and on amendments.
+        </p>
+        <p className="gi-channels-intro">
           Most club conversation happens on Discord, and announcements go out
           on GroupMe.
         </p>

@@ -90,7 +90,7 @@ Nothing in this Code of Conduct limits anyone’s right to report directly to Cl
 
 This Code of Conduct applies within all Clemson Quantum Club spaces, in person and online, and also applies when an individual is officially representing the club in public or other spaces. Examples of representing the club include using an official email address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
 
-This Code of Conduct is adopted under Article IX of the Clemson Quantum Club Constitution. The full governing documents are available on [TigerQuest]({{tigerquestUrl}}).
+This Code of Conduct is adopted under Article IX of the Clemson Quantum Club Constitution. The full governing documents are available on our [Governing Documents page](/governing-documents/) and on [TigerQuest]({{tigerquestUrl}}).
 
 
 ## Attribution
