@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { STAGGER_MS } from '@/lib/animation';
+import { STAGGER_MS, prefersReducedMotion } from '@/lib/animation';
 
 // Below-the-fold elements matching these component classes get a gentle
 // fade-and-rise entrance as they scroll into view. Only component classes —
@@ -54,7 +54,7 @@ export default function ScrollReveal() {
   useEffect(() => {
     // The CSS is additionally wrapped in prefers-reduced-motion: no-preference;
     // bailing here means reduced-motion users never even get elements hidden.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (prefersReducedMotion()) return;
     // Browsers with scroll-driven animations get the scroll-linked motion in
     // style.css ("Scroll motion") instead; this one-shot entrance is the
     // fallback for the rest, so the two never animate the same element.
@@ -70,6 +70,14 @@ export default function ScrollReveal() {
             `${Math.min(i * STAGGER_MS, STAGGER_CAP_MS)}ms`
           );
           el.classList.add('reveal-in');
+          // Once the entrance has played, hand the element its own
+          // transitions back (card hover lift, link color).
+          const settle = (event: TransitionEvent) => {
+            if (event.target !== el || event.propertyName !== 'opacity') return;
+            el.removeEventListener('transitionend', settle);
+            el.classList.remove('reveal-init', 'reveal-in');
+          };
+          el.addEventListener('transitionend', settle);
           observer.unobserve(el);
         });
       },

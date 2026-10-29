@@ -2,7 +2,7 @@
 
 Two weeks, Monday, November 9 to Friday, November 20, 2026: six sessions on Mondays, Wednesdays, and Fridays, matching the event page (`content/events/workshops-and-seminars/qiskit-fall-fest-2026.md`). Each session is a seminar (a guest speaker or the organizers) followed by a guided Qiskit notebook lab, and each releases an individual challenge built on that day's lab. Labs and challenges run on qBraid, with jobs on IBM Quantum processors. Progression: foundations → hardware and noise → algorithms → cryptography → HPC and QML → error correction.
 
-This folder holds the **sources** for each session (notebook, Marp slide deck, challenge notebook). There are no separate lecture notes: the notes are the markdown cells of each notebook. Built artifacts that the website serves go to `public/files/qff-2026/day-N/` and are linked from the session and challenge rows on `/events/workshops-and-seminars/qiskit-fall-fest-2026/`: each plain-text chip becomes a link once its file exists (see "Sky, cryostat, and hummingbirds" in `content/README.md`).
+This folder holds the **sources** for each session (notebook, Marp slide deck, challenge notebook). There are no separate lecture notes: the notes are the markdown cells of each notebook. Built artifacts that the website serves go to `public/files/qff-2026/day-N/` and are linked from the session and challenge rows on `/events/workshops-and-seminars/qiskit-fall-fest-2026/`: each plain-text chip is swapped for a link in the page's markdown once its file exists (see "Sky, cryostat, and hummingbirds" in `content/README.md`).
 
 Status: **scaffold only.** Nothing in `day-*/` is written yet; each day's `README.md` is the build sheet for that session. The options analysis is kept outside the repo.
 

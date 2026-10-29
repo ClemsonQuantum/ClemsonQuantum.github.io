@@ -10,7 +10,7 @@ import meetingSchedule from '@/data/meeting-schedule.json';
 export const metadata: Metadata = pageMetadata({
   title: 'Meetings',
   description:
-    'Club fairs and tabling events, plus the biweekly meeting schedule.',
+    'Club fairs and tabling events from Clemson Quantum Club, plus the biweekly meeting schedule.',
   path: '/events/meetings/',
 });
 
@@ -25,8 +25,8 @@ export default function MeetingsPage() {
       <p className="lr-intro">
         Any student is welcome at club meetings ({siteConfig.meetingDay.replace(/^Biweekly/, 'biweekly')} at{' '}
         {siteConfig.meetingTime}, {siteConfig.location}). See the{' '}
-        <Link href="/get-involved/">{meetingSchedule.semester.replace(/ /g, '\u00a0')} schedule</Link>.
-        Fairs and other one&#x2011;off events are below.
+        <Link href="/get-involved/#gi-schedule-heading">{meetingSchedule.semester.replace(/ /g, '\u00a0')} schedule</Link>.
+        Fairs and other one&#x2011;off events&nbsp;are&nbsp;below.
       </p>
       {/* Card titles are h3s; this hidden h2 keeps the heading
           hierarchy contiguous for assistive tech. */}

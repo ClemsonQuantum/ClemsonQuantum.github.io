@@ -25,6 +25,19 @@ body:has(.qff-page) {
   --font-serif: var(--font-plex-sans);
 }
 
+/* The Plex latin subset has no arrows, so the nav's "View all …" arrows fell
+   back to Arial. The site's arrows file joins the Plex family here the way it
+   joins Source Sans 3 in style.css; browsers fetch it only when an arrow
+   shows. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 100 700; /* next/font's Plex range: Chrome joins only faces whose ranges match */
+  font-display: swap;
+  src: url('/fonts/source-sans-3-arrows.woff') format('woff');
+  unicode-range: U+2190-2199, U+27E8-27E9;
+}
+
 .qff-page {
   --qff-ink: #161616;
   --qff-slate: #21272a;
@@ -38,15 +51,15 @@ body:has(.qff-page) {
   --qff-label-alt: #9f1853;
   --qff-grad: linear-gradient(90deg, var(--qff-pink), var(--qff-lav));
   --qff-mono: var(--font-plex-mono, ui-monospace, monospace);
-  --qff-rule-grad: linear-gradient(90deg, #0f62fe, #be95ff, #ff7eb6);
-  --qff-band-bg: #21272a;
+  --qff-rule-grad: linear-gradient(90deg, var(--qff-blue), var(--qff-lav), var(--qff-pink));
+  --qff-band-bg: var(--qff-slate);
   --qff-band-ink: #f4f4f4;
   --qff-band-muted: #c6c6c6;
-  --qff-tile-sky: #dae5fc;
+  --qff-tile-sky: var(--qff-sky);
   --qff-tile-gray: #e0e0e0;
   --qff-tile-pink: var(--qff-pink);
   --qff-tile-cloud: rgba(255, 255, 255, 0.92);
-  --qff-btn-bg: #161616;
+  --qff-btn-bg: var(--qff-ink);
   --qff-btn-ink: #ffffff;
   --qff-cloud-rgb: 255, 255, 255;
   --qff-cloud-alpha: 0.55;
@@ -213,13 +226,21 @@ body:has(.qff-page) {
   .qff-page-birds {
     display: none;
   }
+
+  /* The gradient phrases draw their letters only through the background,
+     which printing usually drops; print them in the sentence's own ink. */
+  .qff-gradient-text {
+    color: inherit;
+  }
 }
 
-/* Forced colors (high contrast): canvas pixels ignore the user's palette, so
-   the decorative canvases step aside. */
+/* Forced colors (high contrast): canvas pixels and the roaming birds' own
+   fills ignore the user's palette, so those decorative layers step aside
+   (print hides the page clouds and birds too). */
 @media (forced-colors: active) {
   .cloud-sky,
-  .qff-page-clouds-canvas {
+  .qff-page-clouds-canvas,
+  .qff-page-birds {
     display: none;
   }
 
@@ -296,7 +317,8 @@ body:has(.qff-page) {
   }
 }
 
-/* Tagline link: keep the gradient sentence clean; underline only on hover. */
+/* Tagline link: body ink with a faint violet underline, so the gradient
+   sentence stays clean; link ink on hover. */
 .qff-page .qff-tagline a {
   color: inherit;
   text-decoration: underline;
@@ -305,6 +327,20 @@ body:has(.qff-page) {
 }
 
 .qff-page .qff-tagline a:hover {
+  color: var(--color-link);
+}
+
+/* Share in the hero row: a text button beside the three buttons, in the
+   tagline link's ink and underline (ShareButton.tsx). */
+.qff-page .qff-cta-row .qff-share {
+  min-height: 44px;
+  padding: 0 0.5rem;
+  color: inherit;
+  font-weight: 400;
+  text-decoration-color: rgba(var(--color-violet-rgb), 0.45);
+}
+
+.qff-page .qff-cta-row .qff-share:hover {
   color: var(--color-link);
 }
 
@@ -335,7 +371,7 @@ body:has(.qff-page) {
 a.qff-btn:hover {
   background: var(--qff-indigo);
   border-color: var(--qff-indigo);
-  color: #fff;
+  color: var(--qff-btn-ink);
 }
 
 .qff-btn:focus-visible {
@@ -355,6 +391,17 @@ a.qff-btn:hover {
   .qff-hero .qff-cta-row .qff-btn {
     padding-right: 1.1rem;
     padding-left: 1.1rem;
+  }
+}
+
+/* With Share as a fourth item, the row is too narrow for everything until
+   1070px, and Share was left alone on a second line. A capped row splits
+   evenly instead: Register and the sessions, then the challenges and Share.
+   It runs to 1079px, so one line has about 2% to spare for Safari's slightly
+   wider text. In em, so the split holds at larger text sizes. */
+@media (min-width: 900px) and (max-width: 1079px) {
+  .qff-hero .qff-cta-row {
+    max-width: 22em;
   }
 }
 
@@ -586,7 +633,7 @@ a.qff-btn:hover {
 /* .qff-hosted is a wrapping flex row of [label, logos]. Below about 842px it
    wraps onto two lines (the label, then the logos); each line is centered, so
    neither sits alone at the left. */
-@media (max-width: 849px) {
+@media (max-width: 841px) {
   .qff-hosted {
     justify-content: center;
   }
@@ -625,6 +672,17 @@ a.qff-btn:hover {
     order: 4;
     flex: 0 0 100%;
     justify-content: center;
+  }
+
+  /* Those two links span the line, so the focus ring goes on the mark
+     itself, hugging it like the club logo and badge rings. */
+  :is(.qff-hosted-logo, .qff-hosted-sponsor):focus-visible {
+    outline: none;
+  }
+
+  :is(.qff-hosted-logo, .qff-hosted-sponsor):focus-visible img {
+    outline: 2px solid var(--color-link);
+    outline-offset: 2px;
   }
 
   .qff-hosted-label {
@@ -1165,19 +1223,23 @@ a.qff-btn:hover {
   line-height: 1.7;
 }
 
-/* Ghost button re-inked for the band (light ink on slate; dark ink on the
-   lavender dark-mode band). */
 .qff-page .qff-band .qff-band-cta {
   margin-top: 1.6rem;
 }
 
-/* The band's long button wraps on small phones; keep its lines apart. */
+/* The band's long button wraps on small phones; keep its lines apart.
+   Full width with a centered label, like the hero buttons on phones. */
 @media (max-width: 639px) {
   .qff-page .qff-band .qff-band-cta .qff-btn {
+    justify-content: center;
+    width: 100%;
     line-height: 1.25;
+    text-align: center;
   }
 }
 
+/* Ghost button re-inked for the band (light ink on slate; dark ink on the
+   lavender dark-mode band). */
 .qff-page .qff-band .qff-btn--ghost {
   border-color: rgba(244, 244, 244, 0.55);
   color: var(--qff-band-ink);
@@ -1200,10 +1262,49 @@ a.qff-btn:hover {
   border-top: 1px solid var(--qff-line);
 }
 
+/* Session, challenge and FAQ rows open and close with a short, crisp
+   height animation (quicker than the hosted pages' FAQ in style.css). Only
+   where the browser can animate to auto and the reader allows motion, and
+   on screens only, so closed rows still print their content. The clip
+   margin keeps focus rings at the content's edge from being cut. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  @supports (interpolate-size: allow-keywords) {
+    .qff-page :is(.qff-day, .qff-faq-item) {
+      interpolate-size: allow-keywords;
+    }
+
+    .qff-page :is(.qff-day, .qff-faq-item)::details-content {
+      block-size: 0;
+      overflow: clip;
+      overflow-clip-margin: 4px;
+      transition:
+        block-size 0.18s cubic-bezier(0.2, 0, 0.38, 0.9),
+        content-visibility 0.18s allow-discrete;
+    }
+
+    .qff-page :is(.qff-day, .qff-faq-item)[open]::details-content {
+      block-size: auto;
+    }
+  }
+}
+
 .qff-day {
   border-bottom: 1px solid var(--qff-line);
   border-left: 2px solid transparent;
   transition: border-color 0.2s, padding-left 0.2s var(--ease-out-soft);
+}
+
+/* Browsers without scroll timelines (Firefox) get ScrollReveal's .reveal-in
+   instead, whose fade-up the .qff-day transition above overrides (this file
+   loads after style.css): restate it beside the open/close transition. */
+@media (prefers-reduced-motion: no-preference) {
+  .qff-day.reveal-in {
+    transition:
+      opacity var(--reveal-duration) var(--ease-out-soft) var(--reveal-delay, 0s),
+      transform var(--reveal-duration) var(--ease-out-soft) var(--reveal-delay, 0s),
+      border-color 0.2s,
+      padding-left 0.2s var(--ease-out-soft);
+  }
 }
 
 .qff-day[open] {
@@ -1335,6 +1436,14 @@ span.qff-day-resource {
   color: var(--color-text-secondary);
 }
 
+/* Narrowest phones: Notebook, Slides and Challenge stay on one line (274px of
+   chips in a 267px row at 320px). */
+@media (max-width: 339px) {
+  .qff-day-resources .qff-day-resource {
+    padding-inline: 0.75rem;
+  }
+}
+
 /* Live leaderboards (components/Leaderboard.tsx): plain hairline tables in
    the deck's mono labels, the score right-aligned in tabular figures. The
    <p> pieces need the section prefix to outrank `.qff-page .qff-section p`. */
@@ -1397,7 +1506,8 @@ span.qff-day-resource {
   font-variant-numeric: tabular-nums;
 }
 
-/* The overall top 5 (Qiskit merch): rank in the alternate pink. */
+/* Rows within a board's data-highlight (optional; no 2026 board sets it,
+   see content/README.md): rank in the alternate pink. */
 .qff-leaderboard__top td:first-child {
   color: var(--qff-label-alt);
   font-weight: 600;
@@ -1486,7 +1596,7 @@ span.qff-day-resource {
   content: '+';
   content: '+' / '';
   color: var(--qff-blue);
-  font-size: 1.3rem;
+  font-size: 1.45rem; /* the Sessions rows' toggle */
   font-weight: 600;
   line-height: 1;
 }
@@ -1565,6 +1675,12 @@ span.qff-day-resource {
     grid-template-columns: 1fr;
   }
 
+  /* Stacked hero: the tagline takes the page's 80ch prose cap, so it
+     spans the row like the tile strip under it. */
+  .qff-page .qff-tagline {
+    max-width: 80ch;
+  }
+
   .qff-tiles {
     max-width: 380px;
     margin-left: 0;
@@ -1617,10 +1733,20 @@ span.qff-day-resource {
     justify-content: center;
   }
 
-  /* "November 9–20, 2026" (about 168px, kept whole) fits beside the
-     labels at 320px. */
+  /* "November 9–20, 2026" (10.5rem, kept whole) fits beside the labels at
+     320px; with enlarged text a value drops under its label instead. */
   .qff-ledger-row {
-    grid-template-columns: 6.25rem minmax(0, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+  }
+
+  .qff-ledger dt {
+    flex: 0 0 6.25rem;
+  }
+
+  .qff-ledger dd {
+    flex: 1 1 10.5rem;
   }
 
   .qff-day-summary {
@@ -1686,7 +1812,6 @@ span.qff-day-resource {
   a.qff-btn:hover {
     background: #ffa1c9;
     border-color: #ffa1c9;
-    color: #0b1020;
   }
 
   .qff-btn--ghost {
@@ -1735,6 +1860,46 @@ span.qff-day-resource {
   }
 }
 
+/* The hero's gradient phrase ("a decade of quantum computing on the cloud")
+   moves with the scroll like the band's: the same mirrored gradient at twice
+   the width flows left to right as the page scrolls down through the first
+   screen (one full gradient width by 100vh), starting from the usual A → B
+   look, in the hero's own colors (Magenta 70 → Purple 70 by day, the kit's
+   pink → lavender at night). A scroll-driven animation, like the hairlines,
+   so it needs no script; browsers without one, and reduced motion, keep the
+   A → B look. */
+.qff-page .qff-hero .qff-gradient-text {
+  background-image: linear-gradient(90deg, #9f1853, #6929c4, #9f1853);
+  background-size: 200% 100%;
+  background-position: 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .qff-page .qff-hero .qff-gradient-text {
+    background-image: linear-gradient(90deg, var(--qff-pink), var(--qff-lav), var(--qff-pink));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .qff-page .qff-hero .qff-gradient-text {
+      animation: qff-gradient-flow linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+
+@keyframes qff-gradient-flow {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: -100% 0;
+  }
+}
+
 /* Organizers at 50em (800px) and below: a tighter column gap (the phone rule
    below subtracts half of it). .qff-team above keeps them centered at
    every width. */
@@ -1757,5 +1922,19 @@ span.qff-day-resource {
 @media (max-width: 359px) {
   .qff-team-name {
     font-size: 0.875rem;
+  }
+}
+
+/* More contrast (the system setting): the Fall Fest hairlines, which use
+   their own token, get as strong as the rest of the site's borders. */
+@media (prefers-contrast: more) {
+  .qff-page {
+    --qff-line: rgba(22, 22, 22, 0.4);
+  }
+}
+
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  .qff-page {
+    --qff-line: rgba(244, 244, 244, 0.4);
   }
 }

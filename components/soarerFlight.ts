@@ -58,7 +58,7 @@ export function makeSoarer(sky: SoarerSky, wait: number, species = pickSpecies()
   return s;
 }
 
-export function launchSoarer(s: Soarer, sky: SoarerSky) {
+function launchSoarer(s: Soarer, sky: SoarerSky) {
   if (s.flown) s.species = pickSpecies();
   s.flown = true;
   s.dir = Math.random() < 0.5 ? 1 : -1;

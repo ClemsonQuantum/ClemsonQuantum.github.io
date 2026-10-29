@@ -22,8 +22,9 @@ interface Options {
   imageSize?: { width: number; height: number };
 }
 
-// Fallback body for a slug with no markdown file. Only reachable in `next dev`:
-// the static export generates exactly the slugs from generateStaticParams.
+// Fallback body for a slug with no markdown file, kept only as a type guard:
+// generateStaticParams lists exactly the slugs that have files, and with
+// output: 'export' even `next dev` throws for any other slug before rendering.
 const notFound = (
   <div className="page-content">
     <h1>Not Found</h1>
@@ -115,7 +116,7 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
   async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
     const page = getPageBySlug(contentSubdir, slug);
-    if (!page || !page.data) return { title: String(slug) };
+    if (!page.data) return { title: String(slug) };
     const title = String(page.data.title ?? slug);
     const description =
       (typeof page.data.summary === 'string' && page.data.summary) ||
@@ -133,7 +134,7 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
   async function Page({ params }: Props) {
     const { slug } = await params;
     const page = getPageBySlug(contentSubdir, slug);
-    if (!page || !page.data) return notFound;
+    if (!page.data) return notFound;
     const { content } = page;
     const eventJsonLd = buildEventJsonLd(
       page.data,

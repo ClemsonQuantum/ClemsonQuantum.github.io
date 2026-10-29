@@ -22,7 +22,6 @@ export default function Footer() {
           <Link href="/events/">Events</Link>
           <Link href="/resources/">Resources</Link>
           <Link href="/get-involved/">Get Involved</Link>
-          <Link href="/code-of-conduct/">Code of Conduct</Link>
           <Link href="/governing-documents/">Governing Documents</Link>
         </nav>
 

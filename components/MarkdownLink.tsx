@@ -3,7 +3,7 @@ import type { ModalFormField } from './ModalFormButton';
 import { LazyModalFormButton } from './lazyWidgets';
 import { markdownProps } from './markdownProps';
 
-export const PARTICIPANT_FIELDS: ModalFormField[] = [
+const PARTICIPANT_FIELDS: ModalFormField[] = [
   { name: 'name', label: 'Name', type: 'text', required: true },
   { name: 'email', label: 'Email', type: 'email', required: true },
 ];

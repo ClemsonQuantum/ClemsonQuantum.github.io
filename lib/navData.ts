@@ -2,7 +2,7 @@ import { getSortedPages } from './content';
 import type { PageMeta } from './types';
 
 // How many entries each Events submenu lists before its "View all" link.
-export const EVENTS_IN_DROPDOWN = 3;
+const EVENTS_IN_DROPDOWN = 3;
 
 // Only what the header renders: this rides in every page's RSC payload, so
 // full PageMeta records (with excerpts) would add kilobytes to each page.
@@ -12,7 +12,7 @@ export interface NavItem {
   isExternal: boolean;
 }
 
-export interface NavCategory {
+interface NavCategory {
   items: NavItem[];
 }
 

@@ -20,7 +20,7 @@ export default function ClubLogo({
   large?: boolean;
 }) {
   const light = large
-    ? { src: '/images/logo-light.png', width: 258, height: 176 }
+    ? { src: '/images/logo-light.png', width: 212, height: 176 }
     : { src: '/images/logo-light.webp', width: 110, height: 88 };
   const dark = large
     ? { src: '/images/logo-dark.png', width: 208, height: 176 }

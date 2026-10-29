@@ -42,8 +42,8 @@ export default function HomePage() {
         <h1 className="home-hero__title">Clemson Quantum Club</h1>
         <ConstellationDivider />
         {/* The two paragraphs are the same length (about 415 characters
-            each), so on desktop (1104px and wider, where the columns stop
-            growing) both run seven lines and end together. Keep them even
+            each), so on desktop (1100px and wider; the columns stop growing
+            at 1120px) both run seven lines and end together. Keep them even
             when editing either one. */}
         <div className="home-hero__intro">
           <p>
@@ -58,11 +58,11 @@ export default function HomePage() {
           {/* &nbsp; and the word joiner (&#x2060;) keep the names and the
               hackathon's dates on one line. */}
           <p>
-            Each fall the club runs seminars and workshops on campus, including
-            Qiskit&nbsp;Fall&nbsp;Fest with IBM&nbsp;Quantum, and hosts a free
-            student quantum hackathon, open to every major and skill level. The
-            next one, SC&nbsp;Quantathon&nbsp;v4, is October&nbsp;22–&#x2060;24,&nbsp;2027. Teams
-            spend a full weekend working on challenges written by companies and
+            Each fall the club hosts a free student quantum hackathon, open to
+            every major and skill level, and runs seminars and workshops on
+            campus, including Qiskit&nbsp;Fall&nbsp;Fest with IBM&nbsp;Quantum. The
+            next hackathon, SC&nbsp;Quantathon&nbsp;v4, is October&nbsp;22–&#x2060;24,&nbsp;2027.
+            Teams spend a full weekend working on challenges written by companies and
             national labs, learn new quantum tools, and meet professionals from
             industry and research along the way.
           </p>
@@ -71,8 +71,8 @@ export default function HomePage() {
 
       {/* Featured-event band. Which event it shows, and the extra facts beside
           its dates, are set by FEATURED_EVENT in lib/featured.ts; the title,
-          dates, image (16:9, 1200×675), and Register link come from that
-          event's frontmatter. It disappears on its own once the event ends. */}
+          dates, image (16:9, 1200×675, with an optional 4:3 phone crop), and
+          Register link come from that event's frontmatter. It disappears on its own once the event ends. */}
       {featured && (
         <section className="home-featured" aria-labelledby="featured-event">
           <div className="home-featured__inner">
@@ -82,7 +82,11 @@ export default function HomePage() {
                 // No prefetch, as in the Header: prefetching the event page would
                 // preload its stylesheet and images on the homepage.
                 prefetch={false}
-                className="home-featured__art"
+                className={
+                  featured.imageMobile
+                    ? 'home-featured__art home-featured__art--phone'
+                    : 'home-featured__art'
+                }
                 aria-label={`${featured.title} event page`}
               >
                 {/* Above-the-fold LCP candidate: override SiteImage's lazy default.
@@ -90,9 +94,16 @@ export default function HomePage() {
                     it, which link prefetch would apply on every page that
                     links home. */}
                 <picture>
+                  {/* Below 768px the band is one column and the art spans the
+                      phone's width, so the 4:3 crop shows the badge larger. */}
+                  {featured.imageMobile && (
+                    <source media="(max-width: 767px)" srcSet={featured.imageMobile} />
+                  )}
                   <SiteImage
                     src={featured.image}
-                    alt={`${featured.title}, ${featured.dateText}`}
+                    // Decorative: the link's aria-label names it, and the
+                    // dates are the first fact beside it.
+                    alt=""
                     className="home-featured__image"
                     width={1200}
                     height={675}
@@ -174,6 +185,9 @@ export default function HomePage() {
               item={item}
               kind="event"
               metaLabel={item.metaLabel}
+              // The band's image is already loaded, so the card reuses it,
+              // except on phones when the band shows its phone crop instead.
+              fullImage={!!featured && !featured.imageMobile && item.href === featured.href}
             />
           ))}
         </div>

@@ -30,7 +30,7 @@ export default function EventsPage() {
     <div className="archive-page">
       <ArchiveHeader title="Events" />
 
-      {SECTIONS.map(({ dir, title, viewAll }) => (
+      {SECTIONS.map(({ dir, title, viewAll }, sectionIndex) => (
         <section key={dir} className="archive-section">
           <div className="home-section__header">
             <h2 className="home-section__title">{title}</h2>
@@ -39,10 +39,16 @@ export default function EventsPage() {
             </Link>
           </div>
           <div className="preview-grid">
+            {/* The first section's row is in the first screen (as in EventArchive). */}
             {getSortedPages(dir)
               .slice(0, CARDS_PER_SECTION)
               .map((item) => (
-                <PreviewCard key={item.slug} item={item} kind="event" />
+                <PreviewCard
+                  key={item.slug}
+                  item={item}
+                  kind="event"
+                  eager={sectionIndex === 0}
+                />
               ))}
           </div>
         </section>

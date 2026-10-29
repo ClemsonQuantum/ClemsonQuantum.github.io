@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { watchActive } from '@/lib/animation';
+import { prefersReducedMotion, watchActive } from '@/lib/animation';
 
 // How often a board on screen re-reads the sheet, the shortest gap between
 // two reads when it scrolls in and out, and how many rows show before
@@ -22,7 +22,8 @@ interface LeaderboardProps {
   sort?: 'asc' | 'desc';
   /** Heading of the score column, e.g. "Qubits" or "Points". */
   scoreLabel?: string;
-  /** Rows ranked this high or better are marked (the overall top 5). */
+  /** Rows ranked this high or better are marked (optional; no 2026 board
+   *  sets it, see content/README.md). */
   highlight?: number;
   /** What the table is, for screen readers. */
   label: string;
@@ -137,7 +138,7 @@ export default function Leaderboard({
     const body = bodyRef.current;
     if (!body || rows === null) return; // the loading rows don't count
     const previous = lastLayout.current;
-    const animate = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animate = !prefersReducedMotion();
     const next = new Map<string, { top: number; score: string }>();
     for (const tr of body.querySelectorAll<HTMLTableRowElement>('tr[data-key]')) {
       const key = tr.dataset.key ?? '';

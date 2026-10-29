@@ -6,7 +6,28 @@ end_date: 2026-11-20
 location: "Clemson University"
 summary: "Two weeks of seminars, Qiskit labs, and challenges, marking a decade of quantum computing on the cloud. Clemson Quantum Club hosts it as a Fall Fest PLUS event."
 image: "/images/ibm-fall-fest-2026.webp"
+# A 4:3 crop of the image for the homepage featured band on phones.
+image_mobile: "/images/ibm-fall-fest-2026-phone.webp"
 registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
+# Add-to-calendar file: scripts/generate-calendars.mjs writes
+# /calendar/qiskit-fall-fest-2026.ics from this list at build time (times are
+# Clemson local time). Keep it in step with the Sessions rows below.
+calendar:
+  start: "17:00"
+  end: "18:00"
+  sessions:
+    - date: 2026-11-09
+      title: "Quantum and Qiskit 101"
+    - date: 2026-11-11
+      title: "Real hardware, noise, and error mitigation"
+    - date: 2026-11-13
+      title: "Quantum algorithms"
+    - date: 2026-11-16
+      title: "Quantum cryptography"
+    - date: 2026-11-18
+      title: "HPC and quantum machine learning"
+    - date: 2026-11-20
+      title: "Quantum error correction"
 ---
 
 <div class="qff-page">
@@ -18,11 +39,12 @@ registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
     <div class="qff-hero-copy">
       <p class="qff-eyebrow">Clemson Quantum Club<span class="qff-eyebrow-sep"> · </span><span class="qff-nowrap">November 9–20, 2026</span></p>
       <h1>Qiskit Fall Fest 2026</h1>
-      <p class="qff-tagline"><a href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. This November, Clemson Quantum Club runs two weeks of seminars, guided Qiskit labs, and challenges to mark <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
+      <p class="qff-tagline"><a href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. This November, Clemson Quantum Club runs two weeks of seminars, guided Qiskit labs, and challenges to mark <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
       <div class="qff-cta-row">
         <a class="qff-btn" href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">Register</a>
         <a class="qff-btn qff-btn--ghost" href="#sessions">See the sessions</a>
         <a class="qff-btn qff-btn--ghost" href="#challenge">See the challenges</a>
+        <span class="share-button qff-share" data-title="Qiskit Fall Fest 2026"></span>
       </div>
     </div>
     <div class="qff-tiles">
@@ -42,7 +64,7 @@ registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
     <a class="qff-hosted-cqc" href="/">
       <picture>
         <source srcset="/images/logo-dark.png" media="(prefers-color-scheme: dark)" width="208" height="176" />
-        <img src="/images/logo-light.png" alt="Clemson Quantum Club" width="258" height="176" loading="lazy" />
+        <img src="/images/logo-light.png" alt="Clemson Quantum Club" width="212" height="176" loading="lazy" />
       </picture>
     </a>
     <a class="qff-hosted-logo" href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">
@@ -52,7 +74,7 @@ registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
       </picture>
     </a>
     <a class="qff-hosted-badge-link" href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer"><img class="qff-hosted-badge" src="/images/qff-2026-badge.webp" alt="Qiskit Fall Fest 2026 events on IBM Quantum" width="256" height="256" loading="lazy" /></a>
-    <a class="qff-hosted-sponsor" href="https://www.qbraid.com/" target="_blank" rel="noopener noreferrer">
+    <a class="qff-hosted-sponsor" href="https://qbraid.com/" target="_blank" rel="noopener noreferrer">
       <picture>
         <source srcset="/images/qbraid-logo-white.webp" media="(prefers-color-scheme: dark)" />
         <img src="/images/qbraid-logo.webp" alt="qBraid" width="612" height="168" loading="lazy" />
@@ -86,6 +108,7 @@ Our Fall Fest runs for two weeks, with a session every Monday, Wednesday, and Fr
 <dl class="qff-ledger">
   <div class="qff-ledger-row"><dt>Dates</dt><dd><span class="qff-nowrap">November 9–20, 2026</span></dd></div>
   <div class="qff-ledger-row"><dt>Time</dt><dd>Mon, Wed, Fri, <span class="qff-nowrap">5:00–6:00 PM</span></dd></div>
+  <div class="qff-ledger-row"><dt>Calendar</dt><dd><a href="/calendar/qiskit-fall-fest-2026.ics">Add all six sessions</a></dd></div>
   <div class="qff-ledger-row"><dt>Location</dt><dd>Clemson University, rooms TBD</dd></div>
   <div class="qff-ledger-row"><dt>Prizes</dt><dd>Qiskit merch for the top 5 local participants</dd></div>
   <div class="qff-ledger-row"><dt>Cost</dt><dd>Free to attend</dd></div>
@@ -116,17 +139,25 @@ Our Fall Fest runs for two weeks, with a session every Monday, Wednesday, and Fr
 
 Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all six. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 9.
 
+<!-- Each row's first line is checked against the calendar block in the front
+     matter: it starts with the day, keeps its <time datetime>, and shows the
+     session's time; the title matches the calendar title. A room can follow
+     the time: <span class="qff-day-sep"> · </span><span class="qff-nowrap">McAdams Hall 107</span>
+     (and add location: "McAdams Hall 107" under that session in the
+     calendar block, so the calendar file has it too). A session at another
+     time sets its own start: and end: there. The `calendar` row in
+     content/README.md has the rest. -->
 <div class="qff-days">
   <details class="qff-day">
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">01</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Mon, Nov 9<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-09">Mon, Nov 9</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Quantum and Qiskit 101</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Guest seminar (speaker TBD) to open the two weeks with the foundations: what a qubit is, superposition, measurement, the Bloch sphere, gates as rotations, and entanglement through the Bell pair and GHZ states. From there we move to Qiskit: the four steps every Qiskit program follows, and how the same circuit runs on a simulator and on an IBM quantum processor. It closes with how the hardware has changed since 2016.</p>
+      <p>Guest seminar (speaker TBD) to open the two weeks with the foundations: what a qubit is, superposition, measurement, the Bloch sphere, gates as rotations, and entanglement through the Bell pair and GHZ states. From there we move to Qiskit: the four steps every Qiskit program follows, and how the same circuit runs on a simulator and on an IBM Quantum processor. It closes with how the hardware has changed since 2016.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
@@ -139,7 +170,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">02</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Wed, Nov 11<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-11">Wed, Nov 11</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Real hardware, noise, and error mitigation</span>
       </span>
     </summary>
@@ -157,7 +188,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">03</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Fri, Nov 13<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-13">Fri, Nov 13</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Quantum algorithms</span>
       </span>
     </summary>
@@ -175,7 +206,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">04</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Mon, Nov 16<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Quantum cryptography</span>
       </span>
     </summary>
@@ -193,12 +224,12 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">05</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Wed, Nov 18<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">HPC and quantum machine learning</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Seminar by the organizers on high-performance computing for quantum: simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then quantum machine learning: encoding data into qubits, quantum kernels, and variational classifiers.</p>
+      <p>Seminar by the organizers on high-performance computing for quantum: simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then quantum machine learning: encoding data into qubits, quantum kernels, and variational classifiers.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
@@ -211,7 +242,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">06</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Fri, Nov 20<span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-20">Fri, Nov 20</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Quantum error correction</span>
       </span>
     </summary>
@@ -237,7 +268,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
 
 ## Challenges
 
-Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges. Scoring is individual: the top 5 local participants when the leaderboard closes on Sunday, November 22 at 11:59 PM get Qiskit merch. Submission details come with the first challenge on Monday, November 9. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live.
+Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges. Scoring is individual: the top 5 local participants when the leaderboard closes on Sunday, November 22 at 11:59 PM get Qiskit merch. Submission details come with the first challenge on Monday, November 9. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live.
 
 <!-- Leaderboards: each data-src is one Google Sheet tab published to the web
      as CSV (column A name, column B score); leave it empty until the
@@ -258,7 +289,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">01</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Mon, Nov 9</span>
+        <span class="qff-day-meta"><time datetime="2026-11-09">Mon, Nov 9</time></span>
         <span class="qff-day-title">Biggest GHZ state</span>
       </span>
     </summary>
@@ -276,7 +307,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">02</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Wed, Nov 11</span>
+        <span class="qff-day-meta"><time datetime="2026-11-11">Wed, Nov 11</time></span>
         <span class="qff-day-title">Transpile golf</span>
       </span>
     </summary>
@@ -294,7 +325,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">03</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Fri, Nov 13</span>
+        <span class="qff-day-meta"><time datetime="2026-11-13">Fri, Nov 13</time></span>
         <span class="qff-day-title">Max-Cut with QAOA</span>
       </span>
     </summary>
@@ -312,7 +343,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">04</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Mon, Nov 16</span>
+        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time></span>
         <span class="qff-day-title">Catch the eavesdropper</span>
       </span>
     </summary>
@@ -330,7 +361,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">05</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Wed, Nov 18</span>
+        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time></span>
         <span class="qff-day-title">Quantum kernel classifier</span>
       </span>
     </summary>
@@ -348,7 +379,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">06</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta">Fri, Nov 20</span>
+        <span class="qff-day-meta"><time datetime="2026-11-20">Fri, Nov 20</time></span>
         <span class="qff-day-title">Repetition code</span>
       </span>
     </summary>
@@ -389,15 +420,15 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop to every session. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 9; we will help you connect them in the first session.</p>
+    <p>A laptop to every session. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 9; we will help you connect them in the first session.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is it free?</summary>
-    <p>Yes, Qiskit Fall Fest at Clemson is free to attend.</p>
+    <p>Yes. Qiskit Fall Fest at Clemson is free to attend.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Who can attend?</summary>
-    <p>Anyone can join. Prizes are for local participants, handed out at Clemson Quantum Club’s meeting on Tuesday, November 24 at 5:00 PM in McAdams 107.</p>
+    <p>Anyone can join. Prizes are for local participants, handed out at Clemson Quantum Club’s meeting on Tuesday, November 24 at 5:00 PM in McAdams 107.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Who runs it?</summary>
@@ -405,19 +436,19 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>Is it in person or online?</summary>
-    <p>In person at Clemson University from 5:00 to 6:00 PM on Mondays, Wednesdays, and Fridays, <span class="qff-nowrap">November 9–20</span>. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. The notebooks, slides, and challenges will be posted on this page.</p>
+    <p>In person at Clemson University from <span class="qff-nowrap">5:00 to 6:00 PM</span> on Mondays, Wednesdays, and Fridays, <span class="qff-nowrap">November 9–20</span>. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. The notebooks, slides, and challenges will be posted on this page.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Are there prizes?</summary>
-    <p>Yes. The top 5 local participants on the overall leaderboard when it closes get Qiskit merch.</p>
+    <p>Yes. The top 5 local participants on the overall leaderboard when it closes get Qiskit merch.</p>
   </details>
   <details class="qff-faq-item">
     <summary>How are challenges scored?</summary>
-    <p>Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges.</p>
+    <p>Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges.</p>
   </details>
   <details class="qff-faq-item">
     <summary>When does the leaderboard close?</summary>
-    <p>Sunday, November 22 at 11:59 PM.</p>
+    <p>Sunday, November 22 at 11:59 PM.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is there a code of conduct?</summary>

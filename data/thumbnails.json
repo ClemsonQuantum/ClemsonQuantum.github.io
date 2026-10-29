@@ -1,0 +1,218 @@
+{
+  "/images/building-quantum-talent.webp": {
+    "src": "/images/building-quantum-talent.webp",
+    "hash": "71b5e7387f8a5f3a988701fcfe56c922ad9c7b9a",
+    "width": 960,
+    "height": 480,
+    "thumb": "/images/thumbs/building-quantum-talent.webp",
+    "thumbWidth": 576,
+    "thumbHeight": 288
+  },
+  "/images/clemson-team-global.webp": {
+    "src": "/images/clemson-team-global.webp",
+    "hash": "fd3eb82a24a5ba89db540efcf8e2cf43cb1bdeba",
+    "width": 960,
+    "height": 480,
+    "thumb": "/images/thumbs/clemson-team-global.webp",
+    "thumbWidth": 576,
+    "thumbHeight": 288
+  },
+  "/images/cuhackit-2025.webp": {
+    "src": "/images/cuhackit-2025.webp",
+    "hash": "099dbc32e6a466de7f2d2bbd7de5bd4cbe53b20a",
+    "width": 1600,
+    "height": 400,
+    "thumb": "/images/thumbs/cuhackit-2025.webp",
+    "thumbWidth": 1152,
+    "thumbHeight": 288
+  },
+  "/images/cuhackit-2026.webp": {
+    "src": "/images/cuhackit-2026.webp",
+    "hash": "8bda95741d4b8b5aaa0ff44c8ac954eb95b1938c",
+    "width": 1202,
+    "height": 720,
+    "thumb": "/images/thumbs/cuhackit-2026.webp",
+    "thumbWidth": 481,
+    "thumbHeight": 288
+  },
+  "/images/duquantum-2026.webp": {
+    "src": "/images/duquantum-2026.webp",
+    "hash": "a79ea8ffbfd93a1b7b4c5b2fbb967728651b5306",
+    "width": 1200,
+    "height": 675,
+    "thumb": "/images/thumbs/duquantum-2026.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/forward-pathway-quantum-club.webp": {
+    "src": "/images/forward-pathway-quantum-club.webp",
+    "hash": "dc9897eaed70ee9dd29ebdfa50a2730eaaeb58b3",
+    "width": 800,
+    "height": 457,
+    "thumb": "/images/thumbs/forward-pathway-quantum-club.webp",
+    "thumbWidth": 504,
+    "thumbHeight": 288
+  },
+  "/images/hack-the-future-2025.webp": {
+    "src": "/images/hack-the-future-2025.webp",
+    "hash": "e61fea6b085a7c67e2a45c67674580dc025e97cd",
+    "width": 960,
+    "height": 720,
+    "thumb": "/images/thumbs/hack-the-future-2025.webp",
+    "thumbWidth": 384,
+    "thumbHeight": 288
+  },
+  "/images/ibm-fall-fest-2024.webp": {
+    "src": "/images/ibm-fall-fest-2024.webp",
+    "hash": "1e42fb7a2121da3b19db9bb60fc3c30e054fd6c5",
+    "width": 1200,
+    "height": 675,
+    "thumb": "/images/thumbs/ibm-fall-fest-2024.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/ibm-fall-fest-2025.webp": {
+    "src": "/images/ibm-fall-fest-2025.webp",
+    "hash": "dd04b5b4ffe3fc6a7063bebb10850f07977426ef",
+    "width": 1600,
+    "height": 1021,
+    "thumb": "/images/thumbs/ibm-fall-fest-2025.webp",
+    "thumbWidth": 451,
+    "thumbHeight": 288
+  },
+  "/images/ibm-fall-fest-2026.webp": {
+    "src": "/images/ibm-fall-fest-2026.webp",
+    "hash": "a1b70d6f3a7243d8bc159ce11751a1eb9b0ac05c",
+    "width": 1200,
+    "height": 675,
+    "thumb": "/images/thumbs/ibm-fall-fest-2026.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/iquhack-2025.jpg": {
+    "src": "/images/iquhack-2025.jpg",
+    "hash": "2a4068291c22683fbc378c7e284da1545cd8ec18",
+    "width": 1000,
+    "height": 562,
+    "thumb": "/images/thumbs/iquhack-2025.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/iquhack-2026.webp": {
+    "src": "/images/iquhack-2026.webp",
+    "hash": "a3aa961038abe707cb4eb9b606485591ceb0c49a",
+    "width": 480,
+    "height": 640,
+    "thumb": "/images/thumbs/iquhack-2026.webp",
+    "thumbWidth": 288,
+    "thumbHeight": 384
+  },
+  "/images/nyuad-2025.jpg": {
+    "src": "/images/nyuad-2025.jpg",
+    "hash": "bc5961d7a5d0a9493838597d7ec51312ebb8cd4f",
+    "width": 1000,
+    "height": 563,
+    "thumb": "/images/thumbs/nyuad-2025.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/qhack-2026.webp": {
+    "src": "/images/qhack-2026.webp",
+    "hash": "f67d3f3c9989bd03d9511aedd964f28c9a1774bc",
+    "width": 1200,
+    "height": 630,
+    "thumb": "/images/thumbs/qhack-2026.webp",
+    "thumbWidth": 549,
+    "thumbHeight": 288
+  },
+  "/images/quantathon-v1-team-2024.webp": {
+    "src": "/images/quantathon-v1-team-2024.webp",
+    "hash": "f91f956cfc9cde1402c4056c7accdf49f2f98f80",
+    "width": 960,
+    "height": 720,
+    "thumb": "/images/thumbs/quantathon-v1-team-2024.webp",
+    "thumbWidth": 384,
+    "thumbHeight": 288
+  },
+  "/images/quantum-era-clemson.webp": {
+    "src": "/images/quantum-era-clemson.webp",
+    "hash": "7b186a547a5cd295a80fbaa8ff71b2231ed4a9e0",
+    "width": 1044,
+    "height": 637,
+    "thumb": "/images/thumbs/quantum-era-clemson.webp",
+    "thumbWidth": 472,
+    "thumbHeight": 288
+  },
+  "/images/quantum-rings-scq-v3.webp": {
+    "src": "/images/quantum-rings-scq-v3.webp",
+    "hash": "8ecb2418bbc6591dcc07babf6c69dd9b55b993f6",
+    "width": 1200,
+    "height": 675,
+    "thumb": "/images/thumbs/quantum-rings-scq-v3.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/scalab-quantum-initiative.webp": {
+    "src": "/images/scalab-quantum-initiative.webp",
+    "hash": "e841b01f23501f18d5656c6a61b9e79aa6a7b0d3",
+    "width": 1200,
+    "height": 600,
+    "thumb": "/images/thumbs/scalab-quantum-initiative.webp",
+    "thumbWidth": 576,
+    "thumbHeight": 288
+  },
+  "/images/scq-v1-graphic.webp": {
+    "src": "/images/scq-v1-graphic.webp",
+    "hash": "6c8591dd858e55e5d9329f8a6a5e1635b1fbcbd0",
+    "width": 960,
+    "height": 641,
+    "thumb": "/images/thumbs/scq-v1-graphic.webp",
+    "thumbWidth": 431,
+    "thumbHeight": 288
+  },
+  "/images/scq-v2-graphic.webp": {
+    "src": "/images/scq-v2-graphic.webp",
+    "hash": "a1cb6aedbb13677b7d360356898e83014b11d10c",
+    "width": 800,
+    "height": 534,
+    "thumb": "/images/thumbs/scq-v2-graphic.webp",
+    "thumbWidth": 431,
+    "thumbHeight": 288
+  },
+  "/images/scq-v3-banner.webp": {
+    "src": "/images/scq-v3-banner.webp",
+    "hash": "192de00258c07c5fea6934684ae3616a93dc0244",
+    "width": 1200,
+    "height": 675,
+    "thumb": "/images/thumbs/scq-v3-banner.webp",
+    "thumbWidth": 512,
+    "thumbHeight": 288
+  },
+  "/images/tiger-prowl.webp": {
+    "src": "/images/tiger-prowl.webp",
+    "hash": "e0026dd714c3afafec94bd19e585ba1d2c279050",
+    "width": 1144,
+    "height": 620,
+    "thumb": "/images/thumbs/tiger-prowl.webp",
+    "thumbWidth": 531,
+    "thumbHeight": 288
+  },
+  "/images/yquantum-2025.webp": {
+    "src": "/images/yquantum-2025.webp",
+    "hash": "0145a25d77f42f68792b70077401c329bb5634a8",
+    "width": 960,
+    "height": 641,
+    "thumb": "/images/thumbs/yquantum-2025.webp",
+    "thumbWidth": 431,
+    "thumbHeight": 288
+  },
+  "/images/yquantum-2026.webp": {
+    "src": "/images/yquantum-2026.webp",
+    "hash": "d42654c801b5ac1ee0c466e78bf513788b4bd308",
+    "width": 960,
+    "height": 383,
+    "thumb": "/images/thumbs/yquantum-2026.webp",
+    "thumbWidth": 722,
+    "thumbHeight": 288
+  }
+}
