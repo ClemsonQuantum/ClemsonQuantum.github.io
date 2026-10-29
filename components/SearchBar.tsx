@@ -14,20 +14,25 @@ interface SearchResult {
   body?: string;
 }
 
+// Site copy has typographic apostrophes and no-break hyphens; a typed query
+// has ' and -. Both sides are folded the same way (SearchHighlight too).
+const fold = (text: string) =>
+  text.toLowerCase().replace(/[‘’]/g, "'").replace(/‑/g, '-');
+
 // Word-based AND matching: every query word must appear somewhere in the
 // entry (title, hidden meta, excerpt, or body), so "valentine mohaugen paper"
 // finds a paper authored by Valentine even when no field contains that exact
 // phrase. Title hits rank above meta hits (names, outlet, type), which rank
 // above summary and body hits.
 function rankResults(index: SearchResult[], query: string): SearchResult[] {
-  const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const tokens = fold(query).split(/\s+/).filter(Boolean);
   if (tokens.length === 0) return [];
   return index
     .map((item) => {
-      const title = item.title.toLowerCase();
-      const meta = (item.meta ?? '').toLowerCase();
-      const excerpt = (item.excerpt ?? '').toLowerCase();
-      const body = (item.body ?? '').toLowerCase();
+      const title = fold(item.title);
+      const meta = fold(item.meta ?? '');
+      const excerpt = fold(item.excerpt ?? '');
+      const body = fold(item.body ?? '');
       let score = 0;
       for (const t of tokens) {
         if (title.includes(t)) score += 3;
@@ -51,12 +56,14 @@ function withQuery(url: string, query: string): string {
   return `${path}${path.includes('?') ? '&' : '?'}q=${encodeURIComponent(query)}${hash ? `#${hash}` : ''}`;
 }
 
-export default function SearchBar() {
+// onNavigate: the Header closes its phone drawer. A result on the page
+// already shown (/#board from the homepage) keeps the pathname, so the
+// Header's close-on-navigation never sees it.
+export default function SearchBar({ onNavigate }: { onNavigate?: () => void }) {
   const [query, setQuery] = useState('');
   const [indexData, setIndexData] = useState<SearchResult[] | null>(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
   const indexRequested = useRef(false);
   const router = useRouter();
   const listboxId = 'search-listbox';
@@ -135,6 +142,7 @@ export default function SearchBar() {
           // the top result.
           const url = withQuery(results[activeIndex >= 0 ? activeIndex : 0].url, query.trim());
           clear();
+          onNavigate?.();
           // External results (news/attended events) leave the site; internal
           // ones keep the SPA transition.
           if (url.includes('://')) window.location.href = url;
@@ -143,7 +151,7 @@ export default function SearchBar() {
         }
       }
     },
-    [query, results, activeIndex, router, clear]
+    [query, results, activeIndex, router, clear, onNavigate]
   );
 
   const isOpen = query.trim().length >= 1;
@@ -152,6 +160,8 @@ export default function SearchBar() {
   return (
     <div
       className="search search-container"
+      // The search landmark: screen-reader users can jump straight to it.
+      role="search"
       ref={containerRef}
       // Keyboard focus leaving the search closes the panel, as an outside
       // click does. A null relatedTarget (Safari link clicks, blank-area
@@ -181,7 +191,6 @@ export default function SearchBar() {
           search input, so the combobox pattern needs a text input. enterKeyHint
           still gives the mobile keyboard its Search key. */}
       <input
-        ref={inputRef}
         className="search-input"
         name="q"
         type="text"
@@ -213,16 +222,21 @@ export default function SearchBar() {
               className: `search-item${i === activeIndex ? ' search-item--active' : ''}`,
               role: 'option',
               'aria-selected': i === activeIndex,
-              onClick: clear,
+              onClick: () => {
+                clear();
+                onNavigate?.();
+              },
             };
-            // Internal results keep the SPA transition via next/link;
-            // external ones (news, attended events) are plain anchors.
+            // Internal results keep the SPA transition via next/link, with no
+            // prefetch, as in the Header: a prefetched route applies that
+            // page's image preloads here. External ones (news, attended
+            // events) are plain anchors.
             return r.url.includes('://') ? (
               <a key={`${r.url}-${r.title}`} href={r.url} {...shared}>
                 <div className="search-item-title">{r.title}</div>
               </a>
             ) : (
-              <Link key={`${r.url}-${r.title}`} href={withQuery(r.url, query.trim())} {...shared}>
+              <Link key={`${r.url}-${r.title}`} href={withQuery(r.url, query.trim())} prefetch={false} {...shared}>
                 <div className="search-item-title">{r.title}</div>
               </Link>
             );

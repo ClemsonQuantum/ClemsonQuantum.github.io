@@ -1,4 +1,5 @@
 // @ts-check
+import { execFileSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -19,10 +20,10 @@ const PUBLIC_ROOT = path.join(REPO_ROOT, 'public');
 const URL_FIELDS = ['external_url', 'source_url', 'link', 'registration_url'];
 
 // Frontmatter fields that must point at an existing file under public/.
-const ASSET_FIELDS = ['image', 'pdf'];
+const ASSET_FIELDS = ['image', 'image_mobile', 'pdf'];
 
 // Matches site-local asset references (/images/... or /files/...) inside
-// markdown bodies, JSON strings, and CSS url() values.
+// markdown bodies and JSON strings (validateCss has its own url() pattern).
 const LOCAL_ASSET_RE = /\/(?:images|files)\/[^\s"'`<>()\\,]+/g;
 
 /**
@@ -81,6 +82,30 @@ function tagsWithClass(html, tagName, className) {
  */
 function attrOf(tag, name) {
   return new RegExp(`\\b${name}="([^"]*)"`).exec(tag)?.[1];
+}
+
+// Alt text that only looks like a description: a generic word ("image",
+// "photo"), a number, a file or camera name, or a template's [PLACEHOLDER].
+// An empty alt is fine: it marks a decorative image.
+const GENERIC_ALTS = new Set([
+  'alt', 'banner', 'graphic', 'icon', 'image', 'img', 'logo', 'photo', 'pic',
+  'picture', 'placeholder', 'screenshot', 'tbd', 'test', 'todo', 'untitled',
+]);
+
+/**
+ * @param {string} alt
+ * @returns {boolean}
+ */
+function isPlaceholderAlt(alt) {
+  const a = alt.trim().toLowerCase().replace(/[.!]+$/, '');
+  if (a === '') return false;
+  return (
+    GENERIC_ALTS.has(a) ||
+    /^\d+$/.test(a) ||
+    /\.(?:avif|gif|heic|jpe?g|png|svg|webp)$/.test(a) ||
+    /^(?:img|dsc|dscn|pxl)[-_ ]?\d/.test(a) ||
+    /^\[.*\]$/.test(a)
+  );
 }
 
 /**
@@ -155,6 +180,89 @@ function validateFile(fullPath, problems) {
     }
   }
 
+  // `calendar` feeds scripts/generate-calendars.mjs (the add-to-calendar
+  // file): 24-hour start and end times with end after start, and at least one
+  // session, each a real day inside the event's date range with a title. A
+  // session may set its own `start` and `end` (together) and its own
+  // `location` when it differs from the rest: a later session, another room.
+  if (data.calendar !== undefined) {
+    const cal = data.calendar;
+    const hhmm = /^([01]\d|2[0-3]):[0-5]\d$/;
+    /** @param {unknown} a @param {unknown} b */
+    const span = (a, b) => typeof a === 'string' && hhmm.test(a) && typeof b === 'string' && hhmm.test(b) && b > a;
+    if (typeof cal !== 'object' || cal === null || Array.isArray(cal)) {
+      problems.push(`${relPath}: "calendar" must be a block with start, end and sessions`);
+    } else {
+      if (typeof cal.start !== 'string' || !hhmm.test(cal.start) || typeof cal.end !== 'string' || !hhmm.test(cal.end)) {
+        problems.push(`${relPath}: "calendar" start and end must be quoted 24-hour times like "17:00"`);
+      } else if (cal.end <= cal.start) {
+        problems.push(`${relPath}: "calendar" end (${cal.end}) must be after start (${cal.start})`);
+      }
+      if (!Array.isArray(cal.sessions) || cal.sessions.length === 0) {
+        problems.push(`${relPath}: "calendar" needs at least one entry under sessions`);
+      } else {
+        const last = typeof data.end_date === 'string' ? data.end_date : date;
+        cal.sessions.forEach((/** @type {any} */ s, /** @type {number} */ i) => {
+          if (!s || typeof s.date !== 'string' || !isValidIsoDate(s.date)) {
+            problems.push(`${relPath}: calendar session ${i + 1} needs a YYYY-MM-DD date`);
+          } else if (typeof date === 'string' && isValidIsoDate(date) && (s.date < date || s.date > last)) {
+            problems.push(`${relPath}: calendar session ${i + 1} (${s.date}) is outside the event's dates (${date} to ${last})`);
+          }
+          if (!s || typeof s.title !== 'string' || s.title.trim() === '') {
+            problems.push(`${relPath}: calendar session ${i + 1} needs a title`);
+          }
+          if (s && (s.start !== undefined || s.end !== undefined) && !span(s.start, s.end)) {
+            problems.push(`${relPath}: calendar session ${i + 1}: its own "start" and "end" go together, as quoted 24-hour times with end after start`);
+          }
+          if (s && s.location !== undefined && (typeof s.location !== 'string' || s.location.trim() === '')) {
+            problems.push(`${relPath}: calendar session ${i + 1}: "location" must be text, e.g. "McAdams Hall 107"`);
+          }
+        });
+        // Fall Fest pages show the same sessions as the qff-day rows in the
+        // sessions list (the challenge rows after it don't count): same count
+        // and order, and each row's line starts with the day ("Mon, Nov 9"),
+        // carries the same <time datetime> and the session's time ("5:00–6:00
+        // PM"), and has the same title. Anything else in the line (a "Seminar"
+        // label, a room) is free.
+        const page = content.replace(/<!--[\s\S]*?-->/g, '');
+        const from = page.indexOf('<div class="qff-days">');
+        const to = from < 0 ? -1 : page.indexOf('qff-challenges', from);
+        const sessionList = from < 0 ? '' : page.slice(from, to < 0 ? undefined : to);
+        const rows = [...sessionList.matchAll(/<span class="qff-day-meta">([\s\S]*?)<\/span>\s*<span class="qff-day-title">([^<]*)<\/span>/g)];
+        if (rows.length === 0 && /class="[^"]*\bqff-page\b/.test(page)) {
+          problems.push(`${relPath}: "calendar" is set but no session rows were found in <div class="qff-days">; each session needs a row that matches it`);
+        }
+        if (rows.length > 0 && span(cal.start, cal.end)) {
+          if (rows.length !== cal.sessions.length) {
+            problems.push(`${relPath}: "calendar" has ${cal.sessions.length} session(s) but the page has ${rows.length} session row(s)`);
+          }
+          /** @param {string} t */
+          const clock = (t) => `${Number(t.slice(0, 2)) % 12 || 12}:${t.slice(3)}`;
+          /** @param {string} t */
+          const half = (t) => (t < '12:00' ? 'AM' : 'PM');
+          /** "5:00–6:00 PM", or "11:00 AM–1:00 PM" across noon. @param {string} a @param {string} b */
+          const shown = (a, b) => half(a) === half(b)
+            ? `${clock(a)}–${clock(b)} ${half(b)}`
+            : `${clock(a)} ${half(a)}–${clock(b)} ${half(b)}`;
+          rows.forEach(([, meta, title], i) => {
+            const s = cal.sessions[i];
+            if (!s || typeof s.date !== 'string' || !isValidIsoDate(s.date)) return;
+            const day = new Date(`${s.date}T12:00:00Z`).toLocaleDateString('en-US', { timeZone: 'UTC', weekday: 'short', month: 'short', day: 'numeric' });
+            const time = span(s.start, s.end) ? shown(s.start, s.end) : shown(cal.start, cal.end);
+            const want = `${day} · ${time}`;
+            // Text as read: tags gone, no-break spaces and word joiners
+            // (typed or as &nbsp;) counted as the plain spaces they look like.
+            const got = meta.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/⁠/g, '').replace(/\s+/g, ' ').trim();
+            const stamp = /<time\b[^>]*\bdatetime="([^"]*)"/.exec(meta)?.[1];
+            if (!got.startsWith(day) || !got.includes(time) || (stamp !== undefined && stamp !== s.date) || title.trim() !== s.title) {
+              problems.push(`${relPath}: calendar session ${i + 1} (${want}, "${s.title}") doesn't match session row ${i + 1} (${got}${stamp ? `, datetime ${stamp}` : ''}, "${title.trim()}")`);
+            }
+          });
+        }
+      }
+    }
+  }
+
   // `unlisted` hides a live page from every listing (lib/content-shared.mjs
   // isUnlisted). Only a real boolean counts: YAML 1.2 reads `yes`/`on` as
   // strings, so a typo there would otherwise leave the page publicly listed.
@@ -179,6 +287,36 @@ function validateFile(fullPath, problems) {
   // Local image/file links inside the markdown body must exist too.
   checkLocalAssetRefs(content, relPath, problems);
 
+  // Every image in a body says what it shows, or has alt="" when it is
+  // decorative (a logo beside its own name, say).
+  const body = content.replace(/<!--[\s\S]*?-->/g, '');
+  for (const [tag] of body.matchAll(/<img\b[^>]*>/g)) {
+    const alt = /\salt="([^"]*)"/.exec(tag)?.[1];
+    if (alt === undefined) {
+      problems.push(`${relPath}: an <img> has no alt (use alt="" if it is decorative): ${tag.slice(0, 80)}`);
+    } else if (isPlaceholderAlt(alt)) {
+      problems.push(`${relPath}: alt="${alt}" is a placeholder; describe the image, or use alt="" if it is decorative`);
+    }
+  }
+  for (const [, alt] of body.matchAll(/!\[([^\]]*)\]\(/g)) {
+    if (isPlaceholderAlt(alt)) {
+      problems.push(`${relPath}: image alt "${alt}" is a placeholder; describe the image, or leave it empty if it is decorative`);
+    }
+  }
+
+  // <time datetime> in a body (schedule days, Fall Fest session rows) must be
+  // a real YYYY-MM-DD inside the event's dates, so a page copied from last
+  // year can't keep last year's machine-readable dates.
+  const firstDay = typeof date === 'string' && isValidIsoDate(date) ? date : null;
+  const lastDay = typeof data.end_date === 'string' ? data.end_date : firstDay;
+  for (const [, dt] of body.matchAll(/<time\b[^>]*\bdatetime="([^"]*)"/g)) {
+    if (!isValidIsoDate(dt)) {
+      problems.push(`${relPath}: <time datetime="${dt}"> must be a real YYYY-MM-DD date`);
+    } else if (firstDay && lastDay && (dt < firstDay || dt > lastDay)) {
+      problems.push(`${relPath}: <time datetime="${dt}"> is outside the event's dates (${firstDay} to ${lastDay})`);
+    }
+  }
+
   // Update sign-up links (#participant-updates) must name their event with
   // data-event: the modal's title and email subject use it.
   for (const [tag] of content.matchAll(/<a\b[^>]*href="#participant-updates"[^>]*>/g)) {
@@ -190,14 +328,26 @@ function validateFile(fullPath, problems) {
   // Live leaderboards (components/Leaderboard.tsx): a data-src, once set,
   // must be a published Google Sheet CSV (the only source the production
   // Content-Security-Policy in app/layout.tsx lets the page fetch), and
-  // data-sort can only be asc or desc.
+  // data-sort can only be asc or desc. The link must be the tab's published
+  // CSV (…/spreadsheets/d/e/…/pub?…output=csv): an /edit or /pubhtml link
+  // loads a web page the board can't read. No two boards share a tab.
+  /** @type {Set<string>} */
+  const boardSources = new Set();
   for (const tag of tagsWithClass(content, 'div', 'qff-leaderboard')) {
     const src = attrOf(tag, 'data-src') ?? '';
     if (src !== '' && !src.startsWith('https://docs.google.com/')) {
       problems.push(
         `${relPath}: qff-leaderboard data-src must be a published Google Sheet link (https://docs.google.com/…) (got "${src}")`,
       );
+    } else if (src !== '' && !/^https:\/\/docs\.google\.com\/spreadsheets\/d\/e\/[^/]+\/pub\?\S*\boutput=csv\b/.test(src)) {
+      problems.push(
+        `${relPath}: qff-leaderboard data-src must be the tab's published CSV link (File > Share > Publish to web > the tab > Comma-separated values), which ends in output=csv (got "${src}")`,
+      );
     }
+    if (src !== '' && boardSources.has(src)) {
+      problems.push(`${relPath}: two leaderboards use the same data-src; each board needs its own published tab (got "${src}")`);
+    }
+    if (src !== '') boardSources.add(src);
     const sort = attrOf(tag, 'data-sort');
     if (sort !== undefined && sort !== 'asc' && sort !== 'desc') {
       problems.push(`${relPath}: qff-leaderboard data-sort must be "asc" or "desc" (got "${sort}")`);
@@ -249,6 +399,15 @@ function validateFile(fullPath, problems) {
         problems.push(
           `${relPath}: event-countdown ${attr} "${value}" must be ISO 8601 with a UTC offset, e.g. 2027-10-22T17:00:00-04:00`,
         );
+      } else {
+        // Its days match the front matter, so new dates can't leave the hero
+        // counting down to the old ones.
+        const day = attr === 'data-target' ? date : data.end_date;
+        if (typeof day === 'string' && isValidIsoDate(day) && value.slice(0, 10) !== day) {
+          problems.push(
+            `${relPath}: event-countdown ${attr} is on ${value.slice(0, 10)} but the front matter's ${attr === 'data-target' ? '"date"' : '"end_date"'} is ${day}`,
+          );
+        }
       }
     }
   }
@@ -360,7 +519,7 @@ function validateCss(problems) {
   const relPath = path.relative(REPO_ROOT, cssPath);
   const css = fs.readFileSync(cssPath, 'utf-8');
 
-  for (const [, ref] of css.matchAll(/url\(\s*['"]?(\/(?:images|files)\/[^'")]+)['"]?\s*\)/g)) {
+  for (const [, ref] of css.matchAll(/url\(\s*['"]?(\/(?:images|files|fonts)\/[^'")]+)['"]?\s*\)/g)) {
     if (!assetExists(ref)) {
       problems.push(`${relPath}: url() asset "${ref}" not found under public/`);
     }
@@ -426,12 +585,22 @@ function validateInternalLinks(pages, problems) {
     }
   }
 
+  // /calendar/<page>.ics exists only for a published page with a calendar
+  // block (scripts/generate-calendars.mjs); check() skips paths with an extension.
+  const calendars = new Set(
+    pages.filter((p) => p.data.calendar && !isDraft(p.data)).map((p) => path.posix.basename(p.rel, '.md')),
+  );
   /**
    * @param {string} where
    * @param {string} href
    */
   const check = (where, href) => {
     const target = href.split(/[?#]/)[0];
+    const ics = /^\/calendar\/([^/]+)\.ics$/.exec(target);
+    if (ics && !calendars.has(ics[1])) {
+      problems.push(`${where}: link to "${href}" has no calendar block on a published page`);
+      return;
+    }
     if (target === '' || /^\/(?:images|files)\//.test(target) || path.posix.extname(target)) return;
     const normalized = target.endsWith('/') ? target : `${target}/`;
     if (!routes.has(normalized)) {
@@ -447,6 +616,72 @@ function validateInternalLinks(pages, problems) {
   const schedule = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'data', 'meeting-schedule.json'), 'utf-8'));
   for (const m of schedule.meetings ?? []) {
     if (typeof m.href === 'string' && m.href.startsWith('/')) check('data/meeting-schedule.json', m.href);
+  }
+  // Governing Documents rows: a page href (/code-of-conduct/) must resolve;
+  // PDF paths have an extension, so check() skips them (a missing PDF shows
+  // "Coming soon"). lastUpdated is the page's "Last updated" date.
+  const govDocs = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, 'data', 'governing-documents.json'), 'utf-8'));
+  for (const doc of govDocs.documents ?? []) {
+    if (typeof doc.href === 'string' && doc.href.startsWith('/')) check('data/governing-documents.json', doc.href);
+  }
+  if (typeof govDocs.lastUpdated !== 'string' || !isValidIsoDate(govDocs.lastUpdated)) {
+    problems.push(`data/governing-documents.json: "lastUpdated" must be YYYY-MM-DD (got "${govDocs.lastUpdated}")`);
+  }
+  // The PDFs themselves. A name that matches only when case is ignored works
+  // on a Mac (its disk ignores case) but not in the Linux build, which then
+  // shows "Coming soon" or a 404, so that fails here. A PDF no row names is
+  // probably a misnamed upload (…Bylaws.pdf.pdf), so that gets a warning.
+  const docsDir = path.join(REPO_ROOT, 'public', 'documents');
+  const onDisk = fs.existsSync(docsDir) ? fs.readdirSync(docsDir).filter((f) => /\.pdf$/i.test(f)) : [];
+  /** @type {string[]} */
+  const named = (govDocs.documents ?? [])
+    .map((/** @type {{ href?: unknown }} */ d) => d.href)
+    .filter((/** @type {unknown} */ h) => typeof h === 'string' && h.startsWith('/documents/') && h.endsWith('.pdf'))
+    .map((/** @type {string} */ h) => h.slice('/documents/'.length));
+  for (const name of named) {
+    const near = onDisk.find((f) => f !== name && f.toLowerCase() === name.toLowerCase());
+    if (!onDisk.includes(name) && near) {
+      problems.push(`public/documents/${near}: rename it "${name}" exactly; capital letters must match data/governing-documents.json, and the live build is case-sensitive`);
+    }
+  }
+  for (const f of onDisk) {
+    if (!named.some((n) => n.toLowerCase() === f.toLowerCase())) {
+      console.warn(`[warn] public/documents/${f}: no row in data/governing-documents.json uses it; check its name`);
+    }
+  }
+}
+
+// Files kept out of git (.git/info/exclude, .gitignore) never reach the
+// GitHub build, so a published page that uses one passes here and fails
+// there. Drafts may use them; that is what the exclude list is for. Skipped
+// where git isn't available.
+/**
+ * @param {ParsedPage[]} pages
+ * @param {string[]} problems
+ */
+function validateCommittable(pages, problems) {
+  /** @type {Map<string, string>} */
+  const used = new Map(); // public/… path -> first page using it
+  for (const page of pages) {
+    if (isDraft(page.data)) continue;
+    const refs = ASSET_FIELDS.map((f) => page.data[f]).filter((v) => typeof v === 'string' && v.startsWith('/'));
+    for (const [ref] of page.content.replace(/<!--[\s\S]*?-->/g, '').matchAll(LOCAL_ASSET_RE)) refs.push(ref);
+    for (const ref of refs) {
+      const file = `public${decodeURI(ref.split(/[?#]/)[0])}`;
+      if (!used.has(file)) used.set(file, `content/${page.rel}`);
+    }
+  }
+  if (used.size === 0) return;
+  let out = '';
+  try {
+    out = execFileSync('git', ['check-ignore', '--stdin'], { cwd: REPO_ROOT, input: [...used.keys()].join('\n'), encoding: 'utf-8', stdio: ['pipe', 'pipe', 'ignore'] });
+  } catch {
+    // Exit 1 means nothing is ignored; any other failure (no git, not a
+    // repository) skips the check.
+    return;
+  }
+  for (const file of out.split('\n').filter(Boolean)) {
+    problems.push(`${used.get(file)}: uses ${file}, which git ignores (.git/info/exclude or .gitignore), so the live build won't have it; remove its line from the exclude list and commit it`);
   }
 }
 
@@ -483,6 +718,7 @@ const contentFiles = walkContentFiles(CONTENT_ROOT);
 const pages = contentFiles.flatMap((fullPath) => validateFile(fullPath, problems) ?? []);
 validateInternalLinks(pages, problems);
 validateFeaturedEvent(pages, problems);
+validateCommittable(pages, problems);
 const files = contentFiles.length;
 const dataFiles = validateDataJson(problems);
 validateCss(problems);

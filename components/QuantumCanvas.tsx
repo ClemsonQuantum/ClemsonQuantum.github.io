@@ -242,7 +242,8 @@ export default function QuantumCanvas({
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(parent);
     const intersectionObserver = new IntersectionObserver((entries) => {
-      intersecting = entries[0]?.isIntersecting ?? true;
+      // The newest entry wins: one callback can carry several for the canvas.
+      intersecting = entries[entries.length - 1]?.isIntersecting ?? intersecting;
       updateRunning();
     });
     intersectionObserver.observe(canvas);

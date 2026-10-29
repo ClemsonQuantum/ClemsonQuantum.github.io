@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { BLOCH_SPHERE_TILT, blochSphereCamera } from '@/lib/blochSphere.mjs';
+import { BLOCH_SPHERE_TILT, blochSphereCamera, blochState } from '@/lib/blochSphere.mjs';
 
 // Geometry: |psi> = cos(theta/2)|0> + e^{i phi} sin(theta/2)|1> maps to the
 // Bloch vector (x, y, z) = (sin theta cos phi, sin theta sin phi, cos theta).
@@ -23,6 +23,7 @@ const KEY_STEP = (5 * Math.PI) / 180;
 // Keyboard moves are announced once the keys settle, not on every repeat.
 const ANNOUNCE_DELAY_MS = 300;
 const DRAG_RATE = 0.012; // rad per dragged px
+const GLIDE_MS = 450; // the arrow's glide to a pole when its label is pressed
 
 const INITIAL_THETA = (60 * Math.PI) / 180;
 const INITIAL_PHI = (35 * Math.PI) / 180;
@@ -31,12 +32,38 @@ const INITIAL_PHI = (35 * Math.PI) / 180;
 const MERIDIAN_PHI = Math.PI / 2 - TILT;
 const MERIDIAN_SEGMENTS = 72;
 
+// Interaction timing for the idle precession. A module-level helper: the
+// React Compiler lint treats a direct performance.now() in the component's
+// handlers as an impure call during render.
+const nowMs = () => performance.now();
+
 function clampTheta(theta: number): number {
   return Math.min(Math.PI - 0.02, Math.max(0.02, theta));
 }
 
 function toDeg(rad: number): number {
   return Math.round((rad * 180) / Math.PI);
+}
+
+// An azimuth in whole degrees, 0–359: a phi just under 2π rounds to 360,
+// which would read as a different angle from the 0° beside it.
+function azimuthDeg(rad: number): number {
+  return toDeg(rad) % 360;
+}
+
+// The state the arrow stands for (lib/blochSphere.mjs blochState):
+// |psi> = cos(theta/2)|0> + e^{i phi} sin(theta/2)|1>, P(0) = cos^2(theta/2).
+function stateText(theta: number, phi: number) {
+  const st = blochState(theta, phi);
+  return {
+    a0: st.a0.toFixed(2),
+    a1: st.a1.toFixed(2),
+    phase: `${azimuthDeg(st.phase)}°`,
+    p0: st.p0.toFixed(2),
+    p1: st.p1.toFixed(2),
+    p0Pct: `${(st.p0 * 100).toFixed(1)}%`,
+    p1Pct: `${(st.p1 * 100).toFixed(1)}%`,
+  };
 }
 
 function projectPoint(x: number, y: number, z: number): { sx: number; sy: number } {
@@ -79,7 +106,9 @@ const MERIDIAN = meridianPath();
 // Interactive Bloch sphere for the learning-resources page. Idle behavior is
 // a slow phi precession (rAF gated on visibility + on-screen + reduced
 // motion, mirroring QuantumCanvas); dragging or arrow keys move the state
-// vector directly, and auto-rotation resumes ~2 s after the last interaction.
+// vector directly, pressing the |0⟩ or |1⟩ label (or the 0 or 1 key) glides
+// it to that pole (a jump with reduced motion), and auto-rotation resumes
+// ~2 s after the last interaction.
 // Angles live in refs and every update writes the SVG/readout directly (like
 // ConstellationDivider) — per-frame React state would re-render the whole
 // figure at 60 fps. Initial angles are constants, so static-export hydration
@@ -89,11 +118,22 @@ export default function BlochSphere() {
   const vectorRef = useRef<SVGLineElement>(null);
   const tipRef = useRef<SVGCircleElement>(null);
   const readoutRef = useRef<HTMLParagraphElement>(null);
+  const a0Ref = useRef<HTMLSpanElement>(null);
+  const a1Ref = useRef<HTMLSpanElement>(null);
+  const phaseRef = useRef<HTMLElement>(null);
+  const p0Ref = useRef<HTMLSpanElement>(null);
+  const p1Ref = useRef<HTMLSpanElement>(null);
+  const p0BarRef = useRef<HTMLSpanElement>(null);
+  const p1BarRef = useRef<HTMLSpanElement>(null);
   const announceRef = useRef<HTMLSpanElement>(null);
   const announceTimer = useRef(0);
   const angles = useRef({ theta: INITIAL_THETA, phi: INITIAL_PHI });
   const lastInteraction = useRef(0);
   const dragFrom = useRef<{ x: number; y: number } | null>(null);
+  // A glide in progress toward a pole (theta from, theta to, start time),
+  // and whether the animation loop that moves it is running.
+  const glide = useRef<{ from: number; to: number; start: number } | null>(null);
+  const loopRunning = useRef(false);
 
   const render = () => {
     const { theta, phi } = angles.current;
@@ -103,8 +143,46 @@ export default function BlochSphere() {
     tipRef.current?.setAttribute('cx', sx.toFixed(2));
     tipRef.current?.setAttribute('cy', sy.toFixed(2));
     if (readoutRef.current) {
-      readoutRef.current.textContent = `θ = ${toDeg(theta)}° · φ = ${toDeg(phi)}°`;
+      readoutRef.current.textContent = `θ = ${toDeg(theta)}° · φ = ${azimuthDeg(phi)}°`;
     }
+    const t = stateText(theta, phi);
+    if (a0Ref.current) a0Ref.current.textContent = t.a0;
+    if (a1Ref.current) a1Ref.current.textContent = t.a1;
+    if (phaseRef.current) phaseRef.current.textContent = t.phase;
+    if (p0Ref.current) p0Ref.current.textContent = t.p0;
+    if (p1Ref.current) p1Ref.current.textContent = t.p1;
+    p0BarRef.current?.style.setProperty('width', t.p0Pct);
+    p1BarRef.current?.style.setProperty('width', t.p1Pct);
+  };
+
+  // Everything is read when the announcement is made, so the angles and the
+  // odds in one sentence always describe the same position.
+  const announce = () => {
+    window.clearTimeout(announceTimer.current);
+    announceTimer.current = window.setTimeout(() => {
+      const { theta, phi } = angles.current;
+      const t = stateText(theta, phi);
+      if (announceRef.current) {
+        announceRef.current.textContent = `theta ${toDeg(theta)} degrees, phi ${azimuthDeg(phi)} degrees. Probability of 0 is ${t.p0}, of 1 is ${t.p1}.`;
+      }
+    }, ANNOUNCE_DELAY_MS);
+  };
+
+  // Pressing the |0⟩ or |1⟩ label (or the 0 or 1 key) sends the arrow to
+  // that pole: an eased glide, or a jump with reduced motion or whenever the
+  // animation loop isn't running (the sphere off screen, say). phi is kept,
+  // so the precession picks up where it was.
+  const goToPole = (theta: number) => {
+    lastInteraction.current = nowMs();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !loopRunning.current || angles.current.theta === theta) {
+      glide.current = null;
+      angles.current.theta = theta;
+      render();
+      announce();
+      return;
+    }
+    glide.current = { from: angles.current.theta, to: theta, start: nowMs() };
   };
 
   useEffect(() => {
@@ -120,7 +198,17 @@ export default function BlochSphere() {
       rafId = 0;
       const dt = Math.min((time - lastTime) / 1000, 0.05);
       lastTime = time;
-      if (time - lastInteraction.current > RESUME_MS && !dragFrom.current) {
+      const g = glide.current;
+      if (g) {
+        const t = Math.min(1, Math.max(0, (time - g.start) / GLIDE_MS));
+        angles.current.theta = g.from + (g.to - g.from) * (1 - (1 - t) ** 3);
+        lastInteraction.current = time;
+        render();
+        if (t === 1) {
+          glide.current = null;
+          announce();
+        }
+      } else if (time - lastInteraction.current > RESUME_MS && !dragFrom.current) {
         angles.current.phi =
           (angles.current.phi + AUTO_RATE * dt) % (Math.PI * 2);
         render();
@@ -133,6 +221,7 @@ export default function BlochSphere() {
       if (running && rafId === 0) {
         rafId = requestAnimationFrame(frame);
       }
+      loopRunning.current = rafId !== 0;
     }
 
     function updateRunning() {
@@ -140,14 +229,24 @@ export default function BlochSphere() {
       if (!running && rafId !== 0) {
         cancelAnimationFrame(rafId);
         rafId = 0;
+        // A glide the loop can no longer move ends at its pole now.
+        const g = glide.current;
+        if (g) {
+          glide.current = null;
+          angles.current.theta = g.to;
+          render();
+          announce();
+        }
       } else if (running && rafId === 0) {
-        lastTime = performance.now();
+        lastTime = nowMs();
         rafId = requestAnimationFrame(frame);
       }
+      loopRunning.current = rafId !== 0;
     }
 
     const intersectionObserver = new IntersectionObserver((entries) => {
-      intersecting = entries[0]?.isIntersecting ?? true;
+      // The newest entry wins: one callback can carry several for the stage.
+      intersecting = entries[entries.length - 1]?.isIntersecting ?? intersecting;
       updateRunning();
     });
     intersectionObserver.observe(stage);
@@ -155,11 +254,12 @@ export default function BlochSphere() {
     document.addEventListener('visibilitychange', onVisibility);
     motionQuery.addEventListener('change', updateRunning);
 
-    lastTime = performance.now();
+    lastTime = nowMs();
     schedule();
 
     return () => {
       if (rafId !== 0) cancelAnimationFrame(rafId);
+      loopRunning.current = false;
       window.clearTimeout(announceTimer.current);
       intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
@@ -168,8 +268,9 @@ export default function BlochSphere() {
   }, []);
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    glide.current = null;
     dragFrom.current = { x: e.clientX, y: e.clientY };
-    lastInteraction.current = performance.now();
+    lastInteraction.current = nowMs();
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
@@ -179,7 +280,7 @@ export default function BlochSphere() {
     const dx = e.clientX - from.x;
     const dy = e.clientY - from.y;
     dragFrom.current = { x: e.clientX, y: e.clientY };
-    lastInteraction.current = performance.now();
+    lastInteraction.current = nowMs();
     angles.current.phi =
       (angles.current.phi + dx * DRAG_RATE + Math.PI * 2) % (Math.PI * 2);
     angles.current.theta = clampTheta(angles.current.theta + dy * DRAG_RATE);
@@ -188,33 +289,38 @@ export default function BlochSphere() {
 
   const onPointerUp = () => {
     dragFrom.current = null;
-    lastInteraction.current = performance.now();
+    lastInteraction.current = nowMs();
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // Browser and system shortcuts (Ctrl/Cmd+0 resets the zoom) pass through.
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
     const a = angles.current;
     let handled = true;
     if (e.key === 'ArrowLeft') a.phi = (a.phi - KEY_STEP + Math.PI * 2) % (Math.PI * 2);
     else if (e.key === 'ArrowRight') a.phi = (a.phi + KEY_STEP) % (Math.PI * 2);
-    else if (e.key === 'ArrowUp') a.theta = clampTheta(a.theta - KEY_STEP);
-    else if (e.key === 'ArrowDown') a.theta = clampTheta(a.theta + KEY_STEP);
-    else handled = false;
+    // Keys reach the poles exactly (only dragging stays off them), so Up at
+    // |0⟩ stays put instead of stepping off to 1°.
+    else if (e.key === 'ArrowUp') a.theta = Math.max(0, a.theta - KEY_STEP);
+    else if (e.key === 'ArrowDown') a.theta = Math.min(Math.PI, a.theta + KEY_STEP);
+    else if (e.key === '0' || e.key === '1') {
+      e.preventDefault();
+      goToPole(e.key === '0' ? 0 : Math.PI);
+      return;
+    } else handled = false;
     if (handled) {
-      lastInteraction.current = performance.now();
+      glide.current = null;
+      lastInteraction.current = nowMs();
       render();
       e.preventDefault();
-      window.clearTimeout(announceTimer.current);
-      announceTimer.current = window.setTimeout(() => {
-        if (announceRef.current) {
-          announceRef.current.textContent = `theta ${toDeg(a.theta)} degrees, phi ${toDeg(a.phi)} degrees`;
-        }
-      }, ANNOUNCE_DELAY_MS);
+      announce();
     }
   };
 
   // Server-rendered position; identical on hydration since it's constants.
   const { sx, sy } = project(INITIAL_THETA, INITIAL_PHI);
   const poleY = R * Math.cos(TILT);
+  const initial = stateText(INITIAL_THETA, INITIAL_PHI);
 
   return (
     <figure className="bloch-figure">
@@ -226,7 +332,7 @@ export default function BlochSphere() {
         // to the handler instead of presenting this as a static image.
         role="application"
         aria-roledescription="interactive diagram"
-        aria-label="Interactive Bloch sphere. The arrow shows a qubit state. Drag, or use the arrow keys, to rotate it."
+        aria-label="Interactive Bloch sphere. The arrow shows a qubit state. Drag, or use the arrow keys, to rotate it; press 0 or 1 to send it to that pole."
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -248,13 +354,21 @@ export default function BlochSphere() {
             y2={CY + poleY}
           />
           {/* Set off from the outline (R), not from the tilted pole inside it,
-              so neither label touches the circle. */}
-          <text className="bloch-label" x={CX} y={CY - R - 7} textAnchor="middle">
-            |0&#x27E9;
-          </text>
-          <text className="bloch-label" x={CX} y={CY + R + 15} textAnchor="middle">
-            |1&#x27E9;
-          </text>
+              so neither label touches the circle. Pressing a label sends the
+              arrow to its pole; the clear rect is a larger hit area that
+              stops short of the sphere, so it never takes a drag. */}
+          <g className="bloch-pole" onPointerDown={(e) => e.stopPropagation()} onClick={() => goToPole(0)}>
+            <rect x={CX - 18} y={CY - R - 26} width={36} height={24} fill="transparent" />
+            <text className="bloch-label" x={CX} y={CY - R - 7} textAnchor="middle">
+              |0&#x27E9;
+            </text>
+          </g>
+          <g className="bloch-pole" onPointerDown={(e) => e.stopPropagation()} onClick={() => goToPole(Math.PI)}>
+            <rect x={CX - 18} y={CY + R + 2} width={36} height={24} fill="transparent" />
+            <text className="bloch-label" x={CX} y={CY + R + 15} textAnchor="middle">
+              |1&#x27E9;
+            </text>
+          </g>
           {/* State vector */}
           <line ref={vectorRef} className="bloch-vector" x1={CX} y1={CY} x2={sx} y2={sy} />
           <circle ref={tipRef} className="bloch-tip" cx={sx} cy={sy} r={5} />
@@ -266,9 +380,20 @@ export default function BlochSphere() {
       <p ref={readoutRef} className="bloch-readout">
         &theta; = {toDeg(INITIAL_THETA)}&deg; &middot; &phi; = {toDeg(INITIAL_PHI)}&deg;
       </p>
-      <figcaption className="bloch-caption">
-        Every qubit state lives somewhere on this sphere. Go ahead, drag it.
-      </figcaption>
+      {/* The state and its measurement odds, updated with the arrow (refs, not
+          React state, like the readout above). */}
+      <p className="bloch-state">
+        |&psi;&#x27E9; = <span ref={a0Ref}>{initial.a0}</span>&#x202F;|0&#x27E9; +{' '}
+        <span ref={a1Ref}>{initial.a1}</span>&#x202F;e<sup>i&#x202F;<span ref={phaseRef}>{initial.phase}</span></sup>&#x202F;|1&#x27E9;
+      </p>
+      <div className="bloch-probs" aria-hidden="true">
+        <span className="bloch-prob-label">P(0)</span>
+        <span className="bloch-prob-track"><span ref={p0BarRef} className="bloch-prob-bar" style={{ width: initial.p0Pct }} /></span>
+        <span ref={p0Ref} className="bloch-prob-value">{initial.p0}</span>
+        <span className="bloch-prob-label">P(1)</span>
+        <span className="bloch-prob-track"><span ref={p1BarRef} className="bloch-prob-bar bloch-prob-bar--one" style={{ width: initial.p1Pct }} /></span>
+        <span ref={p1Ref} className="bloch-prob-value">{initial.p1}</span>
+      </div>
     </figure>
   );
 }

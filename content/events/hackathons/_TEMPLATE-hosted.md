@@ -25,7 +25,7 @@ image: /images/[PLACEHOLDER].webp
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">[MONTH DAY–DAY, YEAR] • [CITY, STATE]</p>
+      <p class="hackathon-hero-eyebrow">[MONTH DAY–DAY, YEAR]<span class="hackathon-hero-eyebrow-sep"> • </span><span class="hackathon-hero-eyebrow-place">[CITY, STATE]</span></p>
       <h1>[EVENT NAME]</h1>
       <p class="hackathon-hero-tagline">[One plain sentence: what the event is, where, and who sets the challenges.]</p>
     </div>
@@ -124,7 +124,7 @@ image: /images/[PLACEHOLDER].webp
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 <span class="hackathon-schedule-date">[WEEKDAY, MONTH DAY]</span></h3>
+    <h3>Day 1 <time class="hackathon-schedule-date" datetime="[YYYY-MM-DD]">[WEEKDAY, MONTH DAY]</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Check-in</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
@@ -132,7 +132,7 @@ image: /images/[PLACEHOLDER].webp
     </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 <span class="hackathon-schedule-date">[WEEKDAY, MONTH DAY]</span></h3>
+    <h3>Day 2 <time class="hackathon-schedule-date" datetime="[YYYY-MM-DD]">[WEEKDAY, MONTH DAY]</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Hacking begins</span></div>
@@ -140,7 +140,7 @@ image: /images/[PLACEHOLDER].webp
     </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 <span class="hackathon-schedule-date">[WEEKDAY, MONTH DAY]</span></h3>
+    <h3>Day 3 <time class="hackathon-schedule-date" datetime="[YYYY-MM-DD]">[WEEKDAY, MONTH DAY]</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Project submissions due</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">[TIME]</span><span class="hackathon-schedule-event">Judging presentations</span></div>
@@ -239,7 +239,7 @@ image: /images/[PLACEHOLDER].webp
 
 <!-- The tag and the note are optional: use them for a hotel with a group
      rate. Distance is from the venue. -->
-<ul class="hackathon-hotels">
+<ul class="hackathon-hotels" role="list">
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">
       <span class="hackathon-hotel-tag">Group rate</span>

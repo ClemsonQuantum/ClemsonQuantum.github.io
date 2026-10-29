@@ -25,7 +25,8 @@ import {
 // gliding bird (soarerFlight.ts) crosses the screen behind the near clouds,
 // faint like them (--qff-page-soarer-alpha). Same discipline as CloudSky: the
 // loop runs only while the tab is visible and motion is allowed, capped at
-// 30 frames a second; reduced motion gets one still frame and no bird.
+// 30 frames a second at rest and 60 while the page scrolls (so the parallax
+// keeps up with the text); reduced motion gets one still frame and no bird.
 
 // Far → near: sideways speed (px/s), share of the scroll each layer rises
 // by, size, and opacity.
@@ -41,6 +42,7 @@ const MAX_CLOUDS = 14;
 // full-screen canvas skip high-DPI resolution.
 const DPR = 1;
 const FRAME_MS = 1000 / 30 - 2;
+const FRAME_MS_SCROLL = 1000 / 60 - 2;
 
 interface PageCloud {
   layer: number;
@@ -79,6 +81,7 @@ export default function PageClouds() {
     let soarSprites: SpriteSet<SoarerSpecies> = {};
     let soarAlpha = 0.5;
     let elapsed = 0;
+    let lastScroll = 0; // scrollY at the last draw
 
     const soarW = () => (width < 640 ? 48 : 72);
     const sky = (): SoarerSky => ({
@@ -132,6 +135,8 @@ export default function PageClouds() {
 
     function resize() {
       const prevWidth = width;
+      const prevHeight = height;
+      const prevMargin = margin();
       width = canvas.clientWidth;
       height = canvas.clientHeight;
       canvas.width = Math.round(width * DPR);
@@ -142,6 +147,19 @@ export default function PageClouds() {
       } else {
         for (const c of clouds) c.x *= width / prevWidth;
         if (glider) glider.x *= width / prevWidth;
+        // A phone toolbar showing or hiding changes the height and so the
+        // wrap band; re-base each cloud so it stays where it is on screen
+        // instead of the whole layer jumping (as HummingbirdZone avoids).
+        if (height !== prevHeight) {
+          const scroll = reduced ? 0 : window.scrollY;
+          const prevBand = prevHeight + 2 * prevMargin;
+          const m = margin();
+          for (const c of clouds) {
+            const shift = scroll * LAYERS[c.layer].parallax;
+            const shown = ((((c.y - shift) % prevBand) + prevBand) % prevBand) - prevMargin;
+            c.y = shown + m + shift;
+          }
+        }
       }
       // The bird's sprite size depends on the width (phone or not).
       if (!prevWidth || prevWidth < 640 !== width < 640) readColors();
@@ -169,6 +187,7 @@ export default function PageClouds() {
       const m = margin();
       const band = height + 2 * m;
       const scroll = reduced ? 0 : window.scrollY;
+      lastScroll = scroll;
       let glided = false;
       for (const c of clouds) {
         if (!glided && c.layer === LAYERS.length - 1) {
@@ -217,7 +236,10 @@ export default function PageClouds() {
         step(dt);
         draw();
       },
-      { frameMs: FRAME_MS, onMotionChange: onMotion },
+      {
+        frameMs: () => (window.scrollY !== lastScroll ? FRAME_MS_SCROLL : FRAME_MS),
+        onMotionChange: onMotion,
+      },
     );
     window.addEventListener('resize', resize);
     scheme.addEventListener('change', onScheme);

@@ -3,14 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs",
+    "predev": "node scripts/generate-thumbnails.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/verify-bloch-sphere.mjs",
+    "prebuild": "node scripts/generate-thumbnails.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs && node scripts/verify-bloch-sphere.mjs",
     "build": "next build",
     "preview": "python3 -m http.server 4000 --directory out",
     "lint": "eslint . --max-warnings=0 && npm run lint:css",
     "lint:css": "stylelint \"assets/css/**/*.css\"",
     "typecheck": "tsc --noEmit",
+    "todo": "node scripts/list-placeholders.mjs",
+    "validate": "node scripts/validate-content.mjs",
+    "headshot": "node scripts/add-headshot.mjs",
     "verify:physics": "node scripts/verify-bloch-sphere.mjs && node scripts/verify-hydrogen.mjs && node scripts/verify-blackhole.mjs && node scripts/verify-kepler.mjs && node scripts/verify-qubits.mjs && node scripts/verify-cameras.mjs && node scripts/verify-entangle.mjs && node scripts/verify-sky.mjs"
   },
   "dependencies": {

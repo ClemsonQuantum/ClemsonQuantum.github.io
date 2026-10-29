@@ -5,18 +5,11 @@ import Link from 'next/link';
 // Not lib/content: content.ts pulls in Node's `fs`, which can't be bundled
 // into a client component.
 import { formatDate } from '@/lib/dates.mjs';
-import { capitalize } from '@/lib/types';
-import type { PageMeta } from '@/lib/types';
+import { workTypeLabel as typeLabel, type PageMeta } from '@/lib/types';
 import { WORK_TYPES } from '@/lib/work-types.mjs';
 import FilterButtons from './FilterButtons';
 
 const ALL = 'all';
-
-// The `conference` type is a conference talk (posters and papers are often
-// presented at conferences too), so its label says what it is: Talk.
-function typeLabel(type: string): string {
-  return type === 'conference' ? 'Talk' : capitalize(type);
-}
 
 function pluralLabel(type: string): string {
   const label = typeLabel(type);
@@ -55,7 +48,7 @@ export default function StudentWorkList({ works }: { works: PageMeta[] }) {
 
       {visible.length === 0 ? (
         <p className="sw-empty">
-          No {filter === ALL ? 'submissions' : pluralLabel(filter).toLowerCase()}{' '}
+          No {filter === ALL ? 'student work' : pluralLabel(filter).toLowerCase()}{' '}
           yet. Check back soon.
         </p>
       ) : (

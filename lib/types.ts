@@ -10,8 +10,6 @@ export interface PageMeta {
   dateDisplay: string | null;
   summary: string | null;
   image: string | null;
-  external_url: string | null;
-  source_url: string | null;
   source: string | null;
   type: string | null;
   authors: Author[] | null;
@@ -31,6 +29,12 @@ export interface PageMeta {
 }
 
 /** Capitalize the first letter ("poster" -> "Poster"). */
-export function capitalize(s: string): string {
+function capitalize(s: string): string {
   return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** A student-work type's label. `conference` is a conference talk (posters
+ * and papers are often presented at conferences too), so it says Talk. */
+export function workTypeLabel(type: string): string {
+  return type === 'conference' ? 'Talk' : capitalize(type);
 }

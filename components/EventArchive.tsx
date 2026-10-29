@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import { flushSync } from 'react-dom';
 // lib/types only — lib/content uses Node fs and cannot enter a client bundle.
 import type { PageMeta } from '@/lib/types';
 import FilterButtons from './FilterButtons';
@@ -56,10 +57,32 @@ export default function EventArchive({
   }, [items]);
 
   const [filter, setFilter] = useState<string>(ALL);
+  // Spoken after each filter change (not on load): how many cards now show.
+  const [status, setStatus] = useState('');
   const visible =
     filter === ALL
       ? items
       : items.filter((i) => i.date && semesterOf(i.date) === filter);
+
+  const noun = (n: number) =>
+    kind === 'news' ? (n === 1 ? 'news story' : 'news stories') : n === 1 ? 'event' : 'events';
+
+  // A term change glides the cards to their new places (a view transition,
+  // each card named by its slug) where the browser supports it and motion is
+  // allowed; otherwise the grid simply updates.
+  const choose = (value: string) => {
+    const n = value === ALL ? items.length : (counts.get(value) ?? 0);
+    const apply = () => {
+      setFilter(value);
+      setStatus(value === ALL ? `Showing all ${n} ${noun(n)}` : `Showing ${n} ${noun(n)} from ${value}`);
+    };
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (typeof document.startViewTransition === 'function' && !reduced) {
+      document.startViewTransition(() => flushSync(apply));
+    } else {
+      apply();
+    }
+  };
 
   return (
     <>
@@ -72,9 +95,12 @@ export default function EventArchive({
             ...semesters.map((s) => ({ value: s, text: s, count: counts.get(s) ?? 0 })),
           ]}
           value={filter}
-          onChange={setFilter}
+          onChange={choose}
         />
       )}
+      <p className="sr-only" role="status">
+        {status}
+      </p>
 
       {visible.length === 0 ? (
         <p className="sw-empty">{emptyText}</p>
@@ -88,6 +114,7 @@ export default function EventArchive({
               kind={kind}
               showFooter={showFooter}
               eager={i < 3}
+              transitionName={`card-${item.slug}`}
             />
           ))}
         </div>

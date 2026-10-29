@@ -88,8 +88,6 @@ function readAllPages(contentSubdir: string): PageMeta[] {
       dateDisplay: data.dateDisplay ?? null,
       summary: data.summary ?? null,
       image: data.image ?? null,
-      external_url: data.external_url ?? null,
-      source_url: data.source_url ?? null,
       source: data.source ?? null,
       type: data.type ?? null,
       authors: data.authors ?? null,

@@ -76,7 +76,7 @@ link: "https://example.com/related-page"
 Write the abstract here.
 ```
 
-`pdf` (a file in `public/files/`) powers the embedded viewer and "Download PDF" button on the detail page (`pdf_label` replaces the word PDF on that button, e.g. `paper` when the page also shows a poster image); `link` adds a related external link. Both are optional — the detail page still exists either way.
+`image` (a file in `public/images/`) shows the poster itself on the detail page, with a full-size link and a download button. `pdf` (a file in `public/files/`) powers the embedded viewer and "Download PDF" button on the detail page (`pdf_label` replaces the word PDF on that button, e.g. `paper` when the page also shows a poster image); `link` adds a related external link. All three are optional — the detail page still exists either way.
 
 ---
 
@@ -89,19 +89,21 @@ The `---` block at the top of each file is called "front matter." Here are all t
 | `title` | All | Yes | Page/article title |
 | `date` | All | Yes | Date in `YYYY-MM-DD` format. Events may use `TBD` (with a `dateDisplay` override): it shows the Upcoming badge and lists after the dated upcoming events, and it never appears in the homepage Events list while there is a featured event |
 | `dateDisplay` | All | No | Human-readable date override shown on cards (e.g. a date range) |
-| `summary` | All | No | Short description for listing cards |
-| `image` | All | No | Thumbnail image path (`/images/...`). On hosted event pages it is also the link-preview image, so use a 16:9 banner at 1200×675 |
+| `summary` | All | No | Short description for listing cards. On pages with their own URL it is also the page's description in search engines and link previews (and in the event structured data), so keep it under about 155 characters |
+| `image` | All | No | Thumbnail image path (`/images/...`). For event and news cards, `npm run dev` or `npm run build` also makes a small phone copy in `public/images/thumbs/` and lists it in `data/thumbnails.json`: commit both with the image. On hosted event pages it is also the link-preview image, so use a 16:9 banner at 1200×675; on student work pages it is the poster and the link-preview image, so export it at 1600×1200 |
+| `image_mobile` | Featured event | No | A 4:3 crop of `image` (e.g. 860×645) for the homepage featured band on phones, where the 16:9 art would show its text small. Only the featured event (`FEATURED_EVENT` in `lib/featured.ts`) uses it |
 | `end_date` | Events | No | Last day of a multi-day event, `YYYY-MM-DD`. Keeps the Upcoming badge on through that day. On hosted events, with `location`, it also turns on Event structured data (Google rich results) for the page |
-| `location` | Hosted events | No | Venue name for the structured data (e.g. `Watt Family Innovation Center`) |
+| `location` | Hosted events | No | Venue name for the structured data (e.g. `Watt Family Innovation Center`). It also fills the Location line of the homepage featured band (when the page is the featured event) and the location of every session in the add-to-calendar file, unless a session sets its own |
 | `street_address` | Hosted events | No | Venue street address for the structured data; city, state, and ZIP default to Clemson |
 | `registration_url` | Hosted events | No | Absolute registration link, emitted as the structured-data offer |
+| `calendar` | Hosted events | No | Sessions for the add-to-calendar file: `start` and `end` as quoted 24-hour Clemson times (`"17:00"`), then `sessions`, a list of `- date: YYYY-MM-DD` with `title: "..."` under each. A session that differs from the rest adds its own `start:` and `end:` (both) or `location:` (a room) under its title. The build writes `/calendar/<page-name>.ics`; link it from the page. The validator checks the times, that every session falls inside the event's dates, and, on a Fall Fest page, that each session row shows the same day, time and title (a room or a label may sit in the row's line too) |
 | `draft` | All | No | `true` keeps the page on your machine only: the dev server shows it like any page, but production builds (the published site) leave it out entirely, with no page, listing, sitemap, or search entry. Delete the line to publish. Unlike `unlisted`, nothing about the page reaches the live site except any images or files it uses in `public/`, which deploy with everything else. Its file still goes to GitHub if you commit it |
 | `unlisted` | All | No | `true` builds the page at its URL but keeps it out of every listing (archives, nav, homepage, sitemap, search) and tags it `noindex`, so it can be reviewed before it is announced. Delete the line (or set `false`) to publish it normally. The source file is still visible in the public GitHub repo |
 | `external_url` | Events | Meetings: yes. Other events: no | External event link. The card links there and no internal page is generated. Required for meetings, which have no detail pages (the content validator enforces this) |
 | `source` | News | Yes | Outlet named on homepage news cards |
 | `source_url` | News | Yes | Link to the original article; the card links there directly |
-| `type` | Student work | No | `poster`, `paper`, or `conference` |
-| `authors` | Student work | No | List of `- name: "..."` entries |
+| `type` | Student work | No | `poster`, `paper`, or `conference` (labeled Talk on the site); any other value fails the content validator |
+| `authors` | Student work | No | List of `- name: "..."` entries; an optional `affiliation: "..."` under a name shows in parentheses after it on the detail page |
 | `mentors` | Student work | No | List of plain `- "..."` name strings |
 | `pdf` | Student work | No | Path in `public/files/` — drives the embedded viewer and download button |
 | `pdf_label` | Student work | No | Word after Download on the PDF button (default `PDF`); use `paper` when the page also shows a poster image |
@@ -118,13 +120,16 @@ Event pages (hackathons and workshops) turn a few marker classes into live compo
 | `event-countdown` | an empty `<div>` | `data-target` (start) and `data-end`, ISO 8601 with a UTC offset; optional `data-sr-summary`, `data-ended-message`, `data-live-message` | `data-target` is required, and both must parse |
 | `hackathon-hero--quantum` | the hero `<div>` | none | none |
 | `qff-hero--sky` | the Qiskit Fall Fest hero `<div>` | `data-hummingbirds` 0–3, `data-soarers` 0–3 | both 0–3 |
+| `qff-page` | the `<div>` that wraps the whole Fall Fest page; it adds the layer the inline `qff-bird-zone` birds roam in (without it they never appear) | none | none |
 | `qff-page-clouds` | an empty `<div aria-hidden="true">` near the top of `.qff-page` | none | one per page |
+| `qff-challenges` | the `<div>` around the challenge `<details>` rows; a same-page link to a row's `id` (e.g. `#challenge-3`) opens that row before the jump | none | none |
 | `qff-leaderboard` | an empty `<div>` | `data-src`, `data-sort` (`asc` or `desc`), `data-score-label`, `data-highlight`, `data-label`, `data-empty` | `data-src` empty or a published Google Sheet (`https://docs.google.com/…`); `data-sort` `asc` or `desc` |
 | `qff-cryostat` | a `<div>` in the dark band | `data-label` (alt text) | `data-label` is required |
 | `qff-bird-zone` | an empty `<span>` | `data-birds` 1–4, `data-variant` (`pink` or `lavender`) | both values |
 | `qff-decade` | a `<span>` holding the final text, e.g. `2016–2026` | `data-from`, `data-to` (years) | none |
 | `sponsor-carousel`, `sponsor-carousel--reverse` | a `<div>` of `<a class="hackathon-sponsor-logo">` logos | none | none |
 | `href="#participant-updates"` | an `<a>` | `data-event` (the event name) | `data-event` is required |
+| `share-button` | an empty `<span>` at the end of the hero's CTA row; add `hackathon-share` (Quantathon pages) or `qff-share` (Fall Fest pages) for its size there | `data-title` (the event name for the share sheet) | none |
 | `scq4-stage`, `scq4-hero--sky`, `data-stage` cues | archived v4 design; see "Scroll stage" below | see below | none |
 
 The sections below cover the Qiskit Fall Fest blocks and the leaderboards in more detail.
@@ -133,7 +138,7 @@ The sections below cover the Qiskit Fall Fest blocks and the leaderboards in mor
 
 ## Scroll stage (SC Quantathon v4 page)
 
-**Shelved 2026-10-12.** The current v4 page (a local-only draft) uses the simple v3-style design. The scroll-stage version is kept in `events/hackathons/_ARCHIVE-sc-quantathon-v4-2027-scroll-stage.md` (the leading underscore keeps it off the site). Its code is kept in `components/scq4/`, `lib/physics/`, and `assets/css/scq4-archive.css`, except the anyon braid and orrery scenes, which were removed on 2026-10-15. To bring it back, follow the note at the top of that file. The rest of this section describes the archived version.
+**Shelved 2026-10-12.** The current v4 page (a local-only draft) uses the simple v3-style design. The scroll-stage version is kept in `events/hackathons/_ARCHIVE-sc-quantathon-v4-2027-scroll-stage.md` (the leading underscore keeps it off the site; like the v4 page, the file is local only and not in the GitHub repo). Its code is kept in `components/scq4/`, `lib/physics/`, `lib/webgl.ts`, and `assets/css/scq4-archive.css`, except the anyon braid and orrery scenes, which were removed on 2026-10-15. To bring it back, follow the note at the top of that file. The rest of this section describes the archived version.
 
 The v4 page (`events/hackathons/sc-quantathon-v4-2027.md`) had a scroll stage: a fixed canvas behind the page where a hydrogen atom, a pair of entangled qubits, and the committee's solar system appear as you scroll. It is driven entirely by attributes in the markdown, so the choreography can change without touching code.
 
@@ -171,8 +176,8 @@ Two more attributes work on any cue: `data-stage-sun="1"` (atom cues) collapses 
 
 The Challenges sections on the Qiskit Fall Fest 2026 and 2027 pages have live leaderboards: an overall one and one inside each challenge. Each reads a Google Sheet, so editing the sheet updates the page within a few minutes (Google refreshes a published sheet every few minutes; the page re-reads it every minute), with no rebuild.
 
-1. Make a Google Sheet with one tab per leaderboard (Overall, and one per challenge). Column A is the name, column B the score; an optional first row of headers is skipped.
-2. File → Share → Publish to web. Pick a single tab, choose "Comma-separated values (.csv)", and publish. Copy the link (it ends in `output=csv`).
+1. Make a Google Sheet with one tab per leaderboard (Overall, and one per challenge). Row 1 is a header (`Name`, `Points`), then one row per person: column A the name, column B the score as a number. Keep the header: without it, a first row whose score is still blank is taken for a header and dropped. Put nothing above the header, and list each person once.
+2. File → Share → Publish to web. Pick a single tab, choose "Comma-separated values (.csv)", and publish. Copy the link (it ends in `output=csv`). Everything in a published tab is public (the link is in the page source), so keep only names and scores in it, never emails.
 3. Paste it into that leaderboard's `data-src="…"` in `events/workshops-and-seminars/qiskit-fall-fest-2026.md` (or `-2027.md`). While `data-src` is empty the page shows the "opens …" note instead.
 
 The attributes on each `<div class="qff-leaderboard">`:
@@ -196,7 +201,7 @@ The page shows the top 10 with a "Show all" button. Names appear exactly as type
 - **Page clouds** (2026 page). `<div class="qff-page-clouds" aria-hidden="true"></div>` near the top of `.qff-page` lets faint clouds drift behind the whole page (one per page). They hold still for visitors who prefer reduced motion.
 - **Decade counter** (2026 page). `<span class="qff-decade" data-from="2016" data-to="2026">2016–2026</span>` in the band's eyebrow counts the end year up from `data-from` to `data-to` as the band scrolls past, in step with the cryostat. The component writes the range itself from those two attributes (any text inside the span is replaced), and screen readers, search engines, and reduced-motion visitors always get the full range.
 - **Hairlines.** Each `<div class="qff-rule" aria-hidden="true"></div>` draws in from the left as it scrolls into view (browsers without scroll-driven animation, and reduced motion, show the full line). Add `qff-rule--static` to a rule in the first screen so it loads fully drawn; on the 2026 page that is the first two, after the hero and after the hosted strip.
-- **Session and challenge files** go in `public/files/qff-<year>/`. On the 2026 page each session row has a Notebook chip and a Slides chip (there are no separate notes; they are part of each notebook), and each challenge row has Challenge notebook and Files. The chips start as plain text after a hidden screen-reader label that says when they will be posted. To post a file, replace its chip with a link, e.g. `<a class="qff-day-resource" href="/files/qff-2026/(file)">Notebook</a>`, and delete the row's `<span class="sr-only">` label once every chip in it is a link.
+- **Session and challenge files** go in `public/files/qff-<year>/`. On the 2026 page each session row has a Notebook chip and a Slides chip (there are no separate notes; they are part of each notebook) plus a Challenge link to its challenge row, and each challenge row has Challenge notebook and Files. The file chips start as plain text after a hidden screen-reader label that says when they will be posted. To post a file, replace its chip with a link that names its row for screen readers, e.g. `<a class="qff-day-resource" href="/files/qff-2026/session-1-notebook.ipynb" download>Notebook<span class="sr-only">: Quantum and Qiskit 101</span></a>` (a PDF opens in a new tab instead: `target="_blank" rel="noopener noreferrer"` in place of `download`), and once every file chip in the row is a link, delete that label (the row's first `<span class="sr-only">`; keep the one inside the Challenge link). Name files in lowercase with dashes, no spaces, commas or parentheses; the validator checks that each linked file exists. The site only changes when you push, so prepare each release's edits ahead and push a little before the 6:00 PM release.
 - Session and challenge rows alternate violet and pink on their own (odd rows violet, even rows pink); there is no class to set.
 
 ## Tips
@@ -207,5 +212,7 @@ The page shows the top 10 with a "Show all" button. Names appear exactly as type
   - Events (hackathons, workshops, meetings): descriptive name first, **year at the end** (e.g. `my-event-2026.md` → `/events/.../my-event-2026/`).
   - News: name by date (e.g. `2026-03-15.md`), with an optional slug suffix (e.g. `2026-05-18-scalab-initiative.md`).
 - **Keeping words together:** a time, date, room, course code, or name that must never break across lines takes a no-break space (U+00A0) instead of a plain space, e.g. "5:00 PM" or "Watt Family Innovation Center"; type the character itself, since `&nbsp;` would show up in search results. A hyphen that must not break is a no-break hyphen (U+2011), and the en dash of a range takes a word joiner (U+2060) right after it. On Fall Fest pages, wrap a range in `<span class="qff-nowrap">` instead, as those pages already do.
-- **Dates:** The `date:` field must be `YYYY-MM-DD` format — listings are sorted by this field, not by the filename, so the filename order doesn't affect sorting.
+- **Alt text:** every `<img>` in a page needs an `alt` that says what the image shows, or `alt=""` when it is decorative (a logo next to its own name). The validator rejects placeholders: a lone word like "image" or "photo", a number, a file or camera name (`IMG_2041.jpg`), or a template's `[BRACKETS]`.
+- **Schedule dates:** schedule days are `<time>` tags with the date for machines, e.g. `<time class="hackathon-schedule-date" datetime="2026-09-25">Friday, September 25</time>`, or `<time datetime="2026-11-09">Mon, Nov 9</time>` inside a Fall Fest `qff-day-meta`. The validator checks each `datetime` is a real day inside the event's dates, so update both when you copy a page to a new year.
+- **Dates:** The `date:` field must be `YYYY-MM-DD` format (or `TBD` on an event, with `dateDisplay` set) — listings are sorted by this field, not by the filename, so the filename order doesn't affect sorting.
 - **Adding a new event type:** Currently supports hackathons, workshops & seminars, and meetings. To add a new category, a developer will need to create a new folder and route.

@@ -2,6 +2,8 @@
 title: "[WORKSHOP/SEMINAR NAME]"
 date: YYYY-MM-DD
 summary: "[One-line description]"
+# Also the link-preview image when the site generates a page (no
+# external_url): a 16:9 banner at 1200×675.
 image: "/images/[PLACEHOLDER].webp"
 # For an event hosted elsewhere (e.g. an IBM Fall Fest signup page), set
 # external_url so the card links straight there. Without it, the site

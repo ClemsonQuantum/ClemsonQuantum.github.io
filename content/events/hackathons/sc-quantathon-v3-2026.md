@@ -14,7 +14,7 @@ image: "/images/scq-v3-banner.webp"
 <div class="hackathon-hero hackathon-hero--quantum">
   <div class="hackathon-hero-inner">
     <div class="hackathon-hero-text">
-      <p class="hackathon-hero-eyebrow">September 25–27, 2026 • Clemson, South Carolina</p>
+      <p class="hackathon-hero-eyebrow">September 25–27, 2026<span class="hackathon-hero-eyebrow-sep"> • </span><span class="hackathon-hero-eyebrow-place">Clemson, South Carolina</span></p>
       <h1>SC Quantathon v3</h1>
       <p class="hackathon-hero-tagline">A student-led quantum hackathon at Clemson University, with challenges set by Savannah River National Laboratory and Quantum Rings.</p>
     </div>
@@ -23,10 +23,11 @@ image: "/images/scq-v3-banner.webp"
 </div>
 
 <div class="hackathon-hero-cta">
-  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T20:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has ended. Thanks to everyone who took part." data-live-message="Happening now: SC Quantathon v3 is live"></div>
+  <div class="event-countdown" data-target="2026-09-25T17:00:00-04:00" data-end="2026-09-27T20:00:00-04:00" data-sr-summary="The event starts September 25, 2026." data-ended-message="SC Quantathon v3 has ended. Thanks to everyone who took part." data-live-message="Happening now: SC Quantathon v3 is live"></div>
   <div class="hackathon-cta-row">
     <a href="/events/workshops-and-seminars/sc-quantathon-v3-bootcamp-2026/" class="hackathon-cta hackathon-cta--ghost">Bootcamp</a>
     <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer" class="hackathon-cta hackathon-cta--secondary">Devpost</a>
+    <span class="share-button hackathon-share" data-title="SC Quantathon v3"></span>
   </div>
 </div>
 
@@ -38,7 +39,7 @@ image: "/images/scq-v3-banner.webp"
 
 Teams worked through the weekend with mentors and organizers on hand, and sponsors held firesides on Saturday.
 
-<p>Past editions: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1 (2024)</a> and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2 (2025)</a>.</p>
+<p>Past editions, hosted by SC Quantum in Columbia: <a href="https://www.scquantum.org/events/quantathon-v1" target="_blank" rel="noopener noreferrer">SC Quantathon v1</a> (October 10–⁠13, 2024) and <a href="https://www.scquantum.org/events/iqc25-championship-quantathonv2" target="_blank" rel="noopener noreferrer">SC Quantathon v2</a> (October 9–⁠12, 2025).</p>
 
 <p>Recap of SC Quantathon v2 (2025) in Columbia:</p>
 
@@ -101,7 +102,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
 
 <div class="hackathon-schedule">
   <div class="hackathon-schedule-day">
-    <h3>Day 1 <span class="hackathon-schedule-date">Friday, September 25</span></h3>
+    <h3>Day 1 <time class="hackathon-schedule-date" datetime="2026-09-25">Friday, September 25</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:00 PM</span><span class="hackathon-schedule-event">Check-in</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">5:30 PM</span><span class="hackathon-schedule-event">Welcome ceremony</span></div>
@@ -110,7 +111,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
     </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 2 <span class="hackathon-schedule-date">Saturday, September 26</span></h3>
+    <h3>Day 2 <time class="hackathon-schedule-date" datetime="2026-09-26">Saturday, September 26</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">9:30 AM</span><span class="hackathon-schedule-event">Opening ceremony</span></div>
@@ -122,7 +123,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
     </div>
   </div>
   <div class="hackathon-schedule-day">
-    <h3>Day 3 <span class="hackathon-schedule-date">Sunday, September 27</span></h3>
+    <h3>Day 3 <time class="hackathon-schedule-date" datetime="2026-09-27">Sunday, September 27</time></h3>
     <div class="hackathon-schedule-items">
       <div class="hackathon-schedule-item"><span class="hackathon-time">12:00 AM</span><span class="hackathon-schedule-event">Midnight snack</span></div>
       <div class="hackathon-schedule-item"><span class="hackathon-time">8:30 AM</span><span class="hackathon-schedule-event">Breakfast</span></div>
@@ -173,7 +174,7 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
   <div class="hackathon-sponsor-tier">
     <h3>Powered by</h3>
     <div class="hackathon-sponsor-logos">
-      <a class="hackathon-sponsor-logo" href="https://www.qbraid.com/" target="_blank" rel="noopener noreferrer">
+      <a class="hackathon-sponsor-logo" href="https://qbraid.com/" target="_blank" rel="noopener noreferrer">
         <picture>
           <source srcset="/images/qbraid-logo-white.webp" media="(prefers-color-scheme: dark)" />
           <img src="/images/qbraid-logo.webp" alt="qBraid" width="612" height="168" loading="lazy" />
@@ -232,9 +233,9 @@ Teams worked through the weekend with mentors and organizers on hand, and sponso
 
 ## Where to Stay
 
-Hotels near Clemson University. Dollar signs are estimates for prices. Shuttles ran between these hotels and the Watt Center each morning and evening of the event.
+Hotels near Clemson University. Dollar signs are estimates for prices. Shuttles ran between these hotels and the Watt Center each morning and evening of the event.
 
-<ul class="hackathon-hotels">
+<ul class="hackathon-hotels" role="list">
   <li class="hackathon-hotel">
     <div class="hackathon-hotel-main">
       <span class="hackathon-hotel-tag">Group rate</span>
@@ -282,7 +283,7 @@ These were the answers for the September 2026 event.
   </details>
   <details class="hackathon-faq-item">
     <summary>How much does it cost?</summary>
-    <p>Nothing. SC Quantathon v3 is free to attend, and meals and event materials are provided.</p>
+    <p>Nothing. SC Quantathon v3 is free to attend, and meals and event materials are provided.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Do I need a team before I arrive?</summary>
@@ -310,7 +311,7 @@ These were the answers for the September 2026 event.
   </details>
   <details class="hackathon-faq-item">
     <summary>How and when do we submit?</summary>
-    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at 12:00 PM and awards are at 6:00 PM.</p>
+    <p>Through <a href="https://sc-quantathon-v3.devpost.com/" target="_blank" rel="noopener noreferrer">Devpost</a>. Project submissions are due Sunday, September 27 at 10:00 AM. Devpost lists exactly what each team needs to include. Judging presentations begin at 12:00 PM and awards are at 6:00 PM.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>How does judging work?</summary>
@@ -322,7 +323,7 @@ These were the answers for the September 2026 event.
   </details>
   <details class="hackathon-faq-item">
     <summary>How do I register?</summary>
-    <p>Registration for SC Quantathon v3 has closed.</p>
+    <p>Registration for SC Quantathon v3 has closed.</p>
   </details>
   <details class="hackathon-faq-item">
     <summary>Is there a code of conduct?</summary>

@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Checks for the learning-resources Bloch sphere's camera (lib/blochSphere.mjs,
+ * Checks for the learning-resources Bloch sphere's camera and state readout (lib/blochSphere.mjs,
  * drawn by components/BlochSphere.tsx). The one physics check prebuild runs:
  * it guards the only live figure; the full suite is npm run verify:physics.
  * Run: node scripts/verify-bloch-sphere.mjs   (exit code 1 on any failure)
@@ -26,17 +26,21 @@
  *  6. The SVG's closed forms: equator semi-axes (R, R sin t), pole offset
  *     R cos t, and the meridian at phi_m = pi/2 - t, whose half-width
  *     cos(phi_m) = sin t equals the equator's half-height.
+ *  7. The state readout (blochState): P(0) + P(1) = 1, the amplitudes
+ *     reproduce the Bloch vector (<sigma_x>, <sigma_y>, <sigma_z>), |0>, |1>,
+ *     |+> and |-> have their textbook amplitudes and sit on their axes, and
+ *     theta outside [0, pi] throws.
  * Limits: at t -> 0 the equator collapses to a line (sin t -> 0) and the
  * poles reach the rim (cos t -> 1); at t -> pi/2 the view is from the pole
  * and the equator is a full circle. Both are checked on the closed forms.
  */
 
 import assert from 'node:assert/strict';
-import { BLOCH_SPHERE_TILT, blochSphereCamera } from '../lib/blochSphere.mjs';
+import { BLOCH_SPHERE_TILT, blochSphereCamera, blochState } from '../lib/blochSphere.mjs';
 
 const TOL = 1e-12;
 const SAMPLES = 360; // equator points per sampled check
-const STEPS = 6;
+const STEPS = 7;
 let step = 0;
 /** @param {string} msg */
 const log = (msg) => console.log(`[${++step}/${STEPS}] ${msg}`);
@@ -140,5 +144,49 @@ const top = blochSphereCamera(Math.PI / 2);
 assert.ok(Math.abs(flat.v[1]) < 1e-8 && Math.abs(flat.v[2] - 1) < 1e-12, 'tilt -> 0: equator must flatten to a line, poles on the rim');
 assert.ok(Math.abs(top.v[1] - 1) < TOL && Math.abs(top.v[2]) < TOL, 'tilt -> pi/2: equator must be a full circle, poles at the center');
 log('equator semi-axes (1, sin t), pole offset cos t, meridian width = equator height; t -> 0 and t -> pi/2 limits');
+
+// 7. The state readout (blochState).
+//    |psi> = cos(theta/2)|0> + e^{i phi} sin(theta/2)|1>, so <sigma_x> = 2 a0 a1 cos phi,
+//    <sigma_y> = 2 a0 a1 sin phi and <sigma_z> = a0^2 - a1^2 must be the Bloch vector.
+for (let i = 0; i <= 36; i++) {
+  for (let j = 0; j < 24; j++) {
+    const theta = (Math.PI * i) / 36;
+    const phi = (2 * Math.PI * j) / 24 - Math.PI; // includes negative phi
+    const st = blochState(theta, phi);
+    assert.ok(Math.abs(st.p0 + st.p1 - 1) < TOL, `theta ${theta}, phi ${phi}: P(0) + P(1) = ${st.p0 + st.p1}`);
+    assert.ok(st.phase >= 0 && st.phase < 2 * Math.PI, `phi ${phi}: phase ${st.phase} outside [0, 2 pi)`);
+    const want = bloch(theta, phi);
+    const got = [2 * st.a0 * st.a1 * Math.cos(st.phase), 2 * st.a0 * st.a1 * Math.sin(st.phase), st.a0 * st.a0 - st.a1 * st.a1];
+    for (let k = 0; k < 3; k++) assert.ok(Math.abs(got[k] - want[k]) < 1e-12, `theta ${theta}, phi ${phi}: expectation ${k} = ${got[k]}, Bloch vector ${want[k]}`);
+  }
+}
+assert.ok(blochState(0, 0).p0 === 1 && blochState(Math.PI, 0).p1 === 1, 'poles: |0> must give P(0) = 1 and |1> P(1) = 1');
+const eq = blochState(Math.PI / 2, 0);
+assert.ok(Math.abs(eq.p0 - 0.5) < TOL && Math.abs(eq.p1 - 0.5) < TOL, 'equator: P(0) = P(1) = 1/2');
+// The named states as (theta, phi), through blochState: their amplitudes
+// (c0, c1 = a1 e^{i phase}) and Bloch vectors. |+> = (|0> + |1>)/sqrt2 is +x
+// and |-> = (|0> - |1>)/sqrt2 is -x (e^{i pi} = -1).
+const S2 = Math.SQRT1_2;
+/** @type {[string, number, number, [number, number], number[]][]} */
+const named = [
+  ['|0>', 0, 0, [1, 0], [0, 0, 1]],
+  ['|1>', Math.PI, 0, [0, 1], [0, 0, -1]],
+  ['|+>', Math.PI / 2, 0, [S2, S2], [1, 0, 0]],
+  ['|->', Math.PI / 2, Math.PI, [S2, -S2], [-1, 0, 0]],
+];
+for (const [label, theta, phi, [c0, c1], axis] of named) {
+  const st = blochState(theta, phi);
+  const re1 = st.a1 * Math.cos(st.phase);
+  const im1 = st.a1 * Math.sin(st.phase);
+  assert.ok(
+    Math.abs(st.a0 - c0) < TOL && Math.abs(re1 - c1) < TOL && Math.abs(im1) < TOL,
+    `${label}: amplitudes (${st.a0}, ${re1} + ${im1}i), want (${c0}, ${c1})`,
+  );
+  const v = [2 * st.a0 * re1, 2 * st.a0 * im1, st.a0 * st.a0 - st.a1 * st.a1];
+  for (let k = 0; k < 3; k++) assert.ok(Math.abs(v[k] - axis[k]) < TOL, `${label}: Bloch vector ${v} vs ${axis}`);
+}
+assert.throws(() => blochState(-0.1, 0), RangeError, 'theta < 0 must throw');
+assert.throws(() => blochState(4, 0), RangeError, 'theta > pi must throw');
+log('state readout: P(0) + P(1) = 1, amplitudes reproduce the Bloch vector, poles, equator, |0> |1> |+> |->, out-of-range theta throws');
 
 console.log('[done] Bloch sphere: all checks passed');

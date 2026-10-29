@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation';
-import { getPageBySlug } from '@/lib/content';
+import Link from 'next/link';
+import { getPageBySlug, getSortedPages } from '@/lib/content';
 import { normalizeDate } from '@/lib/content-shared.mjs';
 import { formatDate } from '@/lib/dates.mjs';
 import { createSlugPage } from '@/lib/slugPage';
-import type { Author } from '@/lib/types';
-import { capitalize } from '@/lib/types';
+import { workTypeLabel, type Author } from '@/lib/types';
 import SiteImage from '@/components/SiteImage';
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
@@ -15,8 +15,11 @@ interface PageProps {
 }
 
 // Same static params, metadata and noindex rules as the event routes; this
-// route keeps its own page body. No imageSize: poster images aren't banners.
-const slugPage = createSlugPage('resources/student-work-and-projects');
+// route keeps its own page body. Posters are 1600×1200 (the size the image
+// below declares), so og:image carries that width/height too.
+const slugPage = createSlugPage('resources/student-work-and-projects', {
+  imageSize: { width: 1600, height: 1200 },
+});
 export const generateStaticParams = slugPage.generateStaticParams;
 export const generateMetadata = slugPage.generateMetadata;
 
@@ -61,10 +64,17 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
   // poster itself (e.g. `pdf_label: paper`); otherwise the button says PDF.
   const pdfLabel = typeof data.pdf_label === 'string' ? data.pdf_label : 'PDF';
 
+  // The neighbors in the list's own order (newest first), for the links at
+  // the bottom of the page.
+  const works = getSortedPages('resources/student-work-and-projects');
+  const at = works.findIndex((w) => w.slug === slug);
+  const prev = at > 0 ? works[at - 1] : null;
+  const next = at >= 0 && at < works.length - 1 ? works[at + 1] : null;
+
   return (
     <article className="sw-detail">
       <header className="sw-detail__header">
-        {type && <span className="sw-type">{type === 'conference' ? 'Talk' : capitalize(type)}</span>}
+        {type && <span className="sw-type">{workTypeLabel(type)}</span>}
         <h1 className="sw-detail__title">{title}</h1>
         {(date || authors.length > 0) && (
           <p className="sw-detail__meta">
@@ -120,7 +130,10 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           <iframe
             className="sw-media__pdf"
             loading="lazy"
-            src={pdfSrc}
+            // #navpanes=0 opens Chrome's PDF viewer with its thumbnail sidebar
+            // closed, so the paper gets the whole frame (downloads keep the
+            // plain URL).
+            src={`${pdfSrc}#navpanes=0`}
             title={`${title} (PDF)`}
           />
         </div>
@@ -152,7 +165,7 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              {/* ↑ turned 45°: the loaded Source Sans subset has ↑ and ↓ but not ↗. */}
+              {/* ↗ drawn as ↑ turned 45°, the site's diagonal-arrow style (as in .lr-item__title::after). */}
               View on {hostOf(externalLink)}{' '}
               <span
                 aria-hidden="true"
@@ -171,6 +184,27 @@ export default async function StudentWorkProjectPage({ params }: PageProps) {
           {content ?? ''}
         </ReactMarkdown>
       </div>
+
+      {(prev || next) && (
+        <nav className="sw-pager" aria-label="More student work">
+          {prev && (
+            <Link className="sw-pager__link sw-pager__link--prev" href={prev.href}>
+              <span className="sw-pager__dir">
+                <span aria-hidden="true">&larr; </span>Previous
+              </span>
+              <span className="sw-pager__title">{prev.title}</span>
+            </Link>
+          )}
+          {next && (
+            <Link className="sw-pager__link sw-pager__link--next" href={next.href}>
+              <span className="sw-pager__dir">
+                Next<span aria-hidden="true"> &rarr;</span>
+              </span>
+              <span className="sw-pager__title">{next.title}</span>
+            </Link>
+          )}
+        </nav>
+      )}
     </article>
   );
 }

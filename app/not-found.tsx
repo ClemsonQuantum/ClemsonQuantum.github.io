@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+// A direct import on purpose: this root not-found boundary ships with every
+// route, and a next/dynamic wrapper here pulls the whole lazyWidgets registry
+// and the dynamic-import runtime into that shared chunk, which outweighs the
+// canvas itself (measured 2026-10-28: 3,969 bytes with the canvas inline,
+// 7,058 bytes with the lazy wrapper).
 import QuantumCanvas from '@/components/QuantumCanvas';
 import NotFoundJoke from '@/components/NotFoundJoke';
 

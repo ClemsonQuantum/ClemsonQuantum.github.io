@@ -26,11 +26,11 @@ unlisted: true
 
 ## About
 
-The bootcamp was the run-up to <a href="/events/hackathons/sc-quantathon-v3-2026/">SC Quantathon v3</a>, with one day of material released on each of seven weekdays from Monday, September 14 to Tuesday, September 22. It is self-paced: each day has written notes and a notebook you can run (Day 3 is a recorded demo), so you can work through it whenever suits you and come back to anything you want to see again. Nothing is graded.
+The bootcamp was the run-up to <a href="/events/hackathons/sc-quantathon-v3-2026/">SC Quantathon v3</a>, with one day of material released on each of seven weekdays from Monday, September 14 to Tuesday, September 22. It is self-paced: each day has written notes and a notebook you can run (Day 3 is a recorded demo), so you can work through it whenever suits you and come back to anything you want to see again. Nothing is graded.
 
 The seven days build from the basics up. The first week gets you set up with Python and your first circuit, covers the math behind a qubit, demos the qBraid platform, works through gates, measurement, and entanglement, and ends by running circuits on real hardware. The second week covers variational algorithms and closes with a full day on quantum machine learning.
 
-It is built for people who have never written a quantum circuit before, and it is open to everyone. You do not need to be registered for the hackathon, or attending it at all, to work through it. Every day below has its files posted, and the same files are mirrored in the <a href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026" target="_blank" rel="noopener noreferrer">SC Quantathon v3 GitHub repository</a>.
+It is built for people who have never written a quantum circuit before, and it is open to everyone. You do not need to have registered for the hackathon, or to have attended it, to work through it. Every day below has its files posted, and the same files are mirrored in the <a href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026" target="_blank" rel="noopener noreferrer">SC Quantathon v3 GitHub repository</a>.
 
 </div>
 
@@ -53,7 +53,7 @@ Open a day for its notes and notebook.
   </details>
   <details class="hackathon-faq-item hackathon-day">
     <summary><span class="hackathon-day-num">Day 3</span><span class="hackathon-day-title">qBraid Platform Demo: Lab, Credits, and Submitting to a QPU</span><span class="hackathon-day-date">Wed, Sep 16</span></summary>
-    <p>Recorded on September 16. Alex Van Bussum of qBraid walks through the qBraid platform: launching Lab, how the hackathon credits work, and submitting a circuit from Lab to a QPU. Create a free account at <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">account.qbraid.com</a>, then launch Lab from the account dashboard before you start. During the hackathon, accepted participants were added to the SC Quantathon v3 organization on qBraid, which is where the credits lived.</p>
+    <p>Recorded on September 16. Alex Van Bussum of qBraid walks through the qBraid platform: launching Lab, how the hackathon credits work, and submitting a circuit from Lab to a QPU. Create a free account at <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">account.qbraid.com</a>, then launch Lab from the account dashboard before you start. During the hackathon, accepted participants were added to the SC Quantathon v3 organization on qBraid, which is where the credits lived.</p>
     <div class="hackathon-video"><video controls preload="none" poster="/files/scqv3-bootcamp/scqv3-day-3-qbraid-demo-poster.jpg" src="/files/scqv3-bootcamp/scqv3-day-3-qbraid-demo.mp4">Your browser cannot play this video. <a href="/files/scqv3-bootcamp/scqv3-day-3-qbraid-demo.mp4">Download it instead.</a></video></div>
     <p class="hackathon-resources"><a class="hackathon-resource" href="/files/scqv3-bootcamp/scqv3-day-3-qbraid-demo.mp4" target="_blank" rel="noopener noreferrer">Video</a><a class="hackathon-resource" href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid account</a><a class="hackathon-resource" href="https://docs.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid docs</a><a class="hackathon-resource" href="https://github.com/ClemsonQuantum/SC-Quantathon-v3-2026/tree/main/bootcamp/day-3" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only">: Day 3</span></a></p>
   </details>
