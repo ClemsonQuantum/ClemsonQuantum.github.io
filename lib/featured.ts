@@ -7,7 +7,8 @@ import type { PageMeta } from './types';
  * The event in the homepage's featured band (app/page.tsx). Point it at the
  * next event to feature, or set it to null for no band. The band's title,
  * dates, image, and Register link come from that event's frontmatter
- * (`title`, `dateDisplay`/`date`, `image` at 1200×675, `registration_url`);
+ * (`title`, `dateDisplay`/`date`, `image` at 1200×675, `registration_url`,
+ * and an optional `image_mobile`, a 4:3 crop of the image shown below 768px);
  * `facts` are a few short lines beside the dates, chosen from the event page.
  * The Location fact takes the event's `location` when it has one.
  *
@@ -38,6 +39,7 @@ export interface FeaturedEvent {
   date: string;
   dateText: string;
   image: string | null;
+  imageMobile: string | null;
   registrationUrl: string | null;
   facts: { label: string; value: string }[];
 }
@@ -73,6 +75,7 @@ export function getFeaturedEvent(): FeaturedEvent | null {
     date,
     dateText: typeof data.dateDisplay === 'string' ? data.dateDisplay : formatDate(date),
     image: typeof data.image === 'string' ? data.image : null,
+    imageMobile: typeof data.image_mobile === 'string' ? data.image_mobile : null,
     registrationUrl: typeof data.registration_url === 'string' ? data.registration_url : null,
     facts: facts.map((fact) =>
       fact.label === 'Location' && location ? { ...fact, value: location } : fact,

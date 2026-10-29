@@ -10,6 +10,7 @@ import {
 import '../assets/css/style.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ConsoleGreeting from '@/components/ConsoleGreeting';
 import ScrollReveal from '@/components/ScrollReveal';
 import SearchHighlight from '@/components/SearchHighlight';
 import ShootingStar from '@/components/ShootingStar';
@@ -50,6 +51,11 @@ const plexMono = IBM_Plex_Mono({
   weight: ['400', '600'],
   variable: '--font-plex-mono',
   preload: false,
+  // The generated Arial stand-in is proportional and about 135% as wide, so
+  // the Fall Fest hero eyebrow wrapped to two lines until Plex Mono arrived;
+  // a system monospace has Plex Mono's 0.6em advance and keeps one line.
+  adjustFontFallback: false,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
 });
 
 // Space Grotesk: the SC Quantathon page titles only (.hackathon-hero-text
@@ -67,7 +73,13 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
-  alternates: { canonical: './' },
+  alternates: {
+    canonical: './',
+    // The news and events feed (app/feed.xml/route.ts), for feed readers.
+    types: {
+      'application/atom+xml': [{ url: '/feed.xml', title: 'Clemson Quantum Club news and events' }],
+    },
+  },
   // app/manifest.ts; Next emits it as /manifest.webmanifest.
   manifest: '/manifest.webmanifest',
   verification: {
@@ -141,7 +153,10 @@ export default function RootLayout({
         )}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          // Escape "<" as the event JSON-LD does (lib/slugPage.tsx).
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c'),
+          }}
         />
       </head>
       <body
@@ -154,6 +169,7 @@ export default function RootLayout({
         <ScrollReveal />
         <TitleReveal />
         <ShootingStar />
+        <ConsoleGreeting />
         {/* Search results open page/?q=…; this scrolls to and highlights the
             match. useSearchParams needs the Suspense boundary in a static export. */}
         <Suspense fallback={null}>

@@ -161,7 +161,10 @@ export default function HummingbirdZone({
       {
         rootMargin: '10% 0px',
         // Reduced motion: put the birds back in their resting places.
-        onMotionChange: layout,
+        onMotionChange: (reduced) => {
+          if (reduced) flyers = [];
+          layout();
+        },
         // The CSS wing flutter runs only while this is set (qff.css).
         onRunningChange: (running) => root.toggleAttribute('data-flying', running),
       },

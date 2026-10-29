@@ -11,7 +11,7 @@ Built with Next.js 16, React 19, and TypeScript, statically exported and deploye
 Most updates only touch Markdown and JSON:
 
 - Events, news, and student work live as Markdown in `content/` — see [content/README.md](content/README.md).
-- Board roster, meeting info, and site links live as JSON in `data/` — see [data/README.md](data/README.md).
+- Board roster, faculty, meeting info, the Governing Documents list, and site links live as JSON in `data/` — see [data/README.md](data/README.md).
 
 ## Development
 
@@ -25,4 +25,4 @@ npm run build # static export to out/
 
 ## Deployment
 
-Pushing to `main` triggers `.github/workflows/deploy.yml` (lint → type check → build → deploy to GitHub Pages). The custom domain is set via `public/CNAME`.
+Pushing to `main` triggers `.github/workflows/deploy.yml` (lint → type check → build → deploy to GitHub Pages). The custom domain is set in the repository's Settings → Pages (an Actions deploy ignores `public/CNAME`).

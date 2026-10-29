@@ -35,7 +35,8 @@ function normalize(text: string): { flat: string; map: number[] } {
   let flat = '';
   const map: number[] = [];
   for (let i = 0; i < text.length; i++) {
-    const c = text[i];
+    // A typographic apostrophe matches a typed one (SearchBar folds the same).
+    const c = text[i] === '’' || text[i] === '‘' ? "'" : text[i];
     if (c === '⁠') continue;
     flat += c === ' ' || c === ' ' ? ' ' : c === '‑' ? '-' : c.toLowerCase();
     map.push(i);
@@ -86,7 +87,9 @@ const nextFrame = () => new Promise<void>((resolve) => requestAnimationFrame(() 
 export default function SearchHighlight() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const query = searchParams.get('q')?.trim().toLowerCase() ?? '';
+  // A pasted or phone-typed ?q= can carry ’ or a no-break hyphen; fold it
+  // the way normalize() folds the page text.
+  const query = searchParams.get('q')?.trim().toLowerCase().replace(/[‘’]/g, "'").replace(/‑/g, '-') ?? '';
 
   useEffect(() => {
     if (!query) return;
@@ -111,6 +114,7 @@ export default function SearchHighlight() {
       // The first match that is (or can be made) visible; a match inside
       // something hidden by CSS alone, such as a phone-only copy, is skipped.
       let box: DOMRect | null = null;
+      let hit: Range | null = null;
       for (const range of ranges.slice(0, 20)) {
         if (reveal(range.startContainer)) {
           await nextFrame();
@@ -120,14 +124,27 @@ export default function SearchHighlight() {
         const rect = range.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
           box = rect;
+          hit = range;
           break;
         }
       }
-      if (!box) return;
+      if (!box || !hit) return;
       window.scrollTo({
         top: window.scrollY + box.top - window.innerHeight / 2 + box.height / 2,
         behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       });
+      // A keyboard pick leaves focus in the header's search box (on the page
+      // body once the phone drawer closes), so the next Tab would jump back
+      // to the top. Focus the match instead: its link or <summary>, else its
+      // block, which tabindex -1 keeps out of the Tab order.
+      const at = hit.startContainer.parentElement;
+      const target =
+        at?.closest<HTMLElement>('a[href], summary') ??
+        at?.closest<HTMLElement>('p, li, dt, dd, td, th, h1, h2, h3, h4, figcaption');
+      if (target) {
+        if (!target.matches('a[href], summary') && !target.hasAttribute('tabindex')) target.tabIndex = -1;
+        target.focus({ preventScroll: true });
+      }
       if (typeof Highlight !== 'undefined' && 'highlights' in CSS) {
         addHighlightStyle();
         CSS.highlights.set(HIGHLIGHT, new Highlight(...ranges));

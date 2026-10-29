@@ -12,4 +12,4 @@ source: "Clemson News"
 source_url: "https://example.com/article"
 ---
 
-[Optional: a brief summary/excerpt. Only used as a search-index/SEO fallback when `summary` is missing.]
+[Optional: a brief summary/excerpt. Site search always indexes it; the card shows it only when `summary` is missing.]

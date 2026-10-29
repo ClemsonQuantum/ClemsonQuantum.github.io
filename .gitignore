@@ -3,7 +3,11 @@
 out/
 node_modules/
 tsconfig.tsbuildinfo
+# Rewritten by next dev and next build (.next/dev/types vs .next/types); Next
+# regenerates it, so it stays out of git.
+next-env.d.ts
 public/search.json
+public/calendar/
 
 # Misc
 .DS_Store

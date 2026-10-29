@@ -1,11 +1,9 @@
-import fs from 'node:fs';
-import path from 'node:path';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { pageMetadata } from '@/lib/og';
 import { formatDate } from '@/lib/dates.mjs';
 import siteConfig from '@/data/site-config.json';
-import governingDocuments from '@/data/governing-documents.json';
+import { getGoverningDocuments, governingDocumentsUpdated } from '@/lib/governingDocuments';
 
 export const metadata: Metadata = pageMetadata({
   title: 'Governing Documents',
@@ -14,15 +12,6 @@ export const metadata: Metadata = pageMetadata({
   path: '/governing-documents/',
 });
 
-// PDFs live in public/documents/ under their exact filenames (spaces and
-// all); the href in data/governing-documents.json is the readable path and
-// encodeURI makes the link. A PDF that isn't there yet shows "Coming soon".
-// Checked inside the component so `next dev` notices a newly added file on
-// the next request; the static export checks once, at build time.
-function pdfExists(href: string): boolean {
-  return fs.existsSync(path.join(process.cwd(), 'public', href));
-}
-
 export default function GoverningDocumentsPage() {
   return (
     <article className="about-page">
@@ -30,37 +19,37 @@ export default function GoverningDocumentsPage() {
         <div className="about-page__hero-copy">
           <h1>Governing Documents</h1>
           <p className="about-page__tagline">
-            Clemson Quantum Club is a Delegated Student Organization (DSO) at
-            Clemson University, advised by Dr. Rong Ge of the School of
-            Computing. These documents govern how the club is run. Official
-            copies are also posted on TigerQuest.
+            Clemson&nbsp;Quantum&nbsp;Club is a Delegated Student Organization
+            (DSO) at Clemson&nbsp;University, advised by Dr.&nbsp;Rong&nbsp;Ge
+            of the School&nbsp;of&nbsp;Computing. These documents govern how the
+            club is run. Official copies are also posted on&nbsp;TigerQuest.
           </p>
         </div>
       </header>
 
       <section className="about-page__section" aria-label="Documents">
         <ul className="gov-docs" role="list">
-          {governingDocuments.documents.map((doc) => {
-            const isPdf = doc.href.endsWith('.pdf');
+          {/* A PDF that isn't uploaded yet shows "Coming soon" (lib/governingDocuments.ts). */}
+          {getGoverningDocuments().map((doc) => {
             return (
               <li key={doc.title} className="gov-docs__item">
                 <div>
                   <h2 className="gov-docs__title">{doc.title}</h2>
                   <p className="gov-docs__desc">{doc.description}</p>
                 </div>
-                {!isPdf ? (
+                {!doc.isPdf ? (
                   <Link className="gov-docs__link" href={doc.href}>
                     View page
                     <span className="sr-only"> ({doc.title})</span>
                   </Link>
-                ) : pdfExists(doc.href) ? (
+                ) : doc.available ? (
                   <a
                     className="gov-docs__link"
                     href={encodeURI(doc.href)}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    View PDF
+                    View PDF{doc.size && ` (${doc.size})`}
                     <span className="sr-only"> ({doc.title}, opens in a new tab)</span>
                   </a>
                 ) : (
@@ -72,12 +61,12 @@ export default function GoverningDocumentsPage() {
         </ul>
         <p className="gov-docs__footer">
           Last updated:{' '}
-          <time dateTime={governingDocuments.lastUpdated}>
-            {formatDate(governingDocuments.lastUpdated)}
+          <time dateTime={governingDocumentsUpdated}>
+            {formatDate(governingDocumentsUpdated).replace(/ /g, '\u00a0')}
           </time>
-          <span aria-hidden="true"> · </span>
+          <span className="gov-docs__sep" aria-hidden="true">&nbsp;· </span>
           <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener noreferrer">
-            View on TigerQuest
+            View&nbsp;on&nbsp;TigerQuest
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </p>

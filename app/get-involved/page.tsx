@@ -29,8 +29,8 @@ const nextIndex = meetings.findIndex((m) => !m.isPast);
 // Each channel's call to action on this page (the footer shows bare names).
 const CHANNEL_TEXT: Record<ChannelId, string> = {
   discord: 'Join the Discord community',
-  groupme: 'Join the GroupMe chat',
-  linkedin: 'Follow us on LinkedIn',
+  groupme: 'Get announcements on GroupMe',
+  linkedin: 'Connect with us on LinkedIn',
   github: 'See our code on GitHub',
   tigerquest: 'Find us on TigerQuest',
   instagram: 'Follow us on Instagram',
@@ -43,7 +43,7 @@ export default function GetInvolvedPage() {
         <div className="about-page__hero-copy">
           <h1>Get involved</h1>
           <p className="about-page__tagline">
-            Drop into a meeting, join our Discord or GroupMe, or send us an email.
+            Drop into a meeting, join our Discord or GroupMe, or send us an&nbsp;email.
           </p>
         </div>
         <aside className="about-page__meeting-card" aria-label="Meeting details">
@@ -73,7 +73,7 @@ export default function GetInvolvedPage() {
       >
         <h2 id="gi-schedule-heading">{meetingSchedule.semester} schedule</h2>
         <div className="gi-schedule-layout">
-          <ol className="gi-schedule">
+          <ol className="gi-schedule" role="list">
           {meetings.map((m, i) => (
             <li
               key={m.date}
@@ -103,19 +103,43 @@ export default function GetInvolvedPage() {
 
       <section className="about-page__section">
         <h2>Ways to join</h2>
-        <p className="gi-channels-intro">
-          To become an official voting member,{' '}
-          <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener noreferrer">
-            join Clemson Quantum Club on TigerQuest
-            <span className="sr-only"> (opens in a new tab)</span>
-          </a>
-          . Anyone can come to meetings, but only members on our TigerQuest
-          roster can vote in club elections and on amendments.
-        </p>
-        <p className="gi-channels-intro">
-          Most club conversation happens on Discord, and announcements go out
-          on GroupMe.
-        </p>
+        {/* Three steps, styled like the About page's "Why join" list. */}
+        <ol className="about-page__why-list gi-join-steps" role="list">
+          <li className="about-page__why-item">
+            <span className="about-page__why-num" aria-hidden="true">01</span>
+            <div>
+              <h3>Come to a meeting</h3>
+              <p>
+                {siteConfig.meetingDay} at {siteConfig.meetingTime} in{' '}
+                {siteConfig.location}. Open to every student, from any major and
+                experience&nbsp;level.
+              </p>
+            </div>
+          </li>
+          <li className="about-page__why-item">
+            <span className="about-page__why-num" aria-hidden="true">02</span>
+            <div>
+              <h3>Join Discord or GroupMe</h3>
+              <p>
+                Most club conversation happens on Discord, and announcements go
+                out on&nbsp;GroupMe.
+              </p>
+            </div>
+          </li>
+          <li className="about-page__why-item">
+            <span className="about-page__why-num" aria-hidden="true">03</span>
+            <div>
+              <h3>Become a member on TigerQuest</h3>
+              <p>
+                <a href={siteConfig.tigerquestUrl} target="_blank" rel="noopener noreferrer">
+                  Join Clemson&nbsp;Quantum&nbsp;Club on TigerQuest
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>{' '}
+                to be listed as an official&nbsp;member.
+              </p>
+            </div>
+          </li>
+        </ol>
         <div className="gi-channels">
           {CHANNELS.map(({ id, href }) => {
             const Icon = CHANNEL_ICONS[id];

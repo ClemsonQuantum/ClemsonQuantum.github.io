@@ -8,7 +8,7 @@ After editing, push your changes to the `main` branch and GitHub Actions will re
 
 ## board-members.json
 
-Controls the **Executive Board** section on the homepage.
+Controls the **Executive board** section on the homepage.
 
 Each person is an object with these fields:
 
@@ -19,7 +19,7 @@ Each person is an object with these fields:
 | `start` | Yes | Month they started this role, `YYYY-MM` (e.g. `2026-10`). Not shown on the site |
 | `profile` | Yes | Reference notes on the person (role history, background). Not shown on the site, but this repo is public, so keep it to public facts |
 | `description` | Yes | Short bio — major, research area, etc. |
-| `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg`. Leave it `""` while a headshot is pending: the card shows an empty circle in its place |
+| `image` | Yes | Path to their photo, e.g. `/images/nathan-jones.jpg`. Leave it `""` while a headshot is pending: the card shows an empty circle in its place. `npm run headshot -- ~/Downloads/photo.jpg "Full Name"` does both steps: it saves a cropped 360×360 JPEG and fills in this path |
 | `email` | No | Clemson email address |
 | `linkedin` | No | Full LinkedIn URL |
 | `github` | No | Full GitHub URL |
@@ -51,7 +51,7 @@ One person can be in both files. When someone moves from one board role to anoth
 
 ## faculty.json
 
-Controls the **Quantum Faculty at Clemson** section on the Resources page.
+Controls the **Quantum faculty at Clemson** section on the Resources page.
 
 Each person is an object with these fields (all must be present — use an empty string `""` to leave one blank):
 
@@ -67,11 +67,13 @@ Each person is an object with these fields (all must be present — use an empty
 
 **To finish a card:** set `image` to a headshot in `public/images/`, and fill in any of `linkedin` / `website` / `email` to surface those links on the card.
 
+**Keeping words together:** a name, room, or course code that must not break across lines takes the escape `\u00a0` (a no-break space) in place of the space, e.g. `"CPSC\u00a03990"`. A hyphen that must not break is `\u2011`, and the en dash of a range takes `\u2060` right after it. Keep them as escapes in every data file, as faculty.json and site-config.json do (Markdown files take the characters themselves; see content/README.md).
+
 ---
 
 ## site-config.json
 
-Controls meeting info, social links, and contact details used across the site (Get Involved page, footer, and page metadata).
+Controls meeting info, social links, and contact details used across the site (the Get Involved page, the Meetings page intro, the TigerQuest link on Governing Documents, the `{{contactEmail}}` and `{{tigerquestUrl}}` placeholders in the Code of Conduct, the footer, the event-page pop-up forms, and page metadata).
 
 | Field | Description |
 |-------|-------------|
@@ -85,7 +87,7 @@ Controls meeting info, social links, and contact details used across the site (G
 | `instagramUrl` | Instagram profile URL |
 | `githubUrl` | GitHub organization URL |
 | `contactEmail` | Club email address |
-| `web3formsKey` | Optional. A public [Web3Forms](https://web3forms.com) access key makes the Get Involved contact form email you submissions directly. When it is absent or left as the placeholder (`your-access-key`), the Get Involved form falls back to opening the visitor’s email app (pre-addressed to `contactEmail`), and the pop-up forms on hosted event pages show a “not configured yet” message instead. |
+| `web3formsKey` | A public [Web3Forms](https://web3forms.com) access key makes the Get Involved contact form email you submissions directly. Keep the field even when you don’t use it (deleting it fails `npm run typecheck`). When it is empty or left as the placeholder (`your-access-key`), the Get Involved form falls back to opening the visitor’s email app (pre-addressed to `contactEmail`), and the pop-up forms on hosted event pages show a “not configured yet” message instead. |
 
 ---
 
@@ -95,16 +97,22 @@ Controls the **Governing Documents** page (`/governing-documents/`).
 
 | Field | Description |
 |-------|-------------|
-| `lastUpdated` | Date shown as “Last updated”, `YYYY-MM-DD`. Change it whenever a document changes |
+| `lastUpdated` | Date shown as “Last updated”, `YYYY-MM-DD`: the newest revision date among the three documents. Change it when a document is revised; uploading a PDF of a version already in force doesn’t change it |
 | `documents` | One entry per row: `title`, `description`, and `href` |
 
-**PDFs:** put each file in `public/documents/` with exactly the name in its `href` (spaces included, e.g. `Clemson Quantum Club Constitution.pdf`). The link is URL-encoded automatically. Until a PDF exists, its row shows “Coming soon” instead of “View PDF”. An `href` that isn’t a `.pdf` (like `/code-of-conduct/`) links to that page.
+**PDFs:** put each file in `public/documents/` with exactly the name in its `href` (spaces included, e.g. `Clemson Quantum Club Constitution.pdf`). The link is URL-encoded automatically. Until a PDF exists, its row shows “Coming soon” instead of “View PDF”; once it does, the button shows the file’s size, e.g. “View PDF (120 KB)”. An `href` that isn’t a `.pdf` (like `/code-of-conduct/`) links to that page. Capital letters must match exactly: a Mac ignores case, but the live build doesn’t, and the validator stops on a name that differs only in case. Check that Finder didn’t add a second extension (`…Constitution.pdf.pdf`; the validator warns about any PDF no row uses), and commit the files with the change (quote the names: `git add "public/documents/Clemson Quantum Club Constitution.pdf"`). Everything in the repo is public, so check a scanned PDF for signatures or personal details first.
+
+---
+
+## thumbnails.json
+
+Generated by `scripts/generate-thumbnails.mjs` (it runs before `npm run dev` and `npm run build`); don't edit it by hand. It lists each event and news card image with its size, a hash of the file, and its phone copy in `public/images/thumbs/`, which the cards offer to phones as a smaller `srcset` choice. Commit it together with the thumbnails.
 
 ---
 
 ## meeting-schedule.json
 
-Controls the semester meeting list on the Get Involved page.
+Controls the semester meeting list on the Get Involved page; `semester` also names the schedule link on the Meetings page (e.g. "Fall 2026 schedule").
 
 | Field | Required | Description |
 |-------|----------|-------------|

@@ -60,7 +60,7 @@ export default function PastBoardMembers({
       </noscript>
       {/* Always in the DOM (hidden while collapsed) so the button's
           aria-controls points at a real element. */}
-      <ul id="past-board-list" className="about-past-board__list" hidden={!expanded}>
+      <ul id="past-board-list" className="about-past-board__list" role="list" hidden={!expanded}>
         {members.map((m) => (
           <li key={`${m.name}-${m.tenure}`} className="about-past-board__item">
             {/* Rendered as a fixed 52px circle regardless of source size.

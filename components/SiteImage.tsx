@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-img-element -- static export serves images as-is, so next/image adds nothing (docs/DEVELOPMENT.md, "Images are plain <img>") */
 
 interface SiteImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;

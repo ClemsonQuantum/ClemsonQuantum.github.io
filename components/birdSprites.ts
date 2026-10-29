@@ -28,7 +28,7 @@ import {
 const HB_PAD = 2;
 const SOAR_PAD = 7;
 
-export const HB_VARIANTS = ['pink', 'lavender'] as const satisfies readonly HummingbirdVariant[];
+const HB_VARIANTS = ['pink', 'lavender'] as const satisfies readonly HummingbirdVariant[];
 
 export type SpriteSet<K extends string> = Partial<Record<K, HTMLCanvasElement[]>>;
 

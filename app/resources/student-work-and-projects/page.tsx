@@ -22,7 +22,7 @@ export default function StudentWorkPage() {
       <h2 className="sr-only">All student work</h2>
       <p className="lr-intro">
         Posters, papers, and conference talks from Clemson&nbsp;Quantum&nbsp;Club members.
-        Open a title for its abstract, files, and links.
+        Open a title for its abstract, files, and&nbsp;links.
       </p>
       <StudentWorkList works={works} />
     </div>

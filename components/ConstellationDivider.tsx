@@ -10,9 +10,9 @@ interface ConstellationDividerProps {
 // Projection: the Bloch vector (x, y, z) = (sin theta cos phi,
 // sin theta sin phi, cos theta), drawn orthographically as
 //   sx = CX + R x,  sy = CY - R (z cos TILT - y sin TILT).
-// Same orthographic form as BlochSphere.tsx's older camera (y term negated);
-// the divider's random wander hides handedness, so it keeps its own TILT and
-// sign.
+// Same orthographic form as BlochSphere.tsx's camera, with the y term's
+// sign flipped; the divider's random wander hides handedness, so it keeps
+// its own TILT and sign.
 const CX = 130;
 const CY = 18;
 const R = 12.3; // vector length in the 260x36 viewBox (sphere outline r=13)
@@ -176,7 +176,8 @@ export default function ConstellationDivider({
     reducedMotion = motionQuery.matches;
 
     const intersectionObserver = new IntersectionObserver((entries) => {
-      intersecting = entries[0]?.isIntersecting ?? true;
+      // The newest entry wins: one callback can carry several for the svg.
+      intersecting = entries[entries.length - 1]?.isIntersecting ?? intersecting;
       updateRunning();
     });
     intersectionObserver.observe(svg);

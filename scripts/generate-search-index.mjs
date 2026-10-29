@@ -21,7 +21,7 @@ const OUTPUT = path.join(__dirname, '..', 'public', 'search.json');
 // validate-content.mjs, via walkContentFiles), minus drafts and unlisted
 // pages (see isUnlisted in lib/content-shared.mjs).
 function contentEntries() {
-  return walkContentFiles(CONTENT_ROOT).flatMap((fullPath) => {
+  const dated = walkContentFiles(CONTENT_ROOT).flatMap((fullPath) => {
     const raw = fs.readFileSync(fullPath, 'utf-8');
     const { data, content } = parseFrontmatter(raw);
     if (isUnlisted(data) || isDraft(data)) return [];
@@ -55,14 +55,14 @@ function contentEntries() {
     const body = plainText(content);
     return [
       {
-        title: data.title ?? slug,
-        url,
-        excerpt,
-        meta,
-        body,
+        date: String(data.date ?? ''),
+        entry: { title: data.title ?? slug, url, excerpt, meta, body },
       },
     ];
   });
+  // Newest first: SearchBar keeps index order for equal scores, so "fall
+  // fest" lists this year's Fall Fest before the 2024 and 2025 cards.
+  return dated.sort((a, b) => b.date.localeCompare(a.date)).map((d) => d.entry);
 }
 
 /** @param {string} file */

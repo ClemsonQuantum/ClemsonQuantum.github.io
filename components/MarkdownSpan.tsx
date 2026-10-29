@@ -1,6 +1,7 @@
 import type { ComponentPropsWithoutRef } from 'react';
 import { LazyDecadeCounter, LazyHummingbirdZone } from './lazyWidgets';
 import { markdownProps } from './markdownProps';
+import { ShareButton } from './ShareButton';
 
 // Marker spans on the event routes, dispatched on sentinel classes like
 // MarkdownDiv:
@@ -13,6 +14,9 @@ import { markdownProps } from './markdownProps';
 //                     tech ("Hummingbirds" in qff.css)
 //   .qff-decade     → a year range whose end year counts up as it scrolls
 //                     into view (DecadeCounter); data-from and data-to
+//   .share-button   → a "Share" text button for the page (ShareButton:
+//                     the share sheet on phones, else copies the link);
+//                     data-title names the event, other classes style it
 // Every other span renders as written.
 export default function MarkdownSpan(
   props: ComponentPropsWithoutRef<'span'> & { node?: unknown },
@@ -30,6 +34,14 @@ export default function MarkdownSpan(
         className={classes
           .filter((c) => c !== 'qff-bird-zone' && c !== 'qff-bird-zone--box')
           .join(' ')}
+      />
+    );
+  }
+  if (classes.includes('share-button')) {
+    return (
+      <ShareButton
+        title={data('title') ?? 'this event'}
+        className={classes.filter((c) => c !== 'share-button').join(' ')}
       />
     );
   }

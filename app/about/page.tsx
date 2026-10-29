@@ -5,6 +5,7 @@ import SiteImage from '@/components/SiteImage';
 import PastBoardMembers from '@/components/PastBoardMembers';
 import { getAllPages } from '@/lib/content';
 import { formatMonthRange } from '@/lib/dates.mjs';
+import { getGoverningDocuments } from '@/lib/governingDocuments';
 import pastBoardMembers from '@/data/past-board-members.json';
 
 // Formatted here at build time (a bad month fails the build) and trimmed to
@@ -33,7 +34,7 @@ const focusAreas = [
   {
     title: 'Write and run circuits',
     text:
-      'In workshops and study groups, members write and run their own quantum circuits.',
+      'In workshops and study sessions, members write and run their own quantum circuits.',
   },
   {
     title: 'Connect with people',
@@ -101,7 +102,7 @@ export default function AboutPage() {
           majors; some are new to the subject and some are Ph.D. students
           doing quantum research. Members can also join Clemson’s two quantum
           computing Creative&nbsp;Inquiry research teams: Hands&#x2011;on&nbsp;Quantum&nbsp;Computing
-          and Quantum Optimization for Resilient Systems.
+          and Quantum&nbsp;Optimization for Resilient&nbsp;Systems.
         </p>
       </section>
 
@@ -129,7 +130,7 @@ export default function AboutPage() {
           <h2>What members do</h2>
           <p>Meetings mix discussion with coding.</p>
         </div>
-        <ul className="about-page__activity-list">
+        <ul className="about-page__activity-list" role="list">
           {memberActivities.map((activity) => (
             <li key={activity}>{activity}</li>
           ))}
@@ -141,7 +142,7 @@ export default function AboutPage() {
           <h2>Events and resources</h2>
           <p>
             Members participate in workshops, student projects, and hackathons,
-            including one the club hosts every fall.
+            including one the club hosts every&nbsp;fall.
           </p>
         </div>
         <div className="about-page__link-panel">
@@ -162,10 +163,33 @@ export default function AboutPage() {
             works.
           </p>
         </div>
-        <div className="about-page__link-panel">
-          <Link href="/governing-documents/">Governing Documents</Link>
-          <Link href="/code-of-conduct/">Code of Conduct</Link>
-        </div>
+        {/* The three documents themselves, each with a small button to open
+            it; a PDF that isn't uploaded yet says "Coming soon". */}
+        <ul className="about-page__docs" role="list">
+          {getGoverningDocuments().map((doc) => (
+            <li key={doc.title} className="about-page__doc">
+              <span className="about-page__doc-title">{doc.title}</span>
+              {!doc.isPdf ? (
+                <Link className="hackathon-cta hackathon-cta--ghost about-page__doc-btn" href={doc.href}>
+                  View page
+                  <span className="sr-only"> ({doc.title})</span>
+                </Link>
+              ) : doc.available ? (
+                <a
+                  className="hackathon-cta hackathon-cta--ghost about-page__doc-btn"
+                  href={encodeURI(doc.href)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View PDF{doc.size && ` (${doc.size})`}
+                  <span className="sr-only"> ({doc.title}, opens in a new tab)</span>
+                </a>
+              ) : (
+                <span className="about-page__doc-soon">Coming soon</span>
+              )}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <PastBoardMembers members={pastBoardCards} />

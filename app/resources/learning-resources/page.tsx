@@ -51,6 +51,24 @@ const LEVELS: Level[] = [
         href: 'https://quantum.cloud.ibm.com/composer',
       },
       {
+        type: 'Tool',
+        title: 'Quantum Flytrap Virtual Lab',
+        desc: 'An interactive optics table: place lasers, beam splitters, and detectors to see interference and entanglement.',
+        href: 'https://lab.quantumflytrap.com/',
+      },
+      {
+        type: 'Reading',
+        title: 'The Quantum Atlas',
+        desc: 'Short illustrated explainers of quantum ideas from the University of Maryland’s Joint Quantum Institute.',
+        href: 'https://quantumatlas.umd.edu/',
+      },
+      {
+        type: 'Game',
+        title: 'Quantum Game',
+        desc: 'An interactive puzzle game with photons, mirrors, and beam splitters that builds intuition for interference.',
+        href: 'https://quantumgame.io/',
+      },
+      {
         type: 'Practice',
         title: 'PennyLane Codebook',
         desc: 'Short coding exercises that check your answers as you learn each concept.',
@@ -70,13 +88,19 @@ const LEVELS: Level[] = [
     label: 'Intermediate',
     title: 'Write your own programs',
     blurb:
-      'Tutorials and courses in PennyLane, Q#, and Azure Quantum, plus talks from Google’s quantum team.',
+      'Tutorials and courses in PennyLane, Q#, and Azure Quantum, an essay with built-in review, and talks from Google’s quantum team.',
     resources: [
       {
         type: 'Course',
         title: 'PennyLane QML Tutorials',
         desc: 'Runnable quantum machine learning demos covering variational circuits and quantum neural networks.',
         href: 'https://pennylane.ai/learn',
+      },
+      {
+        type: 'Reading',
+        title: 'Quantum Country',
+        desc: 'Andy Matuschak and Michael Nielsen’s essay on quantum computing, with review questions built in so you remember what you read.',
+        href: 'https://quantum.country/qcvc',
       },
       {
         type: 'Course',
@@ -125,14 +149,14 @@ const LEVELS: Level[] = [
       {
         type: 'Book',
         title: 'Simon',
-        desc: '“Topological Quantum: Lecture Notes and Proto-Book,” a modern introduction to anyons, topological phases, and topological quantum computation.',
+        desc: '“Topological Quantum: Lecture Notes and Proto\u2011Book,” a modern introduction to anyons, topological phases, and topological quantum computation.',
         href: 'https://www-thphys.physics.ox.ac.uk/people/SteveSimon/topological2021/TopoBook-Sep28-2021.pdf',
       },
       {
         type: 'Video',
         title: 'Preskill’s Ph219 Lectures',
         desc: 'Recorded lectures from Caltech’s Ph/CS 219A Quantum Computation course, taught by John\u00a0Preskill.',
-        href: 'https://youtube.com/playlist?list=PL0ojjrEqIyPy-1RRD8cTD_lF1hflo89Iu',
+        href: 'https://www.youtube.com/playlist?list=PL0ojjrEqIyPy-1RRD8cTD_lF1hflo89Iu',
       },
     ],
   },
@@ -171,7 +195,7 @@ export default function LearningResourcesPage() {
       <ArchiveHeader title="Learning Resources" />
       <p className="lr-intro">
         Courses, tools, and reading in three levels. Start at whichever level
-        fits you.
+        fits&nbsp;you.
       </p>
 
       {LEVELS.map((level) => (
@@ -190,7 +214,7 @@ export default function LearningResourcesPage() {
           <p className="lr-section__blurb">{level.blurb}</p>
           {level.id === 'beginner' && <BlochSphere />}
 
-          <ul className="lr-list">
+          <ul className="lr-list" role="list">
             {level.resources.map((r) => (
               <li key={r.href + r.title} className="lr-item">
                 <span className="lr-item__tag">{r.type}</span>
@@ -230,7 +254,7 @@ export default function LearningResourcesPage() {
       <section className="lr-ongoing">
         <h2 className="lr-ongoing__title">Keep going</h2>
         <p className="lr-ongoing__note">
-          Community, news, and collections worth bookmarking at any level.
+          Community, news, and collections worth bookmarking at any&nbsp;level.
         </p>
         <div className="lr-ongoing__grid">
           {ONGOING.map((o) => (
