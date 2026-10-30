@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/generate-thumbnails.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs",
+    "predev": "node scripts/generate-thumbnails.mjs && node scripts/generate-share-images.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/generate-thumbnails.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs && node scripts/verify-bloch-sphere.mjs",
+    "prebuild": "node scripts/generate-thumbnails.mjs && node scripts/generate-share-images.mjs && node scripts/validate-content.mjs && node scripts/generate-search-index.mjs && node scripts/generate-calendars.mjs && node scripts/verify-bloch-sphere.mjs",
     "build": "next build",
     "preview": "python3 -m http.server 4000 --directory out",
     "lint": "eslint . --max-warnings=0 && npm run lint:css",

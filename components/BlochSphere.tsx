@@ -18,6 +18,13 @@ const CY = 122;
 const TILT = BLOCH_SPHERE_TILT; // rad (~20 deg)
 const CAMERA = blochSphereCamera(TILT);
 const AUTO_RATE = 0.35; // rad/s of idle phi precession
+// Idle theta drift, so the amplitudes and odds change as well as the phase:
+// a sway built from two slow sines of unrelated periods (it looks unplanned
+// and never quite repeats), plus a pull back toward the equator that keeps
+// it clear of the poles.
+const WANDER_RATE = 0.5; // rad/s through the sway's phase
+const THETA_SWAY = 0.25; // rad/s, the sway's peak speed
+const THETA_PULL = 0.1; // 1/s, toward theta = pi/2
 const RESUME_MS = 2000; // idle time before auto-rotation resumes
 const KEY_STEP = (5 * Math.PI) / 180;
 // Keyboard moves are announced once the keys settle, not on every repeat.
@@ -104,8 +111,9 @@ const EQUATOR_FRONT = `M ${CX - R} ${CY} A ${R} ${EQUATOR_RY} 0 0 0 ${CX + R} ${
 const MERIDIAN = meridianPath();
 
 // Interactive Bloch sphere for the learning-resources page. Idle behavior is
-// a slow phi precession (rAF gated on visibility + on-screen + reduced
-// motion, mirroring QuantumCanvas); dragging or arrow keys move the state
+// a slow phi precession with a gentle theta drift, so the readout's numbers
+// all change (rAF gated on visibility + on-screen + reduced motion,
+// mirroring QuantumCanvas); dragging or arrow keys move the state
 // vector directly, pressing the |0⟩ or |1⟩ label (or the 0 or 1 key) glides
 // it to that pole (a jump with reduced motion), and auto-rotation resumes
 // ~2 s after the last interaction.
@@ -134,6 +142,7 @@ export default function BlochSphere() {
   // and whether the animation loop that moves it is running.
   const glide = useRef<{ from: number; to: number; start: number } | null>(null);
   const loopRunning = useRef(false);
+  const wander = useRef(0); // the idle theta sway's phase
 
   const render = () => {
     const { theta, phi } = angles.current;
@@ -209,8 +218,12 @@ export default function BlochSphere() {
           announce();
         }
       } else if (time - lastInteraction.current > RESUME_MS && !dragFrom.current) {
-        angles.current.phi =
-          (angles.current.phi + AUTO_RATE * dt) % (Math.PI * 2);
+        const a = angles.current;
+        a.phi = (a.phi + AUTO_RATE * dt) % (Math.PI * 2);
+        wander.current += WANDER_RATE * dt;
+        const w = wander.current;
+        const sway = THETA_SWAY * (Math.sin(w) + 0.6 * Math.sin(2.3 * w + 1.1));
+        a.theta = clampTheta(a.theta + (sway + THETA_PULL * (Math.PI / 2 - a.theta)) * dt);
         render();
       }
       schedule();

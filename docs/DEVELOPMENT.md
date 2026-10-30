@@ -25,7 +25,7 @@ Open http://localhost:3000.
 ## Scripts
 
 - `npm run dev`: starts the Next.js dev server. `predev` first makes phone copies of any new or changed card images (`scripts/generate-thumbnails.mjs`), validates content, and regenerates the search index and the add-to-calendar files.
-- `npm run build`: runs `prebuild` (card-image phone copies, content validation, the search index, the add-to-calendar files, and the Bloch-sphere physics check, `scripts/verify-bloch-sphere.mjs`), then `next build`. Static output lands in `out/` (`public/.nojekyll` lands there too but isn't deployed: `upload-pages-artifact` leaves out dotfiles, and an Actions deploy never runs Jekyll).
+- `npm run build`: runs `prebuild` (card-image phone copies, JPEG link-preview copies of WebP page images, content validation, the search index, the add-to-calendar files, and the Bloch-sphere physics check, `scripts/verify-bloch-sphere.mjs`), then `next build`. Static output lands in `out/` (`public/.nojekyll` lands there too but isn't deployed: `upload-pages-artifact` leaves out dotfiles, and an Actions deploy never runs Jekyll).
 - `npm run preview`: serves the last build from `out/` at http://localhost:4000 (`python3 -m http.server`). `next start` does not work with `output: 'export'`.
 - `npm run typecheck`: `tsc --noEmit` (same gate CI runs, on a fresh checkout). Locally it also reads the route types that `dev` and `build` write under `.next/`, so after removing or renaming a page, delete `.next/` before trusting the result.
 - `npm run lint`: `eslint . --max-warnings=0`, so a warning fails CI like an error, then `npm run lint:css`: stylelint on `assets/css/`, with only three rules in `.stylelintrc.json` (no repeated property in a block, except a vh/dvh-style fallback pair; no shorthand that wipes an earlier longhand; kebab-case keyframe names).
@@ -73,7 +73,7 @@ Entry points worth knowing:
 1. `npm ci`
 2. `npm run lint`
 3. `npm run typecheck`
-4. `npm run build` (card-image phone copies, content validation, the search index, the add-to-calendar files, the Bloch-sphere check, then the static export into `out/`)
+4. `npm run build` (card-image phone copies, link-preview copies, content validation, the search index, the add-to-calendar files, the Bloch-sphere check, then the static export into `out/`)
 5. Publish `out/` to GitHub Pages
 
 The custom domain (`clemsonquantum.com`) is set in the repository's Settings → Pages. `public/CNAME` still ships with the site, but GitHub ignores it for Actions deploys.
@@ -82,7 +82,7 @@ The custom domain (`clemsonquantum.com`) is set in the repository's Settings →
 
 - **Static export.** No server-side features (no API routes, no SSR at request time). Dates and other dynamic values are resolved at build time.
 - **Search index and calendar files are generated.** `public/search.json` and `public/calendar/` are gitignored and rebuilt by `predev`/`prebuild`. They must exist at runtime in dev.
-- **Card thumbnails are generated but committed.** `scripts/generate-thumbnails.mjs` writes `public/images/thumbs/` and `data/thumbnails.json` and skips any image whose hash has not changed, so the deploy never needs the image library. Commit them together with a new card image.
+- **Card thumbnails are generated but committed.** `scripts/generate-thumbnails.mjs` writes `public/images/thumbs/` and `data/thumbnails.json` and skips any image whose hash has not changed, so the deploy never needs the image library. Commit them together with a new card image. `scripts/generate-share-images.mjs` does the same for link previews: every page with its own URL and a WebP `image` gets a same-size JPEG in `public/images/share/` (listed in `data/share-images.json`) that `lib/slugPage.tsx` uses for og:image, since LinkedIn doesn't reliably show WebP previews; commit those too.
 - **`next-env.d.ts` is not tracked.** `next dev` and `next build` rewrite it with different paths, so it is gitignored and Next recreates it.
 - **Images are plain `<img>`.** `next/image` optimization is unavailable under static export, so images are served as-is.
 - **`next dev` and `npm run build` can run side by side.** Next 16 writes the dev server's output to `.next/dev/` and the build's to `.next/`. If the dev preview ever serves unstyled pages, stop the dev server, delete `.next/`, and start it again.
