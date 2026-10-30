@@ -1862,6 +1862,34 @@ span.qff-day-resource {
   }
 }
 
+/* A band without the cryostat has no --band-p, so its phrase makes the same
+   slide on a scroll-driven animation instead, over about the same stretch:
+   from the band's top entering the window to it reaching the top. Browsers
+   without one, and reduced motion, keep the finished A → B look. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .qff-page .qff-band:not(:has(.qff-cryostat)) {
+      view-timeline: --qff-band block;
+    }
+
+    .qff-page .qff-band:not(:has(.qff-cryostat)) .qff-gradient-text {
+      animation: qff-band-flow linear both;
+      animation-timeline: --qff-band;
+      animation-range: entry-crossing 0% exit-crossing 0%;
+    }
+  }
+}
+
+@keyframes qff-band-flow {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
+
 /* The hero's gradient phrase ("a decade of quantum computing on the cloud")
    moves with the scroll like the band's: the same mirrored gradient at twice
    the width flows left to right as the page scrolls down through the first

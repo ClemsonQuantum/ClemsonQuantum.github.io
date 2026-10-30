@@ -19,7 +19,7 @@ const SPHERE = String.raw`
 
 const MESSAGE =
   'Hello from the Clemson Quantum Club. Want to learn quantum computing, or help ' +
-  'build this site? Come to a meeting: https://clemsonquantum.com/get-involved/';
+  'build this site? Come to a meeting: https://www.clemsonquantum.com/get-involved/';
 
 let greeted = false;
 
