@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { pageMetadata } from '@/lib/og';
 import { formatDate } from '@/lib/dates.mjs';
 import siteConfig from '@/data/site-config.json';
+import PdfViewerToggle from '@/components/PdfViewerToggle';
 import { getGoverningDocuments, governingDocumentsUpdated } from '@/lib/governingDocuments';
 
 export const metadata: Metadata = pageMetadata({
@@ -29,10 +30,12 @@ export default function GoverningDocumentsPage() {
 
       <section className="about-page__section" aria-label="Documents">
         <ul className="gov-docs" role="list">
-          {/* A PDF that isn't uploaded yet shows "Coming soon" (lib/governingDocuments.ts). */}
+          {/* View PDF opens the document in a viewer below its row
+              (PdfViewerToggle.tsx); a PDF that isn't uploaded yet shows
+              "Coming soon" (lib/governingDocuments.ts). */}
           {getGoverningDocuments().map((doc) => {
             return (
-              <li key={doc.title} className="gov-docs__item">
+              <li key={doc.title} id={doc.anchor} className="gov-docs__item">
                 <div>
                   <h2 className="gov-docs__title">{doc.title}</h2>
                   <p className="gov-docs__desc">{doc.description}</p>
@@ -43,15 +46,13 @@ export default function GoverningDocumentsPage() {
                     <span className="sr-only"> ({doc.title})</span>
                   </Link>
                 ) : doc.available ? (
-                  <a
+                  <PdfViewerToggle
                     className="gov-docs__link"
-                    href={encodeURI(doc.href)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View PDF{doc.size && ` (${doc.size})`}
-                    <span className="sr-only"> ({doc.title}, opens in a new tab)</span>
-                  </a>
+                    href={doc.href}
+                    title={doc.title}
+                    size={doc.size}
+                    anchor={doc.anchor}
+                  />
                 ) : (
                   <span className="gov-docs__soon">Coming soon</span>
                 )}

@@ -394,13 +394,15 @@ a.qff-btn:hover {
   }
 }
 
-/* With Share as a fourth item, the row is too narrow for everything until
-   1070px, and Share was left alone on a second line. A capped row splits
-   evenly instead: Register and the sessions, then the challenges and Share.
-   It runs to 1079px, so one line has about 2% to spare for Safari's slightly
-   wider text. In em, so the split holds at larger text sizes. */
+/* With Share as a fourth item (three buttons and Share, the 2026 page), the
+   row is too narrow for everything until 1070px, and Share was left alone on
+   a second line. A capped row splits evenly instead: Register and the
+   sessions, then the challenges and Share. It runs to 1079px, so one line
+   has about 2% to spare for Safari's slightly wider text. In em, so the
+   split holds at larger text sizes. A row of two buttons and Share fits on
+   one line, so it keeps its width. */
 @media (min-width: 900px) and (max-width: 1079px) {
-  .qff-hero .qff-cta-row {
+  .qff-hero .qff-cta-row:has(> a.qff-btn:nth-of-type(3)) {
     max-width: 22em;
   }
 }
