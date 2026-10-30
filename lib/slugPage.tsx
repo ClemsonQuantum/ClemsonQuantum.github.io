@@ -4,6 +4,7 @@ import { isUnlisted, normalizeDate } from '@/lib/content-shared.mjs';
 import { todayInClemson } from '@/lib/dates.mjs';
 import { pageMetadata } from '@/lib/og';
 import { SITE_URL } from '@/lib/site';
+import shareImages from '@/data/share-images.json';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
@@ -121,8 +122,13 @@ export function createSlugPage(contentSubdir: string, options: Options = {}) {
     const description =
       (typeof page.data.summary === 'string' && page.data.summary) ||
       makeExcerpt(page.content ?? '');
+    // A WebP image previews through its JPEG twin (scripts/generate-share-images.mjs):
+    // LinkedIn doesn't reliably show WebP link previews.
+    const share: Record<string, { jpg: string }> = shareImages;
     const image =
-      typeof page.data.image === 'string' ? { url: page.data.image, ...options.imageSize } : undefined;
+      typeof page.data.image === 'string'
+        ? { url: share[page.data.image]?.jpg ?? page.data.image, ...options.imageSize }
+        : undefined;
     return {
       ...pageMetadata({ title, description, path: `/${contentSubdir}/${slug}/`, image }),
       // Unlisted pages are live for review but not announced: keep them out
