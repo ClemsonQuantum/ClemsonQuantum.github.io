@@ -7,7 +7,10 @@ export interface GoverningDocument {
   description: string;
   /** The readable path from data/governing-documents.json. */
   href: string;
-  /** A PDF in public/documents/ (opens in a new tab) rather than a site page. */
+  /** The row's id on /governing-documents/ ("constitution"), which About
+   *  links to so that document's viewer opens on arrival. */
+  anchor: string;
+  /** A PDF in public/documents/ rather than a site page. */
   isPdf: boolean;
   /** False for a PDF that isn't uploaded yet: show "Coming soon". */
   available: boolean;
@@ -36,6 +39,7 @@ export function getGoverningDocuments(): GoverningDocument[] {
     const uploaded = stat !== null && stat.size > 0;
     return {
       ...doc,
+      anchor: doc.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
       isPdf,
       available: !isPdf || uploaded,
       size: uploaded ? fileSize(stat.size) : null,
