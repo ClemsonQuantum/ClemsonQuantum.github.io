@@ -2,7 +2,7 @@
 
 Developer reference for the Clemson Quantum Club website.
 
-**Live site:** https://clemsonquantum.com
+**Live site:** https://www.clemsonquantum.com
 
 ## Tech stack
 
@@ -76,7 +76,7 @@ Entry points worth knowing:
 4. `npm run build` (card-image phone copies, link-preview copies, content validation, the search index, the add-to-calendar files, the Bloch-sphere check, then the static export into `out/`)
 5. Publish `out/` to GitHub Pages
 
-The custom domain (`clemsonquantum.com`) is set in the repository's Settings → Pages. `public/CNAME` still ships with the site, but GitHub ignores it for Actions deploys.
+The custom domain (`www.clemsonquantum.com`; GitHub redirects the bare `clemsonquantum.com` to it) is set in the repository's Settings → Pages. `public/CNAME` still ships with the site, but GitHub ignores it for Actions deploys.
 
 ## Known constraints
 
