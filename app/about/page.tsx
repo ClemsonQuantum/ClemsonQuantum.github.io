@@ -163,8 +163,9 @@ export default function AboutPage() {
             works.
           </p>
         </div>
-        {/* The three documents themselves, each with a small button to open
-            it; a PDF that isn't uploaded yet says "Coming soon". */}
+        {/* The three documents themselves, each with a small button: a PDF's
+            goes to its row on Governing Documents, which opens it in place; a
+            PDF that isn't uploaded yet says "Coming soon". */}
         <ul className="about-page__docs" role="list">
           {getGoverningDocuments().map((doc) => (
             <li key={doc.title} className="about-page__doc">
@@ -175,15 +176,13 @@ export default function AboutPage() {
                   <span className="sr-only"> ({doc.title})</span>
                 </Link>
               ) : doc.available ? (
-                <a
+                <Link
                   className="hackathon-cta hackathon-cta--ghost about-page__doc-btn"
-                  href={encodeURI(doc.href)}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={`/governing-documents/#${doc.anchor}`}
                 >
                   View PDF{doc.size && ` (${doc.size})`}
-                  <span className="sr-only"> ({doc.title}, opens in a new tab)</span>
-                </a>
+                  <span className="sr-only"> ({doc.title}, on the Governing Documents page)</span>
+                </Link>
               ) : (
                 <span className="about-page__doc-soon">Coming soon</span>
               )}
