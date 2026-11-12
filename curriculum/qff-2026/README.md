@@ -1,6 +1,6 @@
 # Qiskit Fall Fest 2026 curriculum (Clemson)
 
-Two weeks, Monday, November 9 to Friday, November 20, 2026: six sessions on Mondays, Wednesdays, and Fridays, matching the event page (`content/events/workshops-and-seminars/qiskit-fall-fest-2026.md`). Each session is a seminar (a guest speaker or the organizers) followed by a guided Qiskit notebook lab, and each releases an individual challenge built on that day's lab. Labs and challenges run on qBraid, with jobs on IBM Quantum processors. Progression: foundations → hardware and noise → algorithms → cryptography → HPC and QML → error correction.
+One week, Monday, November 16 to Friday, November 20, 2026: five sessions, one each day from 5:00 to 6:00 PM, matching the event page (`content/events/workshops-and-seminars/qiskit-fall-fest-2026.md`). Each session is a seminar (a guest speaker or the organizers) followed by a guided Qiskit notebook lab, and each releases an individual challenge built on that day's lab. Labs and challenges run on qBraid, with jobs on IBM Quantum processors. Progression: foundations → algorithms → cryptography → HPC and QML → hardware, noise, and error correction.
 
 This folder holds the **sources** for each session (notebook, Marp slide deck, challenge notebook). There are no separate lecture notes: the notes are the markdown cells of each notebook. Built artifacts that the website serves go to `public/files/qff-2026/day-N/` and are linked from the session and challenge rows on `/events/workshops-and-seminars/qiskit-fall-fest-2026/`: each plain-text chip is swapped for a link in the page's markdown once its file exists (see "Sky, cryostat, and hummingbirds" in `content/README.md`).
 
@@ -10,14 +10,15 @@ Status: **scaffold only.** Nothing in `day-*/` is written yet; each day's `READM
 
 | Day | Date | Seminar | Lab | Challenge | Base material |
 |---|---|---|---|---|---|
-| 1 | Mon Nov 9 | Guest (speaker TBD) | Quantum and Qiskit 101 | Biggest GHZ state | QGSS 2025 Lab 0 + IBM Hello World / Your First Quantum Experiment + QGSS 2025 Lab 1 Ch. 1 and CHSH (double slit, cat, which-path, CHSH) |
-| 2 | Wed Nov 11 | Organizers | Hardware, noise, and error mitigation | Transpile golf | Transpilation against a real coupling map, readout mitigation, QDC 2025 Samplomatic §1–3 (twirling) |
-| 3 | Fri Nov 13 | Guest (speaker TBD) | Algorithms: Grover, QFT, QAOA, VQE | Max-Cut with QAOA | QDC 2025 QMOO 12-qubit instances + hand-built H2 VQE with EstimatorV2; Grover and QFT sources TBD (see day-3/README.md) |
-| 4 | Mon Nov 16 | Speaker TBD | Quantum cryptography: no-cloning, BB84, an eavesdropper | Catch the eavesdropper | New session; sources TBD (see day-4/README.md) |
-| 5 | Wed Nov 18 | Organizers | HPC and quantum machine learning | Quantum kernel classifier | Aer MPS / GPU simulation at scale (Palmetto 2), quantum-centric supercomputing framing, quantum kernel classifier with a hardware kernel evaluation |
-| 6 | Fri Nov 20 | Speaker TBD | Quantum error correction | Repetition code | Teleportation (QGSS 2025 Lab 1 Ch. 2.2), long-range-entanglement opener, QDC 2025 error detection Part 1, QGSS 2025 Lab 4 bit-flip code on hardware |
+| 1 | Mon Nov 16 | Guest (speaker TBD) | Quantum and Qiskit 101 | Biggest GHZ state | QGSS 2025 Lab 0 + IBM Hello World / Your First Quantum Experiment + QGSS 2025 Lab 1 Ch. 1 and CHSH (double slit, cat, which-path, CHSH) |
+| 2 | Tue Nov 17 | Guest (speaker TBD) | Algorithms: Grover, QFT, QAOA, VQE | Max-Cut with QAOA | QDC 2025 QMOO 12-qubit instances + hand-built H2 VQE with EstimatorV2; Grover and QFT sources TBD (see day-2/README.md) |
+| 3 | Wed Nov 18 | Speaker TBD | Quantum cryptography: no-cloning, BB84, an eavesdropper | Catch the eavesdropper | New session; sources TBD (see day-3/README.md) |
+| 4 | Thu Nov 19 | Organizers | HPC and quantum machine learning | Quantum kernel classifier | Aer MPS / GPU simulation at scale (Palmetto 2), quantum-centric supercomputing framing, quantum kernel classifier with a hardware kernel evaluation |
+| 5 | Fri Nov 20 | Organizers | Hardware, noise, and error correction | Transpile golf | Transpilation against a real coupling map, readout mitigation, QDC 2025 Samplomatic §1–3 (twirling); then the former Day 6: QGSS 2025 Lab 4 bit-flip code on hardware, with teleportation (QGSS 2025 Lab 1 Ch. 2.2), the long-range-entanglement opener, and QDC 2025 error detection Part 1 as time allows |
 
 The September draft's frontier-research day (QDC 2025 Z2 lattice gauge theory and SKQD) was dropped when the event moved to six sessions. It can come back as "go further" material.
+
+On November 10 the event moved from two weeks (six sessions, Mon/Wed/Fri) to one week (five sessions, Mon–Fri). Quantum error correction, the former Day 6, merged into the hardware day, and its Repetition code challenge was dropped. The hardware day then moved from Day 2 to Day 5, so the week closes on error correction.
 
 ## Challenges and leaderboard
 
@@ -25,19 +26,18 @@ Each session releases one individual challenge built on that day's lab. The rule
 
 - Each challenge is scored out of 100.
 - The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth.
-- The overall standings add both across all six challenges.
+- The overall standings add both across all five challenges.
 - The leaderboard closes Sunday, November 22 at 11:59 PM. The top 5 local participants get Qiskit merch, handed out at Clemson Quantum Club's meeting on Tuesday, November 24.
 
-Each day's `challenge/` needs a challenge notebook (starter code, the task, and how the raw result maps to a score out of 100), any data files it reads, and an organizer-side scoring script. Scores go into the Google Sheet behind the page's leaderboards: one tab per challenge (score plus bonus) and an Overall tab (the totals). See "Leaderboards" in `content/README.md`. Submission details are announced with the first challenge on Monday, November 9.
+Each day's `challenge/` needs a challenge notebook (starter code, the task, and how the raw result maps to a score out of 100), any data files it reads, and an organizer-side scoring script. Scores go into the Google Sheet behind the page's leaderboards: one tab per challenge (score plus bonus) and an Overall tab (the totals). See "Leaderboards" in `content/README.md`. Submission details are announced with the first challenge on Monday, November 16.
 
 | Challenge | Raw result behind the score |
 |---|---|
 | Biggest GHZ state | qubits entangled in a verified GHZ state on hardware |
-| Transpile golf | two-qubit gates after fitting a given circuit to an IBM processor's layout; the mitigated result breaks ties |
 | Max-Cut with QAOA | best cut of a 12-node graph from hardware samples |
 | Catch the eavesdropper | intercepted BB84 exchanges correctly identified |
 | Quantum kernel classifier | accuracy on a held-out test set |
-| Repetition code | logical error rate on hardware (lower scores higher) |
+| Transpile golf | two-qubit gates after fitting a given circuit to an IBM processor's layout; the mitigated result breaks ties |
 
 TODO: the submission route, and the 0–100 mapping for each challenge.
 
@@ -47,7 +47,7 @@ TODO: the submission route, and the 0–100 mapping for each challenge.
 curriculum/qff-2026/
   README.md            this file
   requirements.txt     pinned Python environment for building and running the notebooks
-  day-1/ … day-6/      README.md (build sheet) + notebook.ipynb, slides.md, challenge/  [TODO]
+  day-1/ … day-5/      README.md (build sheet) + notebook.ipynb, slides.md, challenge/  [TODO]
 public/files/qff-2026/day-N/
   qff-dayN-<slug>.ipynb, qff-dayN-slides.pdf, qff-dayN-challenge.ipynb  [TODO, served by the site]
 ```
@@ -56,7 +56,7 @@ public/files/qff-2026/day-N/
 
 - Pin `qiskit==2.5.*`; print `qiskit.__version__` in a `[setup]` cell. Floors: qiskit ≥ 2.1, qiskit-ibm-runtime ≥ 0.40.1, qiskit-aer ≥ 0.17.
 - Structure as a Qiskit Pattern: **Map → Optimize (ISA transpile with `generate_preset_pass_manager`) → Execute (`SamplerV2` / `EstimatorV2`) → Post-process**.
-- One saved account for the two weeks: `QiskitRuntimeService(name="clemson-qff-2026")`, created in Lab 1 with `getpass`, never a token literal in a cell.
+- One saved account for the week: `QiskitRuntimeService(name="clemson-qff-2026")`, created in Lab 1 with `getpass`, never a token literal in a cell.
 - Backends via `service.least_busy(operational=True, simulator=False, min_num_qubits=…)`; no hard-coded device names.
 - Remove every `qc_grader` import and `grade_*` call from the source labs; replace with local `assert` self-checks (`np.allclose`, exact expectations).
 - The notebook is also the session's notes: explanations live in its markdown cells, so there is no separate notes file.
@@ -72,13 +72,12 @@ Labs and challenges run on qBraid, which gives more time on IBM Quantum processo
 | Day | Hardware cells | Estimate per student |
 |---|---|---|
 | 1 | GHZ, Bell, two-spin energy, phase sweep | ~1–1.5 min |
-| 2 | transpiled circuit on a real layout, twirled vs untwirled GHZ, readout-mitigation bookends | TBD |
-| 3 | 12-qubit QAOA samples + one 4-qubit VQE evaluation | < 1 min |
-| 4 | BB84 rounds, if run on hardware at all | TBD |
-| 5 | one small kernel-matrix job | < 1 min |
-| 6 | long-range CNOT opener (~30 s) + bit-flip code with an injected error | TBD |
+| 2 | 12-qubit QAOA samples + one 4-qubit VQE evaluation | < 1 min |
+| 3 | BB84 rounds, if run on hardware at all | TBD |
+| 4 | one small kernel-matrix job | < 1 min |
+| 5 | transpiled circuit on a real layout, twirled vs untwirled GHZ, readout-mitigation bookends, bit-flip code with an injected error (plus the ~30 s long-range CNOT opener if it stays) | TBD |
 
-Re-estimate the total once Days 2, 4, and 6 and the challenges are planned. Outside the Day 2 cells that demonstrate them, turn off zero-noise extrapolation and twirling multipliers; they multiply executions 3–500×.
+Re-estimate the total once Days 3 and 5 and the challenges are planned. Outside the Day 5 cells that demonstrate them, turn off zero-noise extrapolation and twirling multipliers; they multiply executions 3–500×.
 
 ## Licenses and attribution
 

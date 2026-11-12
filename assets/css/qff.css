@@ -156,7 +156,7 @@ body:has(.qff-page) {
   letter-spacing: 0.02em;
 }
 
-/* The hero and section eyebrows ("Clemson Quantum Club · November 9–20,
+/* The hero and section eyebrows ("Clemson Quantum Club · November 16–20,
    2026", "01 / About" to "06 / Organizers") take the deck's label look, like
    "Hosted at Clemson University with": IBM purple at 0.82rem. The prefix
    outranks the paragraph rules (.page-content p, .qff-page .qff-section p);
@@ -1735,8 +1735,9 @@ span.qff-day-resource {
     justify-content: center;
   }
 
-  /* "November 9–20, 2026" (10.5rem, kept whole) fits beside the labels at
-     320px; with enlarged text a value drops under its label instead. */
+  /* "November 16–20, 2026" (11.1rem, kept whole) fits beside the labels at
+     320px; with enlarged text a value drops under its label instead. The
+     label column is as wide as its longest label, "Experience", needs. */
   .qff-ledger-row {
     display: flex;
     flex-wrap: wrap;
@@ -1744,7 +1745,7 @@ span.qff-day-resource {
   }
 
   .qff-ledger dt {
-    flex: 0 0 6.25rem;
+    flex: 0 0 5.75rem;
   }
 
   .qff-ledger dd {

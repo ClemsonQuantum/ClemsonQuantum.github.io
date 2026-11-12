@@ -127,7 +127,7 @@ export default function PreviewCard({
       )}
       <div className="preview-card__body">
         <div className="preview-card__meta">
-          {/* A <time> for real dates; a range ("November 9–20, 2026") carries
+          {/* A <time> for real dates; a range ("November 16–20, 2026") carries
               its first day. Placeholder text ("Dates TBD") stays a span. */}
           {dateText &&
             (item.date && ISO_DAY.test(item.date) && /\d/.test(dateText) ? (

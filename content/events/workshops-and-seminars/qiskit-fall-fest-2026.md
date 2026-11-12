@@ -1,10 +1,10 @@
 ---
 title: "Qiskit Fall Fest 2026"
-date: 2026-11-09
-dateDisplay: "November 9–20, 2026"
+date: 2026-11-16
+dateDisplay: "November 16–20, 2026"
 end_date: 2026-11-20
 location: "Clemson University"
-summary: "Two weeks of seminars, Qiskit labs, and challenges, marking a decade of quantum computing on the cloud. Clemson Quantum Club hosts it as a Fall Fest PLUS event."
+summary: "A week of seminars, Qiskit labs, and challenges, marking a decade of quantum computing on the cloud. Clemson Quantum Club hosts it as a Fall Fest PLUS event."
 image: "/images/ibm-fall-fest-2026.webp"
 # A 4:3 crop of the image for the homepage featured band on phones.
 image_mobile: "/images/ibm-fall-fest-2026-phone.webp"
@@ -16,18 +16,16 @@ calendar:
   start: "17:00"
   end: "18:00"
   sessions:
-    - date: 2026-11-09
-      title: "Quantum and Qiskit 101"
-    - date: 2026-11-11
-      title: "Real hardware, noise, and error mitigation"
-    - date: 2026-11-13
-      title: "Quantum algorithms"
     - date: 2026-11-16
-      title: "Quantum cryptography"
+      title: "Quantum and Qiskit 101"
+    - date: 2026-11-17
+      title: "Quantum algorithms"
     - date: 2026-11-18
+      title: "Quantum cryptography"
+    - date: 2026-11-19
       title: "HPC and quantum machine learning"
     - date: 2026-11-20
-      title: "Quantum error correction"
+      title: "Real hardware, noise, and error correction"
 ---
 
 <div class="qff-page">
@@ -37,9 +35,9 @@ calendar:
 <div class="qff-hero qff-hero--sky" data-hummingbirds="2" data-soarers="2">
   <div class="qff-hero-inner">
     <div class="qff-hero-copy">
-      <p class="qff-eyebrow">Clemson Quantum Club<span class="qff-eyebrow-sep"> · </span><span class="qff-nowrap">November 9–20, 2026</span></p>
+      <p class="qff-eyebrow">Clemson Quantum Club<span class="qff-eyebrow-sep"> · </span><span class="qff-nowrap">November 16–20, 2026</span></p>
       <h1>Qiskit Fall Fest 2026</h1>
-      <p class="qff-tagline"><a href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. This November, Clemson Quantum Club runs two weeks of seminars, guided Qiskit labs, and challenges to mark <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
+      <p class="qff-tagline"><a href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. This November, Clemson Quantum Club runs a week of seminars, guided Qiskit labs, and challenges to mark <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
       <div class="qff-cta-row">
         <a class="qff-btn" href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">Register</a>
         <a class="qff-btn qff-btn--ghost" href="#sessions">See the sessions</a>
@@ -95,7 +93,7 @@ calendar:
 
 This is Clemson Quantum Club’s third Qiskit Fall Fest. This year’s theme marks ten years since IBM put the first quantum computer on the cloud.
 
-Our Fall Fest runs for two weeks, with a session every Monday, Wednesday, and Friday. Each session opens with a seminar on that day’s topic, led by a guest speaker from research or industry or by the organizers, followed by a guided Qiskit notebook. All labs and challenges run on qBraid, a cloud platform that gives you more time on IBM Quantum processors and other quantum hardware. The topics build up to quantum error correction, but each session starts from the basics, so you do not need any quantum background. If you want a head start, the [Learning Resources](/resources/learning-resources/) page has tutorials you can work through before the first session.
+Our Fall Fest runs for one week, with a session every day from Monday to Friday. Each session opens with a seminar on that day’s topic, followed by a guided Qiskit lab. All labs and challenges run on qBraid, a cloud platform that gives you more time on IBM Quantum processors and other quantum hardware. The topics build up to quantum error correction, but each session starts from the basics, so you do not need any quantum background. If you want a head start, the [Learning Resources](/resources/learning-resources/) page has tutorials you can work through before the first session.
 
 </div>
 
@@ -106,9 +104,9 @@ Our Fall Fest runs for two weeks, with a session every Monday, Wednesday, and Fr
 ## Key Details
 
 <dl class="qff-ledger">
-  <div class="qff-ledger-row"><dt>Dates</dt><dd><span class="qff-nowrap">November 9–20, 2026</span></dd></div>
-  <div class="qff-ledger-row"><dt>Time</dt><dd>Mon, Wed, Fri, <span class="qff-nowrap">5:00–6:00 PM</span></dd></div>
-  <div class="qff-ledger-row"><dt>Calendar</dt><dd><a href="/calendar/qiskit-fall-fest-2026.ics">Add all six sessions</a></dd></div>
+  <div class="qff-ledger-row"><dt>Dates</dt><dd><span class="qff-nowrap">November 16–20, 2026</span></dd></div>
+  <div class="qff-ledger-row"><dt>Time</dt><dd>Mon–Fri, <span class="qff-nowrap">5:00–6:00 PM</span></dd></div>
+  <div class="qff-ledger-row"><dt>Calendar</dt><dd><a href="/calendar/qiskit-fall-fest-2026.ics">Add all five sessions</a></dd></div>
   <div class="qff-ledger-row"><dt>Location</dt><dd>Clemson University, rooms TBD</dd></div>
   <div class="qff-ledger-row"><dt>Prizes</dt><dd>Qiskit merch for the top 5 local participants</dd></div>
   <div class="qff-ledger-row"><dt>Cost</dt><dd>Free to attend</dd></div>
@@ -137,7 +135,7 @@ Our Fall Fest runs for two weeks, with a session every Monday, Wednesday, and Fr
 
 ## Sessions
 
-Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all six. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 9.
+Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all five. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 16.
 
 <!-- Each row's first line is checked against the calendar block in the front
      matter: it starts with the day, keeps its <time datetime>, and shows the
@@ -152,12 +150,12 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">01</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-09">Mon, Nov 9</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
         <span class="qff-day-title">Quantum and Qiskit 101</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Guest seminar (speaker TBD) to open the two weeks with the foundations: what a qubit is, superposition, measurement, the Bloch sphere, gates as rotations, and entanglement through the Bell pair and GHZ states. From there we move to Qiskit: the four steps every Qiskit program follows, and how the same circuit runs on a simulator and on an IBM Quantum processor. It closes with how the hardware has changed since 2016.</p>
+      <p>The week opens with the foundations. We cover what a qubit is, superposition, measurement, the Bloch sphere, gates as rotations, and entanglement through the Bell pair and GHZ states. From there we move to Qiskit, where we go through the four steps every Qiskit program follows and see how the same circuit runs on a simulator and on an IBM Quantum processor.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
@@ -170,17 +168,17 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">02</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-11">Wed, Nov 11</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
-        <span class="qff-day-title">Real hardware, noise, and error mitigation</span>
+        <span class="qff-day-meta"><time datetime="2026-11-17">Tue, Nov 17</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-title">Quantum algorithms</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Seminar by the organizers: how IBM’s superconducting processors work, what T1, T2, and readout error mean, and why circuits are transpiled before they run. The math for the day is multi-qubit states as tensor products and gates as unitary matrices. Then the first steps toward error correction: suppressing and mitigating errors so a noisy processor’s answers land closer to the ideal ones. You run each circuit on a simulator and on an IBM processor and compare the two.</p>
+      <p>We start with two textbook algorithms. Grover’s search finds a marked item in an unsorted list with quadratically fewer queries, and the quantum Fourier transform is the building block behind phase estimation and Shor’s algorithm. Then we turn to the variational algorithms that run on today’s processors. We set up the Max-Cut problem, show how a graph becomes an Ising Hamiltonian and what the QAOA circuit is doing, and use VQE to find the ground-state energy of a small molecule. Hybrid quantum-classical methods suit noisy hardware, and the lab shows how to read a good answer out of noisy samples.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
         <span class="qff-day-resource">Slides</span>
-        <a class="qff-day-resource" href="#challenge-2">Challenge<span class="sr-only">: Transpile golf</span></a>
+        <a class="qff-day-resource" href="#challenge-2">Challenge<span class="sr-only">: Max-Cut with QAOA</span></a>
       </div>
     </div>
   </details>
@@ -188,17 +186,17 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">03</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-13">Fri, Nov 13</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
-        <span class="qff-day-title">Quantum algorithms</span>
+        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-title">Quantum cryptography</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Guest seminar (speaker TBD) on quantum algorithms. First the textbook ones: Grover’s search, which finds a marked item in an unsorted list with quadratically fewer queries, and the quantum Fourier transform, the building block behind phase estimation and Shor’s algorithm. Then the variational ones running on today’s processors: the Max-Cut problem, how a graph becomes an Ising Hamiltonian, what the QAOA circuit is doing, and VQE for finding the ground-state energy of a small molecule. Hybrid quantum-classical methods suit noisy hardware, and the lab shows how to read a good answer out of noisy samples.</p>
+      <p>We start with why measuring a quantum state disturbs it and with the <span class="qff-nowrap">no-cloning</span> theorem. BB84 is the protocol that uses those two facts to share a secret key and catch an eavesdropper. We run BB84 as circuits, add an eavesdropper, and watch the error rate give her away. The seminar closes on why Shor’s algorithm threatens today’s public-key encryption and what post-quantum cryptography is doing about it.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
         <span class="qff-day-resource">Slides</span>
-        <a class="qff-day-resource" href="#challenge-3">Challenge<span class="sr-only">: Max-Cut with QAOA</span></a>
+        <a class="qff-day-resource" href="#challenge-3">Challenge<span class="sr-only">: Catch the eavesdropper</span></a>
       </div>
     </div>
   </details>
@@ -206,17 +204,17 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">04</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
-        <span class="qff-day-title">Quantum cryptography</span>
+        <span class="qff-day-meta"><time datetime="2026-11-19">Thu, Nov 19</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
+        <span class="qff-day-title">HPC and quantum machine learning</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Seminar (speaker TBD) on quantum cryptography: why measuring a quantum state disturbs it, the <span class="qff-nowrap">no-cloning</span> theorem, and BB84, the protocol that uses those two facts to share a secret key and catch an eavesdropper. We run BB84 as circuits, add an eavesdropper, and watch the error rate give her away. The seminar closes on why Shor’s algorithm threatens today’s public-key encryption and what post-quantum cryptography is doing about it.</p>
+      <p>The first half is high-performance computing. We cover simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then we move to quantum machine learning, where we encode data into qubits and build quantum kernels and variational classifiers.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
         <span class="qff-day-resource">Slides</span>
-        <a class="qff-day-resource" href="#challenge-4">Challenge<span class="sr-only">: Catch the eavesdropper</span></a>
+        <a class="qff-day-resource" href="#challenge-4">Challenge<span class="sr-only">: Quantum kernel classifier</span></a>
       </div>
     </div>
   </details>
@@ -224,35 +222,17 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">05</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
-        <span class="qff-day-title">HPC and quantum machine learning</span>
-      </span>
-    </summary>
-    <div class="qff-day-body">
-      <p>Seminar by the organizers on high-performance computing for quantum: simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then quantum machine learning: encoding data into qubits, quantum kernels, and variational classifiers.</p>
-      <div class="qff-day-resources">
-        <span class="sr-only">Notebook and slides are posted after the session. </span>
-        <span class="qff-day-resource">Notebook</span>
-        <span class="qff-day-resource">Slides</span>
-        <a class="qff-day-resource" href="#challenge-5">Challenge<span class="sr-only">: Quantum kernel classifier</span></a>
-      </div>
-    </div>
-  </details>
-  <details class="qff-day">
-    <summary class="qff-day-summary">
-      <span class="qff-day-num" aria-hidden="true">06</span>
-      <span class="qff-day-head">
         <span class="qff-day-meta"><time datetime="2026-11-20">Fri, Nov 20</time><span class="qff-day-sep"> · </span><span class="qff-nowrap">5:00–6:00 PM</span></span>
-        <span class="qff-day-title">Quantum error correction</span>
+        <span class="qff-day-title">Real hardware, noise, and error correction</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Seminar (speaker TBD) to close the two weeks with quantum error correction: why a qubit can’t be copied but its information can be spread across many, the bit-flip and repetition codes, and syndrome measurement with mid-circuit measurement and feed-forward. Quantum teleportation uses the same trick, and it is how today’s chips build long-range entanglement. We end with the surface code and what a fault-tolerant processor needs.</p>
+      <p>The last session is about real hardware. We look at how IBM’s superconducting processors work, what T1, T2, and readout error mean, and why circuits are transpiled before they run. The math for the day is multi-qubit states as tensor products and gates as unitary matrices. We then suppress and mitigate errors so a noisy processor’s answers land closer to the ideal ones, and you run each circuit on a simulator and on an IBM processor and compare the two. The last part is quantum error correction. It covers why a qubit can’t be copied but its information can be spread across many, the bit-flip and repetition codes, and syndrome measurement with mid-circuit measurement and feed-forward. We end with the surface code and what a fault-tolerant processor needs.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Notebook and slides are posted after the session. </span>
         <span class="qff-day-resource">Notebook</span>
         <span class="qff-day-resource">Slides</span>
-        <a class="qff-day-resource" href="#challenge-6">Challenge<span class="sr-only">: Repetition code</span></a>
+        <a class="qff-day-resource" href="#challenge-5">Challenge<span class="sr-only">: Transpile golf</span></a>
       </div>
     </div>
   </details>
@@ -268,28 +248,28 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
 
 ## Challenges
 
-Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges. Scoring is individual: the top 5 local participants when the leaderboard closes on Sunday, November 22 at 11:59 PM get Qiskit merch. Submission details come with the first challenge on Monday, November 9. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live.
+Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus, from 10 points for the first down to 1 point for the tenth. The overall standings add your scores and bonuses across all five challenges. Scoring is individual. The top 5 local participants when the leaderboard closes on Sunday, November 22 at 11:59 PM get Qiskit merch. Submission details come with the first challenge on Monday, November 16. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live.
 
 <!-- Leaderboards: each data-src is one Google Sheet tab published to the web
      as CSV (column A name, column B score); leave it empty until the
      challenge opens. Every board ranks points, highest first: a challenge's
      tab holds each person's points for that challenge (the score out of 100
      plus any first-to-100 bonus), and the Overall tab holds each person's
-     total across all six. See "Leaderboards" in content/README.md.
+     total across all five. See "Leaderboards" in content/README.md.
      Challenge files: put them in a qff-2026 folder under public/files and
      replace a chip with an <a class="qff-day-resource"> linking to them. -->
 <h3 class="qff-leaderboard-heading">Overall standings<span class="qff-bird-zone" data-birds="1" data-variant="pink"></span></h3>
 
-<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 9 at 6:00 PM."></div>
+<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 16 at 6:00 PM."></div>
 
-<h3 class="sr-only">The six challenges</h3>
+<h3 class="sr-only">The five challenges</h3>
 
 <div class="qff-days qff-challenges">
   <details class="qff-day" id="challenge-1">
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">01</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-09">Mon, Nov 9</time></span>
+        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time></span>
         <span class="qff-day-title">Biggest GHZ state</span>
       </span>
     </summary>
@@ -300,32 +280,14 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 9 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-2">
     <summary class="qff-day-summary">
       <span class="qff-day-num" aria-hidden="true">02</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-11">Wed, Nov 11</time></span>
-        <span class="qff-day-title">Transpile golf</span>
-      </span>
-    </summary>
-    <div class="qff-day-body">
-      <p>Fit a given circuit onto an IBM processor’s layout with the fewest two-qubit gates, then run it there with error mitigation. Fewer gates score higher; the mitigated result breaks ties.</p>
-      <div class="qff-day-resources">
-        <span class="sr-only">Released with the challenge: </span>
-        <span class="qff-day-resource">Challenge notebook</span>
-        <span class="qff-day-resource">Files</span>
-      </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard opens Wednesday, November 11 at 6:00 PM."></div>
-    </div>
-  </details>
-  <details class="qff-day" id="challenge-3">
-    <summary class="qff-day-summary">
-      <span class="qff-day-num" aria-hidden="true">03</span>
-      <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-13">Fri, Nov 13</time></span>
+        <span class="qff-day-meta"><time datetime="2026-11-17">Tue, Nov 17</time></span>
         <span class="qff-day-title">Max-Cut with QAOA</span>
       </span>
     </summary>
@@ -336,14 +298,14 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard opens Friday, November 13 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard opens Tuesday, November 17 at 6:00 PM."></div>
     </div>
   </details>
-  <details class="qff-day" id="challenge-4">
+  <details class="qff-day" id="challenge-3">
     <summary class="qff-day-summary">
-      <span class="qff-day-num" aria-hidden="true">04</span>
+      <span class="qff-day-num" aria-hidden="true">03</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-16">Mon, Nov 16</time></span>
+        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time></span>
         <span class="qff-day-title">Catch the eavesdropper</span>
       </span>
     </summary>
@@ -354,14 +316,14 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard opens Wednesday, November 18 at 6:00 PM."></div>
     </div>
   </details>
-  <details class="qff-day" id="challenge-5">
+  <details class="qff-day" id="challenge-4">
     <summary class="qff-day-summary">
-      <span class="qff-day-num" aria-hidden="true">05</span>
+      <span class="qff-day-num" aria-hidden="true">04</span>
       <span class="qff-day-head">
-        <span class="qff-day-meta"><time datetime="2026-11-18">Wed, Nov 18</time></span>
+        <span class="qff-day-meta"><time datetime="2026-11-19">Thu, Nov 19</time></span>
         <span class="qff-day-title">Quantum kernel classifier</span>
       </span>
     </summary>
@@ -372,25 +334,25 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard opens Wednesday, November 18 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard opens Thursday, November 19 at 6:00 PM."></div>
     </div>
   </details>
-  <details class="qff-day" id="challenge-6">
+  <details class="qff-day" id="challenge-5">
     <summary class="qff-day-summary">
-      <span class="qff-day-num" aria-hidden="true">06</span>
+      <span class="qff-day-num" aria-hidden="true">05</span>
       <span class="qff-day-head">
         <span class="qff-day-meta"><time datetime="2026-11-20">Fri, Nov 20</time></span>
-        <span class="qff-day-title">Repetition code</span>
+        <span class="qff-day-title">Transpile golf</span>
       </span>
     </summary>
     <div class="qff-day-body">
-      <p>Get the lowest logical error rate on real hardware.</p>
+      <p>Fit a given circuit onto an IBM processor’s layout with the fewest two-qubit gates, then run it there with error mitigation. Fewer gates score higher; the mitigated result breaks ties.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Released with the challenge: </span>
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Repetition code leaderboard" data-empty="The leaderboard opens Friday, November 20 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard opens Friday, November 20 at 6:00 PM."></div>
     </div>
   </details>
 </div>
@@ -416,11 +378,11 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>Do I have to attend every session?</summary>
-    <p>No. Every session stands on its own, so come to one or all six. Each session’s challenge counts toward the leaderboard, so more sessions means more points.</p>
+    <p>No. Every session stands on its own, so come to one or all five. Each session’s challenge counts toward the leaderboard, so more sessions means more points.</p>
   </details>
   <details class="qff-faq-item">
     <summary>What should I bring?</summary>
-    <p>A laptop to every session. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 9; we will help you connect them in the first session.</p>
+    <p>A laptop to every session. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 16; we will help you connect them in the first session.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is it free?</summary>
@@ -436,7 +398,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>Is it in person or online?</summary>
-    <p>In person at Clemson University from <span class="qff-nowrap">5:00 to 6:00 PM</span> on Mondays, Wednesdays, and Fridays, <span class="qff-nowrap">November 9–20</span>. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. The notebooks, slides, and challenges will be posted on this page.</p>
+    <p>In person at Clemson University from <span class="qff-nowrap">5:00 to 6:00 PM</span>, Monday to Friday, <span class="qff-nowrap">November 16–20</span>. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. You can also take part remotely. The notebooks, slides, and challenges are posted on this page after each session, and anyone can enter the challenges.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Are there prizes?</summary>
@@ -444,7 +406,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>How are challenges scored?</summary>
-    <p>Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add your scores and bonuses across all six challenges.</p>
+    <p>Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus, from 10 points for the first down to 1 point for the tenth. The overall standings add your scores and bonuses across all five challenges.</p>
   </details>
   <details class="qff-faq-item">
     <summary>When does the leaderboard close?</summary>

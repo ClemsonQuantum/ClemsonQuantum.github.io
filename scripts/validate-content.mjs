@@ -220,7 +220,7 @@ function validateFile(fullPath, problems) {
         });
         // Fall Fest pages show the same sessions as the qff-day rows in the
         // sessions list (the challenge rows after it don't count): same count
-        // and order, and each row's line starts with the day ("Mon, Nov 9"),
+        // and order, and each row's line starts with the day ("Mon, Nov 16"),
         // carries the same <time datetime> and the session's time ("5:00–6:00
         // PM"), and has the same title. Anything else in the line (a "Seminar"
         // label, a room) is free.

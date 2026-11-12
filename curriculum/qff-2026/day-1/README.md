@@ -1,4 +1,4 @@
-# Day 1 (Mon Nov 9): Quantum and Qiskit 101
+# Day 1 (Mon Nov 16): Quantum and Qiskit 101
 
 Status: **placeholder.** Files to produce here: `notebook.ipynb` (the lecture notes are its markdown cells), `slides.md` (Marp), `challenge/`.
 Served copies go to `public/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipynb`, `qff-day1-slides.pdf`, `qff-day1-challenge.ipynb`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.
@@ -12,7 +12,7 @@ Served copies go to `public/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipy
 Qubit, superposition, measurement and the Born rule, Bloch sphere, single-qubit gates as rotations, entanglement through the Bell pair and GHZ states (correlations, why they are not classical), the four Qiskit Pattern steps, simulator-first workflow (Aer / StatevectorSampler) before hardware, account and AI-tool norms. It closes with how the hardware has changed since 2016, when IBM put the first quantum processor on the cloud (the event's theme). Do NOT promise "by the end of the day you will know…" phrasing on the page. Slide sources: Lanes, Foundations of Quantum Mechanics; IBM Qiskit 101 deck (pathways, two-prompt demo).
 
 ## Also in the lab (QGSS 2025 Lab 1, Chapter 1 + CHSH)
-- Double slit as a 1-qubit circuit with a phase sweep (the hardware cell, under 1 min), Schrödinger’s cat widget, which-path measurement, CHSH game beating 75%. Teleportation is on Day 6.
+- Double slit as a 1-qubit circuit with a phase sweep (the hardware cell, under 1 min), Schrödinger’s cat widget, which-path measurement, CHSH game beating 75%. Teleportation is in the Day 5 build sheet (error correction half).
 - Extra dependencies: ipywidgets, Pillow, `happy.png`/`grumpy.png` from the QGSS 2025 Lab 1 folder.
 
 ## Notebook plan
@@ -38,4 +38,4 @@ Three small jobs plus the phase sweep, ~1–1.5 min QPU, plus challenge runs. Ca
 
 ## Open decisions (TODO)
 - Session time and room.
-- Students create IBM Quantum and qBraid accounts before Monday, November 9 (the event page asks them to); plan a fallback for anyone who arrives without one.
+- Students create IBM Quantum and qBraid accounts before Monday, November 16 (the event page asks them to); plan a fallback for anyone who arrives without one.

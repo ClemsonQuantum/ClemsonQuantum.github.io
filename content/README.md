@@ -186,11 +186,11 @@ The attributes on each `<div class="qff-leaderboard">`:
 - `data-score-label` names the score column.
 - `data-highlight="5"` marks the top 5 rows (optional; the 2026 overall board leaves it off, since prizes go to the top 5 local participants, who may not be the top 5 rows).
 - `data-label` is the table's name for screen readers, e.g. `Repetition code leaderboard`.
-- `data-empty` is the note shown while `data-src` is empty, e.g. `The leaderboard opens Monday, November 9.`
+- `data-empty` is the note shown while `data-src` is empty, e.g. `The leaderboard opens Monday, November 16.`
 
 The page shows the top 10 with a "Show all" button. Names appear exactly as typed in the sheet, so use whatever participants agreed to show.
 
-**Scoring on the 2026 page.** Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add both across all six challenges. Every board on the page uses `data-sort="desc" data-score-label="Points"`: a challenge's tab holds each person's points for that challenge (the score plus any bonus), and the Overall tab holds each person's total. The raw result (qubits, two-qubit gates, cut value, and so on) stays in each challenge's description. Scoring for the 2027 page is still TBD.
+**Scoring on the 2026 page.** Each challenge is scored out of 100. The first ten people to reach a full 100 on a challenge get a bonus: 10 points for the first, down to 1 point for the tenth. The overall standings add both across all five challenges. Every board on the page uses `data-sort="desc" data-score-label="Points"`: a challenge's tab holds each person's points for that challenge (the score plus any bonus), and the Overall tab holds each person's total. The raw result (qubits, two-qubit gates, cut value, and so on) stays in each challenge's description. Scoring for the 2027 page is still TBD.
 
 ## Sky, cryostat, and hummingbirds (Qiskit Fall Fest pages)
 
@@ -213,6 +213,6 @@ The page shows the top 10 with a "Show all" button. Names appear exactly as type
   - News: name by date (e.g. `2026-03-15.md`), with an optional slug suffix (e.g. `2026-05-18-scalab-initiative.md`).
 - **Keeping words together:** a time, date, room, course code, or name that must never break across lines takes a no-break space (U+00A0) instead of a plain space, e.g. "5:00 PM" or "Watt Family Innovation Center"; type the character itself, since `&nbsp;` would show up in search results. A hyphen that must not break is a no-break hyphen (U+2011), and the en dash of a range takes a word joiner (U+2060) right after it. On Fall Fest pages, wrap a range in `<span class="qff-nowrap">` instead, as those pages already do.
 - **Alt text:** every `<img>` in a page needs an `alt` that says what the image shows, or `alt=""` when it is decorative (a logo next to its own name). The validator rejects placeholders: a lone word like "image" or "photo", a number, a file or camera name (`IMG_2041.jpg`), or a template's `[BRACKETS]`.
-- **Schedule dates:** schedule days are `<time>` tags with the date for machines, e.g. `<time class="hackathon-schedule-date" datetime="2026-09-25">Friday, September 25</time>`, or `<time datetime="2026-11-09">Mon, Nov 9</time>` inside a Fall Fest `qff-day-meta`. The validator checks each `datetime` is a real day inside the event's dates, so update both when you copy a page to a new year.
+- **Schedule dates:** schedule days are `<time>` tags with the date for machines, e.g. `<time class="hackathon-schedule-date" datetime="2026-09-25">Friday, September 25</time>`, or `<time datetime="2026-11-16">Mon, Nov 16</time>` inside a Fall Fest `qff-day-meta`. The validator checks each `datetime` is a real day inside the event's dates, so update both when you copy a page to a new year.
 - **Dates:** The `date:` field must be `YYYY-MM-DD` format (or `TBD` on an event, with `dateDisplay` set) — listings are sorted by this field, not by the filename, so the filename order doesn't affect sorting.
 - **Adding a new event type:** Currently supports hackathons, workshops & seminars, and meetings. To add a new category, a developer will need to create a new folder and route.

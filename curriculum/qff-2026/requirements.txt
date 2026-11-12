@@ -8,12 +8,12 @@ pylatexenc>=2.10
 # Day 1 (QGSS Lab 1 widgets)
 ipywidgets
 Pillow
-# Day 2 twirling and Day 6 error detection. TODO: test-install early; samplomatic tracked a preview runtime branch at QDC 2025.
+# Day 5 twirling and error detection (the former Day 6). TODO: test-install early; samplomatic tracked a preview runtime branch at QDC 2025.
 samplomatic
 qiskit-device-benchmarking @ git+https://github.com/qiskit-community/qiskit-device-benchmarking.git
 pandas
 graphviz
-# Day 3 (QMOO)
+# Day 2 (QMOO)
 networkx
 rustworkx
 moocore
