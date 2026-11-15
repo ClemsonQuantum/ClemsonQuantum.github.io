@@ -14,7 +14,7 @@ Status: **scaffold only.** Nothing in `day-*/` is written yet; each day's `READM
 | 2 | Tue Nov 17 | Guest (speaker TBD) | Algorithms: Grover, QFT, QAOA, VQE | Max-Cut with QAOA | QDC 2025 QMOO 12-qubit instances + hand-built H2 VQE with EstimatorV2; Grover and QFT sources TBD (see day-2/README.md) |
 | 3 | Wed Nov 18 | Speaker TBD | Quantum cryptography: no-cloning, BB84, an eavesdropper | Catch the eavesdropper | New session; sources TBD (see day-3/README.md) |
 | 4 | Thu Nov 19 | Organizers | HPC and quantum machine learning | Quantum kernel classifier | Aer MPS / GPU simulation at scale (Palmetto 2), quantum-centric supercomputing framing, quantum kernel classifier with a hardware kernel evaluation |
-| 5 | Fri Nov 20 | Organizers | Hardware, noise, and error correction | Transpile golf | Transpilation against a real coupling map, readout mitigation, QDC 2025 Samplomatic §1–3 (twirling); then the former Day 6: QGSS 2025 Lab 4 bit-flip code on hardware, with teleportation (QGSS 2025 Lab 1 Ch. 2.2), the long-range-entanglement opener, and QDC 2025 error detection Part 1 as time allows |
+| 5 | Fri Nov 20 | Organizers | Real hardware, noise, and error correction | Transpile golf | Transpilation against a real coupling map, readout mitigation, QDC 2025 Samplomatic §1–3 (twirling); then the former Day 6: QGSS 2025 Lab 4 bit-flip code on hardware, with teleportation (QGSS 2025 Lab 1 Ch. 2.2), the long-range-entanglement opener, and QDC 2025 error detection Part 1 as time allows |
 
 The September draft's frontier-research day (QDC 2025 Z2 lattice gauge theory and SKQD) was dropped when the event moved to six sessions. It can come back as "go further" material.
 

@@ -453,10 +453,11 @@ a.qff-btn:hover {
 }
 
 /* A " · " separator hides once the part after it drops to its own line, so
-   no line ends in a dot: the hero eyebrow below 381px (its 341.7px line plus
-   16px gutters, with about 2% to spare for Safari's slightly different text
-   widths) and the session date and time below 350px. */
-@media (max-width: 380px) {
+   no line ends in a dot: the hero eyebrow below 389px (its 349.8px line,
+   "Clemson Quantum Club · November 16–20, 2026", plus 16px gutters, with
+   about 2% to spare for Safari's slightly different text widths) and the
+   session date and time below 350px. */
+@media (max-width: 388px) {
   .qff-hero .qff-eyebrow-sep {
     display: none;
   }
@@ -569,10 +570,11 @@ a.qff-btn:hover {
   font-variant-numeric: tabular-nums;
 }
 
-/* Hosted-with strip: the label, then four marks in one row (club logo, IBM
-   Quantum logotype, Fall Fest badge, qBraid; IBM Quantum stays before
-   qBraid). Each mark is scaled uniformly (height only), with clear space and
-   no lock-up; the single flex gap is the only spacing between them. */
+/* Hosted-with strip: the label, then five marks in one row (club logo, IBM
+   Quantum logotype, Fall Fest badge, then the sponsors, qBraid and TraCR;
+   IBM Quantum stays before qBraid). Each mark is scaled uniformly (height
+   only), with clear space and no lock-up; the single flex gap is the only
+   spacing between them. */
 .qff-hosted {
   display: flex;
   flex-wrap: wrap;
@@ -627,15 +629,24 @@ a.qff-btn:hover {
   height: 32px;
 }
 
+/* TraCR's round seal reads small at the wordmark height; it takes the Fall
+   Fest badge's 44px, the strip's other round mark. */
+.qff-hosted-sponsor img[src*="tracr-logo"] {
+  height: 44px;
+}
+
 .qff-hosted-badge {
   width: 44px;
   height: 44px;
 }
 
-/* .qff-hosted is a wrapping flex row of [label, logos]. Below about 842px it
+/* .qff-hosted is a wrapping flex row of [label, logos]. Below about 910px it
    wraps onto two lines (the label, then the logos); each line is centered, so
-   neither sits alone at the left. */
-@media (max-width: 841px) {
+   neither sits alone at the left. The label, gaps and gutters grow with the
+   reader's text size (32em of them) while the marks stay 398px, so the
+   second query follows the wrap point at any text size (922px at the default
+   16px); the first covers browsers that ignore calc() in a media query. */
+@media (max-width: 921px), (max-width: calc(32.75em + 398px)) {
   .qff-hosted {
     justify-content: center;
   }
@@ -669,20 +680,19 @@ a.qff-btn:hover {
     justify-content: center;
   }
 
-  /* qBraid, the sponsor, gets its own centered line under IBM Quantum. */
+  /* The sponsors, qBraid then TraCR, share one centered line under IBM
+     Quantum, whose own line is full, so they start a new one. */
   .qff-hosted-sponsor {
     order: 4;
-    flex: 0 0 100%;
-    justify-content: center;
   }
 
-  /* Those two links span the line, so the focus ring goes on the mark
-     itself, hugging it like the club logo and badge rings. */
-  :is(.qff-hosted-logo, .qff-hosted-sponsor):focus-visible {
+  /* The IBM Quantum link spans its line, so the focus ring goes on the mark
+     itself, hugging it like the rings on the other marks. */
+  .qff-hosted-logo:focus-visible {
     outline: none;
   }
 
-  :is(.qff-hosted-logo, .qff-hosted-sponsor):focus-visible img {
+  .qff-hosted-logo:focus-visible img {
     outline: 2px solid var(--color-link);
     outline-offset: 2px;
   }

@@ -78,6 +78,9 @@ calendar:
         <img src="/images/qbraid-logo.webp" alt="qBraid" width="612" height="168" loading="lazy" />
       </picture>
     </a>
+    <a class="qff-hosted-sponsor" href="https://www.clemson.edu/cecas/tracr/" target="_blank" rel="noopener noreferrer">
+      <img src="/images/tracr-logo.webp" alt="TraCR, National Center for Transportation Cybersecurity and Resiliency" width="220" height="220" loading="lazy" />
+    </a>
   </div>
 </div>
 
@@ -135,7 +138,7 @@ Our Fall Fest runs for one week, with a session every day from Monday to Friday.
 
 ## Sessions
 
-Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all five. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 16.
+Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all five. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 16.
 
 <!-- Each row's first line is checked against the calendar block in the front
      matter: it starts with the day, keeps its <time datetime>, and shows the
@@ -260,7 +263,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
      replace a chip with an <a class="qff-day-resource"> linking to them. -->
 <h3 class="qff-leaderboard-heading">Overall standings<span class="qff-bird-zone" data-birds="1" data-variant="pink"></span></h3>
 
-<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 16 at 6:00 PM."></div>
+<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 16 at 6:00 PM."></div>
 
 <h3 class="sr-only">The five challenges</h3>
 
@@ -280,7 +283,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-2">
@@ -298,7 +301,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard opens Tuesday, November 17 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard opens Tuesday, November 17 at 6:00 PM."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-3">
@@ -316,7 +319,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard opens Wednesday, November 18 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard opens Wednesday, November 18 at 6:00 PM."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-4">
@@ -334,7 +337,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard opens Thursday, November 19 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard opens Thursday, November 19 at 6:00 PM."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-5">
@@ -352,7 +355,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard opens Friday, November 20 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard opens Friday, November 20 at 6:00 PM."></div>
     </div>
   </details>
 </div>

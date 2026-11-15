@@ -1,4 +1,4 @@
-# Day 5 (Fri Nov 20): Hardware, noise, and error correction
+# Day 5 (Fri Nov 20): Real hardware, noise, and error correction
 
 Status: **placeholder.** Files to produce here: `notebook.ipynb` (the lecture notes are its markdown cells), `slides.md` (Marp), `challenge/`.
 Served copies go to `public/files/qff-2026/day-5/qff-day5-hardware-noise.ipynb`, `qff-day5-slides.pdf`, `qff-day5-challenge.ipynb`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.

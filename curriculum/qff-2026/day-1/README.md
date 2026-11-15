@@ -37,5 +37,5 @@ Entangle the most qubits in a GHZ state on hardware. Builds on notebook steps 3â
 Three small jobs plus the phase sweep, ~1â€“1.5 min QPU, plus challenge runs. Cache fallback results for all.
 
 ## Open decisions (TODO)
-- Session time and room.
+- Room.
 - Students create IBM Quantum and qBraid accounts before Monday, November 16 (the event page asks them to); plan a fallback for anyone who arrives without one.
