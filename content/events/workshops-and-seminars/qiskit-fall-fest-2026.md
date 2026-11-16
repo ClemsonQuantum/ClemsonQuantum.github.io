@@ -269,7 +269,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
      the challenge has no extra files. -->
 <h3 class="qff-leaderboard-heading">Overall standings<span class="qff-bird-zone" data-birds="1" data-variant="pink"></span></h3>
 
-<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 16 at 6:00 PM."></div>
+<div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
 
 <h3 class="sr-only">The five challenges</h3>
 
@@ -288,7 +288,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <a class="qff-day-resource" href="/files/qff-2026/day-1/qff-day1-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Biggest GHZ state</span></a>
         <a class="qff-day-resource" href="https://forms.gle/GVYREiQnWGFF18Sy9" target="_blank" rel="noopener noreferrer">Submission form<span class="sr-only">: Biggest GHZ state</span></a>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-2">
