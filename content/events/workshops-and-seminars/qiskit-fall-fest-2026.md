@@ -100,7 +100,7 @@ calendar:
 
 This is Clemson Quantum Club’s third Qiskit Fall Fest. This year’s theme marks ten years since IBM put the first quantum computer on the cloud.
 
-Our Fall Fest runs for one week, with a session every day from Monday to Friday. Each session opens with a seminar on that day’s topic, followed by a guided Qiskit lab. All labs and challenges run on qBraid, a cloud platform that gives you more time on IBM Quantum processors and other quantum hardware. The topics build up to quantum error correction, but each session starts from the basics, so you do not need any quantum background. If you want a head start, the [Learning Resources](/resources/learning-resources/) page has tutorials you can work through before the first session.
+Our Fall Fest runs for one week, with a session every day from Monday to Friday. Each session opens with a seminar on that day’s topic, followed by a guided Qiskit lab. The labs and challenges run on IBM Quantum processors through your own free IBM Quantum account. qBraid, a cloud platform, is a second option that reaches other quantum computers. The topics build up to quantum error correction, but each session starts from the basics, so you do not need any quantum background. If you want a head start, the [Learning Resources](/resources/learning-resources/) page has tutorials you can work through before the first session.
 
 </div>
 
@@ -164,9 +164,8 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <div class="qff-day-body">
       <p>The week opens with the foundations. We cover what a qubit is, superposition, measurement, the Bloch sphere, gates as rotations, and entanglement through the Bell pair and GHZ states. From there we move to Qiskit, where we go through the four steps every Qiskit program follows and see how the same circuit runs on a simulator and on an IBM Quantum processor.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">Notebook and slides are posted after the session. </span>
-        <span class="qff-day-resource">Notebook</span>
-        <span class="qff-day-resource">Slides</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipynb" download>Notebook<span class="sr-only">: Quantum and Qiskit 101</span></a>
+        <a class="qff-day-resource" href="/files/qff-2026/day-1/qff-day1-slides.pptx" download>Slides<span class="sr-only">: Quantum and Qiskit 101</span></a>
         <a class="qff-day-resource" href="#challenge-1">Challenge<span class="sr-only">: Biggest GHZ state</span></a>
       </div>
     </div>
@@ -284,7 +283,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
       <p>Entangle the most qubits in a GHZ state on real hardware.</p>
       <div class="qff-day-resources">
         <span class="sr-only">Released with the challenge: </span>
-        <span class="qff-day-resource">Challenge notebook</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-1/qff-day1-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Biggest GHZ state</span></a>
         <span class="qff-day-resource">Files</span>
       </div>
       <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
@@ -377,7 +376,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
 <div class="qff-faq">
   <details class="qff-faq-item">
     <summary>What happens at each session?</summary>
-    <p>A seminar on that day’s topic, then a Qiskit lab on qBraid, then that session’s challenge for the leaderboard.</p>
+    <p>A seminar on that day’s topic, then a guided Qiskit lab, then that session’s challenge for the leaderboard.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Do I need quantum computing or Qiskit experience?</summary>
@@ -389,7 +388,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>What do I need?</summary>
-    <p>A computer for the labs. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 16; we will help you connect them in the first session.</p>
+    <p>A computer for the labs. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 16. Sign up for qBraid with the email you registered with; qBraid access is sent to that address.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is it free?</summary>

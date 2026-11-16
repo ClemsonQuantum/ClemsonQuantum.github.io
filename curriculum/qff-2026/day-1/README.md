@@ -1,7 +1,7 @@
 # Day 1 (Mon Nov 16): Quantum and Qiskit 101
 
 Status: **placeholder.** Files to produce here: `notebook.ipynb` (the lecture notes are its markdown cells), `slides.md` (Marp), `challenge/`.
-Served copies go to `public/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipynb`, `qff-day1-slides.pdf`, `qff-day1-challenge.ipynb`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.
+Served copies go to `public/files/qff-2026/day-1/qff-day1-quantum-qiskit-101.ipynb`, `qff-day1-slides.pptx`, `qff-day1-challenge.ipynb`, then the matching chips in `content/events/workshops-and-seminars/qiskit-fall-fest-2026.md` become links.
 
 ## Sources
 - QGSS 2025 Lab 0, `lab0.ipynb` (account setup, Bell sanity check, GHZ via Qiskit Patterns, toy coupling map, Sampler + Estimator, hardware bonus). Author credit: Jorge Martínez de Lejarza et al.

@@ -67,7 +67,7 @@ public/files/qff-2026/day-N/
 
 ## QPU budget
 
-Labs and challenges run on qBraid, which gives more time on IBM Quantum processors than the free Open Plan. Still plan each lab as if a student had only the Open Plan (10 min per user per 28-day window), so no lab depends on the extra time, and count challenge runs against the same budget.
+Hardware jobs in the labs and challenges run on IBM Quantum processors through each student’s own IBM Quantum account, on the free Open Plan (10 min per user per 28-day window). Plan each lab inside that budget and count challenge runs against it. qBraid is the second option: it reaches the other quantum computers qBraid offers, and a job on an IBM processor still needs the student’s own IBM credentials.
 
 | Day | Hardware cells | Estimate per student |
 |---|---|---|
