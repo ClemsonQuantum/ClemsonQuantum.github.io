@@ -3,12 +3,15 @@ title: "Qiskit Fall Fest 2026"
 date: 2026-11-16
 dateDisplay: "November 16–20, 2026"
 end_date: 2026-11-20
-location: "Clemson University"
 summary: "A week of seminars, Qiskit labs, and challenges, marking a decade of quantum computing on the cloud. Clemson Quantum Club hosts it as a Fall Fest PLUS event."
 image: "/images/ibm-fall-fest-2026.webp"
 # A 4:3 crop of the image for the homepage featured band on phones.
 image_mobile: "/images/ibm-fall-fest-2026-phone.webp"
 registration_url: "https://forms.gle/NC9o1iRk3WggLuTH7"
+# The live Zoom room for every session; the event is online only, so there is
+# no `location`. It goes into the event data and each calendar entry; the hero
+# button, the Key Details row and the FAQ link to it by hand.
+online_url: "https://clemson.zoom.us/j/98934524366"
 # Add-to-calendar file: scripts/generate-calendars.mjs writes
 # /calendar/qiskit-fall-fest-2026.ics from this list at build time (times are
 # Clemson local time). Keep it in step with the Sessions rows below.
@@ -40,6 +43,7 @@ calendar:
       <p class="qff-tagline"><a href="https://www.ibm.com/quantum/events/fall-fest-2026" target="_blank" rel="noopener noreferrer">Qiskit Fall Fest</a> is the yearly series of student-led quantum computing events that IBM Quantum supports on campuses around the world. This November, Clemson Quantum Club runs a week of seminars, guided Qiskit labs, and challenges to mark <span class="qff-gradient-text">a decade of quantum computing on the cloud</span>.</p>
       <div class="qff-cta-row">
         <a class="qff-btn" href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">Register</a>
+        <a class="qff-btn qff-btn--ghost" href="https://clemson.zoom.us/j/98934524366" target="_blank" rel="noopener noreferrer">Join on Zoom</a>
         <a class="qff-btn qff-btn--ghost" href="#sessions">See the sessions</a>
         <a class="qff-btn qff-btn--ghost" href="#challenge">See the challenges</a>
         <span class="share-button qff-share" data-title="Qiskit Fall Fest 2026"></span>
@@ -110,7 +114,7 @@ Our Fall Fest runs for one week, with a session every day from Monday to Friday.
   <div class="qff-ledger-row"><dt>Dates</dt><dd><span class="qff-nowrap">November 16–20, 2026</span></dd></div>
   <div class="qff-ledger-row"><dt>Time</dt><dd>Mon–Fri, <span class="qff-nowrap">5:00–6:00 PM</span></dd></div>
   <div class="qff-ledger-row"><dt>Calendar</dt><dd><a href="/calendar/qiskit-fall-fest-2026.ics">Add all five sessions</a></dd></div>
-  <div class="qff-ledger-row"><dt>Location</dt><dd>Clemson University, rooms TBD</dd></div>
+  <div class="qff-ledger-row"><dt>Zoom</dt><dd><a href="https://clemson.zoom.us/j/98934524366" target="_blank" rel="noopener noreferrer">Join the sessions live</a></dd></div>
   <div class="qff-ledger-row"><dt>Prizes</dt><dd>Qiskit merch for the top 5 local participants</dd></div>
   <div class="qff-ledger-row"><dt>Cost</dt><dd>Free to attend</dd></div>
   <div class="qff-ledger-row"><dt>Experience</dt><dd>No quantum background required</dd></div>
@@ -138,7 +142,7 @@ Our Fall Fest runs for one week, with a session every day from Monday to Friday.
 
 ## Sessions
 
-Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all five. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before you arrive so your first job runs on Monday, November 16.
+Each session pairs a seminar with a notebook lab and releases a challenge. Come to one or all five. Open a session to see the plan; its challenge is in the Challenges section below. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before the first session so your first job runs on Monday, November 16.
 
 <!-- Each row's first line is checked against the calendar block in the front
      matter: it starts with the day, keeps its <time datetime>, and shows the
@@ -384,8 +388,8 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <p>No. Every session stands on its own, so come to one or all five. Each session’s challenge counts toward the leaderboard, so more sessions means more points.</p>
   </details>
   <details class="qff-faq-item">
-    <summary>What should I bring?</summary>
-    <p>A laptop to every session. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 16; we will help you connect them in the first session.</p>
+    <summary>What do I need?</summary>
+    <p>A computer for the labs. Create free <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noopener noreferrer">IBM Quantum</a> (Open Plan) and <a href="https://account.qbraid.com/" target="_blank" rel="noopener noreferrer">qBraid</a> accounts before Monday, November 16; we will help you connect them in the first session.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is it free?</summary>
@@ -400,8 +404,8 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <p>Clemson Quantum Club, with support from IBM Quantum as a Fall Fest PLUS event.</p>
   </details>
   <details class="qff-faq-item">
-    <summary>Is it in person or online?</summary>
-    <p>In person at Clemson University from <span class="qff-nowrap">5:00 to 6:00 PM</span>, Monday to Friday, <span class="qff-nowrap">November 16–20</span>. Rooms will be posted here once they are confirmed, and everyone who registers gets an email. You can also take part remotely. The notebooks, slides, and challenges are posted on this page after each session, and anyone can enter the challenges.</p>
+    <summary>Where is it held?</summary>
+    <p>On <a href="https://clemson.zoom.us/j/98934524366" target="_blank" rel="noopener noreferrer">Zoom</a>, from <span class="qff-nowrap">5:00 to 6:00 PM</span>, Monday to Friday, <span class="qff-nowrap">November 16–20</span>. The notebooks, slides, and challenges are posted on this page after each session, and anyone can enter the challenges.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Are there prizes?</summary>
@@ -442,18 +446,13 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <div class="qff-team-role">Lead Organizer</div>
   </div>
   <div class="qff-team-member">
+    <img src="/images/landon-holcomb.jpg" alt="" class="qff-team-photo" width="92" height="92" loading="lazy" />
+    <div class="qff-team-name">Landon Holcomb</div>
+    <div class="qff-team-role">Co-Organizer</div>
+  </div>
+  <div class="qff-team-member">
     <img src="/images/jack-layton.jpg" alt="" class="qff-team-photo" width="92" height="92" loading="lazy" />
     <div class="qff-team-name">Jack Layton</div>
-    <div class="qff-team-role">Co-Organizer</div>
-  </div>
-  <div class="qff-team-member">
-    <img src="/images/caroline-cadena.jpg" alt="" class="qff-team-photo" width="92" height="92" loading="lazy" />
-    <div class="qff-team-name">Caroline Cadena</div>
-    <div class="qff-team-role">Co-Organizer</div>
-  </div>
-  <div class="qff-team-member">
-    <img src="/images/varun-sethi.webp" alt="" class="qff-team-photo" width="92" height="92" loading="lazy" />
-    <div class="qff-team-name">Varun Sethi</div>
     <div class="qff-team-role">Co-Organizer</div>
   </div>
 </div>

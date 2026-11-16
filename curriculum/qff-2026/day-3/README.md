@@ -30,4 +30,3 @@ Single-qubit circuits, so cheap if run on hardware at all; the challenge data ca
 
 ## Open decisions (TODO)
 - Speaker.
-- Room.

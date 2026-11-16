@@ -14,6 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { isDraft, parseFrontmatter } from '../lib/content-shared.mjs';
+import { clemsonToUtc } from '../lib/dates.mjs';
 import { walkContentFiles } from './walk-content.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -21,38 +22,6 @@ const ROOT = path.join(__dirname, '..');
 const CONTENT_ROOT = path.join(ROOT, 'content');
 const OUT_DIR = path.join(ROOT, 'public', 'calendar');
 const DOMAIN = fs.readFileSync(path.join(ROOT, 'public', 'CNAME'), 'utf-8').trim();
-const TIME_ZONE = 'America/New_York';
-
-/**
- * Clemson local date and time -> the same instant in UTC.
- * Two passes of "format the guess in New York, correct by the difference"
- * settle on the right offset for that date (EST or EDT).
- *
- * @param {string} date YYYY-MM-DD
- * @param {string} time HH:MM (24-hour)
- * @returns {Date}
- */
-function clemsonToUtc(date, time) {
-  const [y, m, d] = date.split('-').map(Number);
-  const [h, mi] = time.split(':').map(Number);
-  const wanted = Date.UTC(y, m - 1, d, h, mi);
-  const fmt = new Intl.DateTimeFormat('en-US', {
-    timeZone: TIME_ZONE,
-    hourCycle: 'h23',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-  let t = wanted;
-  for (let i = 0; i < 2; i++) {
-    const p = Object.fromEntries(fmt.formatToParts(new Date(t)).map((x) => [x.type, x.value]));
-    const shown = Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute);
-    t += wanted - shown;
-  }
-  return new Date(t);
-}
 
 /** @param {Date} d */
 const icsTime = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -94,7 +63,15 @@ for (const fullPath of walkContentFiles(CONTENT_ROOT)) {
   const slug = path.basename(fullPath, '.md');
   const subdir = path.relative(CONTENT_ROOT, path.dirname(fullPath)).replace(/\\/g, '/');
   const pageUrl = `https://${DOMAIN}/${subdir}/${slug}/`;
-  const location = typeof data.location === 'string' ? data.location : 'Clemson University';
+  // `online_url` (a Zoom room, say) goes first in every entry's notes, where
+  // calendar apps turn it into a link. An event with the link and no
+  // `location` is online only: the link is also each entry's place, and the
+  // notes say nothing about rooms.
+  const onlineUrl = typeof data.online_url === 'string' && data.online_url.includes('://') ? data.online_url : null;
+  const venue = typeof data.location === 'string' && data.location.trim() ? data.location : null;
+  const location = venue ?? onlineUrl ?? 'Clemson University';
+  const online = onlineUrl ? `Join online: ${onlineUrl}\n` : '';
+  const more = venue || !onlineUrl ? 'Rooms, materials, and the challenge' : 'Materials and the challenge';
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -116,7 +93,7 @@ for (const fullPath of walkContentFiles(CONTENT_ROOT)) {
       `DTEND:${icsTime(clemsonToUtc(s.date, own ? s.end : end))}`,
       `SUMMARY:${icsText(`${data.title}: ${s.title}`)}`,
       `LOCATION:${icsText(room)}`,
-      `DESCRIPTION:${icsText(`Session ${i + 1} of ${sessions.length}. Rooms, materials, and the challenge: ${pageUrl}`)}`,
+      `DESCRIPTION:${icsText(`Session ${i + 1} of ${sessions.length}. ${online}${more}: ${pageUrl}`)}`,
       `URL:${pageUrl}`,
       'END:VEVENT',
     );

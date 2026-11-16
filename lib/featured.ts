@@ -26,7 +26,7 @@ export const FEATURED_EVENT: {
   section: 'events/workshops-and-seminars',
   slug: 'qiskit-fall-fest-2026',
   facts: [
-    { label: 'Location', value: 'Clemson University' },
+    { label: 'Where', value: 'Live on Zoom' },
     // \u2060 (word joiner) and \u00a0 keep each range on one line.
     { label: 'Sessions', value: 'Mon–\u2060Fri, 5:00–\u20606:00\u00a0PM' },
     { label: 'Prizes', value: 'Qiskit merch' },

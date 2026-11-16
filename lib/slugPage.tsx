@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getPageBySlug, getRoutablePages, makeExcerpt } from '@/lib/content';
 import { isUnlisted, normalizeDate } from '@/lib/content-shared.mjs';
-import { todayInClemson } from '@/lib/dates.mjs';
+import { clemsonIso, todayInClemson } from '@/lib/dates.mjs';
 import { pageMetadata } from '@/lib/og';
 import { SITE_URL } from '@/lib/site';
 import shareImages from '@/data/share-images.json';
@@ -34,14 +34,38 @@ const notFound = (
 );
 
 // schema.org Event structured data for the hosted event pages (Google's event
-// rich results). Emitted only when the frontmatter carries both `end_date` and
-// `location`: an Event without a real end date and venue fails the rich-result
-// checks, and entries without them (TBD announcements, plain notes) should not
-// claim to be a scheduled in-person event at all. Frontmatter contract:
+// rich results). Emitted only when the frontmatter carries `end_date` and a
+// place to be, `location` or `online_url`: an Event without a real end date
+// and a venue or a link fails the rich-result checks, and entries without
+// them (TBD announcements, plain notes) should not claim to be a scheduled
+// event at all. Frontmatter contract:
 // `date` and `end_date` (YYYY-MM-DD), `location` (venue name), optional
 // `street_address` and `registration_url` (absolute URL); everything else is
 // fixed (Clemson campus address, free admission, club as organizer). Once the
 // event has ended there is nothing left to register for, so the offer goes.
+// Two optional additions: a `calendar` block gives the start and end their
+// hours (the first day's session start and the last day's session end, with
+// Clemson's UTC offset), and `online_url` (a Zoom room) makes the event
+// in person and online at once, or online only when there is no `location`.
+
+// "2026-11-16" -> "2026-11-16T17:00:00-05:00" when the `calendar` block has a
+// session that day; the plain date otherwise. `edge` picks the session's
+// start or end time, falling back to the block's shared one.
+function withSessionTime(day: string, calendar: unknown, edge: 'start' | 'end'): string {
+  if (typeof calendar !== 'object' || calendar === null) return day;
+  const cal = calendar as Record<string, unknown>;
+  if (!Array.isArray(cal.sessions)) return day;
+  const hhmm = /^([01]\d|2[0-3]):[0-5]\d$/;
+  const times = cal.sessions
+    .filter((s): s is Record<string, unknown> => typeof s === 'object' && s !== null)
+    .filter((s) => normalizeDate(s.date) === day)
+    .map((s) => (typeof s.start === 'string' && typeof s.end === 'string' ? s[edge] : cal[edge]))
+    .filter((t): t is string => typeof t === 'string' && hhmm.test(t))
+    .sort();
+  if (times.length === 0) return day;
+  return clemsonIso(day, edge === 'start' ? times[0] : times[times.length - 1]);
+}
+
 function buildEventJsonLd(
   data: Record<string, unknown>,
   title: string,
@@ -50,38 +74,48 @@ function buildEventJsonLd(
   const startDate = normalizeDate(data.date);
   const { end_date: endDate, location, street_address: streetAddress } = data;
   const { registration_url: registrationUrl, summary, image } = data;
+  const onlineUrl =
+    typeof data.online_url === 'string' && data.online_url.includes('://')
+      ? data.online_url
+      : null;
   if (
     typeof startDate !== 'string' ||
     typeof endDate !== 'string' ||
-    typeof location !== 'string'
+    (typeof location !== 'string' && !onlineUrl)
   ) {
     return null;
   }
+  const place =
+    typeof location === 'string'
+      ? {
+          '@type': 'Place',
+          name: location,
+          address: {
+            '@type': 'PostalAddress',
+            ...(typeof streetAddress === 'string' ? { streetAddress } : {}),
+            addressLocality: 'Clemson',
+            addressRegion: 'SC',
+            postalCode: '29634',
+            addressCountry: 'US',
+          },
+        }
+      : null;
+  const online = onlineUrl ? { '@type': 'VirtualLocation', url: onlineUrl } : null;
+  const mode = place && online ? 'Mixed' : online ? 'Online' : 'Offline';
   return {
     '@context': 'https://schema.org',
     '@type': 'Event',
     name: title,
-    startDate,
-    endDate,
+    startDate: withSessionTime(startDate, data.calendar, 'start'),
+    endDate: withSessionTime(endDate, data.calendar, 'end'),
     ...(typeof summary === 'string' ? { description: summary } : {}),
     ...(typeof image === 'string' && image.startsWith('/')
       ? { image: `${SITE_URL}${image}` }
       : {}),
     url,
-    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventAttendanceMode: `https://schema.org/${mode}EventAttendanceMode`,
     eventStatus: 'https://schema.org/EventScheduled',
-    location: {
-      '@type': 'Place',
-      name: location,
-      address: {
-        '@type': 'PostalAddress',
-        ...(typeof streetAddress === 'string' ? { streetAddress } : {}),
-        addressLocality: 'Clemson',
-        addressRegion: 'SC',
-        postalCode: '29634',
-        addressCountry: 'US',
-      },
-    },
+    location: place && online ? [place, online] : (place ?? online),
     organizer: {
       '@type': 'Organization',
       name: 'Clemson Quantum Club',

@@ -58,4 +58,3 @@ TBD: one transpiled circuit, the readout bookends, and the twirled GHZ pair, the
 ## Open decisions (TODO)
 - What fits in one hour. Steps 1–9 were planned as two sessions; candidates to move to "go further": teleportation (step 6), the long-range CNOT (step 7), and error detection (step 8).
 - Whether zero-noise extrapolation gets a demo cell (it multiplies executions).
-- Room.

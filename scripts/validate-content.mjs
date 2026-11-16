@@ -179,6 +179,20 @@ function validateFile(fullPath, problems) {
       problems.push(`${relPath}: "registration_url" must be an absolute URL (got "${value}")`);
     }
   }
+  // `online_url` (the Zoom room of a hosted event) goes into the event data
+  // and every add-to-calendar entry, so it must be a full https link.
+  if (data.online_url !== undefined) {
+    const value = data.online_url;
+    let ok = false;
+    try {
+      ok = typeof value === 'string' && new URL(value).protocol === 'https:';
+    } catch {
+      ok = false;
+    }
+    if (!ok) {
+      problems.push(`${relPath}: "online_url" must be a full https link, e.g. "https://clemson.zoom.us/j/123" (got "${value}")`);
+    }
+  }
 
   // `calendar` feeds scripts/generate-calendars.mjs (the add-to-calendar
   // file): 24-hour start and end times with end after start, and at least one

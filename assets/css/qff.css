@@ -407,6 +407,29 @@ a.qff-btn:hover {
   }
 }
 
+/* With a fourth button (Join on Zoom on the 2026 page), the four buttons and
+   Share need 695px for one line. The copy column never gets that wide beside
+   the tiles, and the stacked hero only does from 727px, so in between the
+   buttons filled a line and left Share alone under them. A capped row splits
+   three and two instead: Register, Zoom and the sessions (434px), then the
+   challenges and Share. The cap sits between that first line and the 625px
+   that would let the fourth button back up. The stacked range runs to 744px,
+   so one line has about 2% to spare for Safari's slightly wider text. */
+@media (min-width: 640px) and (max-width: 744px), (min-width: 900px) {
+  .qff-hero .qff-cta-row:has(> a.qff-btn:nth-of-type(4)) {
+    max-width: 33em;
+  }
+}
+
+/* On phones the buttons stack, so the fourth one pushes the tiles 57px down
+   (the hero then ends at up to 1197px). The sky grows by the same amount to
+   keep covering it, and goes back by itself when the button is removed. */
+@media (max-width: 639px) {
+  .qff-page:has(.qff-hero .qff-cta-row > a.qff-btn:nth-of-type(4)) {
+    background-size: 100% 1207px;
+  }
+}
+
 /* Tiles: the cover-slide 2x2 grid (slate / sky / pink / gray). */
 .qff-tiles {
   display: grid;
