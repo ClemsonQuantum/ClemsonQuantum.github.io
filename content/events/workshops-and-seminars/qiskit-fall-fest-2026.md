@@ -263,7 +263,10 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
      plus any first-to-100 bonus), and the Overall tab holds each person's
      total across all five. See "Leaderboards" in content/README.md.
      Challenge files: put them in a qff-2026 folder under public/files and
-     replace a chip with an <a class="qff-day-resource"> linking to them. -->
+     replace a chip with an <a class="qff-day-resource"> linking to them.
+     Each challenge has its own submission form. Link it as a "Submission
+     form" chip (see Challenge 1); it takes the place of the Files chip when
+     the challenge has no extra files. -->
 <h3 class="qff-leaderboard-heading">Overall standings<span class="qff-bird-zone" data-birds="1" data-variant="pink"></span></h3>
 
 <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Overall leaderboard" data-empty="The leaderboard opens with the first challenge on Monday, November 16 at 6:00 PM."></div>
@@ -282,9 +285,8 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <div class="qff-day-body">
       <p>Entangle the most qubits in a GHZ state on real hardware.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">Released with the challenge: </span>
         <a class="qff-day-resource" href="/files/qff-2026/day-1/qff-day1-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Biggest GHZ state</span></a>
-        <span class="qff-day-resource">Files</span>
+        <a class="qff-day-resource" href="https://forms.gle/GVYREiQnWGFF18Sy9" target="_blank" rel="noopener noreferrer">Submission form<span class="sr-only">: Biggest GHZ state</span></a>
       </div>
       <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Biggest GHZ state leaderboard" data-empty="The leaderboard opens Monday, November 16 at 6:00 PM."></div>
     </div>
