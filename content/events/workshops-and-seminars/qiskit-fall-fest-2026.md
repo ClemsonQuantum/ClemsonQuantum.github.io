@@ -306,7 +306,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard opens Tuesday, November 17 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Max-Cut with QAOA leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-3">
@@ -324,7 +324,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard opens Wednesday, November 18 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-4">
@@ -342,7 +342,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard opens Thursday, November 19 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-5">
@@ -360,7 +360,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard opens Friday, November 20 at 6:00 PM."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
 </div>

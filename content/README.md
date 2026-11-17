@@ -187,7 +187,7 @@ The attributes on each `<div class="qff-leaderboard">`:
 - `data-score-label` names the score column.
 - `data-highlight="5"` marks the top 5 rows (optional; the 2026 overall board leaves it off, since prizes go to the top 5 local participants, who may not be the top 5 rows).
 - `data-label` is the table's name for screen readers, e.g. `Transpile golf leaderboard`.
-- `data-empty` is the note shown while `data-src` is empty, e.g. `The leaderboard opens Monday, November 16.`
+- `data-empty` is the note shown while `data-src` is empty, e.g. `The leaderboard appears here once the first scores are in.` (the 2026 page uses this on all six boards; a note with a date goes stale if the sheet is not ready by then)
 
 The page shows the top 10 with a "Show all" button. Names appear exactly as typed in the sheet, so use whatever participants agreed to show.
 
