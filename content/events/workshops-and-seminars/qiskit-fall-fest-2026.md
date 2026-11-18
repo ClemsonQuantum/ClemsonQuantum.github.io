@@ -198,9 +198,8 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <div class="qff-day-body">
       <p>We start with why measuring a quantum state disturbs it and with the <span class="qff-nowrap">no-cloning</span> theorem. BB84 is the protocol that uses those two facts to share a secret key and catch an eavesdropper. We run BB84 as circuits, add an eavesdropper, and watch the error rate give her away. The seminar closes on why Shor’s algorithm threatens today’s public-key encryption and what post-quantum cryptography is doing about it.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">The notebook is posted before the session, the slides after it. </span>
-        <span class="qff-day-resource">Notebook</span>
-        <span class="qff-day-resource">Slides</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-3/qff-day3-cryptography.ipynb" download>Notebook<span class="sr-only">: Quantum cryptography</span></a>
+        <a class="qff-day-resource" href="/files/qff-2026/day-3/qff-day3-slides.pptx" download>Slides<span class="sr-only">: Quantum cryptography</span></a>
         <a class="qff-day-resource" href="#challenge-3">Challenge<span class="sr-only">: Catch the eavesdropper</span></a>
       </div>
     </div>
@@ -253,7 +252,7 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
 
 ## Challenges
 
-Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus, from 10 points for the first down to 1 point for the tenth. The overall standings add your scores and bonuses across all five challenges. Scoring is individual. The top 5 local participants when the leaderboard closes on Sunday, November 22 at 11:59 PM ET get Qiskit merch. Each challenge notebook has its submission steps and the link to its form. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live. The scores of Challenges 3 and 4 appear only after the close, so the overall standings leave those two out until then.
+Each challenge builds on that day’s lab and is scored out of 100. The first ten people to reach a full 100 on a challenge also get a bonus, from 10 points for the first down to 1 point for the tenth. The overall standings add your scores and bonuses across all five challenges. Scoring is individual. The top 5 local participants in the final standings get Qiskit merch. The leaderboard closes on Sunday, November 22 at 11:59 PM ET. Each challenge notebook has its submission steps and the link to its form. Open a challenge below for its files and its own leaderboard; the overall standings are here, and both update live.
 
 <!-- Leaderboards: each data-src is one Google Sheet tab published to the web
      as CSV (column A name, column B score); leave it empty until the
@@ -318,11 +317,10 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <div class="qff-day-body">
       <p>Spot which BB84 key exchanges were intercepted.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">Released with the challenge: </span>
-        <span class="qff-day-resource">Challenge notebook</span>
-        <span class="qff-day-resource">Files</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-3/qff-day3-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Catch the eavesdropper</span></a>
+        <a class="qff-day-resource" href="https://forms.gle/zRgtCHGC682mVUDm7" target="_blank" rel="noopener noreferrer">Submission form<span class="sr-only">: Catch the eavesdropper</span></a>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="Scores for this challenge appear here after it closes on Sunday, November 22 at 11:59 PM ET."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Catch the eavesdropper leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-4">
@@ -340,7 +338,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
         <span class="qff-day-resource">Challenge notebook</span>
         <span class="qff-day-resource">Files</span>
       </div>
-      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="Scores for this challenge appear here after it closes on Sunday, November 22 at 11:59 PM ET."></div>
+      <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
   </details>
   <details class="qff-day" id="challenge-5">
@@ -412,7 +410,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>Are there prizes?</summary>
-    <p>Yes. The top 5 local participants on the overall leaderboard when it closes get Qiskit merch.</p>
+    <p>Yes. The top 5 local participants in the final standings get Qiskit merch. The final standings are announced at Clemson Quantum Club’s meeting on Tuesday, November 24 at 5:00 PM in McAdams 107 and in our <a href="https://discord.gg/FBNzRcxMr" target="_blank" rel="noopener noreferrer">Discord</a>, and nobody is told a final place before then. A winner who is not at the meeting is contacted afterwards.</p>
   </details>
   <details class="qff-faq-item">
     <summary>How are challenges scored?</summary>
@@ -420,7 +418,7 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   </details>
   <details class="qff-faq-item">
     <summary>When does the leaderboard close?</summary>
-    <p>Sunday, November 22 at 11:59 PM.</p>
+    <p>Sunday, November 22 at 11:59 PM ET. The five submission forms close at the same time, and a submission counts only if its form has it by then, so leave time for a job to wait in the queue.</p>
   </details>
   <details class="qff-faq-item">
     <summary>Is there a code of conduct?</summary>
@@ -429,6 +427,10 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
   <details class="qff-faq-item">
     <summary>How do I register?</summary>
     <p>Use the <a href="https://forms.gle/NC9o1iRk3WggLuTH7" target="_blank" rel="noopener noreferrer">registration form</a>, also linked at the top of this page.</p>
+  </details>
+  <details class="qff-faq-item">
+    <summary>How do I give feedback?</summary>
+    <p>Fill in the <a href="https://forms.gle/ASYeymq9D3e21Kes8" target="_blank" rel="noopener noreferrer">feedback form</a> and tell us how the week went.</p>
   </details>
 </div>
 
