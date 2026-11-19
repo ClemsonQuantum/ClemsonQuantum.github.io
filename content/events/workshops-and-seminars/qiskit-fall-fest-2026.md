@@ -215,9 +215,8 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <div class="qff-day-body">
       <p>The first half is high-performance computing. We cover simulating circuits at scale with tensor networks and GPUs, the quantum-centric supercomputing model in which a classical cluster and a quantum processor share the work, and running large simulations on Clemson’s Palmetto 2 cluster. Then we move to quantum machine learning, where we encode data into qubits and build quantum kernels and variational classifiers.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">The notebook is posted before the session, the slides after it. </span>
-        <span class="qff-day-resource">Notebook</span>
-        <span class="qff-day-resource">Slides</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-4/qff-day4-hpc-qml.ipynb" download>Notebook<span class="sr-only">: HPC and quantum machine learning</span></a>
+        <a class="qff-day-resource" href="/files/qff-2026/day-4/qff-day4-slides.pptx" download>Slides<span class="sr-only">: HPC and quantum machine learning</span></a>
         <a class="qff-day-resource" href="#challenge-4">Challenge<span class="sr-only">: Quantum kernel classifier</span></a>
       </div>
     </div>
@@ -334,9 +333,8 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <div class="qff-day-body">
       <p>Reach the highest accuracy on a held-out test set.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">Released with the challenge: </span>
-        <span class="qff-day-resource">Challenge notebook</span>
-        <span class="qff-day-resource">Files</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-4/qff-day4-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Quantum kernel classifier</span></a>
+        <a class="qff-day-resource" href="https://forms.gle/9gY4TnmQqMiZ5gHM8" target="_blank" rel="noopener noreferrer">Submission form<span class="sr-only">: Quantum kernel classifier</span></a>
       </div>
       <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Quantum kernel classifier leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
