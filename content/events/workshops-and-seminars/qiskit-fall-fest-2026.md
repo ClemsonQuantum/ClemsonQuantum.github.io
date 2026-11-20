@@ -232,9 +232,8 @@ Each session pairs a seminar with a notebook lab and releases a challenge. Come 
     <div class="qff-day-body">
       <p>The last session is about real hardware. We look at how IBM’s superconducting processors work, what T1, T2, and readout error mean, and why circuits are transpiled before they run. The math for the day is multi-qubit states as tensor products and gates as unitary matrices. We then suppress and mitigate errors so a noisy processor’s answers land closer to the ideal ones, and you run each circuit on a simulator and on an IBM processor and compare the two. The last part is quantum error correction. It covers why a qubit can’t be copied but its information can be spread across many, the bit-flip and repetition codes, and syndrome measurement with mid-circuit measurement and feed-forward. We end with the surface code and what a fault-tolerant processor needs.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">The notebook is posted before the session, the slides after it. </span>
-        <span class="qff-day-resource">Notebook</span>
-        <span class="qff-day-resource">Slides</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-5/qff-day5-hardware-noise.ipynb" download>Notebook<span class="sr-only">: Real hardware, noise, and error correction</span></a>
+        <a class="qff-day-resource" href="/files/qff-2026/day-5/qff-day5-slides.pptx" download>Slides<span class="sr-only">: Real hardware, noise, and error correction</span></a>
         <a class="qff-day-resource" href="#challenge-5">Challenge<span class="sr-only">: Transpile golf</span></a>
       </div>
     </div>
@@ -350,9 +349,8 @@ Each challenge builds on that day’s lab and is scored out of 100. The first te
     <div class="qff-day-body">
       <p>Fit a given circuit onto an IBM processor’s layout with the fewest two-qubit gates, then run it there with error mitigation. Fewer gates score higher; the mitigated result breaks ties.</p>
       <div class="qff-day-resources">
-        <span class="sr-only">Released with the challenge: </span>
-        <span class="qff-day-resource">Challenge notebook</span>
-        <span class="qff-day-resource">Files</span>
+        <a class="qff-day-resource" href="/files/qff-2026/day-5/qff-day5-challenge.ipynb" download>Challenge notebook<span class="sr-only">: Transpile golf</span></a>
+        <a class="qff-day-resource" href="https://forms.gle/LdGAKjrSbNfeYNRT6" target="_blank" rel="noopener noreferrer">Submission form<span class="sr-only">: Transpile golf</span></a>
       </div>
       <div class="qff-leaderboard" data-src="" data-sort="desc" data-score-label="Points" data-label="Transpile golf leaderboard" data-empty="The leaderboard appears here once the first scores are in."></div>
     </div>
